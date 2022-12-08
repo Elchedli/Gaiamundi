@@ -1,0 +1,124 @@
+{
+  "name": "gaiamundi-web",
+  "version": "0.1.0",
+  "description": "Gaïamundi Web Version",
+  "keywords": [
+    "gaiamundi",
+    "maps",
+    "statistics"
+  ],
+  "homepage": "https://gitlab.com/gaia-mundi/gaiamundi/#readme",
+  "bugs": {
+    "url": "https://gitlab.com/gaia-mundi/gaiamundi/-/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/gaia-mundi/gaiamundi.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Gaïamundi",
+    "email": "marrouchi.mohamed@gmail.com",
+    "url": "https://www.gaiamundi.org"
+  },
+  "contributors": [
+    {
+      "name": "Mohamed Marrouchi",
+      "email": "marrouchi.mohamed@gmail.com",
+      "url": "https://github.com/marrouchi"
+    }
+  ],
+  "private": true,
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^28.1.7",
+    "@types/node": "^16.18.3",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-erb": "^4.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^3.4.1",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-compat": "^4.0.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.8.3",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "lint-staged": "^13.0.3",
+    "postcss": "^8.4.19",
+    "prettier": "^2.7.1",
+    "react-refresh": "^0.14.0",
+    "tailwindcss": "^3.2.4",
+    "ts-jest": "^28.0.8",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3",
+    "web-vitals": "^2.1.4"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.4",
+    "@heroicons/react": "^2.0.13",
+    "axios": "^1.2.0",
+    "classnames": "^2.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.40.0",
+    "react-router-dom": "^6.4.0",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged",
+    "lint": "eslint ./src/ --ext ts,js,tsx,jsx",
+    "lint:fix": "eslint ./src/ --ext ts,js,tsx,jsx --fix",
+    "format": "prettier 'src/**/*.{js,jsx,ts,tsx,json,css}' --write",
+    "type-check": "tsc"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "cross-env NODE_ENV=development eslint --cache"
+    ],
+    "*.json,.{eslintrc,prettierrc}": [
+      "prettier --ignore-path .eslintignore --parser json --write"
+    ],
+    "*.{css,scss}": [
+      "prettier --ignore-path .eslintignore --single-quote --write"
+    ],
+    "*.{html,md,yml}": [
+      "prettier --ignore-path .eslintignore --single-quote --write"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "page_cartos",
+  "info": {
+    "singularName": "page-carto",
+    "pluralName": "page-cartos",
+    "displayName": "PageCarto"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "map": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::map.map"
+    },
+    "html": {
+      "type": "richtext"
+    }
+  }
+}

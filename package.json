@@ -1,0 +1,51 @@
+{
+  "name": "gaia-mundi",
+  "description": "Gaïamundi Mono Repo",
+  "keywords": [
+    "gaiamundi",
+    "maps",
+    "statistics"
+  ],
+  "homepage": "https://gitlab.com/gaia-mundi/gaiamundi/#readme",
+  "bugs": {
+    "url": "https://gitlab.com/gaia-mundi/gaiamundi/-/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/gaia-mundi/gaiamundi.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Gaïamundi",
+    "email": "marrouchi.mohamed@gmail.com",
+    "url": "https://www.gaiamundi.org"
+  },
+  "contributors": [
+    {
+      "name": "Mohamed Marrouchi",
+      "email": "marrouchi.mohamed@gmail.com",
+      "url": "https://github.com/marrouchi"
+    }
+  ],
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.1.0",
+    "@commitlint/cli": "^16.0.1",
+    "@commitlint/config-conventional": "^16.0.0",
+    "husky": "^7.0.4"
+  },
+  "engines": {
+    "node": "=16"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "clean": "lerna clean",
+    "bootstrap": "lerna bootstrap",
+    "setup": "lerna clean -y && rm -rf node_modules/ && yarn && lerna bootstrap",
+    "test": "lerna run test --stream",
+    "build": "lerna run build --stream",
+    "start:web": "lerna run start --scope=gaiamundi-web --stream",
+    "start:desktop": "lerna run start --scope=gaiamundi-desktop --stream",
+    "start:api": "lerna run develop --scope=gaiamundi-api --stream"
+  }
+}
