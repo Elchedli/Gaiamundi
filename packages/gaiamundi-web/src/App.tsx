@@ -8,6 +8,8 @@ import { AuthProvider } from 'hooks/useAuth';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 
+import { NouvelleCarte } from 'pages/NouvelleCartePage/NouvelleCartePage';
+// import { GptTabs } from 'pages/NouvelleCartePage';
 export default function App() {
   return (
     <BrowserRouter>
@@ -20,6 +22,8 @@ export default function App() {
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="reset-password" element={<ResetPasswordPage />} />
+            <Route path="page-carto/create" element={<NouvelleCarte />} />
+            {/* <Route path="page-carto/tailwind" element={<GptTabs />} /> */}
           </Route>
         </Routes>
       </AuthProvider>
