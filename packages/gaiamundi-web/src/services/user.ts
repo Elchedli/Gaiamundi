@@ -17,7 +17,14 @@ export const getCurrentUser = async (token: string) => {
   return await strapi.currentUser(token);
 };
 
-export const resetPassword = async (_email: string) => {
-  // @todo
-  return await Promise.resolve();
+export const forgotPassword = async (email: string) => {
+  return await strapi.forgotPassword(email);
+};
+
+export const resetPassword = async (
+  code: string,
+  password: string,
+  passwordConfirmation: string
+) => {
+  return await strapi.resetPassword(code, password, passwordConfirmation);
 };

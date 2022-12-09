@@ -116,7 +116,7 @@ const LoginForm: React.FC = () => {
       <div className="flex items-end mt-4">
         <div className="text-sm leading-5">
           <Link
-            to="/reset-password"
+            to="/forgot-password"
             className="font-medium transition duration-150 ease-in-out text-blue-800 hover:text-royal-blue-500 focus:outline-none focus:underline"
           >
             Mot de passe oublié ?

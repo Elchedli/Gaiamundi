@@ -1,48 +1,52 @@
+import { Button } from 'components/Button/Button';
+import { useAuth } from 'hooks/useAuth';
+import useQuery from 'hooks/useQuery';
+import { useToast } from 'hooks/useToast';
+// import { useAuth } from 'hooks/useAuth';
+import { ApiError, ApiErrorResponse } from 'interfaces/api';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
-import { Button } from 'components/Button/Button';
-import { useAuth } from 'hooks/useAuth';
-import { ApiError } from 'interfaces/api';
-import { useToast } from 'hooks/useToast';
-
-type UserEmail = { email: string };
 
 const ResetPasswordForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserEmail>();
-  const auth = useAuth();
-  const navigate = useNavigate();
+    watch,
+  } = useForm<{ password: string; password2: string }>({
+    defaultValues: {
+      password: '',
+      password2: '',
+    },
+  });
+  const query = useQuery();
   const { addToast } = useToast();
+  const { changePassword } = useAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<ApiError | undefined>(undefined);
 
-  const onSubmit = (data: UserEmail) => {
+  const onSubmit = (data: { password: string; password2: string }) => {
     setIsLoading(true);
     setError(undefined);
-    auth
-      .sendPasswordResetEmail(data.email)
+    const code = query.get('code') || '';
+    changePassword(code, data.password, data.password2)
       .then(() => {
+        navigate('/dashboard');
         addToast({
-          title: 'Réinitialisation en cours ...',
-          description:
-            'Un email de réinitialisation de mot de passe vous a été envoyé par E-mail.',
+          title: 'Bienvenue !👋',
+          description: 'Connexion effectuée avec succès.',
           type: 'success',
         });
-        navigate('/login');
       })
-      .catch(({ error }) => {
+      .catch(({ error }: ApiErrorResponse) => {
         setError(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {error?.message && (
@@ -50,30 +54,57 @@ const ResetPasswordForm: React.FC = () => {
           <span>{error.message}</span>
         </div>
       )}
-      <div className="rounded-md">
+      <div className="mt-4">
         <label
-          htmlFor="email"
+          htmlFor="password"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
-          Adresse E-mail
+          Nouveau mot de passe
         </label>
         <div className="mt-1 rounded-md">
           <input
-            id="email"
+            id="password"
             className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
-            type="email"
-            {...register('email', {
-              required: 'Veuillez saisir votre adresse E-mail',
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: `L'adresse E-mail est invalid !`,
+            type="password"
+            {...register('password', {
+              required: 'Veuillez saisir votre mot de passe',
+              minLength: {
+                value: 6,
+                message: 'Le mot de passe doit avoir au moins 6 charactères',
               },
             })}
           />
-          {errors.email && (
+          {errors.password && (
             <div className="mt-2 text-xs text-red-600">
-              {errors.email.message}
+              {errors.password.message}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mt-4">
+        <label
+          htmlFor="password2"
+          className="block text-sm font-medium leading-5 text-gray-700"
+        >
+          Confirmation du mot de passe
+        </label>
+        <div className="mt-1 rounded-md">
+          <input
+            id="password2"
+            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            type="password"
+            {...register('password2', {
+              required: 'Veuillez saisir la confirmation du mot de passe',
+              validate: (val: string) => {
+                if (watch('password') != val) {
+                  return 'La confirmation du mot de passe est incorrecte.';
+                }
+              },
+            })}
+          />
+          {errors.password2 && (
+            <div className="mt-2 text-xs text-red-600">
+              {errors.password2.message}
             </div>
           )}
         </div>
@@ -82,7 +113,7 @@ const ResetPasswordForm: React.FC = () => {
       <div className="mt-4">
         <span className="block w-full rounded-md shadow-sm">
           <Button type="submit" isLoading={isLoading}>
-            Réinitialiser le mot de passe
+            Confirmer
           </Button>
         </span>
       </div>
