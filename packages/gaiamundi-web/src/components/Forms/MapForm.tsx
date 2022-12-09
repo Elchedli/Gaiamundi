@@ -166,8 +166,8 @@ const FormulaireJSON = () => {
 export const MapForm: React.FC = () => {
   return (
     <form action="">
-      <div className="grid lg:grid-cols-3">
-        <div className="basis-1/2 mr-10">
+      <div className="grid lg:grid-cols-2">
+        <div className=" mr-10">
           <div>
             <label
               htmlFor="Nom"
