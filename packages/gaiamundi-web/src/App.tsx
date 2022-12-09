@@ -23,7 +23,6 @@ export default function App() {
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="reset-password" element={<ResetPasswordPage />} />
             <Route path="page-carto/create" element={<NouvelleCarte />} />
-            {/* <Route path="page-carto/tailwind" element={<GptTabs />} /> */}
           </Route>
         </Routes>
       </AuthProvider>
