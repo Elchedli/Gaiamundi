@@ -5,6 +5,8 @@ import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
 import { DashboardPage } from 'pages/DashboardPage/DashboardPage';
 import { AuthProvider } from 'hooks/useAuth';
+import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
+import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
             <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="reset-password" element={<ResetPasswordPage />} />
           </Route>
         </Routes>
       </AuthProvider>

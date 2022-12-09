@@ -8,10 +8,12 @@ import {
 import { User, UserSignUpFields } from 'interfaces/user';
 import { useCookie } from './useCookie';
 import {
+  forgotPassword,
   getCurrentUser,
   login,
   register,
   updateAccount,
+  resetPassword,
 } from '../services/user';
 
 export interface AuthContext {
@@ -21,6 +23,11 @@ export interface AuthContext {
   signIn: (credentials: { email: string; password: string }) => Promise<User>;
   signOut: () => void;
   sendPasswordResetEmail: (email: string) => Promise<boolean>;
+  changePassword: (
+    code: string,
+    password: string,
+    password2: string
+  ) => Promise<User>;
   updateUser: (id: number, data: UserSignUpFields) => Promise<User>;
 }
 
@@ -80,10 +87,20 @@ const useAuthProvider = () => {
     return setUser(null);
   };
 
-  const sendPasswordResetEmail = async (_email: string) => {
-    // @todo : add reset password
-    // const response = await resetPassword(email);
-    return false;
+  const sendPasswordResetEmail = async (email: string) => {
+    return await forgotPassword(email);
+  };
+
+  const changePassword = async (
+    code: string,
+    password: string,
+    password2: string
+  ) => {
+    const response = await resetPassword(code, password, password2);
+    const { jwt, user } = response;
+    setUser(user);
+    setJwtToken(jwt);
+    return user;
   };
 
   const loadCurrentUser = async () => {
@@ -112,6 +129,7 @@ const useAuthProvider = () => {
     signIn,
     signOut,
     sendPasswordResetEmail,
+    changePassword,
     updateUser,
   };
 };
