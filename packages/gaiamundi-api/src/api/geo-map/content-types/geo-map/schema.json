@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "maps",
+  "collectionName": "geo_maps",
   "info": {
-    "singularName": "map",
-    "pluralName": "maps",
-    "displayName": "Map",
+    "singularName": "geo-map",
+    "pluralName": "geo-maps",
+    "displayName": "GeoMap",
     "description": ""
   },
   "options": {
@@ -38,6 +38,12 @@
       "allowedTypes": [
         "files"
       ]
+    },
+    "page_cartos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::page-carto.page-carto",
+      "mappedBy": "map"
     }
   }
 }

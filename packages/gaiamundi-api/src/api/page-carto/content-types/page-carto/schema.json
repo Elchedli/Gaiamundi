@@ -4,7 +4,8 @@
   "info": {
     "singularName": "page-carto",
     "pluralName": "page-cartos",
-    "displayName": "PageCarto"
+    "displayName": "PageCarto",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,11 +23,18 @@
     },
     "map": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::map.map"
+      "relation": "manyToOne",
+      "target": "api::geo-map.geo-map",
+      "inversedBy": "page_cartos"
     },
     "html": {
       "type": "richtext"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "page_cartos"
     }
   }
 }

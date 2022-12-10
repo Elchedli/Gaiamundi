@@ -4,4 +4,4 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreService('api::map.map');
+export default factories.createCoreService('api::geo-map.geo-map');

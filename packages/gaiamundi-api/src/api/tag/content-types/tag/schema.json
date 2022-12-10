@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Géographie",
+        "Thématique"
+      ],
+      "required": true
+    },
+    "page_cartos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::page-carto.page-carto",
+      "mappedBy": "tags"
+    }
+  }
+}
