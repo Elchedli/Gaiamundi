@@ -1,4 +1,4 @@
-import PageCarto from 'components/home/Pagecarto';
+import PageCarto from 'components/home/PageCarto';
 
 export const HomePage: React.FC = () => {
   return (

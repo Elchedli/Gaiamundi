@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export interface Map {
+export interface GeoMap {
   name: string;
   owner: User;
   yearValidity: number;
