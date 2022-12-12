@@ -89,6 +89,41 @@ class Strapi {
   // TODO: Forgot password, Reset password
 
   /**
+   * Forgot password
+   * @param {string} email - Email that will recieve the link for password reset
+   */
+  forgotPassword(email: string): Promise<boolean> {
+    return this.request
+      .post<{ email: string }, boolean>('/auth/forgot-password', { email })
+      .then((response) => response)
+      .catch((error: ApiErrorResponse) => {
+        throw error;
+      });
+  }
+
+  /**
+   * Reset password
+   */
+  resetPassword(
+    code: string,
+    password: string,
+    passwordConfirmation: string
+  ): Promise<UserAuthResponse> {
+    return this.request
+      .post<
+        { code: string; password: string; passwordConfirmation: string },
+        UserAuthResponse
+      >('/auth/reset-password', { code, password, passwordConfirmation })
+      .then(({ jwt, user }) => {
+        this.token = jwt;
+        return { jwt, user };
+      })
+      .catch((error: ApiErrorResponse) => {
+        throw error;
+      });
+  }
+
+  /**
    * Count the data of a content-type.
    * @param {string} contentType The content-type or model to count.
    * @param {Object} [query] The query on what to count.

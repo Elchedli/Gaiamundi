@@ -7,6 +7,7 @@ import { useToast } from 'hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { UserSignUpFields } from 'interfaces/user';
 import { ApiError } from 'interfaces/api';
+import { emailRegex } from 'utils/utils';
 
 interface Props {
   email?: string;
@@ -104,8 +105,7 @@ const SignUpForm = ({ email }: Props) => {
             {...register('email', {
               required: 'Veuillez saisir votre email',
               pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                value: emailRegex,
                 message: 'Not a valid email',
               },
             })}
