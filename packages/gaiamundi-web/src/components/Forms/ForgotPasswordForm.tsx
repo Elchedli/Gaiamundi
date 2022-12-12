@@ -6,6 +6,7 @@ import { Button } from 'components/Button/Button';
 import { useAuth } from 'hooks/useAuth';
 import { ApiError } from 'interfaces/api';
 import { useToast } from 'hooks/useToast';
+import { emailRegex } from 'utils/utils';
 
 type UserEmail = { email: string };
 
@@ -65,8 +66,7 @@ const ForgotPasswordForm: React.FC = () => {
             {...register('email', {
               required: 'Veuillez saisir votre adresse E-mail',
               pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                value: emailRegex,
                 message: `L'adresse E-mail est invalid !`,
               },
             })}

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/Button/Button';
 import { ApiError, ApiErrorResponse } from 'interfaces/api';
+import { emailRegex } from 'utils/utils';
 
 interface LoginData {
   email: string;
@@ -72,8 +73,7 @@ const LoginForm: React.FC = () => {
             {...register('email', {
               required: 'Veuillez saisir votre adresse E-mail',
               pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                value: emailRegex,
                 message: 'Email invalide !',
               },
             })}
