@@ -1,4 +1,4 @@
-import MapForm from 'components/Forms/MapForm';
+import NewMapForm from 'components/Forms/NewMapForm';
 
 export const NouvelleCarte: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const NouvelleCarte: React.FC = () => {
       </div>
       <div className="mx-4 lg:mx-8 mt-8 flex justify-center">
         <div className="w-fit lg:w-3/5 px-4 py-8 mt-8 bg-white rounded-lg shadow-lg sm:px-10">
-          <MapForm />
+          <NewMapForm />
         </div>
       </div>
     </div>
