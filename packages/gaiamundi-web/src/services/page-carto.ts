@@ -1,20 +1,21 @@
-import { ApiResponse } from 'interfaces/api';
-import { PageCarto } from '../interfaces/pageCarto';
+import { ApiCollectionContentType } from 'interfaces/api';
+import { PageCartoAttributes } from '../interfaces/pageCarto';
 import { strapi } from './init';
 
 export const getPageCarto = async (
   query?: object | number
-): Promise<
-  ApiResponse<{ data: { id: number; attributes: PageCarto }[]; meta: object }>
-> => {
+): Promise<ApiCollectionContentType<PageCartoAttributes>> => {
   return await strapi.get('page-cartos', query);
 };
 
-export const createPageCarto = async (data: PageCarto) => {
+export const createPageCarto = async (data: PageCartoAttributes) => {
   return await strapi.create('page-cartos', data);
 };
 
-export const updatePageCarto = async (id: number, data: Partial<PageCarto>) => {
+export const updatePageCarto = async (
+  id: number,
+  data: Partial<PageCartoAttributes>
+) => {
   return await strapi.update('page-cartos', id, data);
 };
 

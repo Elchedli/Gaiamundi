@@ -5,8 +5,10 @@ import PageCartoItem from './PageCartoItem';
 const PageCarto = () => {
   const { pageCartos, getPageCartos } = usePageCarto();
 
+  console.log(pageCartos);
+
   useEffect(() => {
-    getPageCartos();
+    getPageCartos({ populate: '*' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -18,16 +20,19 @@ const PageCarto = () => {
 
       <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
         {pageCartos &&
-          pageCartos.map((page) => (
-            <PageCartoItem
-              key={page.id}
-              name={page.attributes?.name}
-              owner={page.attributes.owner}
-              map={page.attributes.map}
-              html={page.attributes.html}
-              tags={page.attributes.tags}
-            />
-          ))}
+          pageCartos.map((page) => {
+            const { attributes } = page;
+            return (
+              <PageCartoItem
+                key={page.id}
+                name={attributes.name}
+                owner={attributes.owner}
+                map={attributes.map}
+                html={attributes.html}
+                tags={attributes.tags}
+              />
+            );
+          })}
       </div>
     </div>
   );

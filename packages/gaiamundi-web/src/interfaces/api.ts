@@ -11,3 +11,24 @@ export interface ApiErrorResponse {
 }
 
 export type ApiResponse<T> = T | ApiErrorResponse;
+
+export interface ApiSingleContentType<T> {
+  data: {
+    id: number;
+    attributes: T;
+  };
+  meta?: any;
+}
+
+export interface ApiCollectionContentType<T> {
+  data?: {
+    id: number;
+    attributes: T;
+  }[];
+  meta?: any;
+}
+
+export interface DataCollectionType<T> {
+  id: number;
+  attributes: T;
+}

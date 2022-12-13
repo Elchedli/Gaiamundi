@@ -1,4 +1,5 @@
-import { PageCarto } from 'interfaces/pageCarto';
+import { DataCollectionType } from 'interfaces/api';
+import { PageCartoAttributes } from 'interfaces/pageCarto';
 import { useState } from 'react';
 import {
   getPageCarto,
@@ -9,12 +10,11 @@ import {
 
 /**
  * A hook to perform CRUD operations on the map entity
- * @returns
  */
 
 export const usePageCarto = () => {
   const [pageCartos, setPagesCartos] = useState<
-    { id: number; attributes: PageCarto }[] | undefined
+    DataCollectionType<PageCartoAttributes>[] | undefined
   >(undefined);
 
   const getPageCartos = async (query?: object | number) => {
@@ -26,11 +26,14 @@ export const usePageCarto = () => {
     return await deletePage(id);
   };
 
-  const updatePageCarto = async (id: number, data: Partial<PageCarto>) => {
+  const updatePageCarto = async (
+    id: number,
+    data: Partial<PageCartoAttributes>
+  ) => {
     return await updatePage(id, data);
   };
 
-  const createPageCarte = async (data: PageCarto) => {
+  const createPageCarte = async (data: PageCartoAttributes) => {
     return await createPage(data);
   };
 
