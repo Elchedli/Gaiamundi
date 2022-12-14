@@ -1,5 +1,5 @@
 import { ApiSingleContentType } from './api';
-import { GeoMap } from './map';
+import { GeoMapAttributes } from './map';
 import { User } from './user';
 
 export interface Tags {
@@ -12,7 +12,7 @@ export interface PageCartoAttributes {
   id?: string;
   name: string;
   owner?: ApiSingleContentType<User>;
-  map: GeoMap;
+  map: GeoMapAttributes;
   html: HTMLElement;
   tags: Tags;
 }

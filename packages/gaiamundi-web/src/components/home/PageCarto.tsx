@@ -5,8 +5,6 @@ import PageCartoItem from './PageCartoItem';
 const PageCarto = () => {
   const { pageCartos, getPageCartos } = usePageCarto();
 
-  console.log(pageCartos);
-
   useEffect(() => {
     getPageCartos({ populate: '*' });
     // eslint-disable-next-line react-hooks/exhaustive-deps

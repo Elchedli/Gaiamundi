@@ -1,9 +1,12 @@
-import { GeoMap } from 'interfaces/map';
+import { DataCollectionType } from 'interfaces/api';
+import { GeoMapAttributes } from 'interfaces/map';
 import { useState } from 'react';
 import { createMap, deleteMap, getMap, updateMap } from 'services/geo-map';
 
 export const useGeoMap = () => {
-  const [geoMaps, setGeoMaps] = useState<GeoMap[] | undefined>(undefined);
+  const [geoMaps, setGeoMaps] = useState<
+    DataCollectionType<GeoMapAttributes>[] | undefined
+  >(undefined);
 
   const getGeoMap = async (query?: object | number) => {
     const { data } = await getMap(query);
@@ -14,11 +17,11 @@ export const useGeoMap = () => {
     return await deleteMap(id);
   };
 
-  const updateGeoMap = async (id: number, data: Partial<GeoMap>) => {
+  const updateGeoMap = async (id: number, data: Partial<GeoMapAttributes>) => {
     return await updateMap(id, data);
   };
 
-  const createGeoMap = async (data: GeoMap) => {
+  const createGeoMap = async (data: GeoMapAttributes) => {
     return await createMap(data);
   };
 
