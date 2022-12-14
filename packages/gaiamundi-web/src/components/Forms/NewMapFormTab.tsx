@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import NewMapInputs from './NewMapInputs';
-import DropZoneMap from './DropzoneMap';
-
+import DropZone from './Inputs/DropZone';
 const NewMapFormTab = () => {
   const [tabContent] = useState([
     {
@@ -11,7 +10,7 @@ const NewMapFormTab = () => {
       title: "A partir d'une carte GeoJSON",
       content: (
         <>
-          <DropZoneMap />
+          <DropZone />
           <div>
             <NewMapInputs />
           </div>

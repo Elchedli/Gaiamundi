@@ -32,7 +32,7 @@ export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
         className="mt-1 text-sm text-gray-500 dark:text-gray-300"
         id="user_avatar_help"
       >
-        Locate and select the CSV file that you want to import.
+        Localisez et sélectionnez le fichier que vous souhaitez télécharger.
       </div>
     </>
   );

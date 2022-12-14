@@ -1,4 +1,4 @@
-const MapDownload = (): JSX.Element => {
+const Download = (): JSX.Element => {
   return (
     <svg
       aria-hidden="true"
@@ -18,4 +18,4 @@ const MapDownload = (): JSX.Element => {
   );
 };
 
-export default MapDownload;
+export default Download;

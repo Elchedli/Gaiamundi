@@ -1,5 +1,4 @@
-import { TextInput } from './TextInput';
-
+import { TextInput } from './Inputs/TextInput';
 const NewMapInputs = () => {
   return (
     <div className="lg:ml-12 mt-5 lg:mt-0">
