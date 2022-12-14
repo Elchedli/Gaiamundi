@@ -1,6 +1,6 @@
 import NewMapForm from 'components/Forms/NewMapForm';
 
-export const NouvelleCarte: React.FC = () => {
+export const NewMapPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <div className="flex justify-center">
