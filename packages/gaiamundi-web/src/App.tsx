@@ -7,7 +7,7 @@ import { DashboardPage } from 'pages/DashboardPage/DashboardPage';
 import { AuthProvider } from 'hooks/useAuth';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
-import { NewMapPage } from 'pages/NewMapPage/NewMapPage';
+import { NewPageCartoPage } from 'pages/NewMapPage/NewPageCartoPage';
 export default function App() {
   return (
     <BrowserRouter>
@@ -20,7 +20,7 @@ export default function App() {
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="reset-password" element={<ResetPasswordPage />} />
-            <Route path="page-carto/create" element={<NewMapPage />} />
+            <Route path="page-carto/create" element={<NewPageCartoPage />} />
           </Route>
         </Routes>
       </AuthProvider>

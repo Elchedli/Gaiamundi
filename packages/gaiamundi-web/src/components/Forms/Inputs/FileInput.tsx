@@ -5,7 +5,6 @@ import { TextInput, TextInputProps } from './TextInput';
 export type FileInputProps = Omit<TextInputProps, 'type' | 'onChange'> & {
   onUpload?: (file: File) => void;
 };
-
 export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
   // Handle file upload event and update state
 
