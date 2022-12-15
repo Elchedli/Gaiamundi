@@ -7,7 +7,8 @@ import { DashboardPage } from 'pages/DashboardPage/DashboardPage';
 import { AuthProvider } from 'hooks/useAuth';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
-import { NewPageCartoPage } from 'pages/NewMapPage/NewPageCartoPage';
+import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
+
 export default function App() {
   return (
     <BrowserRouter>
