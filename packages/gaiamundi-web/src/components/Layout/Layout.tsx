@@ -7,7 +7,9 @@ export const Layout: React.FC = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <Outlet />
+      <div className="sm:px-6 lg:px-8 mx-auto max-w-7xl">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
