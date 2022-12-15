@@ -32,6 +32,7 @@ const DropZone: React.FC = () => {
         filecontent: event.target.result,
       });
     };
+    reader.readAsText(file);
   };
 
   return (
