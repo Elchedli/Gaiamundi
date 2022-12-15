@@ -2,7 +2,10 @@ import Download from 'components/Icons/Download';
 import { useState } from 'react';
 import { TextInput } from './TextInput';
 const DropZone: React.FC = () => {
-  const [fileContents, setFileContents] = useState('');
+  const [fileContents, setFileContents] = useState({
+    filename: '',
+    filecontent: '',
+  });
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
@@ -11,8 +14,10 @@ const DropZone: React.FC = () => {
     const file = files[0];
     const reader = new FileReader();
     reader.onload = (event: any) => {
-      setFileContents(file.name);
-      console.log(file.name, ' | content :  ', event.target.result);
+      setFileContents({
+        filename: file.name,
+        filecontent: event.target.result,
+      });
     };
     reader.readAsText(file);
   }
@@ -31,7 +36,7 @@ const DropZone: React.FC = () => {
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <Download />
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              {fileContents || (
+              {fileContents.filename || (
                 <span>
                   <span className="font-semibold">Cliquer pour ajouter </span>
                   ou glisser et déposer

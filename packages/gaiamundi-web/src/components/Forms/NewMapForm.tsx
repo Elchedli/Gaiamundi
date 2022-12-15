@@ -1,33 +1,49 @@
-import { Button } from 'components/Button/Button';
-import NewMapFormTab from './NewMapFormTab';
-const NewMapForm: React.FC = () => {
+import { Label } from './Inputs/Label';
+import { TextInput } from './Inputs/TextInput';
+const NewMapForm = () => {
   return (
-    <>
-      <div>
-        <label
+    <div className="lg:ml-12 mt-5 lg:mt-0">
+      <div className="max-lg:mt-3">
+        <Label
           htmlFor="Nom"
           className="block text-sm font-medium leading-5 text-gray-700"
-        >
-          Nom
-        </label>
+        />
+        Nom
         <div className="mt-1 rounded-md">
-          <input
-            id="nom"
-            className="block w-max px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading"
-          />
+          <TextInput className="max-lg:w-full" id="nom" />
         </div>
       </div>
-      <form action="">
-        <div className=" mr-10">
-          <div>
-            <NewMapFormTab />
-          </div>
+      <div className="max-lg:mt-3">
+        <Label
+          htmlFor="Annee"
+          className="block text-sm font-medium leading-5 text-gray-700"
+        />
+        Année de validitée
+        <div className="mt-1 rounded-md">
+          <TextInput id="annee" className="max-lg:w-full" />
         </div>
-        <div className="mt-4 flex justify-end">
-          <Button type="submit">Valider</Button>
+      </div>
+      <div className="max-lg:mt-3">
+        <Label
+          htmlFor="Source"
+          className="block text-sm font-medium leading-5 text-gray-700"
+        />
+        Source
+        <div className="mt-1 rounded-md">
+          <TextInput id="source" className="max-lg:w-full" />
         </div>
-      </form>
-    </>
+      </div>
+      <div className="max-lg:mt-3">
+        <Label
+          htmlFor="License"
+          className="block text-sm font-medium leading-5 text-gray-700"
+        />
+        License
+        <div className="mt-1 rounded-md">
+          <TextInput id="license" className="max-lg:w-full" />
+        </div>
+      </div>
+    </div>
   );
 };
 

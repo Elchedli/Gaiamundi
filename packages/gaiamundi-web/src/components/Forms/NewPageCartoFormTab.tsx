@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import NewMapInputs from './NewMapInputs';
 import DropZone from './Inputs/DropZone';
-const NewMapFormTab = () => {
+import NewMapForm from './NewMapForm';
+
+const NewPageCartoFormTab = () => {
   const [tabContent] = useState([
     {
       id: 1,
@@ -12,7 +13,7 @@ const NewMapFormTab = () => {
         <>
           <DropZone />
           <div>
-            <NewMapInputs />
+            <NewMapForm />
           </div>
         </>
       ),
@@ -65,4 +66,4 @@ const NewMapFormTab = () => {
   );
 };
 
-export default NewMapFormTab;
+export default NewPageCartoFormTab;

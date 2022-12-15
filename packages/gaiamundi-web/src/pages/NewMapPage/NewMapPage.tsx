@@ -1,5 +1,4 @@
-import NewMapForm from 'components/Forms/NewMapForm';
-
+import NewPageCartoForm from 'components/Forms/NewPageCartoForm';
 export const NewMapPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -10,7 +9,7 @@ export const NewMapPage: React.FC = () => {
       </div>
       <div className="mx-4 lg:mx-8 mt-8 flex justify-center">
         <div className="w-fit lg:w-3/5 px-4 py-8 mt-8 bg-white rounded-lg shadow-lg sm:px-10">
-          <NewMapForm />
+          <NewPageCartoForm />
         </div>
       </div>
     </div>
