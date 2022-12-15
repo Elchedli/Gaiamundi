@@ -2,6 +2,7 @@ import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
 import { TextInput } from 'components/Forms/Inputs/TextInput';
 import NewPageCartoFormTab from 'components/Forms/NewPageCartoForm';
+
 export const NewPageCartoPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
