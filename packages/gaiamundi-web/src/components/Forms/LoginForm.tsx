@@ -8,7 +8,7 @@ import { Button } from 'components/Button/Button';
 import { ApiError, ApiErrorResponse } from 'interfaces/api';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
-// import { emailRegex } from 'utils/utils';
+import { EMAIL_REGEX } from 'utils/utils';
 
 interface LoginData {
   email: string;
@@ -71,10 +71,10 @@ const LoginForm: React.FC = () => {
             type="email"
             {...register('email', {
               required: 'Veuillez saisir votre adresse E-mail',
-              // pattern: {
-              //   value: emailRegex,
-              //   message: 'Email invalide !',
-              // },
+              pattern: {
+                value: EMAIL_REGEX,
+                message: 'Email invalide !',
+              },
             })}
           />
           {errors.email && (
