@@ -1861,12 +1861,12 @@
     url-join "4.0.1"
 
 "@strapi/provider-email-sendgrid@^4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@strapi/provider-email-sendgrid/-/provider-email-sendgrid-4.5.3.tgz#f0b9aa052aa75d79226a2e5c116db8858428846b"
-  integrity sha512-3maQdFqG0KUWfe6u4TkCFhcTjK1WrCBD0QdK2pD+ia9vS+g0jqgnGaEdQIyklja0ORYSx/x5JXWB0avbnYuNmA==
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@strapi/provider-email-sendgrid/-/provider-email-sendgrid-4.5.4.tgz#3c0deaa28a305755204407782f664570d0fc331d"
+  integrity sha512-OaxA18MmJsbLbRO5Zw2ywojCActfaSQRiGXOzKZRU15FS7F6gm49vMq30lcOoJxOOGUO6Nx1Cw79h2kZVVYgxA==
   dependencies:
     "@sendgrid/mail" "7.7.0"
-    "@strapi/utils" "4.5.3"
+    "@strapi/utils" "4.5.4"
 
 "@strapi/provider-email-sendmail@4.5.3":
   version "4.5.3"
@@ -1959,6 +1959,17 @@
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.5.3.tgz#87afacd1e087c4b3693a70c0086281ab0eb66945"
   integrity sha512-0gq1RQQ+0iRKW60UqsKu+oc047+zO/6DrBmH6fxPrmbLZAvrVizjcXU3Vb6v7VEsYgpC1fN3m8b0ptE6CrwtUA==
+  dependencies:
+    "@sindresorhus/slugify" "1.1.0"
+    date-fns "2.29.2"
+    http-errors "1.8.1"
+    lodash "4.17.21"
+    yup "0.32.9"
+
+"@strapi/utils@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.5.4.tgz#f601fb0d1feee8882a91eb90265137ce0614fa63"
+  integrity sha512-LtARhACDp//kJ5My+oQeuFYOCdtxP8BMwVHlqEf1jdT6GnAbqNNCrN85nevZ1mJuZ5BCkQjlwb1wWLGn2GHdDQ==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
     date-fns "2.29.2"

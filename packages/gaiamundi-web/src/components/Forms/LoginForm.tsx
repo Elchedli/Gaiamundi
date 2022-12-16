@@ -6,7 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/Button/Button';
 import { ApiError, ApiErrorResponse } from 'interfaces/api';
-import { emailRegex } from 'utils/utils';
+import { Label } from './Inputs/Label';
+import { TextInput } from './Inputs/TextInput';
+// import { emailRegex } from 'utils/utils';
 
 interface LoginData {
   email: string;
@@ -59,23 +61,20 @@ const LoginForm: React.FC = () => {
         </div>
       )}
       <div className="rounded-md">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium leading-5 text-gray-700"
-        >
+        <Label htmlFor="email" className="block font-medium  text-gray-700">
           Adresse E-mail
-        </label>
+        </Label>
         <div className="mt-1 rounded-md">
-          <input
+          <TextInput
             id="email"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
             type="email"
             {...register('email', {
               required: 'Veuillez saisir votre adresse E-mail',
-              pattern: {
-                value: emailRegex,
-                message: 'Email invalide !',
-              },
+              // pattern: {
+              //   value: emailRegex,
+              //   message: 'Email invalide !',
+              // },
             })}
           />
           {errors.email && (
@@ -86,16 +85,16 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
       <div className="mt-4">
-        <label
+        <Label
           htmlFor="password"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Mot de passe
-        </label>
-        <div className="mt-1 rounded-md">
-          <input
+        </Label>
+        <div className="mt-1 rounded">
+          <TextInput
             id="password"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
             type="password"
             {...register('password', {
               required: 'Veuillez saisir votre mot de passe',
@@ -113,24 +112,17 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex items-end mt-4">
-        <div className="text-sm leading-5">
-          <Link
-            to="/forgot-password"
-            className="font-medium transition duration-150 ease-in-out text-blue-800 hover:text-royal-blue-500 focus:outline-none focus:underline"
-          >
-            Mot de passe oublié ?
-          </Link>
-        </div>
+      <div className="flex items-end mt-4 text-sm leading-5">
+        <Link
+          to="/forgot-password"
+          className="font-medium transition duration-150 ease-in-out text-blue-800 hover:text-royal-blue-500 focus:outline-none focus:underline"
+        >
+          Mot de passe oublié ?
+        </Link>
       </div>
-
-      <div className="mt-4">
-        <span className="block w-full rounded-md shadow-sm">
-          <Button type="submit" isLoading={isLoading}>
-            Connexion
-          </Button>
-        </span>
-      </div>
+      <Button className="mt-4" type="submit" isLoading={isLoading}>
+        Connexion
+      </Button>
     </form>
   );
 };

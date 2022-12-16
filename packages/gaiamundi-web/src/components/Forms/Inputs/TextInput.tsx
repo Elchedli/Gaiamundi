@@ -1,4 +1,4 @@
-import { ComponentProps, FC, ReactNode } from 'react';
+import React, { ComponentProps, FC, ReactNode, Ref } from 'react';
 import classNames from 'classnames';
 
 type Size = 'sm' | 'md' | 'lg';
@@ -12,6 +12,7 @@ export type TextInputProps = ComponentProps<'input'> & {
   icon?: FC<ComponentProps<'svg'>>;
   color?: Color;
   prefix?: string;
+  ref?: Ref<HTMLInputElement>;
 };
 
 const colorClasses: Record<Color, { input: string; helperText: string }> = {
@@ -32,62 +33,72 @@ const colorClasses: Record<Color, { input: string; helperText: string }> = {
   },
 };
 
-export const TextInput: FC<TextInputProps> = ({
-  className,
-  sizing = 'md',
-  shadow,
-  helperText,
-  addon,
-  prefix,
-  icon: Icon,
-  color = 'base',
-  ...props
-}) => (
-  <>
-    <div>
-      {addon && (
-        <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
-          {addon}
-        </span>
-      )}
+export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  (props, ref) => {
+    const {
+      className,
+      sizing = 'md',
+      shadow,
+      helperText,
+      addon,
+      prefix,
+      icon: Icon,
+      color = 'base',
+      ...otherProps
+    } = props;
+    TextInput.displayName = 'legend';
+    return (
+      <>
+        <div>
+          {addon && (
+            <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
+              {addon}
+            </span>
+          )}
 
-      <div className="relative">
-        {Icon && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <Icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-          </div>
-        )}
-        {
-          <input
-            className={classNames(
-              'border disabled:cursor-not-allowed disabled:opacity-50',
-              colorClasses[color].input,
-              {
-                'pl-10': Icon,
-                'rounded-lg': !addon && !prefix,
-                'rounded-r-lg': addon,
-                'rounded-l-lg': prefix,
-                'shadow-sm dark:shadow-sm-light': shadow,
-                'p-2 sm:text-xs': sizing === 'sm',
-                'p-2.5 text-sm': sizing === 'md',
-                'sm:text-md p-4': sizing === 'lg',
-              },
-              className
+          <div className="relative">
+            {Icon && (
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <Icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              </div>
             )}
-            {...props}
-          />
-        }
-      </div>
-      {prefix && (
-        <span className="inline-flex items-center rounded-r-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
-          {prefix}
-        </span>
-      )}
-    </div>
-    {helperText && (
-      <p className={classNames('mt-1 text-sm', colorClasses[color].helperText)}>
-        {helperText}
-      </p>
-    )}
-  </>
+            <input
+              ref={ref}
+              className={classNames(
+                'border disabled:cursor-not-allowed disabled:opacity-50',
+                colorClasses[color].input,
+                {
+                  'pl-10': Icon,
+                  'rounded-lg': !addon && !prefix,
+                  'rounded-r-lg': addon,
+                  'rounded-l-lg': prefix,
+                  'shadow-sm dark:shadow-sm-light': shadow,
+                  'p-2 sm:text-xs': sizing === 'sm',
+                  'p-2.5 text-sm': sizing === 'md',
+                  'sm:text-md p-4': sizing === 'lg',
+                },
+                className
+              )}
+              {...otherProps}
+            />
+          </div>
+          {prefix && (
+            <span className="inline-flex items-center rounded-r-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
+              {prefix}
+            </span>
+          )}
+        </div>
+        {helperText && (
+          <p
+            className={classNames(
+              'mt-1 text-sm',
+              colorClasses[color].helperText
+            )}
+          >
+            {helperText}
+          </p>
+        )}
+      </>
+    );
+  }
 );

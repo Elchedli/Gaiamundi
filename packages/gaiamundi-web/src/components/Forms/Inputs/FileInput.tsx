@@ -1,4 +1,5 @@
 import { ChangeEventHandler, FC } from 'react';
+import { Label } from './Label';
 
 import { TextInput, TextInputProps } from './TextInput';
 
@@ -14,12 +15,12 @@ export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
   };
   return (
     <>
-      <label
+      <Label
         className="block mb-2 text-md font-semibold text-gray-900 dark:text-gray-300"
         htmlFor="file_upload"
       >
         Upload a file
-      </label>
+      </Label>
       <TextInput
         className="!p-0 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         aria-describedby="file_upload_help"
