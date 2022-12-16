@@ -120,7 +120,7 @@ const SideNavigation: React.FC = () => {
             </Button>
           </Link>
           <Button className="mx-4" color={'blue'} onClick={() => signOut()}>
-            Deconnexion
+            Déconnexion
           </Button>
         </div>
       )}
