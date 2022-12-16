@@ -7,7 +7,9 @@ import { useToast } from 'hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { UserSignUpFields } from 'interfaces/user';
 import { ApiError } from 'interfaces/api';
-import { emailRegex } from 'utils/utils';
+import { EMAIL_REGEX } from 'utils/utils';
+import { TextInput } from './Inputs/TextInput';
+import { Label } from './Inputs/Label';
 
 interface Props {
   email?: string;
@@ -66,13 +68,13 @@ const SignUpForm = ({ email }: Props) => {
         </div>
       )}
       <div className="rounded-md">
-        <label
+        <Label
           htmlFor="name"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Nom
-        </label>
-        <input
+        </Label>
+        <TextInput
           id="username"
           className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           type="text"
@@ -89,14 +91,14 @@ const SignUpForm = ({ email }: Props) => {
         )}
       </div>
       <div className="mt-4">
-        <label
+        <Label
           htmlFor="email"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Addresse E-mail
-        </label>
+        </Label>
         <div className="mt-1 rounded-md">
-          <input
+          <TextInput
             id="email"
             className={`appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 shadow-sm ${
               !!email && 'cursor-not-allowed'
@@ -105,7 +107,7 @@ const SignUpForm = ({ email }: Props) => {
             {...register('email', {
               required: 'Veuillez saisir votre email',
               pattern: {
-                value: emailRegex,
+                value: EMAIL_REGEX,
                 message: 'Not a valid email',
               },
             })}
@@ -118,14 +120,14 @@ const SignUpForm = ({ email }: Props) => {
         </div>
       </div>
       <div className="mt-4">
-        <label
+        <Label
           htmlFor="password"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Mot de passe
-        </label>
+        </Label>
         <div className="mt-1 rounded-md">
-          <input
+          <TextInput
             id="password"
             className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
@@ -145,14 +147,14 @@ const SignUpForm = ({ email }: Props) => {
         </div>
       </div>
       <div className="mt-4">
-        <label
+        <Label
           htmlFor="password2"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Confirmation du mot de passe
-        </label>
+        </Label>
         <div className="mt-1 rounded-md">
-          <input
+          <TextInput
             id="password2"
             className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"

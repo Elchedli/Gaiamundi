@@ -108,6 +108,7 @@ const NavbarMenu: React.FC<{ isInverted: boolean }> = ({ isInverted }) => {
 
 const SideNavigation: React.FC = () => {
   const location = useLocation();
+  const { signOut } = useAuth();
   const isAppPage = location.pathname.startsWith('/app');
   return (
     <div className="flex-row items-center hidden md:flex">
@@ -118,6 +119,9 @@ const SideNavigation: React.FC = () => {
               Créer un carte
             </Button>
           </Link>
+          <Button className="mx-4" color={'blue'} onClick={() => signOut()}>
+            Déconnexion
+          </Button>
         </div>
       )}
       <AccountDropdown />
