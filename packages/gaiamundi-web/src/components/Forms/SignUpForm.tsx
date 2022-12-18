@@ -60,7 +60,7 @@ const SignUpForm = ({ email }: Props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {isError && <ApiErrorAlert error={error} />}
-      <div className="rounded-md">
+      <div className="mt-4">
         <Label
           htmlFor="username"
           className="block text-sm font-medium leading-5 text-gray-700"
