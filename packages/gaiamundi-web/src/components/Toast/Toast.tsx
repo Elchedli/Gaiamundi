@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { ToastContent } from 'interfaces/toast';
-import { Transition } from '@headlessui/react';
 import { useToast } from 'hooks/useToast';
 
 interface Props {
@@ -10,21 +9,11 @@ interface Props {
 
 export const Toast: React.FC<Props> = ({ toast }) => {
   const { removeToast } = useToast();
-  const [shouldShow, setShouldShow] = useState(false);
-
-  useEffect(() => {
-    if (!shouldShow) {
-      setShouldShow(true);
-    }
-  }, [shouldShow]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShouldShow(false);
-      setTimeout(() => {
-        removeToast(toast.id);
-      }, 5000);
-    }, 3500);
+      removeToast(toast.id);
+    }, 5000);
     return () => {
       clearTimeout(timer);
     };
@@ -104,33 +93,23 @@ export const Toast: React.FC<Props> = ({ toast }) => {
       className="flex items-end justify-center px-4 pt-6 pb-3 pointer-events-none sm:px-6 sm:items-start sm:justify-end"
       key={toast.id}
     >
-      <Transition
-        show={shouldShow}
-        enter="transform ease-out duration-300 transition"
-        enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-        enterTo="translate-y-0 opacity-100 sm:translate-x-0 w-full"
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <div className="w-full max-w-sm bg-white rounded-lg shadow-lg pointer-events-auto">
-          <div className="overflow-hidden rounded-lg shadow-xs">
-            <div className="p-4">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">{icon()}</div>
-                <div className="ml-3 w-0 flex-1 pt-0.5">
-                  <p className="text-sm font-medium leading-5 text-gray-900">
-                    {toast.title}
-                  </p>
-                  <p className="mt-1 text-sm leading-5 text-gray-500">
-                    {toast.description}
-                  </p>
-                </div>
+      <div className="w-full max-w-sm bg-white rounded-lg shadow-lg pointer-events-auto">
+        <div className="overflow-hidden rounded-lg shadow-xs">
+          <div className="p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">{icon()}</div>
+              <div className="ml-3 w-0 flex-1 pt-0.5">
+                <p className="text-sm font-medium leading-5 text-gray-900">
+                  {toast.title}
+                </p>
+                <p className="mt-1 text-sm leading-5 text-gray-500">
+                  {toast.description}
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </Transition>
+      </div>
     </div>
   );
 };

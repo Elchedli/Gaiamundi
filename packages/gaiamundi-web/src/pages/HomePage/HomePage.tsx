@@ -1,14 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './HomePage.css';
+import { Header } from 'components/Layout/Header';
+import { PageCartoList } from 'components/PageCarto/PageCartoList';
 
 export const HomePage: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Développement en cours ...</p>
-      </header>
+    <div>
+      <Header>{'Dernières PageCartos publiées'}</Header>
+      <PageCartoList />
     </div>
   );
 };

@@ -1,14 +1,10 @@
-import { useState } from 'react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { PlusIcon } from '@heroicons/react/24/solid';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { Button } from 'components/Button/Button';
 import { LogoLink } from './LogoLink';
 import { AccountDropdown } from 'components/Account/AccountDropdown';
-import Hamburger from 'components/Icons/Hamburger';
 import { useAuth } from 'hooks/useAuth';
-import { MobileNavbar } from './MobileNavbar';
-import { Link, useLocation } from 'react-router-dom';
 
 const NavbarMenuItem: React.FC<{
   href: string;
@@ -107,19 +103,30 @@ const NavbarMenu: React.FC<{ isInverted: boolean }> = ({ isInverted }) => {
 };
 
 const SideNavigation: React.FC = () => {
-  const location = useLocation();
-  const { signOut } = useAuth();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const isAppPage = location.pathname.startsWith('/app');
   return (
-    <div className="flex-row items-center hidden md:flex">
+    <div className="flex flex-row items-center hidden md:flex">
       {!isAppPage && (
-        <div>
-          <Link to="/app">
-            <Button className="mx-4" color={'lime'} icon={PlusIcon}>
-              Créer un carte
-            </Button>
-          </Link>
-          <Button className="mx-4" color={'blue'} onClick={() => signOut()}>
+        <div className="flex flex-row">
+          <Button
+            outline={false}
+            size="md"
+            className="inline-flex mx-1"
+            color={'lime'}
+            icon={PlusIcon}
+            onClick={() => navigate('/page-carto/create')}
+          >
+            Nouvelle PageCarto
+          </Button>
+          <Button
+            outline={false}
+            size="md"
+            className="inline-flex mx-1"
+            color={'blue'}
+            onClick={() => logout()}
+          >
             Déconnexion
           </Button>
         </div>
@@ -139,7 +146,6 @@ const Navbar: React.FC<NavbarProps> = ({
   isInverted = false,
 }) => {
   const { isAuthenticated } = useAuth();
-  const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   return (
     <nav
       className={`${
@@ -151,26 +157,12 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center justify-between h-16 px-4 sm:px-0">
             <div className="flex items-center">
               <LogoLink isInverted={isInverted} />
-              <div className="hidden md:block">
-                <NavbarMenu isInverted={isInverted} />
-              </div>
+              <NavbarMenu isInverted={isInverted} />
             </div>
             {isAuthenticated ? <SideNavigation /> : <AuthSidebarMenu />}
-            <div className="flex -mr-2 md:hidden">
-              <button
-                onClick={() => setIsMobileNavbarOpen(!isMobileNavbarOpen)}
-                className="inline-flex items-center justify-center p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:text-gray-600"
-              >
-                <Hamburger className="w-6 h-6" isOpen={isMobileNavbarOpen} />
-              </button>
-            </div>
           </div>
         </div>
       </div>
-      <MobileNavbar
-        isOpen={isMobileNavbarOpen}
-        setIsMobileNavbarOpen={setIsMobileNavbarOpen}
-      />
     </nav>
   );
 };

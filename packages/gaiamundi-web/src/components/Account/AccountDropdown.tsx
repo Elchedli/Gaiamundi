@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuth } from 'hooks/useAuth';
 import { AccountAvatar } from './AccountAvatar';
 import { useOnClickOutside } from 'hooks/useClickOutside';
 import { useToast } from 'hooks/useToast';
-import { Link } from 'react-router-dom';
 
 type AccountDropdownItemProps = {
   href?: string;
@@ -29,7 +30,8 @@ export const AccountDropdownItem: React.FC<AccountDropdownItemProps> = ({
 };
 
 export const AccountDropdown: React.FC = () => {
-  const { signOut } = useAuth();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const dropdownNode = useRef<HTMLDivElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { addToast } = useToast();
@@ -38,12 +40,13 @@ export const AccountDropdown: React.FC = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      logout();
       addToast({
         title: 'Until next time!👋',
         description: 'You are successfully signed out.',
         type: 'success',
       });
+      navigate('/');
     } catch (err) {
       addToast({
         title: 'Something went wrong!',

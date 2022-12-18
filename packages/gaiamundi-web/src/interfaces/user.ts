@@ -1,15 +1,15 @@
 import { ApiResponse } from './api';
 
 export interface UserCredentials {
-  username: string;
   email: string;
-}
-
-export interface UserSignUpFields extends UserCredentials {
   password: string;
 }
 
-export interface User extends UserCredentials {
+export interface UserSignUpFields extends UserCredentials {
+  username: string;
+}
+
+export interface User extends UserSignUpFields {
   id: number;
   provider: 'local';
   confirmed: boolean;

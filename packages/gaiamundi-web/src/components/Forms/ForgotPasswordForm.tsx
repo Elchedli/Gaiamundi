@@ -1,14 +1,15 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import { Button } from 'components/Button/Button';
-import { useAuth } from 'hooks/useAuth';
 import { ApiError } from 'interfaces/api';
 import { useToast } from 'hooks/useToast';
 import { EMAIL_REGEX } from 'utils/utils';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
+import { strapi } from 'services/strapi';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 
 type UserEmail = { email: string };
 
@@ -18,41 +19,33 @@ const ForgotPasswordForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<UserEmail>();
-  const auth = useAuth();
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<ApiError | undefined>(undefined);
 
-  const onSubmit = (data: UserEmail) => {
-    setIsLoading(true);
-    setError(undefined);
-    auth
-      .sendPasswordResetEmail(data.email)
-      .then(() => {
-        addToast({
-          title: 'Réinitialisation en cours ...',
-          description:
-            'Un email de réinitialisation de mot de passe vous a été envoyé par E-mail.',
-          type: 'success',
-        });
-        navigate('/login');
-      })
-      .catch(({ error }) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
+  const { mutateAsync, isError, error, isLoading } = useMutation<
+    boolean,
+    ApiError,
+    string
+  >({
+    mutationFn: (email: string) => strapi.forgotPassword(email),
+    onSuccess: () => {
+      addToast({
+        title: 'Réinitialisation en cours ...',
+        description:
+          'Un email de réinitialisation de mot de passe vous a été envoyé par E-mail.',
+        type: 'success',
       });
+      navigate('/login');
+    },
+  });
+
+  const onSubmit = ({ email }: UserEmail) => {
+    mutateAsync(email);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
-        <div className="p-2 mb-4 text-center text-red-500 border border-red-600 border-dashed rounded">
-          <span>{error.message}</span>
-        </div>
-      )}
+      {isError && <ApiErrorAlert error={error} />}
       <div className="rounded-md">
         <Label
           htmlFor="email"
