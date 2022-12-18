@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export const useLocalStorageState = (key: string) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(localStorage.getItem(key) || '');
 
   const persistValue = (newValue: string) => {
     if (newValue !== value) {
@@ -10,13 +10,6 @@ export const useLocalStorageState = (key: string) => {
     }
     return value;
   };
-
-  useEffect(() => {
-    const item = localStorage.getItem(key);
-    if (item) {
-      setValue(item);
-    }
-  }, []);
 
   return { value, persistValue };
 };

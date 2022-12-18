@@ -19,6 +19,8 @@ type ObjectType<T> = T extends ContentType.PAGE_CARTOS
   ? PageCarto
   : T extends ContentType.GEO_MAPS
   ? GeoMap
+  : T extends ContentType.USERS
+  ? User
   : never;
 
 type FilterOperator =
@@ -64,7 +66,6 @@ class Strapi {
 
   /**
    * A strapi-client instance.
-   * @param {string} baseURL The base URL of the API.
    */
   constructor(baseURL: string) {
     /** @type {string} A valid JSONWebToken. */
@@ -92,8 +93,6 @@ class Strapi {
 
   /**
    * Get currently authenticated user.
-   * @param {string} [token] - A valid JWT
-   * @return {Promise<Object>} User object.
    */
   currentUser(token: string): Promise<User> {
     if (token) this.token = token;
@@ -105,10 +104,24 @@ class Strapi {
   }
 
   /**
+   * Update current user
+   */
+  updateCurrentUser(
+    userId: number,
+    data: Pick<User, 'username' | 'email' | 'password'>
+  ) {
+    return this.request
+      .put<Pick<User, 'username' | 'email' | 'password'>, User>(
+        `/users/${userId}`,
+        data
+      )
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
+      });
+  }
+
+  /**
    * Login and generate an authenticated token.
-   * @param {string} identifier - A user's identifier
-   * @param {string} password - The corresponding password.
-   * @return {Promise<Object>} User object and jwt.
    */
   login(identifier: string, password: string): Promise<UserAuthResponse> {
     return this.request
@@ -134,8 +147,6 @@ class Strapi {
 
   /**
    * Register a new user.
-   * @param {Object} data - The user data to be registered.
-   * @return {Promise<Object>} User object and jwt.
    */
   register(data: UserSignUpFields): Promise<UserAuthResponse> {
     return this.request
@@ -188,9 +199,6 @@ class Strapi {
 
   /**
    * Count the data of a content-type.
-   * @param {string} contentType The content-type or model to count.
-   * @param {Object} [params] The query on what to count.
-   * @return {Promise<number>} The number of data counted.
    */
   count<T extends ContentType>(contentType: T, params: QueryParams) {
     return this.request
@@ -205,9 +213,6 @@ class Strapi {
 
   /**
    * Create an entry to the given content-type.
-   * @param {string} contentType The content-type or model.
-   * @param {Object} data The data to insert.
-   * @return {Promise<Object>} An object of the created entry.
    */
   create<T extends ContentType>(contentType: T, data: ObjectType<T>) {
     return this.request
@@ -222,9 +227,6 @@ class Strapi {
 
   /**
    * get a content-type entry by id.
-   * @param {string} contentType The content-type or model.
-   * @param {Object|number} query Query parameters or the ID of a specific entry.
-   * @return {Promise<Array|Object>} Returns an array of entries or an object of a specific entry.
    */
   getById<T extends ContentType>(contentType: T, id: number) {
     return this.request
@@ -236,9 +238,6 @@ class Strapi {
 
   /**
    * Get a content-type collection.
-   * @param {string} contentType The content-type or model.
-   * @param {Object} params Query parameters or the ID of a specific entry.
-   * @return {Promise<Array|Object>} Returns an array of entries or an object of a specific entry.
    */
   get<T extends ContentType>(contentType: T, params?: QueryParams) {
     return this.request
@@ -255,10 +254,6 @@ class Strapi {
 
   /**
    * Update an entry in a content-type.
-   * @param {string} contentType The content-type or model.
-   * @param {number} id An entry ID.
-   * @param {Object} data The updated data.
-   * @return {Promise<Object>} An object of the updated entry.
    */
   update<T extends ContentType>(
     contentType: T,
@@ -277,9 +272,6 @@ class Strapi {
 
   /**
    * Delete an entry.
-   * @param {string} contentType The content-type or model.
-   * @param {number} id An entry ID.
-   * @return {Promise<Object>} An object of the deleted entry.
    */
   delete<T extends ContentType>(contentType: ContentType, id: number) {
     return this.request

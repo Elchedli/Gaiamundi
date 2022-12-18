@@ -20,6 +20,7 @@ import { useLocalStorageState } from './useLocalStorageState';
 export interface AuthContextValue {
   user: User | undefined;
   isAuthenticated: boolean;
+  setUser: (data: User | undefined) => void;
   authenticate: (user: User, jwt: string) => void;
   logout: UseMutateFunction<any, any, void, any>;
   refetchUser: (
@@ -75,8 +76,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     <AuthContext.Provider
       value={{
         user,
-        isAuthenticated: !!user,
+        isAuthenticated: !!jwtToken,
         error,
+        setUser,
         authenticate,
         refetchUser: refetch,
         logout,

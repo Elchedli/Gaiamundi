@@ -12,6 +12,8 @@ import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
 import { ToastProvider } from 'hooks/useToast';
+import { AccountPage } from 'pages/Account/AccountPage';
+import { AccountEditPage } from 'pages/Account/AccountEditPage';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ export default function App() {
               <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
                 <Route path="login" element={<LoginPage />} />
+                <Route path="account" element={<AccountPage />} />
+                <Route path="account/edit" element={<AccountEditPage />} />
                 <Route path="signup" element={<SignUpPage />} />
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route
