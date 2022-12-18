@@ -1,14 +1,16 @@
-import { Button } from 'components/Button/Button';
-import { useAuth } from 'hooks/useAuth';
-import useQuery from 'hooks/useQuery';
-import { useToast } from 'hooks/useToast';
-// import { useAuth } from 'hooks/useAuth';
-import { ApiError, ApiErrorResponse } from 'interfaces/api';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+
+import { Button } from 'components/Button/Button';
+import { useUrlQuery } from 'hooks/useUrlQuery';
+import { useToast } from 'hooks/useToast';
+import { ApiError } from 'interfaces/api';
+import { UserAuthResponse } from 'interfaces/user';
+import { strapi } from 'services/strapi';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 
 const ResetPasswordForm: React.FC = () => {
   const {
@@ -22,40 +24,35 @@ const ResetPasswordForm: React.FC = () => {
       password2: '',
     },
   });
-  const query = useQuery();
+  const query = useUrlQuery();
   const { addToast } = useToast();
-  const { changePassword } = useAuth();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<ApiError | undefined>(undefined);
+
+  const { mutateAsync, isError, error, isLoading } = useMutation<
+    UserAuthResponse,
+    ApiError,
+    { code: string; password: string; password2: string }
+  >({
+    mutationFn: ({ code, password, password2 }) =>
+      strapi.resetPassword(code, password, password2),
+    onSuccess: () => {
+      navigate('/dashboard');
+      addToast({
+        title: 'Bienvenue !👋',
+        description: 'Connexion effectuée avec succès.',
+        type: 'success',
+      });
+    },
+  });
 
   const onSubmit = (data: { password: string; password2: string }) => {
-    setIsLoading(true);
-    setError(undefined);
     const code = query.get('code') || '';
-    changePassword(code, data.password, data.password2)
-      .then(() => {
-        navigate('/dashboard');
-        addToast({
-          title: 'Bienvenue !👋',
-          description: 'Connexion effectuée avec succès.',
-          type: 'success',
-        });
-      })
-      .catch(({ error }: ApiErrorResponse) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    mutateAsync({ ...data, code });
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
-        <div className="p-2 mb-4 text-center text-red-500 border border-red-600 border-dashed rounded">
-          <span>{error.message}</span>
-        </div>
-      )}
+      {isError && <ApiErrorAlert error={error} />}
       <div className="mt-4">
         <Label
           htmlFor="password"

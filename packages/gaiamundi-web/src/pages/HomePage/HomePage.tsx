@@ -1,9 +1,11 @@
-import PageCarto from 'components/home/PageCarto';
+import { Header } from 'components/Layout/Header';
+import { PageCartoList } from 'components/PageCarto/PageCartoList';
 
 export const HomePage: React.FC = () => {
   return (
-    <div className="bg-white">
-      <PageCarto />
+    <div>
+      <Header>{'Dernières PageCartos publiées'}</Header>
+      <PageCartoList />
     </div>
   );
 };

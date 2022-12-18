@@ -1,135 +1,97 @@
+import React from 'react';
 import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { User, UserSignUpFields } from 'interfaces/user';
-import { useCookie } from './useCookie';
-import {
-  forgotPassword,
-  getCurrentUser,
-  login,
-  register,
-  updateAccount,
-  resetPassword,
-} from '../services/user';
+  useQuery,
+  useQueryClient,
+  QueryObserverResult,
+  RefetchOptions,
+  UseMutateFunction,
+} from 'react-query';
 
-export interface AuthContext {
-  user: User | null;
+import { User } from 'interfaces/user';
+import { strapi } from '../services/strapi';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { Alert } from 'components/Alert/Alert';
+import { useLocalStorageState } from './useLocalStorageState';
+
+// const updateAccount = async (id: number, userData: UserSignUpFields) => {
+//   return (await strapi.update(ContentType.USERS, id, userData)) as User;
+// };
+
+export interface AuthContextValue {
+  user: User | undefined;
   isAuthenticated: boolean;
-  signUp: (data: UserSignUpFields) => Promise<User>;
-  signIn: (credentials: { email: string; password: string }) => Promise<User>;
-  signOut: () => void;
-  sendPasswordResetEmail: (email: string) => Promise<boolean>;
-  changePassword: (
-    code: string,
-    password: string,
-    password2: string
-  ) => Promise<User>;
-  updateUser: (id: number, data: UserSignUpFields) => Promise<User>;
+  authenticate: (user: User, jwt: string) => void;
+  logout: UseMutateFunction<any, any, void, any>;
+  refetchUser: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<User, Error>>;
+  error: Error | null;
 }
 
-const authContext = createContext({ user: null } as AuthContext);
+const AuthContext = React.createContext<AuthContextValue | null>(null);
+AuthContext.displayName = 'AuthContext';
 
-// AuthProvider is a Context Provider that wraps our app and makes an auth object
-// available to any child component that calls the useAuth() hook.
-export function AuthProvider(props: { children: ReactNode }): JSX.Element {
-  const auth = useAuthProvider();
+export interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
+  const { value: jwtToken, persistValue: persistJwtToken } =
+    useLocalStorageState('token');
+  const queryClient = useQueryClient();
+  const key = 'auth-user';
+
+  const {
+    data: user,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery<User, Error>({
+    queryKey: key,
+    queryFn: async () => {
+      return await strapi.currentUser(jwtToken);
+    },
+    enabled: !!jwtToken,
+  });
+
+  const setUser = (data: User | undefined) =>
+    queryClient.setQueryData(key, data);
+
+  const authenticate = (user: User, jwt: string) => {
+    setUser(user);
+    persistJwtToken(jwt);
+  };
+
+  const logout = () => {
+    persistJwtToken('');
+    queryClient.clear();
+  };
+
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+
   return (
-    <authContext.Provider value={auth}>{props.children}</authContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        error,
+        authenticate,
+        refetchUser: refetch,
+        logout,
+      }}
+    >
+      {error && <Alert>{error.message}</Alert>}
+      {children}
+    </AuthContext.Provider>
   );
-}
-
-// useAuth is a hook that enables any component to subscribe to auth state
-export const useAuth = () => {
-  return useContext(authContext);
 };
 
-// Provider hook that creates auth object and handles state
-const useAuthProvider = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const { cookieItem: jwtToken, updateCookieItem: setJwtToken } =
-    useCookie<string>('token', '', {
-      days: 24,
-    });
-  const isAuthenticated = !!jwtToken;
-
-  const signUp = async (currentUser: UserSignUpFields) => {
-    const { jwt, user } = await register(currentUser);
-    setUser(user);
-    setJwtToken(jwt);
-    return user;
-  };
-
-  const updateUser = async (id: number, data: UserSignUpFields) => {
-    const result = await updateAccount(id, data);
-    setUser(result);
-    return result;
-  };
-
-  const signIn = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    const { jwt, user } = await login(email, password);
-    setUser(user);
-    setJwtToken(jwt);
-    return user;
-  };
-
-  const signOut = async () => {
-    setJwtToken('');
-    return setUser(null);
-  };
-
-  const sendPasswordResetEmail = async (email: string) => {
-    return await forgotPassword(email);
-  };
-
-  const changePassword = async (
-    code: string,
-    password: string,
-    password2: string
-  ) => {
-    const response = await resetPassword(code, password, password2);
-    const { jwt, user } = response;
-    setUser(user);
-    setJwtToken(jwt);
-    return user;
-  };
-
-  const loadCurrentUser = async () => {
-    try {
-      const user = await getCurrentUser(jwtToken);
-      setUser(user);
-      return user;
-    } catch (e) {
-      setJwtToken('');
-    }
-  };
-
-  useEffect(() => {
-    // @todo : fetch current user  on load
-    if (isAuthenticated) {
-      loadCurrentUser();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return {
-    user,
-    jwtToken,
-    isAuthenticated: !!isAuthenticated,
-    signUp,
-    signIn,
-    signOut,
-    sendPasswordResetEmail,
-    changePassword,
-    updateUser,
-  };
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
+  if (!context) {
+    throw new Error(`useAuth must be used within an AuthProvider`);
+  }
+  return context;
 };

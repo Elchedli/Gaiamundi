@@ -1,21 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import { Button } from 'components/Button/Button';
 import { useAuth } from 'hooks/useAuth';
-import { useForm } from 'react-hook-form';
-import { useToast } from 'hooks/useToast';
-import { useNavigate } from 'react-router-dom';
-import { UserSignUpFields } from 'interfaces/user';
-import { ApiError } from 'interfaces/api';
+import { UserAuthResponse, UserSignUpFields } from 'interfaces/user';
 import { EMAIL_REGEX } from 'utils/utils';
 import { TextInput } from './Inputs/TextInput';
 import { Label } from './Inputs/Label';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { strapi } from 'services/strapi';
+import { ApiError } from 'interfaces/api';
+import { useToast } from 'hooks/useToast';
 
 interface Props {
   email?: string;
 }
 
 const SignUpForm = ({ email }: Props) => {
+  const navigate = useNavigate();
+  const { addToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -28,48 +32,37 @@ const SignUpForm = ({ email }: Props) => {
       password: '',
     },
   });
-  const navigate = useNavigate();
-  const { addToast } = useToast();
-  const { user, signUp } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<ApiError | undefined>(undefined);
+  const { authenticate } = useAuth();
+
+  const { mutateAsync, isError, error, isLoading } = useMutation<
+    UserAuthResponse,
+    ApiError,
+    UserSignUpFields
+  >({
+    mutationFn: async (newUser) => {
+      return await strapi.register(newUser);
+    },
+    onSuccess: ({ user, jwt }) => {
+      authenticate(user, jwt);
+      addToast({
+        title: 'Bienvenue!👋',
+        description: 'Votre compte a été crée avec succès.',
+        type: 'success',
+      });
+      navigate(`/dashboard`);
+    },
+  });
 
   const onSubmit = (data: UserSignUpFields): void => {
-    setIsLoading(true);
-    setError(undefined);
-    signUp(data)
-      .then(() => {
-        navigate(`/dashboard`);
-        addToast({
-          title: 'Bienvenue!👋',
-          description: 'Votre compte a été crée avec succès.',
-          type: 'success',
-        });
-      })
-      .catch(({ error }) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    mutateAsync(data);
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
-        <div className="p-2 mb-4 text-center text-red-500 border border-red-600 border-dashed rounded">
-          <span>{error.message}</span>
-        </div>
-      )}
+      {isError && <ApiErrorAlert error={error} />}
       <div className="rounded-md">
         <Label
-          htmlFor="name"
+          htmlFor="username"
           className="block text-sm font-medium leading-5 text-gray-700"
         >
           Nom

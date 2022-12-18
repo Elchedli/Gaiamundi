@@ -1,65 +1,54 @@
-import { useEffect, useState } from 'react';
 import { useAuth } from 'hooks/useAuth';
 import { useForm } from 'react-hook-form';
-import { useToast } from 'hooks/useToast';
 import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import { Button } from 'components/Button/Button';
-import { ApiError, ApiErrorResponse } from 'interfaces/api';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
 import { EMAIL_REGEX } from 'utils/utils';
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { useToast } from 'hooks/useToast';
+import { strapi } from 'services/strapi';
+import { UserAuthResponse, UserCredentials } from 'interfaces/user';
+import { ApiError } from 'interfaces/api';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+  const { addToast } = useToast();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginData>();
-  const navigate = useNavigate();
-  const { addToast } = useToast();
-  const { user, signIn } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<ApiError | undefined>(undefined);
+  } = useForm<UserCredentials>();
+  const { authenticate } = useAuth();
 
-  useEffect(() => {
-    if (user) {
+  const { mutateAsync, isError, error, isLoading } = useMutation<
+    UserAuthResponse,
+    ApiError,
+    UserCredentials
+  >({
+    mutationFn: async ({ email, password }) => {
+      return await strapi.login(email, password);
+    },
+    onSuccess: ({ user, jwt }) => {
+      authenticate(user, jwt);
       navigate('/dashboard');
-    }
-  }, [user, navigate]);
-
-  const onSubmit = (data: LoginData) => {
-    setIsLoading(true);
-    setError(undefined);
-    signIn(data)
-      .then(() => {
-        navigate('/dashboard');
-        addToast({
-          title: 'Bienvenue !👋',
-          description: 'Connexion effectuée avec succès.',
-          type: 'success',
-        });
-      })
-      .catch(({ error }: ApiErrorResponse) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
+      addToast({
+        title: 'Bienvenue !👋',
+        description: 'Connexion effectuée avec succès.',
+        type: 'success',
       });
+    },
+  });
+
+  const onSubmit = (data: UserCredentials) => {
+    mutateAsync(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
-        <div className="p-2 mb-4 text-center text-red-500 border border-red-600 border-dashed rounded">
-          <span>{error.message}</span>
-        </div>
-      )}
+      {isError && <ApiErrorAlert error={error} />}
       <div className="rounded-md">
         <Label htmlFor="email" className="block font-medium  text-gray-700">
           Adresse E-mail

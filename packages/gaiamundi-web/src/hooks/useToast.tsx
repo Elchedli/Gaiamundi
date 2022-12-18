@@ -47,7 +47,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
         removeToast,
       }}
     >
-      <div className="fixed top-0 right-0 z-50 w-full max-w-sm">
+      <div className="absolute top-0 right-0 z-50 w-full max-w-sm">
         {toasts.map((toast) => (
           <Toast toast={toast} key={toast.id} />
         ))}

@@ -1,6 +1,62 @@
 import axios, { AxiosInstance } from 'axios';
-import { ApiErrorResponse, ApiResponse } from 'interfaces/api';
+import {
+  ApiCollection,
+  ApiErrorResponse,
+  ApiResponse,
+  ApiDocument,
+} from 'interfaces/api';
+import { GeoMap } from 'interfaces/geo-map';
+import { PageCarto } from 'interfaces/page-carto';
 import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
+
+export enum ContentType {
+  PAGE_CARTOS = 'page-cartos',
+  GEO_MAPS = 'geo-maps',
+  USERS = 'users',
+}
+
+type ObjectType<T> = T extends ContentType.PAGE_CARTOS
+  ? PageCarto
+  : T extends ContentType.GEO_MAPS
+  ? GeoMap
+  : never;
+
+type FilterOperator =
+  | '$eq' //	Equal
+  | '$eqi' //	Equal (case-insensitive)
+  | '$ne' //	Not equal
+  | '$lt' //	Less than
+  | '$lte' //	Less than or equal to
+  | '$gt' //	Greater than
+  | '$gte' //	Greater than or equal to
+  | '$in' //	Included in an array
+  | '$notIn' //	Not included in an array
+  | '$contains' //	Contains
+  | '$notContains' //	Does not contain
+  | '$containsi' //	Contains (case-insensitive)
+  | '$notContainsi' //	Does not contain (case-insensitive)
+  | '$null' //	Is null
+  | '$notNull' //	Is not null
+  | '$between' //	Is between
+  | '$startsWith' //	Starts with
+  | '$endsWith' //	Ends with
+  | '$or' //	Joins the filters in an "or" expression
+  | '$and'; //	Joins the filters in an "and" expression
+
+export type QueryParams = {
+  filters?: {
+    [field: string]: { [operator in FilterOperator]?: any };
+  };
+  populate?: string | string[] | { [field: string]: { populate: string[] } };
+  sort?: string | string[]; // exp. 'createdAt:desc'
+  pagination?: {
+    page?: number; // default 1
+    pageSize?: number; // default 25
+    start?: number; // default 0
+    limit?: number; // default 25
+    withCount?: boolean;
+  };
+};
 
 class Strapi {
   public token: string | undefined;
@@ -43,7 +99,7 @@ class Strapi {
     if (token) this.token = token;
     return this.request
       .get<void, User>('/users/me')
-      .catch((error: ApiErrorResponse) => {
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -64,9 +120,16 @@ class Strapi {
         this.token = jwt;
         return { jwt, user };
       })
-      .catch((error: ApiErrorResponse) => {
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
+  }
+
+  /**
+   * Remove token on logout
+   */
+  logout() {
+    this.token = undefined;
   }
 
   /**
@@ -81,7 +144,7 @@ class Strapi {
         this.token = jwt;
         return { jwt, user };
       })
-      .catch((error: ApiErrorResponse) => {
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -96,7 +159,7 @@ class Strapi {
     return this.request
       .post<{ email: string }, boolean>('/auth/forgot-password', { email })
       .then((response) => response)
-      .catch((error: ApiErrorResponse) => {
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -118,7 +181,7 @@ class Strapi {
         this.token = jwt;
         return { jwt, user };
       })
-      .catch((error: ApiErrorResponse) => {
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -126,13 +189,16 @@ class Strapi {
   /**
    * Count the data of a content-type.
    * @param {string} contentType The content-type or model to count.
-   * @param {Object} [query] The query on what to count.
+   * @param {Object} [params] The query on what to count.
    * @return {Promise<number>} The number of data counted.
    */
-  count<D, R>(contentType: string, query: D) {
+  count<T extends ContentType>(contentType: T, params: QueryParams) {
     return this.request
-      .get<D, R>(`/${contentType}/count`, query ? { params: query } : undefined)
-      .catch((error: ApiErrorResponse) => {
+      .get<QueryParams, ObjectType<T>>(
+        `/${contentType}/count`,
+        params && { params }
+      )
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -143,44 +209,48 @@ class Strapi {
    * @param {Object} data The data to insert.
    * @return {Promise<Object>} An object of the created entry.
    */
-  create<D, R>(contentType: string, data: D): Promise<ApiResponse<R>> {
+  create<T extends ContentType>(contentType: T, data: ObjectType<T>) {
     return this.request
-      .post<D, R>(`/${contentType}`, data)
-      .catch((error: ApiErrorResponse) => {
+      .post<ObjectType<T>, ApiResponse<ApiDocument<ObjectType<T>>>>(
+        `/${contentType}`,
+        data
+      )
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
 
   /**
-   * Read an entry or a content-type.
+   * get a content-type entry by id.
    * @param {string} contentType The content-type or model.
    * @param {Object|number} query Query parameters or the ID of a specific entry.
    * @return {Promise<Array|Object>} Returns an array of entries or an object of a specific entry.
    */
-  get<D, R>(contentType: string, query: D): Promise<ApiResponse<R>> {
-    switch (typeof query) {
-      case 'object':
-        return this.request
-          .get<D, R>(`/${contentType}`, { params: query })
-          .catch((error: ApiErrorResponse) => {
-            throw error;
-          });
+  getById<T extends ContentType>(contentType: T, id: number) {
+    return this.request
+      .get<void, ApiResponse<ObjectType<T>>>(`/${contentType}/${id}`)
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
+      });
+  }
 
-      case 'number':
-        return this.request
-          .get<D, R>(`/${contentType}/${query}`)
-          .catch((error: ApiErrorResponse) => {
-            throw error;
-          });
-
-      case 'undefined':
-        return this.request
-          .get<D, R>(`/${contentType}`)
-          .catch((error: ApiErrorResponse) => {
-            throw error;
-          });
-    }
-    return Promise.reject(new Error('Unknow type of query!'));
+  /**
+   * Get a content-type collection.
+   * @param {string} contentType The content-type or model.
+   * @param {Object} params Query parameters or the ID of a specific entry.
+   * @return {Promise<Array|Object>} Returns an array of entries or an object of a specific entry.
+   */
+  get<T extends ContentType>(contentType: T, params?: QueryParams) {
+    return this.request
+      .get<QueryParams, ApiCollection<ObjectType<T>>>(
+        `/${contentType}`,
+        params && {
+          params,
+        }
+      )
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
+      });
   }
 
   /**
@@ -190,14 +260,17 @@ class Strapi {
    * @param {Object} data The updated data.
    * @return {Promise<Object>} An object of the updated entry.
    */
-  update<D, R>(
-    contentType: string,
+  update<T extends ContentType>(
+    contentType: T,
     id: number,
-    data: D
-  ): Promise<ApiResponse<R>> {
+    data: Partial<ObjectType<T>>
+  ) {
     return this.request
-      .put<D, R>(`/${contentType}/${id}`, data)
-      .catch((error: ApiErrorResponse) => {
+      .put<Partial<ObjectType<T>>, ApiResponse<ApiDocument<ObjectType<T>>>>(
+        `/${contentType}/${id}`,
+        data
+      )
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
@@ -208,10 +281,12 @@ class Strapi {
    * @param {number} id An entry ID.
    * @return {Promise<Object>} An object of the deleted entry.
    */
-  delete<R>(contentType: string, id: number): Promise<ApiResponse<R>> {
+  delete<T extends ContentType>(contentType: ContentType, id: number) {
     return this.request
-      .delete(`/${contentType}/${id}`)
-      .catch((error: ApiErrorResponse) => {
+      .delete<void, ApiResponse<ApiDocument<ObjectType<T>>>>(
+        `/${contentType}/${id}`
+      )
+      .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
   }
