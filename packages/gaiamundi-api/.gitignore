@@ -82,6 +82,8 @@ ssl
 nbproject
 public/uploads/*
 !public/uploads/.gitkeep
+public/thumbnails/*
+!public/thumbnails/.gitkeep
 
 ############################
 # Node.js
