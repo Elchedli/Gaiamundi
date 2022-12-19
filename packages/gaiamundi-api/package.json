@@ -15,7 +15,8 @@
     "@strapi/plugin-users-permissions": "4.5.3",
     "@strapi/provider-email-sendgrid": "^4.5.3",
     "@strapi/strapi": "4.5.3",
-    "better-sqlite3": "7.4.6"
+    "better-sqlite3": "7.4.6",
+    "geojson-to-svg": "^1.1.4"
   },
   "author": {
     "name": "A Strapi developer"
