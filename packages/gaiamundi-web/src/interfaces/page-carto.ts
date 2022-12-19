@@ -15,6 +15,7 @@ export interface PageCartoAttributes {
   map: GeoMapAttributes;
   html: HTMLElement;
   tags: Tags;
+  cover: MediaImage;
 }
 
 export type PageCarto = ApiData<PageCartoAttributes>;
