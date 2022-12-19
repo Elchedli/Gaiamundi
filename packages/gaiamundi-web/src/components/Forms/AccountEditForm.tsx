@@ -24,6 +24,7 @@ export const AccountEditForm: React.FC = () => {
     defaultValues: {
       username: user?.username,
       email: user?.email,
+      password: user?.password,
     },
   });
 
@@ -45,7 +46,6 @@ export const AccountEditForm: React.FC = () => {
   const onSubmit = (data: UserSignUpFields) => {
     mutateAsync(data);
   };
-
   if (!user) return null;
 
   return (
@@ -85,6 +85,7 @@ export const AccountEditForm: React.FC = () => {
               </div>
             </div>
           </div>
+
           <div className="mt-6 mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
             <Label
               htmlFor="email"
@@ -108,6 +109,37 @@ export const AccountEditForm: React.FC = () => {
                 {errors?.username && (
                   <div className="mt-2 text-xs text-red-600">
                     {errors?.username.message}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
+            <Label
+              htmlFor="password"
+              className="block text-sm font-medium leading-5 text-gray-700 mt-px pt-2"
+            >
+              Mot de passe
+            </Label>
+            <div className="mt-1 mt-0 col-span-2">
+              <div className="max-w-xs rounded-md shadow-sm">
+                <TextInput
+                  id="password"
+                  className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
+                  type="password"
+                  {...register('password', {
+                    required: 'Veuillez saisir votre mot de passe',
+                    minLength: {
+                      value: 6,
+                      message:
+                        'Le mot de passe doit avoir au moins 6 charactères',
+                    },
+                  })}
+                />
+                {errors.password && (
+                  <div className="mt-2 text-xs text-red-600">
+                    {errors.password.message}
                   </div>
                 )}
               </div>
