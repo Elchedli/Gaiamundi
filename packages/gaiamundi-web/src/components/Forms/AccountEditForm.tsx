@@ -56,23 +56,23 @@ export const AccountEditForm: React.FC = () => {
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             Mettre à jour le compte
           </h3>
-          <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5 text-gray-500">
             Effectuez des mises à jour sur votre compte
           </p>
         </div>
-        <div className="mt-6 mt-5">
-          <div className="grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
+        <div className="mt-6">
+          <div className="grid grid-cols-3 gap-4 items-start border-t pt-5">
             <Label
               htmlFor="username"
               className="block text-sm font-medium leading-5 text-gray-700 mt-px pt-2"
             >
               Nom d&apos;utilisateur
             </Label>
-            <div className="mt-1 mt-0 col-span-2">
-              <div className="max-w-xs rounded-md shadow-sm">
+            <div className="mt-0 col-span-2">
+              <div className="max-w-xs">
                 <TextInput
                   id="username"
-                  className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
+                  className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
                   {...register('username', {
                     required: 'Veuillez saisir votre nom',
                   })}
@@ -85,19 +85,18 @@ export const AccountEditForm: React.FC = () => {
               </div>
             </div>
           </div>
-
-          <div className="mt-6 mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
+          <div className="mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
             <Label
               htmlFor="email"
               className="block text-sm font-medium leading-5 text-gray-700 mt-px pt-2"
             >
               Email address
             </Label>
-            <div className="mt-1 mt-0 col-span-2">
+            <div className="mt-0 col-span-2">
               <div className="max-w-xs rounded-md shadow-sm">
                 <TextInput
                   id="email"
-                  className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
+                  className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
                   {...register('email', {
                     required: 'Veuillez saisir votre email',
                     pattern: {
@@ -106,27 +105,26 @@ export const AccountEditForm: React.FC = () => {
                     },
                   })}
                 />
-                {errors?.username && (
+                {errors?.email && (
                   <div className="mt-2 text-xs text-red-600">
-                    {errors?.username.message}
+                    {errors?.email.message}
                   </div>
                 )}
               </div>
             </div>
           </div>
-
-          <div className="mt-6 mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
+          <div className="mt-5 grid grid-cols-3 gap-4 items-start border-t border-gray-200 pt-5">
             <Label
               htmlFor="password"
               className="block text-sm font-medium leading-5 text-gray-700 mt-px pt-2"
             >
               Mot de passe
             </Label>
-            <div className="mt-1 mt-0 col-span-2">
-              <div className="max-w-xs rounded-md shadow-sm">
+            <div className="mt-0 col-span-2">
+              <div className="max-w-xs">
                 <TextInput
                   id="password"
-                  className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
+                  className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm leading-5"
                   type="password"
                   {...register('password', {
                     required: 'Veuillez saisir votre mot de passe',
@@ -147,8 +145,8 @@ export const AccountEditForm: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="pt-5 mt-8 border-t border-gray-200 flex justify-end">
-        <span className="inline-flex rounded-md shadow-sm">
+      <div className="pt-5 mt-8 border-t flex justify-end">
+        <span className="rounded-md shadow">
           <Link to="/account">
             <Button
               type="button"
@@ -158,7 +156,7 @@ export const AccountEditForm: React.FC = () => {
             </Button>
           </Link>
         </span>
-        <span className="inline-flex ml-3 rounded-md shadow-sm">
+        <span className="ml-3 shadow">
           <Button
             type="submit"
             className="inline-flex justify-center text-sm font-medium leading-5 text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-royal-blue-600 hover:bg-royal-blue-500 focus:outline-none focus:border-royal-blue-700 focus:shadow-outline-royal-blue active:bg-royal-blue-700"

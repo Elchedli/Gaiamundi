@@ -11,7 +11,7 @@ export const AccountEditPage: React.FC = () => {
     <div>
       <Header>Modifier mon compte</Header>
       <div className="flex">
-        <main className="w-2/3 px-5 py-6 mx-auto overflow-hidden bg-white rounded-lg shadow-lg block">
+        <main className="w-2/3 px-5 py-6 mx-auto bg-white rounded-lg shadow-lg">
           <AccountEditForm />
         </main>
       </div>
