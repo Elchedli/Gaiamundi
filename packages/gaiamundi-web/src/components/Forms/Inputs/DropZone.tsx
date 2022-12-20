@@ -15,10 +15,10 @@ const DropZone: React.FC = () => {
     if (files.length === 0) return;
     const file = files[0];
     const reader = new FileReader();
-    reader.onload = (event: any) => {
+    reader.onload = (event: ProgressEvent<FileReader>) => {
       setFileContents({
         filename: file.name,
-        filecontent: event.target.result,
+        filecontent: (event.target as any).target.result,
       });
     };
     reader.readAsText(file);
@@ -26,10 +26,10 @@ const DropZone: React.FC = () => {
 
   const onUpload = (file: File) => {
     const reader = new FileReader();
-    reader.onload = (event: any) => {
+    reader.onload = (event: ProgressEvent<FileReader>) => {
       setFileContents({
         filename: file.name,
-        filecontent: event.target.result,
+        filecontent: (event.target as any).target.result,
       });
     };
     reader.readAsText(file);
