@@ -35,6 +35,14 @@
       "relation": "manyToMany",
       "target": "api::tag.tag",
       "inversedBy": "page_cartos"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
