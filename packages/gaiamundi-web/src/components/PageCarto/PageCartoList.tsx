@@ -11,7 +11,7 @@ import { Pagination } from 'components/Pagination/Pagination';
 
 export const PageCartoList = () => {
   const [page, setPage] = useState(1);
-  const paginationLimit = 10;
+  const paginationLimit = 9;
   const {
     data: response,
     isError,
