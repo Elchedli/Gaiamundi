@@ -63,13 +63,13 @@ const SignUpForm = ({ email }: Props) => {
       <div className="mt-4">
         <Label
           htmlFor="username"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Nom
         </Label>
         <TextInput
           id="username"
-          className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+          className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           type="text"
           {...register('username', {
             required: 'Veuillez saisir votre nom',
@@ -86,7 +86,7 @@ const SignUpForm = ({ email }: Props) => {
       <div className="mt-4">
         <Label
           htmlFor="email"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Addresse E-mail
         </Label>
@@ -115,14 +115,14 @@ const SignUpForm = ({ email }: Props) => {
       <div className="mt-4">
         <Label
           htmlFor="password"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Mot de passe
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
             id="password"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password', {
               required: 'Veuillez saisir votre mot de passe',
@@ -142,14 +142,14 @@ const SignUpForm = ({ email }: Props) => {
       <div className="mt-4">
         <Label
           htmlFor="password2"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Confirmation du mot de passe
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
             id="password2"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password2', {
               required: 'Veuillez saisir la confirmation du mot de passe',

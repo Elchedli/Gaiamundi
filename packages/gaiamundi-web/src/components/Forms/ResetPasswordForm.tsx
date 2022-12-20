@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-
 import { Button } from 'components/Button/Button';
 import { useUrlQuery } from 'hooks/useUrlQuery';
 import { useToast } from 'hooks/useToast';
@@ -56,14 +55,14 @@ const ResetPasswordForm: React.FC = () => {
       <div className="mt-4">
         <Label
           htmlFor="password"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Nouveau mot de passe
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
             id="password"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password', {
               required: 'Veuillez saisir votre mot de passe',
@@ -83,14 +82,14 @@ const ResetPasswordForm: React.FC = () => {
       <div className="mt-4">
         <Label
           htmlFor="password2"
-          className="block text-sm font-medium leading-5 text-gray-700"
+          className="text-sm font-medium leading-5 text-gray-700"
         >
           Confirmation du mot de passe
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
             id="password2"
-            className="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password2', {
               required: 'Veuillez saisir la confirmation du mot de passe',
@@ -110,7 +109,7 @@ const ResetPasswordForm: React.FC = () => {
       </div>
 
       <div className="mt-4">
-        <span className="block w-full rounded-md shadow-sm">
+        <span className="w-full rounded-md">
           <Button type="submit" isLoading={isLoading}>
             Confirmer
           </Button>

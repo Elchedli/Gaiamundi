@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { useState } from 'react';
-
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ContentType, strapi } from 'services/strapi';
