@@ -6,6 +6,7 @@ import {
   ApiResponse,
   ApiDocument,
 } from 'interfaces/api';
+import { FileAttributes } from 'interfaces/file';
 import { GeoMap } from 'interfaces/geo-map';
 import { PageCarto } from 'interfaces/page-carto';
 import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
@@ -281,6 +282,21 @@ class Strapi {
       )
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
+      });
+  }
+
+  /**
+   * Uploads a file.
+   * TODO: add the geo-map id after the map is created.
+   */
+  uploadFile(file: File, ref: string) {
+    const formData = new FormData();
+    formData.append('files', file);
+    formData.append('ref', ref);
+    return this.request
+      .post<FormData, FileAttributes[]>('/upload', formData)
+      .then(([uploadedfile]) => {
+        return uploadedfile;
       });
   }
 }

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import excerptHtml from 'excerpt-html';
-import { PageCarto, Media } from 'interfaces/page-carto';
+import { PageCarto } from 'interfaces/page-carto';
 import { Badge } from 'components/Tags/Badge';
-
 import config from 'config';
+import { UploadedFile } from 'interfaces/file';
 
-const getThumnailUrl = (cover?: Media) => {
+const getThumnailUrl = (cover?: UploadedFile) => {
   const imgUrl = cover?.data?.attributes.formats['thumbnail'].url;
   return imgUrl
     ? `${config.API_URL}/${imgUrl}`

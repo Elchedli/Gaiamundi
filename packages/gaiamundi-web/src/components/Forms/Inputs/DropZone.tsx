@@ -2,42 +2,120 @@ import Download from 'components/Icons/Download';
 import { useState } from 'react';
 import { FileInputHidden } from './FileInput';
 import { Label } from './Label';
+import { useMutation } from 'react-query';
+import { strapi } from 'services/strapi';
+import { useToast } from 'hooks/useToast';
+import { FileAttributes } from 'interfaces/file';
+import LoadingSpinner from 'components/Icons/LoadingSpinner';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { ApiError } from 'interfaces/api';
+import config from 'config';
+import { Alert } from 'components/Alert/Alert';
+
+const readFile = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.readAsText(file);
+
+    reader.onload = function () {
+      if (!reader.result) {
+        return reject(new Error('Unable to read the file!'));
+      }
+      resolve(reader.result.toString());
+    };
+
+    reader.onerror = function () {
+      reject(reader.error);
+    };
+  });
+};
 
 const DropZone: React.FC = () => {
-  const [fileContents, setFileContents] = useState({
-    filename: '',
-    filecontent: '',
+  const { addToast } = useToast();
+  const [file, setFile] = useState<FileAttributes | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  const validateFile = async (file: File) => {
+    const allowedMimTypes = ['application/geo+json', 'application/json'];
+    const maxSizeInMb = 10;
+    if (!allowedMimTypes.includes(file.type)) {
+      setValidationError(
+        `Le type de fichier est invalide ! Les types autorisés sont : ${allowedMimTypes.join(
+          ','
+        )}`
+      );
+      return false;
+    }
+    if (file.size > maxSizeInMb * 1024 ** 2) {
+      setValidationError(
+        `La taille maximale de fichier est dépassée : ${maxSizeInMb} Mo.`
+      );
+      return false;
+    }
+    try {
+      const content = await readFile(file);
+      const json = JSON.parse(content);
+      if (json.type !== 'FeatureCollection' || !Array.isArray(json.features)) {
+        setValidationError(
+          `Le format GeoJSON est invalide (FeatureCollection, features).`
+        );
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.warn(e);
+      setValidationError(`Impossible de valider le format GeoJSON du fichier.`);
+      return false;
+    }
+  };
+
+  const { mutateAsync, isError, isLoading, error } = useMutation({
+    mutationFn: async (data: { file: File }) => {
+      return await strapi.uploadFile(data.file, 'api::geo-map.geo-map');
+    },
+    onSuccess: (data: FileAttributes) => {
+      setFile(data);
+      addToast({
+        title: `Fichier téléchargé`,
+        description: `Fichier ${data.name} téléchargé avec succès`,
+        type: 'success',
+      });
+    },
   });
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+
+    // This is done to set the displayed filename after the file is uploaded
     const files = e.dataTransfer.files;
-    if (files.length === 0) return;
-    const file = files[0];
-    const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      setFileContents({
-        filename: file.name,
-        filecontent: (event.target as any).target.result,
-      });
-    };
-    reader.readAsText(file);
+    if (files.length === 0) {
+      return;
+    }
+
+    mutateAsync({ file: files[0] });
   };
 
-  const onUpload = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      setFileContents({
-        filename: file.name,
-        filecontent: (event.target as any).target.result,
-      });
-    };
-    reader.readAsText(file);
+  const onUpload = async (file: File) => {
+    const isValid = await validateFile(file);
+    // This is done to set the displayed filename after the file is uploaded
+    if (isValid) {
+      mutateAsync({ file });
+    }
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (isError) {
+    <ApiErrorAlert error={error as ApiError} />;
+  }
 
   return (
     <div className="self-center">
       <h2>A partir d&apos;une carte GeoJSON</h2>
+      {validationError && <Alert>{validationError}</Alert>}
       <div
         onDrop={handleDrop}
         onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}
@@ -47,17 +125,24 @@ const DropZone: React.FC = () => {
           className="flex flex-col border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <Download />
+            {file ? (
+              <img
+                src={`${config.API_URL}/api/geo-maps/thumbnail/${file.id}`}
+                width={128}
+                height={128}
+              />
+            ) : (
+              <Download />
+            )}
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              {fileContents.filename || (
+              {file ? (
+                file.name
+              ) : (
                 <span>
                   <span className="font-semibold">Cliquer pour ajouter </span>
                   ou glisser et déposer
                 </span>
               )}
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              (MAX. 300mb)
             </p>
           </div>
           <FileInputHidden onUpload={onUpload} />

@@ -1,18 +1,23 @@
-import { ChangeEventHandler, FC } from 'react';
+import { FC } from 'react';
 import { Label } from './Label';
 
 import { TextInput, TextInputProps } from './TextInput';
 
 export type FileInputProps = Omit<TextInputProps, 'type' | 'onChange'> & {
-  onUpload?: (file: File) => void;
+  onUpload: (file: File) => void;
 };
-export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
-  // Handle file upload event and update state
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const files = event.target.files!;
-    onUpload && onUpload(files[0]);
-  };
+const handleChange = (
+  event: React.ChangeEvent<HTMLInputElement>,
+  onUpload: (file: File) => void
+) => {
+  const files = event.target.files;
+  if (files) {
+    onUpload(files[0]);
+  }
+};
+
+export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
   return (
     <>
       <Label
@@ -25,7 +30,7 @@ export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
         className="!p-0 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         aria-describedby="file_upload_help"
         {...props}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, onUpload)}
         type="file"
       />
       <div
@@ -39,10 +44,6 @@ export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
 };
 
 export const FileInputHidden: FC<FileInputProps> = ({ onUpload, ...props }) => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const files = event.target.files!;
-    onUpload && onUpload(files[0]);
-  };
   return (
     <>
       <TextInput
@@ -50,7 +51,7 @@ export const FileInputHidden: FC<FileInputProps> = ({ onUpload, ...props }) => {
         className="hidden"
         aria-describedby="file_upload_help"
         {...props}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, onUpload)}
         type="file"
       />
     </>
