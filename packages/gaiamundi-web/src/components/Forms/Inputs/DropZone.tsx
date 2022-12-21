@@ -2,37 +2,60 @@ import Download from 'components/Icons/Download';
 import { useState } from 'react';
 import { FileInputHidden } from './FileInput';
 import { Label } from './Label';
+import { useMutation } from 'react-query';
+import { strapi } from 'services/strapi';
+import { useToast } from 'hooks/useToast';
+import { UploadedFile } from 'interfaces/file';
 
 const DropZone: React.FC = () => {
+  const { addToast } = useToast();
   const [fileContents, setFileContents] = useState({
     filename: '',
-    filecontent: '',
+  });
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (data: { file: File }) => {
+      return await strapi.uploadFile(data.file);
+    },
+    onSuccess: (data: UploadedFile) => {
+      addToast({
+        title: `Fichier téléchargé`,
+        description: `Fichier ${data.name} téléchargé avec succès`,
+        type: 'success',
+      });
+    },
   });
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+
+    // This is done to set the displayed filename after the file is uploaded
     const files = e.dataTransfer.files;
     if (files.length === 0) return;
     const file = files[0];
     const reader = new FileReader();
-    reader.onload = (event: any) => {
+
+    reader.onload = () => {
       setFileContents({
         filename: file.name,
-        filecontent: event.target.result,
       });
     };
+
     reader.readAsText(file);
+    mutateAsync({ file });
   };
 
   const onUpload = (file: File) => {
+    // This is done to set the displayed filename after the file is uploaded
     const reader = new FileReader();
-    reader.onload = (event: any) => {
+
+    reader.onload = () => {
       setFileContents({
         filename: file.name,
-        filecontent: event.target.result,
       });
     };
     reader.readAsText(file);
+    mutateAsync({ file });
   };
 
   return (
