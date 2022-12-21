@@ -6,10 +6,11 @@ import { ContentType, strapi } from 'services/strapi';
 import PageCartoItem from './PageCartoItem';
 import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
-import { Button } from 'components/Button/Button';
+import { Pagination } from 'components/Pagination/Pagination';
 
 export const PageCartoList = () => {
   const [page, setPage] = useState(1);
+  const paginationLimit = 9;
   const {
     data: response,
     isError,
@@ -23,6 +24,7 @@ export const PageCartoList = () => {
         sort: 'createdAt:desc',
         pagination: {
           page: page,
+          pageSize: paginationLimit,
         },
       });
     },
@@ -41,6 +43,7 @@ export const PageCartoList = () => {
     return <Alert type="info">Aucun contenu à afficher.</Alert>;
   }
 
+  const totalPages = response?.meta.pagination.total;
   return (
     <div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
@@ -48,13 +51,14 @@ export const PageCartoList = () => {
           return <PageCartoItem key={page.id} {...page} />;
         })}
       </div>
-      <div className="flex flex-row mt-5">
-        <Button className="inline-block" onClick={() => setPage(page - 1)}>
-          Previous page
-        </Button>
-        <Button className="inline-block" onClick={() => setPage(page + 1)}>
-          Next page
-        </Button>
+      <div className="flex flex-row mt-5 justify-center">
+        <Pagination
+          page={page}
+          onPaginateNext={() => setPage(page + 1)}
+          onPaginatePrevious={() => setPage(page - 1)}
+          onPaginate={(p: number) => setPage(p)}
+          totalPages={Math.ceil(totalPages! / paginationLimit)}
+        />
       </div>
     </div>
   );
