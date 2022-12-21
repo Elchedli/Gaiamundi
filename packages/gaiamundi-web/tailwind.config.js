@@ -1,10 +1,19 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const defaultTheme = require('tailwindcss/defaultTheme');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires
 const colors = require('tailwindcss/colors');
 
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
+  ],
+  safelist: [
+    'text-2xl',
+    'text-3xl',
+    {
+      pattern: /(bg|text)-[a-z]*-[\d]{3}/g,
+    },
   ],
   theme: {
     extend: {
