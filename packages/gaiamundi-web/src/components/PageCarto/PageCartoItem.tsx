@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PageCarto } from 'interfaces/page-carto';
-import { BadgeExample } from 'components/Tags/FlowbadgeExample';
-
+import { Badge } from 'components/Tags/Badge';
+import Spinner from 'components/Icons/Spinner';
 const PageCartoItem: React.FC<PageCarto> = ({
   id,
   attributes: { name, owner, tags, map, cover },
@@ -36,14 +36,14 @@ const PageCartoItem: React.FC<PageCarto> = ({
         Tags :
         {(tags as any)?.data?.map((tag: any, index: number) => {
           return (
-            <BadgeExample
-              random={true}
+            <Badge
               //issue : A faire un filtre de tag et creer soit un href soit un link
               href="#"
               key={index}
+              icon={<Spinner />}
             >
               {tag?.attributes?.name}
-            </BadgeExample>
+            </Badge>
           );
         })}
       </h4>

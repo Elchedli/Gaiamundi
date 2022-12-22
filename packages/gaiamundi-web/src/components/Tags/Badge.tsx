@@ -1,19 +1,6 @@
 import classNames from 'classnames';
 import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
 
-// const randomNoRepeats = (array: Array<string>) => {
-//   let copy = array.slice(0);
-//   return function () {
-//     if (copy.length < 1) {
-//       copy = array.slice(0);
-//     }
-//     const index = Math.floor(Math.random() * copy.length);
-//     const item = copy[index];
-//     copy.splice(index, 1);
-//     return item;
-//   };
-// };
-
 interface styleType {
   default: string[];
   dark: string[];
@@ -23,7 +10,7 @@ interface styleType {
   indigo: string[];
   purple: string[];
   pink: string[];
-  [key: string]: string[]; // Add an index signature here
+  [key: string]: string[];
 }
 
 const styles: styleType = {
@@ -39,36 +26,29 @@ const styles: styleType = {
 
 interface BadgeProps
   extends PropsWithChildren<Omit<ComponentProps<'span'>, 'color'>> {
-  color?: string;
-  href?: string;
+  href: string;
   icon?: ReactNode;
-  random?: boolean;
 }
 
-export const BadgeExample: FC<BadgeProps> = ({
+export const Badge: FC<BadgeProps> = ({
   children,
   href,
   icon: Icon,
-  color = 'default',
-  random,
   className,
   ...props
 }): JSX.Element => {
-  // const colors = Object.keys(styles);
-  if (random) {
-    // let chooser = randomNoRepeats(colors);
-  }
-  // random ? (color = randomNoRepeats(colors)) : color;
-  const selectedColor = styles[color];
+  const objectColor = Object.keys(styles);
+  const selectedColor =
+    styles[objectColor[Math.floor(Math.random() * objectColor.length)]];
   const Content = (): JSX.Element => (
     <span
       className={classNames(
-        `bg-${selectedColor[0]} text-${selectedColor[1]} text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-${selectedColor[2]} dark:text-${selectedColor[3]}`,
+        `inline-block bg-${selectedColor[0]} text-${selectedColor[1]} text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-${selectedColor[2]} dark:text-${selectedColor[3]}`,
         className
       )}
       {...props}
     >
-      {Icon}
+      <div className="w-5 h-5 float-left mr-1">{Icon}</div>
       {children && <span>{children}</span>}
     </span>
   );
