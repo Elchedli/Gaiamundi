@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { PageCarto } from 'interfaces/page-carto';
 import { Badge } from 'components/Tags/Badge';
 import Spinner from 'components/Icons/Spinner';
+
 const PageCartoItem: React.FC<PageCarto> = ({
   id,
   attributes: { name, owner, tags, map, cover },
 }) => {
   const ImgUrl = (cover as any)?.data?.attributes?.formats?.thumbnail.url;
+
   return (
     <div className="group border pb-2">
       <Link to={`/page-carto/${id}?populate=*`}>
