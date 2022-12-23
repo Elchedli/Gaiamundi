@@ -8,13 +8,6 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  safelist: [
-    'text-2xl',
-    'text-3xl',
-    {
-      pattern: /(bg|text)-[a-z]*-[\d]{3}/g,
-    },
-  ],
   theme: {
     extend: {
       keyframes: {
