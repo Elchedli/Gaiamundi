@@ -1,5 +1,5 @@
 import { ApiData, ApiDocument } from './api';
-import { GeoMapAttributes } from './geo-map';
+import { GeoMap } from './geo-map';
 import { User } from './user';
 
 export interface Tags {
@@ -12,9 +12,10 @@ export interface PageCartoAttributes {
   id?: string;
   name: string;
   owner?: ApiDocument<User>;
-  map: GeoMapAttributes;
+  map: GeoMap;
   html: HTMLElement;
   tags: Tags;
+  cover?: MediaImage;
 }
 
 export type PageCarto = ApiData<PageCartoAttributes>;

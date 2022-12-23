@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import { NewMapForm } from './NewMapForm';
-import { GeoMapList } from 'components/PageCartoCreate/GeoMapListWithTab';
-
-export const MapPickForm = () => {
+import { GeoMapList } from './GeoMapList';
+export const GeoListPick = () => {
   const [tabContent] = useState([
     {
       id: 1,
       title: "A partir d'une carte GeoJSON",
-      content: <NewMapForm />,
+      content: <GeoMapList />,
     },
     {
       id: 2,
       title: 'Réutiliser une carte GeoJSON existante',
-      content: <GeoMapList />,
+      content: 'Still in developent',
     },
   ]);
 
