@@ -7,7 +7,11 @@ import { strapi } from 'services/strapi';
 import { useToast } from 'hooks/useToast';
 import { UploadedFile } from 'interfaces/file';
 
-const DropZone: React.FC = () => {
+const DropZone = ({
+  setGeoJsonFileId,
+}: {
+  setGeoJsonFileId: (id: number) => void;
+}) => {
   const { addToast } = useToast();
   const [fileContents, setFileContents] = useState({
     filename: '',
@@ -18,6 +22,7 @@ const DropZone: React.FC = () => {
       return await strapi.uploadFile(data.file);
     },
     onSuccess: (data: UploadedFile) => {
+      setGeoJsonFileId(data.id);
       addToast({
         title: `Fichier téléchargé`,
         description: `Fichier ${data.name} téléchargé avec succès`,
@@ -28,7 +33,6 @@ const DropZone: React.FC = () => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-
     // This is done to set the displayed filename after the file is uploaded
     const files = e.dataTransfer.files;
     if (files.length === 0) return;
@@ -60,7 +64,7 @@ const DropZone: React.FC = () => {
 
   return (
     <div className="self-center">
-      <h2>A partir d&apos;une carte GeoJSON</h2>
+      <h2>A partir d&apos;un fichier GeoJSON</h2>
       <div
         onDrop={handleDrop}
         onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}

@@ -3,12 +3,16 @@ import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { NewMapForm } from './NewMapForm';
 
-export const MapPickForm = () => {
+export const MapPickForm = ({
+  setGeoJsonFileId,
+}: {
+  setGeoJsonFileId: (id: number) => void;
+}) => {
   const [tabContent] = useState([
     {
       id: 1,
       title: "A partir d'une carte GeoJSON",
-      content: <NewMapForm />,
+      content: <NewMapForm setGeoJsonFileId={setGeoJsonFileId} />,
     },
     {
       id: 2,

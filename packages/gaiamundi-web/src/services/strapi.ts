@@ -16,13 +16,16 @@ export enum ContentType {
   USERS = 'users',
 }
 
+// Get the type of property whitin a type
+type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
+
 type ObjectType<T> = T extends ContentType.PAGE_CARTOS
   ? PageCarto
   : T extends ContentType.GEO_MAPS
   ? GeoMap
-  : T extends ContentType.USERS
-  ? User
   : never;
+
+type ObjectTypeAttributes<T> = PropType<ObjectType<T>, 'attributes'>;
 
 type FilterOperator =
   | '$eq' //	Equal
@@ -215,11 +218,11 @@ class Strapi {
   /**
    * Create an entry to the given content-type.
    */
-  create<T extends ContentType>(contentType: T, data: ObjectType<T>) {
+  create<T extends ContentType>(contentType: T, data: ObjectTypeAttributes<T>) {
     return this.request
-      .post<ObjectType<T>, ApiResponse<ApiDocument<ObjectType<T>>>>(
+      .post<ObjectTypeAttributes<T>, ApiResponse<ApiDocument<ObjectType<T>>>>(
         `/${contentType}`,
-        data
+        { data }
       )
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
