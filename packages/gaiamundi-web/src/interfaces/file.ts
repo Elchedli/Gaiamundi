@@ -1,6 +1,6 @@
-import { ApiDocument } from "./api";
+import { ApiDocument } from './api';
 
-export interface FileAttributes {
+export interface UploadedFile {
   id: number;
   name: string;
   alternativeText?: string;
@@ -29,5 +29,3 @@ export interface FileAttributes {
   created_at: string;
   updated_at: string;
 }
-
-export type UploadedFile = ApiDocument<FileAttributes>;

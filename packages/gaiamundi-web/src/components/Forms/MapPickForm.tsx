@@ -1,29 +1,32 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { NewMapForm } from './NewMapForm';
+import { UploadedFile } from 'interfaces/file';
 
-export const MapPickForm = () => {
-  const [tabContent] = useState([
+export const MapPickForm: FC<{
+  onFileUploaded: (file: UploadedFile) => void;
+}> = ({ onFileUploaded }) => {
+  const tabs = [
     {
       id: 1,
       title: "A partir d'une carte GeoJSON",
-      content: <NewMapForm />,
+      content: <NewMapForm onFileUploaded={onFileUploaded} />,
     },
     {
       id: 2,
       title: 'Réutiliser une carte GeoJSON existante',
       content: <div className="text-center ">en cours de développement</div>,
     },
-  ]);
+  ];
 
   return (
     <div className="py-8">
       <Tab.Group>
         <Tab.List className="flex bg-blue-600 rounded-t-lg p-2">
-          {tabContent.map((table) => (
+          {tabs.map((tab) => (
             <Tab
-              key={table.id}
+              key={tab.id}
               className={({ selected }) =>
                 classNames(
                   'rounded-t-lg p-4 text-sm font-medium leading-5 text-blue-700',
@@ -34,14 +37,14 @@ export const MapPickForm = () => {
                 )
               }
             >
-              {table.title}
+              {tab.title}
             </Tab>
           ))}
         </Tab.List>
         <Tab.Panels className="rounded-b-lg border border-blue-700">
-          {tabContent.map((tabValue) => (
-            <Tab.Panel key={tabValue.id} className="p-5">
-              {tabValue.content}
+          {tabs.map((tab) => (
+            <Tab.Panel key={tab.id} className="p-5">
+              {tab.content}
             </Tab.Panel>
           ))}
         </Tab.Panels>

@@ -8,10 +8,10 @@ import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
 import { EMAIL_REGEX } from 'utils/utils';
 import { useToast } from 'hooks/useToast';
-import { strapi } from 'services/strapi';
 import { UserAuthResponse, UserCredentials } from 'interfaces/user';
 import { ApiError } from 'interfaces/api';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { login } from 'services/user';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
     UserCredentials
   >({
     mutationFn: async ({ email, password }) => {
-      return await strapi.login(email, password);
+      return await login(email, password);
     },
     onSuccess: ({ user, jwt }) => {
       authenticate(user, jwt);

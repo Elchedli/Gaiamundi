@@ -5,10 +5,9 @@ import {
   ApiErrorResponse,
   ApiResponse,
   ApiDocument,
+  ApiData,
 } from 'interfaces/api';
-import { FileAttributes } from 'interfaces/file';
-import { GeoMap } from 'interfaces/geo-map';
-import { PageCarto } from 'interfaces/page-carto';
+import { UploadedFile } from 'interfaces/file';
 import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
 
 export enum ContentType {
@@ -16,14 +15,6 @@ export enum ContentType {
   GEO_MAPS = 'geo-maps',
   USERS = 'users',
 }
-
-type ObjectType<T> = T extends ContentType.PAGE_CARTOS
-  ? PageCarto
-  : T extends ContentType.GEO_MAPS
-  ? GeoMap
-  : T extends ContentType.USERS
-  ? User
-  : never;
 
 type FilterOperator =
   | '$eq' //	Equal
@@ -49,6 +40,7 @@ type FilterOperator =
 
 export type QueryParams = {
   filters?: {
+    // eslint-disable-next-line
     [field: string]: { [operator in FilterOperator]?: any };
   };
   populate?: string | string[] | { [field: string]: { populate: string[] } };
@@ -204,7 +196,7 @@ class Strapi {
    */
   count<T extends ContentType>(contentType: T, params: QueryParams) {
     return this.request
-      .get<QueryParams, ObjectType<T>>(
+      .get<QueryParams, ApiData<T>>(
         `/${contentType}/count`,
         params && { params }
       )
@@ -216,12 +208,9 @@ class Strapi {
   /**
    * Create an entry to the given content-type.
    */
-  create<T extends ContentType>(contentType: T, data: ObjectType<T>) {
+  create<T>(contentType: ContentType, data: T) {
     return this.request
-      .post<ObjectType<T>, ApiResponse<ApiDocument<ObjectType<T>>>>(
-        `/${contentType}`,
-        data
-      )
+      .post<T, ApiResponse<ApiDocument<T>>>(`/${contentType}`, { data })
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -230,9 +219,9 @@ class Strapi {
   /**
    * get a content-type entry by id.
    */
-  getById<T extends ContentType>(contentType: T, id: number) {
+  getById<R>(contentType: ContentType, id: number) {
     return this.request
-      .get<void, ApiResponse<ObjectType<T>>>(`/${contentType}/${id}`)
+      .get<void, ApiResponse<R>>(`/${contentType}/${id}`)
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -241,9 +230,9 @@ class Strapi {
   /**
    * Get a content-type collection.
    */
-  get<T extends ContentType>(contentType: T, params?: QueryParams) {
+  get<R>(contentType: ContentType, params?: QueryParams) {
     return this.request
-      .get<QueryParams, ApiCollection<ObjectType<T>>>(
+      .get<QueryParams, ApiCollection<R>>(
         `/${contentType}`,
         params && {
           params,
@@ -257,13 +246,9 @@ class Strapi {
   /**
    * Update an entry in a content-type.
    */
-  update<T extends ContentType>(
-    contentType: T,
-    id: number,
-    data: Partial<ObjectType<T>>
-  ) {
+  update<T, R>(contentType: ContentType, id: number, data: Partial<T>) {
     return this.request
-      .put<Partial<ObjectType<T>>, ApiResponse<ApiDocument<ObjectType<T>>>>(
+      .put<Partial<T>, ApiResponse<ApiDocument<R>>>(
         `/${contentType}/${id}`,
         data
       )
@@ -275,11 +260,9 @@ class Strapi {
   /**
    * Delete an entry.
    */
-  delete<T extends ContentType>(contentType: ContentType, id: number) {
+  delete<R>(contentType: ContentType, id: number) {
     return this.request
-      .delete<void, ApiResponse<ApiDocument<ObjectType<T>>>>(
-        `/${contentType}/${id}`
-      )
+      .delete<void, ApiResponse<ApiDocument<R>>>(`/${contentType}/${id}`)
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -294,7 +277,7 @@ class Strapi {
     formData.append('files', file);
     formData.append('ref', ref);
     return this.request
-      .post<FormData, FileAttributes[]>('/upload', formData)
+      .post<FormData, UploadedFile[]>('/upload', formData)
       .then(([uploadedfile]) => {
         return uploadedfile;
       });

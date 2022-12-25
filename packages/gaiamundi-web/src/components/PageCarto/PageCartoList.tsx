@@ -1,12 +1,13 @@
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { ContentType, strapi } from 'services/strapi';
 import PageCartoItem from './PageCartoItem';
 import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
 import { Pagination } from 'components/Pagination/Pagination';
+import { getLatestPageCartos } from 'services/page-carto';
 
 export const PageCartoList = () => {
   const [page, setPage] = useState(1);
@@ -18,15 +19,8 @@ export const PageCartoList = () => {
     isLoading,
   } = useQuery({
     queryKey: ['latest-page-carto', page],
-    queryFn: () => {
-      return strapi.get(ContentType.PAGE_CARTOS, {
-        populate: '*',
-        sort: 'createdAt:desc',
-        pagination: {
-          page: page,
-          pageSize: paginationLimit,
-        },
-      });
+    queryFn: async () => {
+      return await getLatestPageCartos(page, paginationLimit);
     },
     keepPreviousData: true,
   });
@@ -39,15 +33,16 @@ export const PageCartoList = () => {
     return <ApiErrorAlert error={error as ApiError} />;
   }
 
-  if (response?.data.length === 0) {
+  if (!response || response.data.length === 0) {
     return <Alert type="info">Aucun contenu à afficher.</Alert>;
   }
 
-  const totalPages = response?.meta.pagination.total;
+  const { data, meta } = response;
+
   return (
     <div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-        {response?.data.map((page) => {
+        {data.map((page) => {
           return <PageCartoItem key={page.id} {...page} />;
         })}
       </div>
@@ -57,7 +52,7 @@ export const PageCartoList = () => {
           onPaginateNext={() => setPage(page + 1)}
           onPaginatePrevious={() => setPage(page - 1)}
           onPaginate={(p: number) => setPage(p)}
-          totalPages={Math.ceil(totalPages! / paginationLimit)}
+          totalPages={meta.pagination.pageCount || 0}
         />
       </div>
     </div>

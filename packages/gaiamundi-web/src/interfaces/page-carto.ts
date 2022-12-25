@@ -1,25 +1,30 @@
 import { ApiCollection, ApiData, ApiDocument } from './api';
 import { UploadedFile } from './file';
-import { GeoMap } from './geo-map';
+import { GeoMap, GeoMapStub } from './geo-map';
 import { User } from './user';
 
-export interface TagAttributes {
+export interface Tag {
   id: number;
   name: string;
-  created_at: string;
-  updated_at: string;
 }
 
-type Tag = ApiData<TagAttributes>;
-
-export interface PageCartoAttributes {
-  id?: string;
+export interface PageCartoBase {
   name: string;
-  owner?: ApiDocument<User>;
-  map: GeoMap;
   html: string;
-  tags?: ApiCollection<Tag>;
-  cover?: UploadedFile;
 }
 
-export type PageCarto = ApiData<PageCartoAttributes>;
+export interface PageCartoStub extends PageCartoBase {
+  owner?: number;
+  cover?: number;
+  map?: number;
+  tags?: number[];
+}
+
+export interface PageCarto extends PageCartoBase {
+  owner: ApiDocument<User>;
+  cover: ApiDocument<UploadedFile>;
+  map: ApiDocument<GeoMap>;
+  tags: ApiCollection<Tag>;
+}
+
+export type PageCartoForm = { name: string; geoMap: GeoMapStub };

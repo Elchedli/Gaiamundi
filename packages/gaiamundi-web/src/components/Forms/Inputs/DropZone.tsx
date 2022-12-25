@@ -1,16 +1,17 @@
-import Download from 'components/Icons/Download';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+
+import Download from 'components/Icons/Download';
 import { FileInputHidden } from './FileInput';
 import { Label } from './Label';
-import { useMutation } from 'react-query';
-import { strapi } from 'services/strapi';
 import { useToast } from 'hooks/useToast';
-import { FileAttributes } from 'interfaces/file';
+import { UploadedFile } from 'interfaces/file';
 import LoadingSpinner from 'components/Icons/LoadingSpinner';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { ApiError } from 'interfaces/api';
 import config from 'config';
 import { Alert } from 'components/Alert/Alert';
+import { uploadGeoJson } from 'services/geo-map';
 
 const readFile = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -31,9 +32,11 @@ const readFile = (file: File): Promise<string> => {
   });
 };
 
-const DropZone: React.FC = () => {
+const DropZone: React.FC<{
+  onFileUploaded: (file: UploadedFile) => void;
+}> = ({ onFileUploaded }) => {
   const { addToast } = useToast();
-  const [file, setFile] = useState<FileAttributes | null>(null);
+  const [file, setFile] = useState<UploadedFile | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const validateFile = async (file: File) => {
@@ -64,7 +67,6 @@ const DropZone: React.FC = () => {
       }
       return true;
     } catch (e) {
-      console.warn(e);
       setValidationError(`Impossible de valider le format GeoJSON du fichier.`);
       return false;
     }
@@ -72,10 +74,11 @@ const DropZone: React.FC = () => {
 
   const { mutateAsync, isError, isLoading, error } = useMutation({
     mutationFn: async (data: { file: File }) => {
-      return await strapi.uploadFile(data.file, 'api::geo-map.geo-map');
+      return await uploadGeoJson(data.file);
     },
-    onSuccess: (data: FileAttributes) => {
+    onSuccess: (data: UploadedFile) => {
       setFile(data);
+      onFileUploaded(data);
       addToast({
         title: `Fichier téléchargé`,
         description: `Fichier ${data.name} téléchargé avec succès`,
@@ -86,7 +89,6 @@ const DropZone: React.FC = () => {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-
     // This is done to set the displayed filename after the file is uploaded
     const files = e.dataTransfer.files;
     if (files.length === 0) {
