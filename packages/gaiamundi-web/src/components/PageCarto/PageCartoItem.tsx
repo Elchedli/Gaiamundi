@@ -7,8 +7,8 @@ const PageCartoItem: React.FC<PageCarto> = ({
   id,
   attributes: { name, owner, tags, map, cover },
 }) => {
-  const ImgUrl = (cover as any)?.data?.attributes?.formats?.thumbnail.url;
-
+  console.log(tags?.data);
+  const ImgUrl = cover?.data?.attributes.formats['thumbnail'].url;
   return (
     <div className="group border pb-2">
       <Link to={`/page-carto/${id}?populate=*`}>
@@ -27,7 +27,7 @@ const PageCartoItem: React.FC<PageCarto> = ({
         <div className="px-2 pt-2">
           <h3 className="text-lg font-medium text-gray-900">Titre: {name}</h3>
           <h4 className="text-xs text-gray-500 mt-0.5">
-            Nom Map : {(map as any)?.data?.attributes?.name}
+            Nom Map : {map.data?.attributes?.name}
           </h4>
           <h4 className="text-xs text-gray-500">
             Créer par : {owner?.data?.attributes?.username}
@@ -36,15 +36,11 @@ const PageCartoItem: React.FC<PageCarto> = ({
       </Link>
       <h4 className="text-xs text-gray-500 mt-2">
         Tags :
-        {(tags as any)?.data?.map((tag: any, index: number) => {
+        {tags?.data?.map((tag, index: number) => {
+          // console.log(tag.attributes?.);
           return (
-            <Badge
-              //issue : A faire un filtre de tag et creer soit un href soit un link
-              href="#"
-              key={index}
-              icon={<Spinner />}
-            >
-              {tag?.attributes?.name}
+            <Badge href="#" key={index} icon={<Spinner />}>
+              {tag.attributes.name}
             </Badge>
           );
         })}
