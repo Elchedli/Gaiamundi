@@ -5,6 +5,7 @@ const GeoListItem: React.FC<PageCarto> = ({
   id,
   attributes: { name, owner, map, cover },
 }) => {
+  console.log(map);
   const ImgUrl = (cover as any)?.data?.attributes?.formats?.thumbnail.url;
 
   return (
