@@ -7,7 +7,6 @@ const PageCartoItem: React.FC<PageCarto> = ({
   id,
   attributes: { name, owner, tags, map, cover },
 }) => {
-  console.log(tags?.data);
   const ImgUrl = cover?.data?.attributes.formats['thumbnail'].url;
   return (
     <div className="group border pb-2">
@@ -37,7 +36,6 @@ const PageCartoItem: React.FC<PageCarto> = ({
       <h4 className="text-xs text-gray-500 mt-2">
         Tags :
         {tags?.data?.map((tag, index: number) => {
-          // console.log(tag.attributes?.);
           return (
             <Badge href="#" key={index} icon={<Spinner />}>
               {tag.attributes.name}
