@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiDocument,
 } from 'interfaces/api';
-import { GeoMap } from 'interfaces/geo-map';
+import { GeoMapInterface } from 'interfaces/geo-map';
 import { PageCarto } from 'interfaces/page-carto';
 import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
 
@@ -13,12 +13,13 @@ export enum ContentType {
   PAGE_CARTOS = 'page-cartos',
   GEO_MAPS = 'geo-maps',
   USERS = 'users',
+  THUMBNAIL = 'geo-maps/thumbnail',
 }
 
 type ObjectType<T> = T extends ContentType.PAGE_CARTOS
   ? PageCarto
   : T extends ContentType.GEO_MAPS
-  ? GeoMap
+  ? GeoMapInterface
   : T extends ContentType.USERS
   ? User
   : never;

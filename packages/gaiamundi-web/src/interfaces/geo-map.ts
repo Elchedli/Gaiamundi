@@ -1,4 +1,4 @@
-import { ApiDocument } from './api';
+import { ApiData, ApiDocument } from './api';
 import { User } from './user';
 
 export interface GeoMapAttributes {
@@ -7,7 +7,8 @@ export interface GeoMapAttributes {
   yearValidity?: number;
   source?: string;
   license?: string;
-  geojson: JSON;
+  geojson?: JSON;
 }
 
 export type GeoMap = ApiDocument<GeoMapAttributes>;
+export type GeoMapInterface = ApiData<GeoMapAttributes>;

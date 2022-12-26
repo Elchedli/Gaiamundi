@@ -6,7 +6,7 @@ import { ContentType, strapi } from 'services/strapi';
 import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
 import { Pagination } from 'components/Pagination/Pagination';
-// import GeoListItem from './GeoListItem';
+import GeoListItem from './GeoListItem';
 
 export const GeoMapList = () => {
   const [page, setPage] = useState(1);
@@ -17,7 +17,7 @@ export const GeoMapList = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['latest-page-carto', page],
+    queryKey: ['latest-geo-carto', page],
     queryFn: () => {
       return strapi.get(ContentType.GEO_MAPS, {
         populate: '*',
@@ -47,9 +47,9 @@ export const GeoMapList = () => {
   return (
     <div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-        {/* {response?.data.map((page) => {
+        {response?.data.map((page) => {
           return <GeoListItem key={page.id} {...page} />;
-        })} */}
+        })}
       </div>
       <div className="flex flex-row mt-5 justify-center">
         <Pagination
