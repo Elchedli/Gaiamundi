@@ -1,7 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const defaultTheme = require('tailwindcss/defaultTheme');
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires
-const colors = require('tailwindcss/colors');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 module.exports = {
   content: [

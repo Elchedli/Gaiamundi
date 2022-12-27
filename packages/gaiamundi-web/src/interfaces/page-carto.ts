@@ -32,23 +32,25 @@ export interface MediaAttributes {
   updated_at: string;
 }
 
-export interface tagAttributes {
+export type Media = ApiDocument<MediaAttributes>;
+
+export interface TagAttributes {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
 }
 
+type Tag = ApiData<TagAttributes>;
+
 export interface PageCartoAttributes {
   id?: string;
   name: string;
   owner?: ApiDocument<User>;
   map: GeoMap;
-  html: HTMLElement;
-  tags?: tagsCarto;
-  cover?: MediaCarto;
+  html: string;
+  tags?: ApiCollection<Tag>;
+  cover?: Media;
 }
 
-type MediaCarto = ApiDocument<MediaAttributes>;
-type tagsCarto = ApiCollection<ApiData<tagAttributes>>;
 export type PageCarto = ApiData<PageCartoAttributes>;
