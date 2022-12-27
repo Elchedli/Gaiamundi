@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import config from 'config';
 import {
   ApiCollection,
   ApiErrorResponse,
@@ -285,4 +286,4 @@ class Strapi {
   }
 }
 
-export const strapi = new Strapi('http://localhost:1337/api');
+export const strapi = new Strapi(`${config.API_URL}/api`);

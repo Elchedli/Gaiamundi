@@ -1,48 +1,54 @@
 import { Link } from 'react-router-dom';
-import { PageCarto } from 'interfaces/page-carto';
+import excerptHtml from 'excerpt-html';
+import { PageCarto, Media } from 'interfaces/page-carto';
 import { Badge } from 'components/Tags/Badge';
 import Spinner from 'components/Icons/Spinner';
+import config from 'config';
+
+const getThumnailUrl = (cover?: Media) => {
+  const imgUrl = cover?.data?.attributes.formats['thumbnail'].url;
+  return imgUrl
+    ? `${config.API_URL}/${imgUrl}`
+    : `${config.PUBLIC_URL}/imageplaceholder.png`;
+};
 
 const PageCartoItem: React.FC<PageCarto> = ({
   id,
-  attributes: { name, owner, tags, map, cover },
+  attributes: { name, owner, tags, map, cover, html },
 }) => {
-  const ImgUrl = cover?.data?.attributes.formats['thumbnail'].url;
   return (
-    <div className="group border pb-2">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <Link to={`/page-carto/${id}?populate=*`}>
         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8">
-          {
-            <img
-              src={
-                ImgUrl
-                  ? 'http://localhost:1337' + ImgUrl
-                  : process.env.PUBLIC_URL + '/imageplaceholder.png'
-              }
-              className="h-48 w-full object-cover object-center group-hover:opacity-75"
-            />
-          }
+          <img
+            src={getThumnailUrl(cover)}
+            className="h-48 w-full object-cover object-center group-hover:opacity-75"
+          />
         </div>
-        <div className="px-2 pt-2">
-          <h3 className="text-lg font-medium text-gray-900">Titre: {name}</h3>
-          <h4 className="text-xs text-gray-500 mt-0.5">
-            Nom Map : {map.data?.attributes?.name}
-          </h4>
-          <h4 className="text-xs text-gray-500">
-            Créer par : {owner?.data?.attributes?.username}
-          </h4>
+        <div className="p-3">
+          <h2>{name}</h2>
+          <div className="text-gray-500">
+            <div className="text-sm my-1">
+              <div className="my-1 font-bold">
+                Carte : {map.data?.attributes?.name}
+              </div>
+              <p>{excerptHtml(html)}</p>
+              <div className="text-xs mt-2">
+                Créer par : {owner?.data?.attributes?.username}
+              </div>
+            </div>
+            <div className="mt-3">
+              {tags?.data?.map((tag, index) => {
+                return (
+                  <Badge href="#" key={index} icon={<Spinner />}>
+                    {tag.attributes.name}
+                  </Badge>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </Link>
-      <h4 className="text-xs text-gray-500 mt-2">
-        Tags :
-        {tags?.data?.map((tag, index: number) => {
-          return (
-            <Badge href="#" key={index} icon={<Spinner />}>
-              {tag.attributes.name}
-            </Badge>
-          );
-        })}
-      </h4>
     </div>
   );
 };

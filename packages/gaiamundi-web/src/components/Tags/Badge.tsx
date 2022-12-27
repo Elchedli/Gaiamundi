@@ -17,7 +17,7 @@ export const Badge: FC<BadgeProps> = ({
   const Content = (): JSX.Element => (
     <span
       className={classNames(
-        `inline-block bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-purple-200 dark:text-purple-900`,
+        `inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`,
         className
       )}
       {...props}
