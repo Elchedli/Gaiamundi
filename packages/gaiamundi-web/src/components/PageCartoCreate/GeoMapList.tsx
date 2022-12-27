@@ -46,6 +46,7 @@ export const GeoMapList = () => {
   const totalPages = response?.meta.pagination.total;
   return (
     <div>
+      <h2 className="pb-4 text-3xl font-extrabold">Mes cartes GeoJSON</h2>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
         {response?.data.map((page) => {
           return <GeoListItem key={page.id} {...page} />;

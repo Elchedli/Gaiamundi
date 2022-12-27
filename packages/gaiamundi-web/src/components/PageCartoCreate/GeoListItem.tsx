@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import { GeoMapInterface } from 'interfaces/geo-map';
-import { useQuery } from 'react-query';
-import { ContentType, strapi } from 'services/strapi';
 
 const GeoListItem: React.FC<GeoMapInterface> = ({
   id,
@@ -13,22 +11,16 @@ const GeoListItem: React.FC<GeoMapInterface> = ({
     //geojson,owner,page_cartos
   },
 }) => {
-  const { data: response } = useQuery({
-    queryKey: ['thumbnail-map', 13],
-    queryFn: () => strapi.getById(ContentType.THUMBNAIL, id),
-  });
-  [response];
   return (
     <div className="group border pb-2">
       <Link to={`/page-carto/${id}?populate=*`}>
-        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8">
-          <image />
-          {/* {
+        <div className="aspect-w-1 aspect-h-1 w-fit overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8">
+          {
             <img
-              src={image}
-              className="h-48 w-full object-cover object-center group-hover:opacity-75"
+              src={`http://localhost:1337/api/geo-maps/thumbnail/${id}`}
+              className="h-40 w-full object-cover object-center group-hover:opacity-75"
             />
-          } */}
+          }
         </div>
         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8"></div>
         <div className="px-2 pt-2">

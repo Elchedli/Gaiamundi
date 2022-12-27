@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ContentType, strapi } from 'services/strapi';
@@ -7,9 +7,19 @@ import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
 import { Pagination } from 'components/Pagination/Pagination';
 import GeoListItem from './GeoListItem';
+import { User } from 'interfaces/user';
 
 export const GeoMapListUser = () => {
   const [page, setPage] = useState(1);
+  const [currentUser, setCurrentUser] = useState<Partial<User>>({});
+
+  useEffect(() => {
+    const userGetData = async () => {
+      return strapi.token && (await strapi.currentUser(strapi.token));
+    };
+    userGetData().then((user) => user && setCurrentUser(user));
+  }, []);
+
   const paginationLimit = 9;
   const {
     data: response,
@@ -17,9 +27,9 @@ export const GeoMapListUser = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['latest-page-carto', page],
+    queryKey: ['latest-geo-carto', page],
     queryFn: () => {
-      return strapi.get(ContentType.PAGE_CARTOS, {
+      return strapi.get(ContentType.GEO_MAPS, {
         populate: '*',
         sort: 'createdAt:desc',
         pagination: {
@@ -44,10 +54,15 @@ export const GeoMapListUser = () => {
   }
 
   const totalPages = response?.meta.pagination.total;
+
+  const maps = response?.data.filter(
+    (element) =>
+      element.attributes.owner?.data.attributes.username == currentUser.username
+  );
   return (
     <div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-        {response?.data.map((page) => {
+        {maps?.map((page) => {
           return <GeoListItem key={page.id} {...page} />;
         })}
       </div>
