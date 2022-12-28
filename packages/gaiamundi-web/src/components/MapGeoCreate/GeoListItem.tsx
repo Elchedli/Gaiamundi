@@ -3,13 +3,7 @@ import { GeoMapInterface } from 'interfaces/geo-map';
 
 const GeoListItem: React.FC<GeoMapInterface> = ({
   id,
-  attributes: {
-    name,
-    yearValidity,
-    source,
-    license,
-    //geojson,owner,page_cartos
-  },
+  attributes: { name, yearValidity, source, license },
 }) => {
   return (
     <div className="group border pb-2">
