@@ -8,7 +8,7 @@ import config from 'config';
 const getThumnailUrl = (cover?: Media) => {
   const imgUrl = cover?.data?.attributes.formats['thumbnail'].url;
   return imgUrl
-    ? `${config.API_URL}/${imgUrl}`
+    ? `${config.API_URL}${imgUrl}`
     : `${config.PUBLIC_URL}/imageplaceholder.png`;
 };
 
