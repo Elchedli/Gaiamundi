@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { NewMapForm } from './NewMapForm';
-import { GeoListPick } from 'components/PageCartoCreate/GeoListPick';
+import { GeoMapList } from 'components/MapGeoCreate/GeoMapList';
 
 export const MapPickForm = () => {
   const [tabContent] = useState([
@@ -14,7 +14,7 @@ export const MapPickForm = () => {
     {
       id: 2,
       title: 'Réutiliser une carte GeoJSON existante',
-      content: <GeoListPick />,
+      content: <GeoMapList />,
     },
   ]);
 

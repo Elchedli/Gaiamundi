@@ -6,7 +6,7 @@ import GeoListItem from './GeoListItem';
 import { Pagination } from 'components/Pagination/Pagination';
 import { User } from 'interfaces/user';
 
-export const GeoListPick = () => {
+export const GeoMapList = () => {
   const paginationLimit = 9;
 
   const [page, setPage] = useState(1);
@@ -96,6 +96,10 @@ export const GeoListPick = () => {
     },
   ];
 
+  const handleTabClick = (index: number) => {
+    setSelectedTab(index);
+  };
+
   return (
     <div>
       <h2 className="pb-4 text-3xl font-extrabold">
@@ -113,7 +117,7 @@ export const GeoListPick = () => {
                   ? 'bg-white shadow'
                   : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
               )}
-              onClick={() => setSelectedTab(index)}
+              onClick={() => handleTabClick(index)}
             >
               {table.title}
             </div>
