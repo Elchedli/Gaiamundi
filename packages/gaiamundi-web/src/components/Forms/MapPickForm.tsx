@@ -2,16 +2,13 @@ import { FC } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { NewMapForm } from './NewMapForm';
-import { UploadedFile } from 'interfaces/file';
 
-export const MapPickForm: FC<{
-  onFileUploaded: (file: UploadedFile) => void;
-}> = ({ onFileUploaded }) => {
+export const MapPickForm: FC = () => {
   const tabs = [
     {
       id: 1,
       title: "A partir d'une carte GeoJSON",
-      content: <NewMapForm onFileUploaded={onFileUploaded} />,
+      content: <NewMapForm />,
     },
     {
       id: 2,

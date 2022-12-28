@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'components/Button/Button';
@@ -8,7 +7,6 @@ import { PageCartoStub, PageCartoForm } from 'interfaces/page-carto';
 import { useToast } from 'hooks/useToast';
 import { useRequireAuth } from 'hooks/useRequireAuth';
 import { MapPickForm } from './MapPickForm';
-import { UploadedFile } from 'interfaces/file';
 import { TextInput } from './Inputs/TextInput';
 import { Label } from './Inputs/Label';
 import { createPageCarto } from 'services/page-carto';
@@ -18,9 +16,6 @@ export const NewPageCartoForm = () => {
   const { user } = useRequireAuth();
   const { addToast } = useToast();
   const form = useForm<PageCartoForm>();
-  const [fileUploaded, onFileUploaded] = useState<UploadedFile | undefined>(
-    undefined
-  );
 
   const pageCartoMutation = useMutation({
     mutationFn: async (data: PageCartoStub) => {
@@ -54,7 +49,6 @@ export const NewPageCartoForm = () => {
       return await createGeoMap({
         ...geoMap,
         owner: user?.id,
-        geojson: fileUploaded?.id,
       });
     },
     onSuccess: (response, formData) => {
@@ -72,15 +66,7 @@ export const NewPageCartoForm = () => {
   });
 
   const onSubmit = (data: PageCartoForm) => {
-    if (fileUploaded) {
-      geoMapMutation.mutateAsync(data);
-    } else {
-      addToast({
-        title: 'Echec de validation',
-        description: `L'upload du fichier GeoJSON est obligatoire.`,
-        type: 'error',
-      });
-    }
+    geoMapMutation.mutateAsync(data);
   };
 
   return (
@@ -110,12 +96,12 @@ export const NewPageCartoForm = () => {
             )}
           </div>
           <div className="mr-10">
-            <MapPickForm onFileUploaded={onFileUploaded} />
+            <MapPickForm />
           </div>
           <div className="mr-10 flex justify-end">
             <Button
               type="submit"
-              className="inline-flex justify-center text-sm font-medium leading-5 text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-royal-blue-600 hover:bg-royal-blue-500 focus:outline-none focus:border-royal-blue-700 focus:shadow-outline-royal-blue active:bg-royal-blue-700"
+              className="inline-flex justify-center"
               isLoading={
                 geoMapMutation.isLoading || pageCartoMutation.isLoading
               }

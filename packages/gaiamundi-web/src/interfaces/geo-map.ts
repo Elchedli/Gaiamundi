@@ -11,11 +11,10 @@ export interface GeoMapBase {
 
 export interface GeoMapStub extends GeoMapBase {
   owner?: number;
-  geojson?: number;
+  geoJSON?: number;
 }
 
 export interface GeoMap extends GeoMapBase {
   owner?: ApiDocument<User>;
-  geojson?: ApiDocument<UploadedFile>;
+  geoJSON?: ApiDocument<UploadedFile>;
 }
-

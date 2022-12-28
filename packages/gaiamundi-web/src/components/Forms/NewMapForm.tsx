@@ -1,22 +1,27 @@
 import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
-import DropZone from './Inputs/DropZone';
+
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
 import { UploadedFile } from 'interfaces/file';
 import { PageCartoForm } from 'interfaces/page-carto';
+import GeoJsonUploader from './GeoJsonUploader';
 
-export const NewMapForm: FC<{
-  onFileUploaded: (file: UploadedFile) => void;
-}> = ({ onFileUploaded }) => {
+export const NewMapForm: FC = () => {
   const {
     register,
     getFieldState,
     formState: { errors },
+    setValue,
   } = useFormContext<PageCartoForm>(); // retrieve all hook methods
+
+  const handleGeoJsonUpload = ({ id }: UploadedFile) => {
+    setValue('geoMap.geoJSON', id);
+  };
+
   return (
     <div className="grid lg:grid-cols-2">
-      <DropZone onFileUploaded={onFileUploaded} />
+      <GeoJsonUploader onFileUploaded={handleGeoJsonUpload} />
       <div className="px-5">
         <div>
           <Label htmlFor="Nom">Nom</Label>
@@ -77,6 +82,15 @@ export const NewMapForm: FC<{
               {getFieldState('geoMap.license')?.error?.message}
             </div>
           )}
+        </div>
+        <div>
+          <TextInput
+            id="geoMap.geoJSON"
+            type={'hidden'}
+            {...register('geoMap.geoJSON', {
+              required: 'Le fichier GeoJSON est obligatoire',
+            })}
+          />
         </div>
       </div>
     </div>
