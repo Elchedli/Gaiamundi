@@ -270,7 +270,6 @@ class Strapi {
 
   /**
    * Uploads a file.
-   * TODO: add the geo-map id after the map is created.
    */
   uploadFile(file: File, ref: string) {
     const formData = new FormData();

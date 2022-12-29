@@ -1,5 +1,5 @@
 import Download from 'components/Icons/Download';
-import { FileInputHidden } from './FileInput';
+import { FileInput } from './FileInput';
 import { Label } from './Label';
 
 type DropZoneProps = {
@@ -35,7 +35,7 @@ const DropZone: React.FC<DropZoneProps> = ({ onUpload }) => {
             </span>
           </p>
         </div>
-        <FileInputHidden onUpload={onUpload} />
+        <FileInput isHidden={true} onUpload={onUpload} />
       </Label>
     </div>
   );
