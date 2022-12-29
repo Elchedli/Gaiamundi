@@ -22,7 +22,7 @@ export interface AuthContextValue {
   isAuthenticated: boolean;
   setUser: (data: User | undefined) => void;
   authenticate: (user: User, jwt: string) => void;
-  logout: UseMutateFunction<any, any, void, any>;
+  logout: UseMutateFunction;
   refetchUser: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<User, Error>>;

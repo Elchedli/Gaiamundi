@@ -11,6 +11,7 @@ import { AuthProvider } from 'hooks/useAuth';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
+import { PageCartoEditPage } from 'pages/PageCartoPage/PageCartoPage';
 import { ToastProvider } from 'hooks/useToast';
 import { AccountPage } from 'pages/Account/AccountPage';
 import { AccountEditPage } from 'pages/Account/AccountEditPage';
@@ -44,6 +45,10 @@ export default function App() {
                 <Route
                   path="page-carto/create"
                   element={<NewPageCartoPage />}
+                />
+                <Route
+                  path="page-carto/:id/edit"
+                  element={<PageCartoEditPage />}
                 />
               </Route>
             </Routes>

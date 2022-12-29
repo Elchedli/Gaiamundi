@@ -15,6 +15,6 @@ export interface GeoMapStub extends GeoMapBase {
 }
 
 export interface GeoMap extends GeoMapBase {
-  owner?: ApiDocument<User>;
-  geoJSON?: ApiDocument<UploadedFile>;
+  owner: ApiDocument<User>;
+  geoJSON: ApiDocument<UploadedFile>;
 }

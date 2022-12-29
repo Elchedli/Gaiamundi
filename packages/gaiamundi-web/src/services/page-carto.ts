@@ -15,3 +15,16 @@ export const getLatestPageCartos = async (page: number, pageSize: number) => {
     },
   });
 };
+
+export const getPageCartoById = async (id: number) => {
+  return await strapi.getById<PageCarto>(ContentType.PAGE_CARTOS, id, {
+    populate: {
+      map: {
+        populate: {
+          geoJSON: true,
+        },
+      },
+      owner: true,
+    },
+  });
+};

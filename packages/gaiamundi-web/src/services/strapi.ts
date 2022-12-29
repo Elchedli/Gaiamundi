@@ -43,7 +43,10 @@ export type QueryParams = {
     // eslint-disable-next-line
     [field: string]: { [operator in FilterOperator]?: any };
   };
-  populate?: string | string[] | { [field: string]: { populate: string[] } };
+  populate?:
+    | string
+    | string[]
+    | { [field: string]: boolean | { populate: { [field: string]: boolean } } };
   sort?: string | string[]; // exp. 'createdAt:desc'
   pagination?: {
     page?: number; // default 1
@@ -91,7 +94,7 @@ class Strapi {
   currentUser(token: string): Promise<User> {
     if (token) this.token = token;
     return this.request
-      .get<void, User>('/users/me')
+      .get<void, User>('/api/users/me')
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -106,7 +109,7 @@ class Strapi {
   ) {
     return this.request
       .put<Pick<User, 'username' | 'email' | 'password'>, User>(
-        `/users/${userId}`,
+        `/api/users/${userId}`,
         data
       )
       .catch(({ error }: ApiErrorResponse) => {
@@ -120,7 +123,7 @@ class Strapi {
   login(identifier: string, password: string): Promise<UserAuthResponse> {
     return this.request
       .post<{ identifier: string; password: string }, UserAuthResponse>(
-        '/auth/local',
+        '/api/auth/local',
         { identifier, password }
       )
       .then(({ user, jwt }) => {
@@ -144,7 +147,10 @@ class Strapi {
    */
   register(data: UserSignUpFields): Promise<UserAuthResponse> {
     return this.request
-      .post<UserSignUpFields, UserAuthResponse>('/auth/local/register', data)
+      .post<UserSignUpFields, UserAuthResponse>(
+        '/api/auth/local/register',
+        data
+      )
       .then(({ jwt, user }) => {
         this.token = jwt;
         return { jwt, user };
@@ -162,7 +168,7 @@ class Strapi {
    */
   forgotPassword(email: string): Promise<boolean> {
     return this.request
-      .post<{ email: string }, boolean>('/auth/forgot-password', { email })
+      .post<{ email: string }, boolean>('/api/auth/forgot-password', { email })
       .then((response) => response)
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
@@ -181,7 +187,7 @@ class Strapi {
       .post<
         { code: string; password: string; passwordConfirmation: string },
         UserAuthResponse
-      >('/auth/reset-password', { code, password, passwordConfirmation })
+      >('/api/auth/reset-password', { code, password, passwordConfirmation })
       .then(({ jwt, user }) => {
         this.token = jwt;
         return { jwt, user };
@@ -197,7 +203,7 @@ class Strapi {
   count<T extends ContentType>(contentType: T, params: QueryParams) {
     return this.request
       .get<QueryParams, ApiData<T>>(
-        `/${contentType}/count`,
+        `/api/${contentType}/count`,
         params && { params }
       )
       .catch(({ error }: ApiErrorResponse) => {
@@ -210,7 +216,7 @@ class Strapi {
    */
   create<T>(contentType: ContentType, data: T) {
     return this.request
-      .post<T, ApiResponse<ApiDocument<T>>>(`/${contentType}`, { data })
+      .post<T, ApiResponse<ApiDocument<T>>>(`/api/${contentType}`, { data })
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -219,9 +225,14 @@ class Strapi {
   /**
    * get a content-type entry by id.
    */
-  getById<R>(contentType: ContentType, id: number) {
+  getById<R>(contentType: ContentType, id: number, params?: QueryParams) {
     return this.request
-      .get<void, ApiResponse<R>>(`/${contentType}/${id}`)
+      .get<QueryParams, ApiResponse<ApiDocument<R>>>(
+        `/api/${contentType}/${id}`,
+        params && {
+          params,
+        }
+      )
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -233,7 +244,7 @@ class Strapi {
   get<R>(contentType: ContentType, params?: QueryParams) {
     return this.request
       .get<QueryParams, ApiCollection<R>>(
-        `/${contentType}`,
+        `/api/${contentType}`,
         params && {
           params,
         }
@@ -249,7 +260,7 @@ class Strapi {
   update<T, R>(contentType: ContentType, id: number, data: Partial<T>) {
     return this.request
       .put<Partial<T>, ApiResponse<ApiDocument<R>>>(
-        `/${contentType}/${id}`,
+        `/api/${contentType}/${id}`,
         data
       )
       .catch(({ error }: ApiErrorResponse) => {
@@ -262,7 +273,7 @@ class Strapi {
    */
   delete<R>(contentType: ContentType, id: number) {
     return this.request
-      .delete<void, ApiResponse<ApiDocument<R>>>(`/${contentType}/${id}`)
+      .delete<void, ApiResponse<ApiDocument<R>>>(`/api/${contentType}/${id}`)
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
@@ -276,11 +287,11 @@ class Strapi {
     formData.append('files', file);
     formData.append('ref', ref);
     return this.request
-      .post<FormData, UploadedFile[]>('/upload', formData)
+      .post<FormData, UploadedFile[]>('/api/upload', formData)
       .then(([uploadedfile]) => {
         return uploadedfile;
       });
   }
 }
 
-export const strapi = new Strapi(`${config.API_URL}/api`);
+export const strapi = new Strapi(config.API_URL);
