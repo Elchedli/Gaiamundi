@@ -1,18 +1,38 @@
-import { ChangeEventHandler, FC } from 'react';
+import { FC } from 'react';
 import { Label } from './Label';
 
 import { TextInput, TextInputProps } from './TextInput';
 
 export type FileInputProps = Omit<TextInputProps, 'type' | 'onChange'> & {
-  onUpload?: (file: File) => void;
+  isHidden?: boolean;
+  onUpload: (file: File) => void;
 };
-export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
-  // Handle file upload event and update state
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const files = event.target.files!;
-    onUpload && onUpload(files[0]);
+export const FileInput: FC<FileInputProps> = ({
+  onUpload,
+  isHidden = false,
+  ...props
+}) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      onUpload(files[0]);
+    }
   };
+
+  if (isHidden) {
+    return (
+      <TextInput
+        id="dropzone-file"
+        className="hidden"
+        aria-describedby="file_upload_help"
+        {...props}
+        onChange={handleChange}
+        type="file"
+      />
+    );
+  }
+
   return (
     <>
       <Label
@@ -34,25 +54,6 @@ export const FileInput: FC<FileInputProps> = ({ onUpload, ...props }) => {
       >
         Localisez et sélectionnez le fichier que vous souhaitez télécharger.
       </div>
-    </>
-  );
-};
-
-export const FileInputHidden: FC<FileInputProps> = ({ onUpload, ...props }) => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const files = event.target.files!;
-    onUpload && onUpload(files[0]);
-  };
-  return (
-    <>
-      <TextInput
-        id="dropzone-file"
-        className="hidden"
-        aria-describedby="file_upload_help"
-        {...props}
-        onChange={handleChange}
-        type="file"
-      />
     </>
   );
 };

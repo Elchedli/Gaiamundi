@@ -6,10 +6,10 @@ import { useUrlQuery } from 'hooks/useUrlQuery';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
 import { UserAuthResponse } from 'interfaces/user';
-import { strapi } from 'services/strapi';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { resetPassword } from 'services/user';
 
 const ResetPasswordForm: React.FC = () => {
   const {
@@ -33,7 +33,7 @@ const ResetPasswordForm: React.FC = () => {
     { code: string; password: string; password2: string }
   >({
     mutationFn: ({ code, password, password2 }) =>
-      strapi.resetPassword(code, password, password2),
+      resetPassword(code, password, password2),
     onSuccess: () => {
       navigate('/dashboard');
       addToast({

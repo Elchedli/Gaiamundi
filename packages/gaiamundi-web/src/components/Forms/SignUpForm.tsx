@@ -9,9 +9,9 @@ import { EMAIL_REGEX } from 'utils/utils';
 import { TextInput } from './Inputs/TextInput';
 import { Label } from './Inputs/Label';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { strapi } from 'services/strapi';
 import { ApiError } from 'interfaces/api';
 import { useToast } from 'hooks/useToast';
+import { signUp } from 'services/user';
 
 interface Props {
   email?: string;
@@ -40,7 +40,7 @@ const SignUpForm = ({ email }: Props) => {
     UserSignUpFields
   >({
     mutationFn: async (newUser) => {
-      return await strapi.register(newUser);
+      return await signUp(newUser);
     },
     onSuccess: ({ user, jwt }) => {
       authenticate(user, jwt);

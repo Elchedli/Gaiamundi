@@ -12,23 +12,24 @@ export interface ApiErrorResponse {
 
 export type ApiResponse<T> = T | ApiErrorResponse;
 
-export type ApiPaginationMeta = (
-  | {
-      start: number;
-      limit: number;
-    }
-  | {
-      page: number;
-      pageSize: number;
-      pageCount?: number;
-    }
-) & {
-  total?: number;
+export type ApiPaginationMeta = {
+  //
+  start?: number;
+  limit?: number;
+  // OR
+  page?: number;
+  pageSize?: number;
+  pageCount?: number;
+  // Always
+  total: number;
 };
 
 export interface ApiData<T> {
   id: number;
-  attributes: T;
+  attributes: T & {
+    created_at: string;
+    updated_at: string;
+  };
 }
 
 export interface ApiDocument<T> {
@@ -39,7 +40,7 @@ export interface ApiDocument<T> {
 }
 
 export interface ApiCollection<T> {
-  data: Array<T>;
+  data: Array<ApiData<T>>;
   meta: {
     pagination: ApiPaginationMeta;
   };

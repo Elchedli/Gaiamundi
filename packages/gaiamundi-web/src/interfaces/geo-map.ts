@@ -1,13 +1,20 @@
 import { ApiDocument } from './api';
+import { UploadedFile } from './file';
 import { User } from './user';
 
-export interface GeoMapAttributes {
+export interface GeoMapBase {
   name: string;
-  owner?: ApiDocument<User>;
-  yearValidity?: number;
-  source?: string;
-  license?: string;
-  geojson: JSON;
+  yearValidity: number;
+  source: string;
+  license: string;
 }
 
-export type GeoMap = ApiDocument<GeoMapAttributes>;
+export interface GeoMapStub extends GeoMapBase {
+  owner?: number;
+  geoJSON?: number;
+}
+
+export interface GeoMap extends GeoMapBase {
+  owner?: ApiDocument<User>;
+  geoJSON?: ApiDocument<UploadedFile>;
+}

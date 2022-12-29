@@ -8,8 +8,8 @@ import { useToast } from 'hooks/useToast';
 import { EMAIL_REGEX } from 'utils/utils';
 import { Label } from './Inputs/Label';
 import { TextInput } from './Inputs/TextInput';
-import { strapi } from 'services/strapi';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { sendForgotPasswordEmail } from 'services/user';
 
 type UserEmail = { email: string };
 
@@ -27,7 +27,7 @@ const ForgotPasswordForm: React.FC = () => {
     ApiError,
     string
   >({
-    mutationFn: (email: string) => strapi.forgotPassword(email),
+    mutationFn: sendForgotPasswordEmail,
     onSuccess: () => {
       addToast({
         title: 'Réinitialisation en cours ...',

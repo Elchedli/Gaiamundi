@@ -6,11 +6,11 @@ import { UserSignUpFields } from 'interfaces/user';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { ApiError } from 'interfaces/api';
 import { useMutation } from 'react-query';
-import { strapi } from 'services/strapi';
 import { Label } from 'components/Forms/Inputs/Label';
 import { TextInput } from 'components/Forms/Inputs/TextInput';
 import { EMAIL_REGEX } from 'utils/utils';
 import { Button } from 'components/Button/Button';
+import { updateCurrentUser } from 'services/user';
 
 export const AccountEditForm: React.FC = () => {
   const { addToast } = useToast();
@@ -30,7 +30,7 @@ export const AccountEditForm: React.FC = () => {
 
   const { mutateAsync, isError, error, isLoading } = useMutation({
     mutationFn: async (data: UserSignUpFields) => {
-      return await strapi.updateCurrentUser(user?.id || 0, data);
+      return await updateCurrentUser(user?.id || 0, data);
     },
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
