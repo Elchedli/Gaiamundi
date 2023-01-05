@@ -1,8 +1,8 @@
 export interface ApiError {
-  status: number;
-  name: string;
-  message: string;
-  description: string;
+  status?: number;
+  name?: string;
+  message?: string;
+  description?: string;
 }
 
 export interface ApiErrorResponse {

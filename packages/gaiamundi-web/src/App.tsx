@@ -16,6 +16,8 @@ import { ToastProvider } from 'hooks/useToast';
 import { AccountPage } from 'pages/Account/AccountPage';
 import { AccountEditPage } from 'pages/Account/AccountEditPage';
 
+import 'react-data-grid/lib/styles.css';
+
 // Create a client
 const queryClient = new QueryClient();
 

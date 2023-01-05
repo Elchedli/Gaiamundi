@@ -13,6 +13,7 @@ import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
 export enum ContentType {
   PAGE_CARTOS = 'page-cartos',
   GEO_MAPS = 'geo-maps',
+  DATASET = 'datasets',
   USERS = 'users',
 }
 

@@ -43,6 +43,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "columns": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::column.column"
     }
   }
 }

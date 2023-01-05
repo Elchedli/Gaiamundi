@@ -25,6 +25,15 @@ export const getPageCartoById = async (id: number) => {
         },
       },
       owner: true,
+      columns: {
+        populate: {
+          dataset: true,
+        },
+      },
     },
   });
+};
+
+export const uploadCsv = async (file: File) => {
+  return await strapi.uploadFile(file, 'api::page-carto.page-carto');
 };
