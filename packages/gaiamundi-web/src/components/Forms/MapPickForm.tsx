@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { NewMapForm } from './NewMapForm';
+import { GeoMapList } from 'components/MapGeoCreate/GeoMapList';
 
 export const MapPickForm: FC = () => {
   const tabs = [
@@ -13,7 +14,7 @@ export const MapPickForm: FC = () => {
     {
       id: 2,
       title: 'Réutiliser une carte GeoJSON existante',
-      content: <div className="text-center ">en cours de développement</div>,
+      content: <GeoMapList />,
     },
   ];
 

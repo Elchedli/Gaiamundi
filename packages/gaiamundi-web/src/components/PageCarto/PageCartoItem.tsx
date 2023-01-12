@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import excerptHtml from 'excerpt-html';
 import { PageCarto } from 'interfaces/page-carto';
 import { Badge } from 'components/Tags/Badge';
+import Spinner from 'components/Icons/Spinner';
 import config from 'config';
 import { UploadedFile } from 'interfaces/file';
 import { ApiData, ApiDocument } from 'interfaces/api';
@@ -41,7 +42,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
             <div className="mt-3">
               {tags?.data?.map((tag, index) => {
                 return (
-                  <Badge href="#" key={index}>
+                  <Badge href="#" key={index} icon={<Spinner />}>
                     {tag.attributes.name}
                   </Badge>
                 );

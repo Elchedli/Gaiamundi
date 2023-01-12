@@ -14,6 +14,7 @@ export enum ContentType {
   PAGE_CARTOS = 'page-cartos',
   GEO_MAPS = 'geo-maps',
   USERS = 'users',
+  THUMBNAIL = 'geo-maps/thumbnail',
 }
 
 type FilterOperator =
