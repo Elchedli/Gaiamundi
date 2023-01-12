@@ -1,13 +1,13 @@
-import { ApiData, ApiDocument } from './api';
+import { ApiDocument } from './api';
 import { UploadedFile } from './file';
 import { User } from './user';
 
 export interface GeoMapBase {
-  name: string;
+  name?: string;
   yearValidity?: number;
   source?: string;
   license?: string;
-  geojson: JSON;
+  geojson?: JSON;
 }
 
 export interface GeoMapStub extends GeoMapBase {
@@ -20,13 +20,7 @@ export interface GeoMap extends GeoMapBase {
   geoJSON?: ApiDocument<UploadedFile>;
 }
 
-export interface GeoMapAttributes {
-  name: string;
+export interface GeoMap extends GeoMapBase {
   owner?: ApiDocument<User>;
-  yearValidity?: number;
-  source?: string;
-  license?: string;
-  geojson?: JSON;
+  geoJSON?: ApiDocument<UploadedFile>;
 }
-
-export type GeoMapInterface = ApiData<GeoMapAttributes>;

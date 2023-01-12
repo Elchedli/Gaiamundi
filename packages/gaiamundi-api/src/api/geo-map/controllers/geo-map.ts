@@ -13,14 +13,18 @@ export default factories.createCoreController(
     async thumbnail(ctx) {
       try {
         // get map by id
-        const fileId = ctx.params.id;
+        const mapId = ctx.params.id;
         const entry = await strapi.entityService.findOne(
-          "plugin::upload.file",
-          fileId
+          "api::geo-map.geo-map",
+          mapId,
+          {
+            fields: ["name"],
+            populate: { geoJSON: true },
+          }
         );
-          console.log(JSON.stringify(entry), entry.hash)
+
         // compute svg path
-        const svgFilename = `${entry.hash}.svg`;
+        const svgFilename = `${entry.geoJSON.hash}.svg`;
         const svgPath = path.join(
           strapi.dirs.static.public,
           "thumbnails",
@@ -32,7 +36,7 @@ export default factories.createCoreController(
           const geoJsonPath = path.join(
             strapi.dirs.static.public,
             "uploads",
-            `${entry.hash}${entry.ext}`
+            `${entry.geoJSON.hash}${entry.geoJSON.ext}`
           );
           const data = require(geoJsonPath);
           svg = geojson2svg()

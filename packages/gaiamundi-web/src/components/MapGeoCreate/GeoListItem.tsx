@@ -1,9 +1,10 @@
+import { ApiData } from 'interfaces/api';
+import { GeoMap } from 'interfaces/geo-map';
 import { Link } from 'react-router-dom';
-import { GeoMapInterface } from 'interfaces/geo-map';
 
-const GeoListItem: React.FC<GeoMapInterface> = ({
+const GeoListItem: React.FC<ApiData<GeoMap>> = ({
   id,
-  attributes: { name, yearValidity, source, license },
+  attributes: { yearValidity, name, source, license },
 }) => {
   return (
     <div className="group border pb-2">

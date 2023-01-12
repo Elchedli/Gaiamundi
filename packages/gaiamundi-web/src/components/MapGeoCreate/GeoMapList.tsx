@@ -5,6 +5,7 @@ import { ContentType, strapi } from 'services/strapi';
 import GeoListItem from './GeoListItem';
 import { Pagination } from 'components/Pagination/Pagination';
 import { User } from 'interfaces/user';
+import { GeoMap } from 'interfaces/geo-map';
 
 export const GeoMapList = () => {
   const paginationLimit = 9;
@@ -23,7 +24,7 @@ export const GeoMapList = () => {
   const { data: response } = useQuery({
     queryKey: ['latest-geo-carto', page],
     queryFn: () => {
-      return strapi.get(ContentType.GEO_MAPS, {
+      return strapi.get<GeoMap>(ContentType.GEO_MAPS, {
         populate: '*',
         sort: 'createdAt:desc',
         pagination: {
@@ -36,6 +37,7 @@ export const GeoMapList = () => {
   });
 
   const geoMaps = response?.data;
+
   let MapCounter = 0;
   const GeoList = (
     <>

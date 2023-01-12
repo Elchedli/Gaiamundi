@@ -1,5 +1,3 @@
-import { ApiDocument } from './api';
-
 export interface UploadedFile {
   id: number;
   name: string;
