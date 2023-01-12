@@ -22,7 +22,7 @@ export const Badge: FC<BadgeProps> = ({
       )}
       {...props}
     >
-      <div className="w-5 h-5 float-left mr-1">{Icon}</div>
+      <div className="float-left mr-1">{Icon}</div>
       {children && <span>{children}</span>}
     </span>
   );
