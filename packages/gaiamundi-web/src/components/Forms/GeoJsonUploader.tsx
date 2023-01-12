@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-
 import { useToast } from 'hooks/useToast';
 import { UploadedFile } from 'interfaces/file';
 import LoadingSpinner from 'components/Icons/LoadingSpinner';

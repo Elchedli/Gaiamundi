@@ -17,14 +17,17 @@ const GeoListItem: React.FC<ApiData<GeoMap>> = ({
             />
           }
         </div>
-        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8"></div>
-        <div className="px-2 pt-2">
-          <h3 className="text-lg font-medium text-gray-900">Titre: {name}</h3>
-          <h4 className="text-xs text-gray-500 mt-0.5">Source : {source}</h4>
-          <h4 className="text-xs text-gray-500">License : {license}</h4>
-          <h4 className="text-xs text-gray-500">
-            Annee de validitée : {yearValidity}
-          </h4>
+        <div className="p-3">
+          <h2>{name}</h2>
+          <div className="text-gray-500">
+            <div className="text-sm my-1">
+              <div className="my-1 font-bold">Source : {source}</div>
+              <div className="text-xs mt-2">License : {license}</div>
+              <div className="text-xs mt-2">
+                Annee de validitée : {yearValidity}
+              </div>
+            </div>
+          </div>
         </div>
       </Link>
     </div>
