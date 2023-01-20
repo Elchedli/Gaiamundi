@@ -40,7 +40,6 @@ type FilterOperator =
 
 export type QueryParams = {
   filters?: {
-    // eslint-disable-next-line
     [field: string]: { [operator in FilterOperator]?: any };
   };
   populate?: string | string[] | { [field: string]: { populate: string[] } };
