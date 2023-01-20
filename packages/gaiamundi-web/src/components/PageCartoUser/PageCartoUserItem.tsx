@@ -13,7 +13,7 @@ const getThumnailUrl = (cover: ApiDocument<UploadedFile>) => {
     : `${config.PUBLIC_URL}/imageplaceholder.png`;
 };
 
-const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
+const PageCartoUserItem: React.FC<ApiData<PageCarto>> = ({
   id,
   attributes: { name, owner, tags, map, cover, html },
 }) => {
@@ -54,4 +54,4 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   );
 };
 
-export default PageCartoItem;
+export default PageCartoUserItem;
