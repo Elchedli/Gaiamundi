@@ -13,10 +13,10 @@ export default factories.createCoreController(
     async thumbnail(ctx) {
       try {
         // get map by id
-        const mapId = ctx.params.id;
+        const fileId = ctx.params.id;
         const entry = await strapi.entityService.findOne(
           "plugin::upload.file",
-          mapId
+          fileId
         );
         console.log(JSON.stringify(entry), entry.hash);
         // compute svg path

@@ -1,41 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import GeoListItem from './GeoListItem';
 import { Pagination } from 'components/Pagination/Pagination';
-import { User } from 'interfaces/user';
 import { GeoMap } from 'interfaces/geo-map';
+import { useAuth } from 'hooks/useAuth';
 
 export const GeoMapList = () => {
   const paginationLimit = 9;
 
   const [page, setPage] = useState(1);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [currentUser, setCurrentUser] = useState<Partial<User>>({});
-  const [filters, setFilters] = useState<QueryParams['filters']>({});
-
-  useEffect(() => {
-    const userGetData = async () => {
-      return strapi.token && (await strapi.currentUser(strapi.token));
-    };
-    userGetData().then((user) => {
-      if (user) {
-        setCurrentUser(user);
-        setFilters({
-          'owner][username': {
-            $eq: user.username,
-          },
-        });
-      }
-    });
-  }, []);
+  const { user } = useAuth();
 
   const { data: response } = useQuery({
-    queryKey: ['latest-geo-carto', page, filters],
+    queryKey: ['latest-geo-carto', page, selectedTab],
     queryFn: () => {
       return strapi.get<GeoMap>(ContentType.GEO_MAPS, {
-        filters: filters,
+        filters: {
+          owner:
+            !selectedTab && user != undefined
+              ? {
+                  id: {
+                    $eq: user?.id,
+                  },
+                }
+              : {},
+        } as QueryParams['filters'],
         populate: '*',
         sort: 'createdAt:desc',
         pagination: {
@@ -46,19 +38,8 @@ export const GeoMapList = () => {
     },
   });
 
-  let MapCounter = 0;
-
   const handleTabClick = (index: number) => {
     setSelectedTab(index);
-    setFilters(
-      !index
-        ? {
-            'owner][username': {
-              $eq: currentUser.username,
-            },
-          }
-        : {}
-    );
   };
 
   const GeoMap = [
@@ -98,7 +79,6 @@ export const GeoMapList = () => {
           <h2 className="pb-4 text-3xl font-extrabold">Toutes les cartes</h2>
           <div className="grid grid-cols-3 gap-y-10 gap-x-6">
             {response?.data.map((page) => {
-              MapCounter++;
               return <GeoListItem key={page.attributes.name} {...page} />;
             })}
           </div>
@@ -108,7 +88,7 @@ export const GeoMapList = () => {
               onPaginateNext={() => setPage(page + 1)}
               onPaginatePrevious={() => setPage(page - 1)}
               onPaginate={(p: number) => setPage(p)}
-              totalPages={Math.ceil(MapCounter / paginationLimit)}
+              totalPages={response?.meta.pagination.pageCount ?? 0}
             />
           </div>
         </div>
