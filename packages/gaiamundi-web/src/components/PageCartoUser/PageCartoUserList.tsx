@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Alert } from 'components/Alert/Alert';
@@ -8,23 +8,21 @@ import { Pagination } from 'components/Pagination/Pagination';
 import PageCartoUserItem from './PageCartoUserItem';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { PageCarto } from 'interfaces/page-carto';
+import { useAuth } from 'hooks/useAuth';
 
-export const PageCartoUserList = ({ nameInput, tagsTable }: any) => {
+interface PageCartoUserListInterface {
+  nameInput: string;
+  tagsTable: Array<string>;
+}
+
+export const PageCartoUserList = ({
+  nameInput,
+  tagsTable,
+}: PageCartoUserListInterface) => {
   const paginationLimit = 9;
 
   const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState('');
-
-  useEffect(() => {
-    const userGetData = async () => {
-      return strapi.token && (await strapi.currentUser(strapi.token));
-    };
-    userGetData().then((user) => {
-      if (user) {
-        setCurrentUser(user.username);
-      }
-    });
-  }, []);
+  const { user } = useAuth();
 
   const {
     data: response,
@@ -32,13 +30,13 @@ export const PageCartoUserList = ({ nameInput, tagsTable }: any) => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['page-carto-user', page, currentUser, nameInput, tagsTable],
+    queryKey: ['page-carto-user', page, nameInput, tagsTable],
     queryFn: () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
         filters: {
           owner: {
-            username: {
-              $eq: currentUser,
+            id: {
+              $eq: user?.id,
             },
           },
           $or: [
