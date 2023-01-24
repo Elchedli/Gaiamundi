@@ -38,10 +38,6 @@ export const GeoMapList = () => {
     },
   });
 
-  const handleTabClick = (index: number) => {
-    setSelectedTab(index);
-  };
-
   const GeoMap = [
     {
       id: 0,
@@ -69,7 +65,7 @@ export const GeoMapList = () => {
                   ? 'bg-white shadow'
                   : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
               )}
-              onClick={() => handleTabClick(index)}
+              onClick={() => setSelectedTab(index)}
             >
               {table.title}
             </div>
