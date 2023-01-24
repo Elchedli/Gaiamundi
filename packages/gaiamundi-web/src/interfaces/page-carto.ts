@@ -1,4 +1,4 @@
-import { ApiCollection, ApiData, ApiDocument } from './api';
+import { ApiCollection, ApiDocument } from './api';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
 import { User } from './user';

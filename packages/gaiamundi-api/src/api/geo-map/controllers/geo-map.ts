@@ -18,7 +18,7 @@ export default factories.createCoreController(
           "plugin::upload.file",
           fileId
         );
-          console.log(JSON.stringify(entry), entry.hash)
+        console.log(JSON.stringify(entry), entry.hash);
         // compute svg path
         const svgFilename = `${entry.hash}.svg`;
         const svgPath = path.join(
