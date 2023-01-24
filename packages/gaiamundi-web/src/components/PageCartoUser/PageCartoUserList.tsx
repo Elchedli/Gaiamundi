@@ -1,23 +1,19 @@
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
-
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
 import { Pagination } from 'components/Pagination/Pagination';
 import PageCartoUserItem from './PageCartoUserItem';
-import { TextInput } from 'components/Forms/Inputs/TextInput';
-import { Label } from 'components/Forms/Inputs/Label';
-import { ContentType, strapi } from 'services/strapi';
+import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { PageCarto } from 'interfaces/page-carto';
 
-export const PageCartoUserList = () => {
+export const PageCartoUserList = ({ nameInput, tagsTable }: any) => {
   const paginationLimit = 9;
 
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');
-  const [name, setName] = useState('');
 
   useEffect(() => {
     const userGetData = async () => {
@@ -30,40 +26,13 @@ export const PageCartoUserList = () => {
     });
   }, []);
 
-  type FilterOperator =
-    | '$eq' //	Equal
-    | '$eqi' //	Equal (case-insensitive)
-    | '$ne' //	Not equal
-    | '$lt' //	Less than
-    | '$lte' //	Less than or equal to
-    | '$gt' //	Greater than
-    | '$gte' //	Greater than or equal to
-    | '$in' //	Included in an array
-    | '$notIn' //	Not included in an array
-    | '$contains' //	Contains
-    | '$notContains' //	Does not contain
-    | '$containsi' //	Contains (case-insensitive)
-    | '$notContainsi' //	Does not contain (case-insensitive)
-    | '$null' //	Is null
-    | '$notNull' //	Is not null
-    | '$between' //	Is between
-    | '$startsWith' //	Starts with
-    | '$endsWith' //	Ends with
-    | '$or' //	Joins the filters in an "or" expression
-    | '$and'; //	Joins the filters in an "and" expression
-
-  type Filters = {
-    [field: string]: {
-      [operator in FilterOperator]?: any;
-    };
-  };
   const {
     data: response,
     isError,
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['page-carto-user', page, name, currentUser],
+    queryKey: ['page-carto-user', page, currentUser, nameInput, tagsTable],
     queryFn: () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
         filters: {
@@ -72,10 +41,37 @@ export const PageCartoUserList = () => {
               $eq: currentUser,
             },
           },
-          // name: {
-          //   $eq: name,
-          // },
-        } as Filters,
+          $or: [
+            {
+              name:
+                nameInput != ''
+                  ? {
+                      $contains: nameInput,
+                    }
+                  : {},
+            },
+            {
+              html:
+                nameInput != ''
+                  ? {
+                      $contains: nameInput,
+                    }
+                  : {},
+            },
+          ],
+          $and: [
+            {
+              tags: {
+                name:
+                  tagsTable.length != 0
+                    ? {
+                        $in: tagsTable,
+                      }
+                    : {},
+              },
+            },
+          ],
+        } as QueryParams['filters'],
         populate: '*',
         sort: 'createdAt:desc',
         pagination: {
@@ -100,19 +96,8 @@ export const PageCartoUserList = () => {
 
   const { data, meta } = response;
 
-  // const searchPageCartos = (e: any) => {
-  //   setName('hallo');
-  // };
   return (
     <div>
-      <div>
-        <Label htmlFor="Nom">Recherche</Label>
-        <TextInput
-          id="geoMap.name"
-          className="w-fit mb-10"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
         {data.map((page) => {
           return <PageCartoUserItem key={page.id} {...page} />;
