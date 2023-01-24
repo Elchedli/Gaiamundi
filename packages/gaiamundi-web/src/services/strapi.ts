@@ -14,6 +14,7 @@ export enum ContentType {
   PAGE_CARTOS = 'page-cartos',
   GEO_MAPS = 'geo-maps',
   USERS = 'users',
+  TAGS = 'tags',
 }
 
 type FilterOperator =
@@ -40,6 +41,7 @@ type FilterOperator =
 
 export type QueryParams = {
   filters?: {
+    // eslint-disable-next-line
     [field: string]: { [operator in FilterOperator]?: any };
   };
   populate?: string | string[] | { [field: string]: { populate: string[] } };
