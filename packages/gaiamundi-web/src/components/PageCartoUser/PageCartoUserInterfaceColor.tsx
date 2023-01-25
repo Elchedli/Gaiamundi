@@ -6,20 +6,17 @@ import { Tag } from 'interfaces/page-carto';
 import { useEffect, useReducer } from 'react';
 import { ContentType, strapi } from 'services/strapi';
 import { PageCartoUserList } from './PageCartoUserList';
-import { reducerTags } from './reducerTags';
+import { reducerTagsColored } from './reducerTagsColored';
 
 const initialState = {
   tagsTotal: [],
-  tagsSelected: [],
   isLoading: true,
   nameInput: '',
   error: null,
-  index: 0,
 };
 
-export const PageCartoUserInterface: React.FC = () => {
-  const [state, dispatch] = useReducer(reducerTags, initialState);
-
+export const PageCartoUserInterfaceColor: React.FC = () => {
+  const [state, dispatch] = useReducer(reducerTagsColored, initialState);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,29 +42,16 @@ export const PageCartoUserInterface: React.FC = () => {
           className="w-fit mb-10"
           name="inputSearch"
           onChange={(e) =>
-            dispatch({ type: 'searchMap', nameInput: e.target.value })
+            dispatch({ type: 'SEARCH_MAP', nameInput: e.target.value })
           }
         />
-        <Label htmlFor="Nom">Tags Utiliser : </Label>
-        {state.tagsSelected?.map((tag, index) => {
-          return (
-            <Badge
-              href="#"
-              key={index}
-              onClick={() => dispatch({ type: 'DeleteTag', index })}
-            >
-              {tag.attributes.name}
-            </Badge>
-          );
-        })}
-        <br />
-        <Label htmlFor="Nom">Tags : </Label>
         {state.tagsTotal?.map((tag: ApiData<Tag>, index: number) => {
           return (
             <Badge
               href="#"
               key={index}
-              onClick={() => dispatch({ type: 'AddTag', index })}
+              onClick={() => dispatch({ type: 'HANDLE_TAG', index })}
+              disabled={state.tagsSelected?.at(index)}
             >
               {tag.attributes.name}
             </Badge>
@@ -76,9 +60,11 @@ export const PageCartoUserInterface: React.FC = () => {
       </div>
       <PageCartoUserList
         nameInput={state.nameInput}
-        tagsTable={state.tagsSelected.map(
-          (tag: ApiData<Tag>) => tag.attributes.name
-        )}
+        tagsTable={state.tagsTotal
+          .filter(
+            (val: number, index: number) => !state.tagsSelected!.at(index)
+          )
+          .map((tag: ApiData<Tag>) => tag.attributes.name)}
       />
     </>
   );

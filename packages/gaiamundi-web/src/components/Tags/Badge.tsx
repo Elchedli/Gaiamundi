@@ -3,8 +3,9 @@ import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
 
 interface BadgeProps
   extends PropsWithChildren<Omit<ComponentProps<'span'>, 'color'>> {
-  href?: string;
+  href: string;
   icon?: ReactNode;
+  disabled?: boolean;
 }
 
 export const Badge: FC<BadgeProps> = ({
@@ -12,12 +13,14 @@ export const Badge: FC<BadgeProps> = ({
   href,
   icon: Icon,
   className,
+  disabled,
   ...props
 }): JSX.Element => {
   const Content = (): JSX.Element => (
     <span
       className={classNames(
-        `inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`,
+        `inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2`,
+        disabled ? 'bg-gray-600 text-gray-400' : 'bg-gray-200 text-gray-700',
         className
       )}
       {...props}
