@@ -5,10 +5,10 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Alert } from 'components/Alert/Alert';
 import { ApiError } from 'interfaces/api';
 import { Pagination } from 'components/Pagination/Pagination';
-import PageCartoUserItem from './PageCartoUserItem';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { PageCarto } from 'interfaces/page-carto';
 import { useAuth } from 'hooks/useAuth';
+import PageCartoItem from 'components/PageCarto/PageCartoItem';
 
 interface PageCartoUserListInterface {
   nameInput: string;
@@ -98,7 +98,7 @@ export const PageCartoUserList = ({
     <div>
       <div className="grid grid-cols-3 gap-y-10 gap-x-6">
         {data.map((page) => {
-          return <PageCartoUserItem key={page.id} {...page} />;
+          return <PageCartoItem key={page.id} {...page} />;
         })}
       </div>
       <div className="flex flex-row mt-5 justify-center">
