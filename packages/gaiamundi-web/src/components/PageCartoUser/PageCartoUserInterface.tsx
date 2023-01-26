@@ -6,8 +6,8 @@ import { useEffect, useReducer } from 'react';
 import { ContentType, strapi } from 'services/strapi';
 import { PageCartoUserList } from './PageCartoUserList';
 import { reducerTags } from './reducerTags';
-import { SearchInputDebounce } from '../Forms/Inputs/SearchInputDebounce';
-
+import { debounce } from 'utils/debounce';
+import { TextInput } from 'components/Forms/Inputs/TextInput';
 const initialState = {
   tagsTotal: [],
   tagsSelected: [],
@@ -19,7 +19,6 @@ const initialState = {
 
 export const PageCartoUserInterface: React.FC = () => {
   const [state, dispatch] = useReducer(reducerTags, initialState);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,15 +35,19 @@ export const PageCartoUserInterface: React.FC = () => {
     fetchData();
   }, []);
 
+  const debounceSearch = debounce((nameInput: string) => {
+    dispatch({ type: 'MAP_SEARCH', nameInput });
+  });
+
   return (
     <>
       <div>
         <Label htmlFor="Nom">Recherche</Label>
-        <SearchInputDebounce
+        <TextInput
           id="pageCarto.search"
           className="w-fit mb-10"
           name="inputSearch"
-          onSearch={(nameInput) => dispatch({ type: 'MAP_SEARCH', nameInput })}
+          onChange={(e) => debounceSearch(e.target.value)}
         />
         <Label htmlFor="Nom">Tags Utiliser : </Label>
         {state.tagsSelected?.map((tag, index) => {

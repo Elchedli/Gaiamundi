@@ -1,10 +1,11 @@
 import { Label } from 'components/Forms/Inputs/Label';
-import { SearchInputDebounce } from 'components/Forms/Inputs/SearchInputDebounce';
+import { TextInput } from 'components/Forms/Inputs/TextInput';
 import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
 import { useEffect, useReducer } from 'react';
 import { ContentType, strapi } from 'services/strapi';
+import { debounce } from 'utils/debounce';
 import { PageCartoUserList } from './PageCartoUserList';
 import { reducerTagsColored } from './reducerTagsColored';
 
@@ -33,15 +34,19 @@ export const PageCartoUserInterfaceColor: React.FC = () => {
     fetchData();
   }, []);
 
+  const debounceSearch = debounce((nameInput: string) => {
+    dispatch({ type: 'MAP_SEARCH', nameInput });
+  });
+
   return (
     <>
       <div>
         <Label htmlFor="Nom">Recherche</Label>
-        <SearchInputDebounce
+        <TextInput
           id="pageCarto.search"
           className="w-fit mb-10"
           name="inputSearch"
-          onSearch={(nameInput) => dispatch({ type: 'MAP_SEARCH', nameInput })}
+          onChange={(e) => debounceSearch(e.target.value)}
         />
         {state.tagsTotal?.map((tag: ApiData<Tag>, index: number) => {
           return (
