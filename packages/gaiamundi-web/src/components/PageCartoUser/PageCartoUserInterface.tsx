@@ -1,5 +1,4 @@
 import { Label } from 'components/Forms/Inputs/Label';
-import { TextInput } from 'components/Forms/Inputs/TextInput';
 import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
@@ -7,6 +6,7 @@ import { useEffect, useReducer } from 'react';
 import { ContentType, strapi } from 'services/strapi';
 import { PageCartoUserList } from './PageCartoUserList';
 import { reducerTags } from './reducerTags';
+import { SearchInputDebounce } from '../Forms/Inputs/SearchInputDebounce';
 
 const initialState = {
   tagsTotal: [],
@@ -40,13 +40,11 @@ export const PageCartoUserInterface: React.FC = () => {
     <>
       <div>
         <Label htmlFor="Nom">Recherche</Label>
-        <TextInput
+        <SearchInputDebounce
           id="pageCarto.search"
           className="w-fit mb-10"
           name="inputSearch"
-          onChange={(e) =>
-            dispatch({ type: 'searchMap', nameInput: e.target.value })
-          }
+          onSearch={(nameInput) => dispatch({ type: 'MAP_SEARCH', nameInput })}
         />
         <Label htmlFor="Nom">Tags Utiliser : </Label>
         {state.tagsSelected?.map((tag, index) => {
@@ -54,7 +52,7 @@ export const PageCartoUserInterface: React.FC = () => {
             <Badge
               href="#"
               key={index}
-              onClick={() => dispatch({ type: 'DeleteTag', index })}
+              onClick={() => dispatch({ type: 'DELETE_TAG', index })}
             >
               {tag.attributes.name}
             </Badge>
@@ -67,7 +65,7 @@ export const PageCartoUserInterface: React.FC = () => {
             <Badge
               href="#"
               key={index}
-              onClick={() => dispatch({ type: 'AddTag', index })}
+              onClick={() => dispatch({ type: 'ADD_TAG', index })}
             >
               {tag.attributes.name}
             </Badge>

@@ -27,7 +27,7 @@ export const reducerTags = (state: tagsInterface, action: any) => {
         isLoading: false,
         error: action.error,
       };
-    case 'AddTag': {
+    case 'ADD_TAG': {
       const index = action.index;
       const newTagsSelected = [
         ...state.tagsSelected,
@@ -44,7 +44,7 @@ export const reducerTags = (state: tagsInterface, action: any) => {
       };
     }
 
-    case 'DeleteTag': {
+    case 'DELETE_TAG': {
       const index = action.index;
       const newTagsTotal = [...state.tagsTotal, state.tagsSelected.at(index)!];
       const newTagsSelected = [
@@ -58,7 +58,7 @@ export const reducerTags = (state: tagsInterface, action: any) => {
       };
     }
 
-    case 'searchMap':
+    case 'MAP_SEARCH':
       return {
         ...state,
         nameInput: action.nameInput,

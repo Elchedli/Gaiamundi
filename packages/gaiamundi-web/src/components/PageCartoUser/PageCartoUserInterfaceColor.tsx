@@ -1,5 +1,5 @@
 import { Label } from 'components/Forms/Inputs/Label';
-import { TextInput } from 'components/Forms/Inputs/TextInput';
+import { SearchInputDebounce } from 'components/Forms/Inputs/SearchInputDebounce';
 import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
@@ -37,13 +37,11 @@ export const PageCartoUserInterfaceColor: React.FC = () => {
     <>
       <div>
         <Label htmlFor="Nom">Recherche</Label>
-        <TextInput
+        <SearchInputDebounce
           id="pageCarto.search"
           className="w-fit mb-10"
           name="inputSearch"
-          onChange={(e) =>
-            dispatch({ type: 'SEARCH_MAP', nameInput: e.target.value })
-          }
+          onSearch={(nameInput) => dispatch({ type: 'MAP_SEARCH', nameInput })}
         />
         {state.tagsTotal?.map((tag: ApiData<Tag>, index: number) => {
           return (
