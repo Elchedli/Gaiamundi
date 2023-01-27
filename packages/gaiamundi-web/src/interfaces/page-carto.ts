@@ -6,6 +6,7 @@ import { User } from './user';
 export interface Tag {
   id: number;
   name: string;
+  type: string;
 }
 
 export interface PageCartoBase {

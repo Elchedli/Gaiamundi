@@ -32,8 +32,10 @@ export const Dashboard: React.FC = () => {
         state,
       }}
     >
-      <PageCartoFilterBar />
-      <PageCartoUserList />
+      <div className="grid grid-flow-col mt-5 p-4 rounded-lg shadow-xl">
+        <PageCartoFilterBar />
+        <PageCartoUserList />
+      </div>
     </FilterContext.Provider>
   );
 };

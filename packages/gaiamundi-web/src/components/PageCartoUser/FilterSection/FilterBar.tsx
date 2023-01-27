@@ -1,3 +1,4 @@
+import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
 import { Badge } from 'components/Tags/Badge';
 import { useFilterPageCarto } from 'hooks/useFilter';
@@ -31,7 +32,7 @@ export const PageCartoFilterBar: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
       <Label htmlFor="Nom">Recherche</Label>
       <SearchInputDebounce
         id="pageCarto.search"
@@ -39,7 +40,14 @@ export const PageCartoFilterBar: React.FC = () => {
         name="inputSearch"
         rebound={inputChange}
       />
-      <Label htmlFor="Nom">Tags Utiliser : </Label>
+      <div className="flex justify-between">
+        <Label htmlFor="Nom">Filtres</Label>
+        <Button type="button" color="transparent">
+          Clear All
+        </Button>
+      </div>
+
+      <hr />
       {state.tagsSelected?.map((tag, index) => {
         return (
           <Badge
@@ -51,6 +59,8 @@ export const PageCartoFilterBar: React.FC = () => {
           </Badge>
         );
       })}
+      <hr />
+
       <br />
       <Label htmlFor="Nom">Tags : </Label>
       {state.tagsTotal?.map((tag: ApiData<Tag>, index: number) => {
@@ -58,12 +68,13 @@ export const PageCartoFilterBar: React.FC = () => {
           <Badge
             href="#"
             key={index}
+            className="block w-1/2 bg-gray-600 text-gray-200"
             onClick={() => dispatch({ type: 'ADD_TAG', index })}
           >
             {tag.attributes.name}
           </Badge>
         );
       })}
-    </>
+    </div>
   );
 };

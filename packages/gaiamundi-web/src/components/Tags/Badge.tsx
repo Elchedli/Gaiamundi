@@ -5,7 +5,6 @@ interface BadgeProps
   extends PropsWithChildren<Omit<ComponentProps<'span'>, 'color'>> {
   href: string;
   icon?: ReactNode;
-  disabled?: boolean;
 }
 
 export const Badge: FC<BadgeProps> = ({
@@ -13,17 +12,15 @@ export const Badge: FC<BadgeProps> = ({
   href,
   icon: Icon,
   className,
-  disabled,
   ...props
 }): JSX.Element => {
   const Content = (): JSX.Element => (
     <span
+      {...props}
       className={classNames(
-        `inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2`,
-        disabled ? 'bg-gray-600 text-gray-400' : 'bg-gray-200 text-gray-700',
+        `bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2`,
         className
       )}
-      {...props}
     >
       {Icon}
       {children && <span>{children}</span>}
