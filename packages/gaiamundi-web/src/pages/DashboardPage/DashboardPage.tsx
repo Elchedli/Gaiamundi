@@ -1,11 +1,11 @@
 import { Header } from 'components/Layout/Header';
-import { PageCartoUserInterface } from 'components/PageCartoUser/PageCartoUserInterface';
+import { Dashboard } from 'components/PageCartoUser/Dashboard';
 
 export const DashboardPage: React.FC = () => {
   return (
     <div>
-      <Header>Dashboard</Header>
-      <PageCartoUserInterface />
+      <Header>Mes PageCartos</Header>
+      <Dashboard />
     </div>
   );
 };

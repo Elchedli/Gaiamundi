@@ -9,28 +9,23 @@ import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { PageCarto } from 'interfaces/page-carto';
 import { useAuth } from 'hooks/useAuth';
 import PageCartoItem from 'components/PageCarto/PageCartoItem';
+import { useFilterPageCarto } from 'hooks/useFilter';
 
-interface PageCartoUserListInterface {
-  nameInput: string;
-  tagsTable: Array<string>;
-}
-
-export const PageCartoUserList = ({
-  nameInput,
-  tagsTable,
-}: PageCartoUserListInterface) => {
+export const PageCartoUserList = () => {
   const paginationLimit = 9;
-
   const [page, setPage] = useState(1);
   const { user } = useAuth();
+  const { state } = useFilterPageCarto();
 
+  const { nameInput, tagsSelected } = state;
+  const tagsSelectedName = tagsSelected.map((a) => a.attributes.name);
   const {
     data: response,
     isError,
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['page-carto-user', page, nameInput, tagsTable],
+    queryKey: ['page-carto-user', page, state.nameInput, state.tagsSelected],
     queryFn: () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
         filters: {
@@ -61,9 +56,9 @@ export const PageCartoUserList = ({
             {
               tags: {
                 name:
-                  tagsTable.length != 0
+                  tagsSelectedName.length != 0
                     ? {
-                        $in: tagsTable,
+                        $in: tagsSelectedName,
                       }
                     : {},
               },

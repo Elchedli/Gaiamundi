@@ -1,16 +1,8 @@
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
+import { TAction, tagsInterface } from './types';
 
-export interface tagsInterface {
-  nameInput: string;
-  tagsTotal: ApiData<Tag>[];
-  tagsSelected: ApiData<Tag>[];
-  index: number;
-  isLoading?: boolean;
-  error?: any;
-}
-
-export const reducerTags = (state: tagsInterface, action: any) => {
+export const reducerTags = (state: tagsInterface, action: TAction) => {
   switch (action.type) {
     case 'FETCH_DATA': {
       return {
