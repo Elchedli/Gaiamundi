@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
         state,
       }}
     >
-      <div className="grid grid-flow-col mt-5 p-4 rounded-lg shadow-xl">
+      <div className="grid min-[1024px]:grid-flow-col mt-5 p-4 rounded-lg shadow-xl">
         <PageCartoFilterBar />
         <PageCartoUserList />
       </div>

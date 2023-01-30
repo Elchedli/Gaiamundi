@@ -66,7 +66,7 @@ const colorClasses: Record<Color, string> = {
   purple:
     'text-white bg-purple-700 border border-transparent hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 disabled:hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 dark:disabled:hover:bg-purple-600',
   transparent:
-    'text-black border-transparent focus:ring-4 focus:ring-transparent hover:text-green-300',
+    'text-gray border-transparent focus:ring-4 focus:ring-transparent hover:text-gray-600',
 };
 
 const gradientMonochromeClasses: Record<GradientMonochrome, string> = {
