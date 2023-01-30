@@ -10,16 +10,18 @@ import { SearchInputDebounce } from './InputDebounce';
 
 export const PageCartoFilterBar: React.FC = () => {
   const { state, dispatch } = useFilterPageCarto();
-
+  const tagTypes = ['Géographie', 'Thématique'];
   useEffect(() => {
     const fetchData = async () => {
       try {
         await strapi
           .get<Tag>(ContentType.TAGS, {
             populate: '*',
-            sort: 'createdAt:desc',
+            sort: ['type:asc', 'createdAt:desc'],
           })
-          .then((data) => dispatch({ type: 'FETCH_DATA', payload: data.data }));
+          .then((data) => {
+            dispatch({ type: 'FETCH_DATA', payload: data.data });
+          });
       } catch (error) {
         dispatch({ type: 'FETCH_ERROR', error });
       }
@@ -42,7 +44,11 @@ export const PageCartoFilterBar: React.FC = () => {
       />
       <div className="flex justify-between">
         <Label htmlFor="Nom">Filtres</Label>
-        <Button type="button" color="transparent">
+        <Button
+          type="button"
+          color="transparent"
+          onClick={() => dispatch({ type: 'RESET_ALL' })}
+        >
           Clear All
         </Button>
       </div>
@@ -60,21 +66,27 @@ export const PageCartoFilterBar: React.FC = () => {
         );
       })}
       <hr />
-
       <br />
-      <Label htmlFor="Nom">Tags : </Label>
-      {state.tagsTotal?.map((tag: ApiData<Tag>, index: number) => {
-        return (
-          <Badge
-            href="#"
-            key={index}
-            className="block w-1/2 bg-gray-600 text-gray-200"
-            onClick={() => dispatch({ type: 'ADD_TAG', index })}
-          >
-            {tag.attributes.name}
-          </Badge>
-        );
-      })}
+
+      {tagTypes.map((tagType) => (
+        <>
+          <Label>{tagType} : </Label>
+          {state.tagsTotal
+            .filter((x) => x.attributes.type == tagType)
+            .map((tag: ApiData<Tag>, index: number) => {
+              return (
+                <Badge
+                  href="#"
+                  key={tagType + index}
+                  className="block w-1/2 bg-gray-600 text-gray-200"
+                  onClick={() => dispatch({ type: 'ADD_TAG', index })}
+                >
+                  {tag.attributes.name}
+                </Badge>
+              );
+            })}
+        </>
+      ))}
     </div>
   );
 };

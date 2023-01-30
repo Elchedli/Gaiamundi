@@ -7,6 +7,7 @@ export const reducerTags = (state: tagsInterface, action: TAction) => {
     case 'FETCH_DATA': {
       return {
         ...state,
+        tagsInitial: action.payload as ApiData<Tag>[],
         tagsTotal: action.payload as ApiData<Tag>[],
         isLoading: false,
         error: null,
@@ -54,6 +55,13 @@ export const reducerTags = (state: tagsInterface, action: TAction) => {
       return {
         ...state,
         nameInput: action.nameInput,
+      };
+
+    case 'RESET_ALL':
+      return {
+        ...state,
+        tagsTotal: state.tagsInitial,
+        tagsSelected: [],
       };
     default:
       return state;

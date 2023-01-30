@@ -1,4 +1,5 @@
 export const initialState = {
+  tagsInitial: [],
   tagsTotal: [],
   tagsSelected: [],
   isLoading: true,

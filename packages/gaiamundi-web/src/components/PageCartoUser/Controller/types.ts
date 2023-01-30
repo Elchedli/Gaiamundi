@@ -3,6 +3,7 @@ import { Tag } from 'interfaces/page-carto';
 
 export interface tagsInterface {
   nameInput: string;
+  tagsInitial: ApiData<Tag>[];
   tagsTotal: ApiData<Tag>[];
   tagsSelected: ApiData<Tag>[];
   index: number;
@@ -30,4 +31,7 @@ export type TAction =
   | {
       nameInput: string;
       type: 'MAP_SEARCH';
+    }
+  | {
+      type: 'RESET_ALL';
     };
