@@ -1,5 +1,6 @@
 import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
+import CloseCross from 'components/Icons/CloseCross';
 import { Badge } from 'components/Tags/Badge';
 import { useFilterPageCarto } from 'hooks/useFilter';
 import { ApiData } from 'interfaces/api';
@@ -46,23 +47,7 @@ export const PageCartoFilterBar: React.FC = () => {
                 className="px-4 py-2 rounded-full text-gray-200 bg-gray-600 border border-gray-300 font-semibold text-sm inline-flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease"
                 onClick={() => dispatch({ type: 'DELETE_TAG', index })}
                 key={tag.attributes.id}
-                iconAfter={
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="times"
-                    className="w-3 ml-3"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 352 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                    ></path>
-                  </svg>
-                }
+                iconAfter={<CloseCross />}
               >
                 {tag.attributes.name}
               </Badge>
@@ -73,7 +58,9 @@ export const PageCartoFilterBar: React.FC = () => {
 
       {Object.entries(state.tagsTotal).map((categorieArray) => (
         <>
-          <Label className="text-xl">{categorieArray[0]}</Label>
+          {categorieArray[1].length != 0 && (
+            <Label className="text-xl">{categorieArray[0]}</Label>
+          )}
           <div className="my-3">
             {categorieArray[1].map((tag: ApiData<Tag>, index: number) => {
               return (

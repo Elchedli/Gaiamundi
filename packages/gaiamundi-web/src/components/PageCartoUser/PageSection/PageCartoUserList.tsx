@@ -84,7 +84,11 @@ export const PageCartoUserList = () => {
   }
 
   if (!response || response.data.length === 0) {
-    return <Alert type="info">Aucun contenu à afficher.</Alert>;
+    return (
+      <Alert type="info" className="grid justify-center items-center">
+        <div>Aucun contenu à afficher.</div>
+      </Alert>
+    );
   }
 
   const { data, meta } = response;

@@ -25,7 +25,6 @@ export const Dashboard: React.FC = () => {
               data.data,
               (tag: ApiData<Tag>) => tag.attributes.type
             );
-            console.log(Object.entries(groupedTags));
             dispatch({ type: 'FETCH_DATA', dataGiven: groupedTags });
           });
       } catch (error) {

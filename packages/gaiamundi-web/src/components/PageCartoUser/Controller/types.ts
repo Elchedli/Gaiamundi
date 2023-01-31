@@ -9,7 +9,7 @@ export interface tagsInterface {
   tagsInitial: tagsGroupedByType;
   tagsTotal: tagsGroupedByType;
   tagsSelected: ApiData<Tag>[];
-  index: number;
+  index?: number;
   tagType?: string;
   isLoading?: boolean;
   error?: any;
