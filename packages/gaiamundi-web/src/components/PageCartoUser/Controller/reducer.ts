@@ -1,14 +1,15 @@
-import { ApiData } from 'interfaces/api';
-import { Tag } from 'interfaces/page-carto';
-import { TAction, tagsInterface } from './types';
+import { TAction, tagsGroupedByType, tagsInterface } from './types';
 
-export const reducerTags = (state: tagsInterface, action: TAction) => {
+export const reducerTags = (
+  state: tagsInterface,
+  action: TAction
+): tagsInterface => {
   switch (action.type) {
     case 'FETCH_DATA': {
       return {
         ...state,
-        tagsInitial: action.payload as ApiData<Tag>[],
-        tagsTotal: action.payload as ApiData<Tag>[],
+        tagsInitial: action.dataGiven as tagsGroupedByType,
+        tagsTotal: action.dataGiven as tagsGroupedByType,
         isLoading: false,
         error: null,
       };
@@ -22,14 +23,19 @@ export const reducerTags = (state: tagsInterface, action: TAction) => {
       };
     case 'ADD_TAG': {
       const index = action.index;
+      const tagType = action.tagType;
+
       const newTagsSelected = [
         ...state.tagsSelected,
-        state.tagsTotal.at(index)!,
+        state.tagsTotal[tagType][index],
       ];
-      const newTagsTotal = [
-        ...state.tagsTotal.slice(0, index),
-        ...state.tagsTotal.slice(index + 1),
-      ];
+      const newTagsTotal: tagsGroupedByType = {
+        ...state.tagsTotal,
+        [tagType]: [
+          ...state.tagsTotal[tagType].slice(0, index),
+          ...state.tagsTotal[tagType].slice(index + 1),
+        ],
+      };
       return {
         ...state,
         tagsSelected: newTagsSelected,
@@ -39,11 +45,16 @@ export const reducerTags = (state: tagsInterface, action: TAction) => {
 
     case 'DELETE_TAG': {
       const index = action.index;
-      const newTagsTotal = [...state.tagsTotal, state.tagsSelected.at(index)!];
+      const tagType: string = state.tagsSelected[index].attributes.type;
+      const newTagsTotal: tagsGroupedByType = {
+        ...state.tagsTotal,
+        [tagType]: [...state.tagsTotal[tagType], state.tagsSelected[index]],
+      };
       const newTagsSelected = [
         ...state.tagsSelected.slice(0, index),
         ...state.tagsSelected.slice(index + 1),
       ];
+
       return {
         ...state,
         tagsTotal: newTagsTotal,

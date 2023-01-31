@@ -1,6 +1,6 @@
 export const initialState = {
-  tagsInitial: [],
-  tagsTotal: [],
+  tagsInitial: {},
+  tagsTotal: {},
   tagsSelected: [],
   isLoading: true,
   nameInput: '',

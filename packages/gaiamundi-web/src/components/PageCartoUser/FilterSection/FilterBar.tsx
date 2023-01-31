@@ -4,48 +4,13 @@ import { Badge } from 'components/Tags/Badge';
 import { useFilterPageCarto } from 'hooks/useFilter';
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
-import { useEffect } from 'react';
-import { ContentType, strapi } from 'services/strapi';
 import { SearchInputDebounce } from './InputDebounce';
-
-export function groupBy<T, K extends keyof T>(
-  array: T[],
-  key: K
-): Map<T[K], T[]> {
-  return array.reduce((acc: any, cur) => {
-    const group = cur[key];
-    acc.has(group) ? acc.get(group).push(cur) : acc.set(group, [cur]);
-    return acc;
-  }, new Map<T[K], T[]>());
-}
 
 export const PageCartoFilterBar: React.FC = () => {
   const { state, dispatch } = useFilterPageCarto();
-  const tagTypes = ['Géographie', 'Thématique'];
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await strapi
-          .get<Tag>(ContentType.TAGS, {
-            populate: '*',
-            sort: ['type:asc', 'createdAt:desc'],
-          })
-          .then((data) => {
-            const apiVariable: Array<ApiData<any>> = data.data;
-            console.log(apiVariable);
-            // const dataTotal = groupBy(apiVariable);
-            //Sdkqsdksqkdsqkdsqkdkqssdkkdqsss
-            dispatch({ type: 'FETCH_DATA', payload: data.data });
-          });
-      } catch (error) {
-        dispatch({ type: 'FETCH_ERROR', error });
-      }
-    };
-    fetchData();
-  }, []);
-  const inputChange = (nameInput: string) => {
+
+  const inputChange = (nameInput: string) =>
     dispatch({ type: 'MAP_SEARCH', nameInput });
-  };
 
   return (
     <div className="lg:max-w-sm ">
@@ -106,25 +71,28 @@ export const PageCartoFilterBar: React.FC = () => {
         </div>
       </div>
 
-      {tagTypes.map((tagType) => (
+      {Object.entries(state.tagsTotal).map((categorieArray) => (
         <>
-          {state.tagsTotal.filter((x) => x.attributes.type == tagType).length !=
-            0 && <Label className="text-xl">{tagType}</Label>}
+          <Label className="text-xl">{categorieArray[0]}</Label>
           <div className="my-3">
-            {state.tagsTotal
-              .filter((x) => x.attributes.type == tagType)
-              .map((tag: ApiData<Tag>, index: number) => {
-                return (
-                  <Badge
-                    href="#"
-                    key={tag.attributes.id}
-                    className="lg:block w-fit"
-                    onClick={() => dispatch({ type: 'ADD_TAG', index })}
-                  >
-                    {tag.attributes.name}
-                  </Badge>
-                );
-              })}
+            {categorieArray[1].map((tag: ApiData<Tag>, index: number) => {
+              return (
+                <Badge
+                  href="#"
+                  key={tag.attributes.id}
+                  className="lg:block w-fit"
+                  onClick={() =>
+                    dispatch({
+                      type: 'ADD_TAG',
+                      index,
+                      tagType: categorieArray[0],
+                    })
+                  }
+                >
+                  {tag.attributes.name}
+                </Badge>
+              );
+            })}
           </div>
         </>
       ))}

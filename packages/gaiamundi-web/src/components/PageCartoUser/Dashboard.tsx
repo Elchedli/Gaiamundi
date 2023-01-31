@@ -6,6 +6,9 @@ import { PageCartoUserList } from './PageSection/PageCartoUserList';
 import { initialState } from './Controller/initialState';
 import { reducerTags } from './Controller/reducer';
 import { PageCartoFilterBar } from './FilterSection/FilterBar';
+import { groupByApiData } from 'utils/strapiUtils';
+import { ApiData } from 'interfaces/api';
+import { tagsGroupedByType } from './Controller/types';
 
 export const Dashboard: React.FC = () => {
   const [state, dispatch] = useReducer(reducerTags, initialState);
@@ -15,9 +18,16 @@ export const Dashboard: React.FC = () => {
         await strapi
           .get<Tag>(ContentType.TAGS, {
             populate: '*',
-            sort: 'createdAt:desc',
+            sort: ['type:asc', 'createdAt:desc'],
           })
-          .then((data) => dispatch({ type: 'FETCH_DATA', payload: data.data }));
+          .then((data) => {
+            const groupedTags: tagsGroupedByType = groupByApiData(
+              data.data,
+              (tag: ApiData<Tag>) => tag.attributes.type
+            );
+            console.log(Object.entries(groupedTags));
+            dispatch({ type: 'FETCH_DATA', dataGiven: groupedTags });
+          });
       } catch (error) {
         dispatch({ type: 'FETCH_ERROR', error });
       }
