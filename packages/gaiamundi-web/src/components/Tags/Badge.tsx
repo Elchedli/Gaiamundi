@@ -4,26 +4,29 @@ import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
 interface BadgeProps
   extends PropsWithChildren<Omit<ComponentProps<'span'>, 'color'>> {
   href: string;
-  icon?: ReactNode;
+  iconBefore?: ReactNode;
+  iconAfter?: ReactNode;
 }
 
 export const Badge: FC<BadgeProps> = ({
   children,
   href,
-  icon: Icon,
+  iconBefore,
+  iconAfter,
   className,
   ...props
 }): JSX.Element => {
   const Content = (): JSX.Element => (
     <span
+      {...props}
       className={classNames(
-        `inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`,
+        `bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2`,
         className
       )}
-      {...props}
     >
-      {Icon}
+      {iconBefore}
       {children && <span>{children}</span>}
+      {iconAfter}
     </span>
   );
 
