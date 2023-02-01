@@ -29,30 +29,27 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     queryFn: getAllTags,
   });
 
-  const tagsAll: { groupedTags: GroupedTags; selectedTags: ApiData<Tag>[] } =
-    useMemo(() => {
-      const [tagsDisplayed, tagsFiltered] = (response?.data || []).reduce<
-        [ApiData<Tag>[], ApiData<Tag>[]]
-      >(
-        ([displayed, filtered], tag: ApiData<Tag>) => {
-          selectedTagIds.indexOf(tag.id) === -1
-            ? displayed.push(tag)
-            : filtered.push(tag);
-          return [displayed, filtered];
-        },
-        [[], []]
-      );
-      return {
-        groupedTags: groupApiDataBy(
-          tagsDisplayed,
-          (tag: ApiData<Tag>) => tag.attributes.type
-        ),
-        selectedTags: tagsFiltered,
-      };
-    }, [selectedTagIds, response]);
+  const groupedTags: GroupedTags = useMemo(() => {
+    return groupApiDataBy(
+      response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
+        [],
+      (tag: ApiData<Tag>) => tag.attributes.type
+    );
+  }, [selectedTagIds, response]);
+
+  const selectedTags = useMemo(() => {
+    return (
+      response?.data.filter((tag) => {
+        return selectedTagIds.indexOf(tag.id) !== -1;
+      }) || []
+    );
+  }, [selectedTagIds, response]);
 
   const handleAddTag = (tagId: number) => {
+    console.log('tagId', tagId);
+
     setSelectedTagIds([...selectedTagIds, tagId]);
+    console.log(selectedTagIds);
     onChange(selectedTagIds);
   };
 
@@ -103,7 +100,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
         )}
 
         <div className="">
-          {tagsAll.selectedTags.map((tag) => {
+          {selectedTags.map((tag) => {
             return (
               <Badge
                 href="#"
@@ -119,7 +116,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
         </div>
       </div>
 
-      {Object.entries(tagsAll.groupedTags).map(([group, tags]) => (
+      {Object.entries(groupedTags).map(([group, tags]) => (
         <>
           {tags.length > 0 && <Label className="text-xl">{group}</Label>}
           <div className="my-3">
