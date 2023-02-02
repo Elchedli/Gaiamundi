@@ -46,10 +46,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
   }, [selectedTagIds, response]);
 
   const handleAddTag = (tagId: number) => {
-    console.log('tagId', tagId);
-
     setSelectedTagIds([...selectedTagIds, tagId]);
-    console.log(selectedTagIds);
     onChange(selectedTagIds);
   };
 
