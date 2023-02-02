@@ -28,7 +28,6 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     queryKey: ['tags'],
     queryFn: getAllTags,
   });
-
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
       response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
