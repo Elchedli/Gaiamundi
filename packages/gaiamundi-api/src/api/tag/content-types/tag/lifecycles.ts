@@ -1,10 +1,10 @@
 module.exports = {
   afterFindMany: async (event) => {
     const { result } = event;
-    result.forEach((x) => {
-      const count = x.page_cartos.length;
-      delete x.page_cartos;
-      x.totalTags = count;
+    result.forEach((tag) => {
+      const count = tag.page_cartos ? tag.page_cartos.length : 0;
+      delete tag.page_cartos;
+      tag.count = count;
     });
   },
 };
