@@ -125,6 +125,8 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
                   onClick={() => handleAddTag(tag.id)}
                 >
                   {tag.attributes.name}
+                  <br />
+                  {tag.attributes.totalTags}
                 </Badge>
               );
             })}

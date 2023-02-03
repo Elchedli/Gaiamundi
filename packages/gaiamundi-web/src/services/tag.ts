@@ -1,4 +1,3 @@
-import config from 'config';
 import { Tag } from 'interfaces/page-carto';
 import { ContentType, strapi } from './strapi';
 export const getAllTags = async () => {
@@ -6,9 +5,4 @@ export const getAllTags = async () => {
     populate: '*',
     sort: ['type:asc', 'createdAt:desc'],
   });
-};
-
-export const countTagApi = async () => {
-  const data = await fetch(`${config.API_URL}/api/tag/counter`);
-  return data.json();
 };

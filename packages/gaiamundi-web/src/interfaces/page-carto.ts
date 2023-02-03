@@ -7,6 +7,7 @@ export interface Tag {
   id: number;
   name: string;
   type: string;
+  totalTags?: number;
 }
 
 export interface PageCartoBase {
