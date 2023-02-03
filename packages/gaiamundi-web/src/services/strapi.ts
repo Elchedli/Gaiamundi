@@ -15,6 +15,7 @@ export enum ContentType {
   GEO_MAPS = 'geo-maps',
   DATASET = 'datasets',
   USERS = 'users',
+  TAGS = 'tags',
 }
 
 type FilterOperator =

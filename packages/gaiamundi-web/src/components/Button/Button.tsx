@@ -13,7 +13,8 @@ export type Color =
   | 'lime'
   | 'red'
   | 'yellow'
-  | 'purple';
+  | 'purple'
+  | 'transparent';
 type GradientMonochrome =
   | 'blue'
   | 'green'
@@ -64,6 +65,8 @@ const colorClasses: Record<Color, string> = {
     'text-white bg-yellow-400 border border-transparent hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 disabled:hover:bg-yellow-400 dark:focus:ring-yellow-900 dark:disabled:hover:bg-yellow-400',
   purple:
     'text-white bg-purple-700 border border-transparent hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 disabled:hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 dark:disabled:hover:bg-purple-600',
+  transparent:
+    'text-gray border-transparent focus:ring-4 focus:ring-transparent hover:text-gray-600',
 };
 
 const gradientMonochromeClasses: Record<GradientMonochrome, string> = {
