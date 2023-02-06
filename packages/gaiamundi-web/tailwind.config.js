@@ -6,6 +6,11 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
+  safelist: [
+    {
+      pattern: /grid-cols-[0-3]/g,
+    },
+  ],
   theme: {
     extend: {
       keyframes: {
