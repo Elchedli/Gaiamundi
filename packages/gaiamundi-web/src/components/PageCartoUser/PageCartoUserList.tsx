@@ -96,11 +96,7 @@ export const PageCartoUserList = ({
         </Alert>
       ) : (
         <>
-          <div
-            className={`grid grid-cols-${
-              response.data.length > 2 ? 3 : 2
-            } gap-y-10 gap-x-6`}
-          >
+          <div className={`grid grid-cols-3 gap-y-10 gap-x-6`}>
             {response.data.map((page) => {
               return <PageCartoItem key={page.id} {...page} />;
             })}
