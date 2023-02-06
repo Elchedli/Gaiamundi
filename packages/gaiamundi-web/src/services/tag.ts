@@ -5,7 +5,7 @@ export const getAllTags = async () => {
     populate: '*',
     sort: ['type:asc', 'createdAt:asc'],
     pagination: {
-      limit: 1000,
+      limit: -1,
     },
   });
 };
