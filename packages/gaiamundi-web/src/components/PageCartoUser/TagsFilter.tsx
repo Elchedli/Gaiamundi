@@ -28,7 +28,6 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     queryKey: ['tags'],
     queryFn: getAllTags,
   });
-
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
       response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
@@ -126,6 +125,9 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
                   onClick={() => handleAddTag(tag.id)}
                 >
                   {tag.attributes.name}
+                  <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
+                    {tag.attributes.count}
+                  </span>
                 </Badge>
               );
             })}
