@@ -28,7 +28,6 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     queryKey: ['tags'],
     queryFn: getAllTags,
   });
-
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
       response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
@@ -47,7 +46,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
 
   const handleAddTag = (tagId: number) => {
     setSelectedTagIds([...selectedTagIds, tagId]);
-    onChange(selectedTagIds);
+    onChange([...selectedTagIds, tagId]);
   };
 
   const handleRemoveTag = (tagId: number) => {
@@ -71,7 +70,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
 
   if (!response || response.data.length === 0) {
     return (
-      <Alert type="info" className="grid justify-center items-center">
+      <Alert type="info" className="grid h-fit justify-center items-center">
         <div>Aucun tag na été trouvé!.</div>
       </Alert>
     );
@@ -122,10 +121,13 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
                 <Badge
                   href="#"
                   key={tag.id}
-                  className="lg:block w-fit"
+                  className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
                   onClick={() => handleAddTag(tag.id)}
                 >
                   {tag.attributes.name}
+                  <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
+                    {tag.attributes.count}
+                  </span>
                 </Badge>
               );
             })}
