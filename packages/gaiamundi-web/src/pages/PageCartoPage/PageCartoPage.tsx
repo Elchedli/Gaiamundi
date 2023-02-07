@@ -1,14 +1,15 @@
-import { useParams } from 'react-router-dom';
-import { PageCartoEditor } from 'components/PageCarto/PageCartoEditor';
-import { useQuery } from 'react-query';
-import { getPageCartoById } from 'services/page-carto';
-import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { ApiError } from 'interfaces/api';
 import { Alert } from 'components/Alert/Alert';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { PageCartoEditor } from 'components/PageCarto/PageCartoEditor';
+import { ApiError } from 'interfaces/api';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { getPageCartoById } from 'services/page-carto';
 
 export const PageCartoEditPage: React.FC = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = parseInt(params.id || '');
   const {
     data: response,
     isError,
@@ -17,7 +18,7 @@ export const PageCartoEditPage: React.FC = () => {
   } = useQuery({
     queryKey: ['page-carto', id],
     queryFn: async () => {
-      return await getPageCartoById(parseInt(id || ''));
+      return await getPageCartoById(id);
     },
     keepPreviousData: true,
     // The query will not execute until the userId exists

@@ -9,17 +9,14 @@ import { ContentType, strapi } from './strapi';
 
 export const addDataToPageCarto = async (
   pageCartoId: number,
+  name: string,
   data: DatasetStub,
-  selectedColumns: Column[]
+  columns: Column[]
 ) => {
   const dataset = await strapi.create<DatasetStub>(ContentType.DATASET, data);
-  const columns = await Promise.all(
-    selectedColumns.map((column) =>
-      strapi.create<Column>(ContentType.COLUMN, column)
-    )
-  );
   return await strapi.create<DataFragmentStub>(ContentType.DATA_FRAGMENT, {
-    columns: columns.map((column) => column.data.id),
+    name: name,
+    columns: columns,
     dataset: dataset.data.id,
     page_carto: pageCartoId,
   });

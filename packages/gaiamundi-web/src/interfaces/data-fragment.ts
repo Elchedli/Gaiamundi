@@ -1,14 +1,17 @@
-import { ApiCollection, ApiDocument } from './api';
+import { ApiDocument } from './api';
 import { Column } from './column';
 import { Dataset } from './dataset';
 
-export interface DataFragmentStub {
-  columns: number[];
+export interface DataFragmentBase {
+  name: string;
+  columns: Column[];
+}
+
+export interface DataFragmentStub extends DataFragmentBase {
   dataset: number;
   page_carto: number;
 }
 
-export interface DataFragment {
-  columns: ApiCollection<Column>;
+export interface DataFragment extends DataFragmentBase {
   dataset: ApiDocument<Dataset>;
 }

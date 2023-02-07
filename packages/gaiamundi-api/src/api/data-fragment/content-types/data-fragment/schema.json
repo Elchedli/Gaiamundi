@@ -4,24 +4,27 @@
   "info": {
     "singularName": "data-fragment",
     "pluralName": "data-fragments",
-    "displayName": "DataFragment",
-    "description": ""
+    "displayName": "DataFragment"
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "columns": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::column.column",
-      "mappedBy": "data_fragment"
+    "name": {
+      "type": "string",
+      "required": true
     },
     "dataset": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::dataset.dataset"
+    },
+    "columns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "data.columns",
+      "required": true
     },
     "page_carto": {
       "type": "relation",

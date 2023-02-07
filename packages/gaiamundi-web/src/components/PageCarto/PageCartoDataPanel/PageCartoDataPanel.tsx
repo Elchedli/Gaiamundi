@@ -19,16 +19,17 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
   pageCartoId,
 }) => {
   const { showModal, hideModal } = useModal();
+  const fragments = dataFragments?.data || [];
   const rows = useMemo(
     () =>
-      dataFragments.data.reduce((acc, curr) => {
-        const cols = curr.attributes.columns.data
+      fragments.reduce((acc, curr) => {
+        const cols = curr.attributes.columns
           .filter((column) => {
-            return !column.attributes.isGeoCode;
+            return !column.isGeoCode;
           })
           .map((column) => {
             return {
-              ...column.attributes,
+              ...column,
               dataset: curr.attributes.dataset.data.attributes.name,
             };
           });
@@ -53,10 +54,10 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         </Button>
       </div>
       <div className="my-2">
-        {dataFragments?.data.length === 0 && (
+        {fragments.length === 0 && (
           <Alert type="info">{`Aucun jeu de donnée n'a a été importé`}</Alert>
         )}
-        {dataFragments?.data.length > 0 && (
+        {fragments.length > 0 && (
           <DataGrid
             className="border"
             columns={[

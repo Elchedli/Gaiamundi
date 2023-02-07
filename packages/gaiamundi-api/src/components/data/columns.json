@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_data_columns",
+  "info": {
+    "displayName": "Columns",
+    "icon": "columns",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    },
+    "validity": {
+      "type": "string"
+    },
+    "isGeoCode": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}
