@@ -15,7 +15,9 @@ export const getAllTagsByOwner = async (ownerId: number) => {
   return await strapi.get<Tag>(ContentType.TAGS, {
     populate: {
       page_cartos: {
-        populate: 'owner',
+        populate: {
+          owner: true,
+        },
       },
     },
     filters: {
