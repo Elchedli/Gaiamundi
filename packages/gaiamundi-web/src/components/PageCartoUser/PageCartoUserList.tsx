@@ -1,14 +1,14 @@
-import { useQuery } from 'react-query';
-import { useState } from 'react';
+import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { Alert } from 'components/Alert/Alert';
-import { ApiError } from 'interfaces/api';
-import { Pagination } from 'components/Pagination/Pagination';
-import { ContentType, QueryParams, strapi } from 'services/strapi';
-import { PageCarto } from 'interfaces/page-carto';
-import { useAuth } from 'hooks/useAuth';
 import PageCartoItem from 'components/PageCarto/PageCartoItem';
+import { Pagination } from 'components/Pagination/Pagination';
+import { useAuth } from 'hooks/useAuth';
+import { ApiError } from 'interfaces/api';
+import { PageCarto } from 'interfaces/page-carto';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { ContentType, QueryParams, strapi } from 'services/strapi';
 
 export const PageCartoUserList = ({
   nameInput,

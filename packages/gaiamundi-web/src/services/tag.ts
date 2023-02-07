@@ -1,5 +1,5 @@
 import { Tag } from 'interfaces/page-carto';
-import { ContentType, strapi } from './strapi';
+import { ContentType, QueryParams, strapi } from './strapi';
 
 export const getAllTags = async () => {
   return await strapi.get<Tag>(ContentType.TAGS, {
@@ -15,18 +15,18 @@ export const getAllTagsByOwner = async (ownerId: number) => {
   return await strapi.get<Tag>(ContentType.TAGS, {
     populate: {
       page_cartos: {
-        populate: {
-          // eslint-disable-next-line
-          // @ts-ignore
-          owner: {
-            filters: {
-              id: ownerId,
-            },
+        populate: 'owner',
+      },
+    },
+    filters: {
+      page_cartos: {
+        owner: {
+          id: {
+            $eq: ownerId,
           },
         },
       },
-    },
-    sort: ['type:asc', 'createdAt:asc'],
+    } as QueryParams['filters'],
     pagination: {
       limit: -1,
     },

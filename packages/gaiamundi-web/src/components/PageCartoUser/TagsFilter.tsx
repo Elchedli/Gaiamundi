@@ -1,46 +1,33 @@
-import { Alert } from 'components/Alert/Alert';
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
 import CloseCross from 'components/Icons/CloseCross';
-import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Badge } from 'components/Tags/Badge';
-import { useAuth } from 'hooks/useAuth';
-import { ApiData, ApiError } from 'interfaces/api';
+import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
 import { GroupedTags } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';
-import { useQuery } from 'react-query';
-import { getAllTagsByOwner } from 'services/tag';
 import { groupByApiData as groupApiDataBy } from 'utils/strapiUtils';
 
 interface TagsFilterProp {
   onChange: (selectedTagIds: number[]) => void;
+  tags: ApiData<Tag>[];
 }
 
-export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
-  const { user } = useAuth();
+export const TagsFilter: FC<TagsFilterProp> = ({
+  onChange,
+  tags: response,
+}) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const {
-    data: response,
-    isError,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ['tags', user?.id],
-    queryFn: async () => await getAllTagsByOwner(user?.id || 0),
-  });
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
-      response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
-        [],
+      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
       (tag: ApiData<Tag>) => tag.attributes.type
     );
   }, [selectedTagIds, response]);
 
   const selectedTags = useMemo(() => {
     return (
-      response?.data.filter((tag) => {
+      response?.filter((tag) => {
         return selectedTagIds.indexOf(tag.id) !== -1;
       }) || []
     );
@@ -61,22 +48,6 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     setSelectedTagIds([]);
     onChange([]);
   };
-
-  if (isLoading) {
-    return <LoadingMessage />;
-  }
-
-  if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
-  }
-
-  if (!response || response.data.length === 0) {
-    return (
-      <Alert type="info" className="grid h-fit justify-center items-center">
-        <div>Aucun tag na été trouvé!.</div>
-      </Alert>
-    );
-  }
 
   return (
     <div className="lg:max-w-sm ">
@@ -128,7 +99,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
                 >
                   {tag.attributes.name}
                   <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
-                    {/* {tag.attributes.count} */}
+                    {tag.attributes.count}
                   </span>
                 </Badge>
               );

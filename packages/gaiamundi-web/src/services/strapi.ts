@@ -55,7 +55,11 @@ export type QueryParams = {
   populate?:
     | string
     | string[]
-    | { [field: string]: boolean | { populate: { [field: string]: boolean } } };
+    | {
+        [field: string]:
+          | boolean
+          | { populate: { [field: string]: boolean } | string };
+      };
   sort?: string | string[]; // exp. 'createdAt:desc'
   pagination?: {
     page?: number; // default 1
