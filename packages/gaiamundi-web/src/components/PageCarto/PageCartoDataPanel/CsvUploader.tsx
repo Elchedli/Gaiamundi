@@ -6,8 +6,8 @@ import { UploadedFile } from 'interfaces/file';
 import LoadingSpinner from 'components/Icons/LoadingSpinner';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { ApiError } from 'interfaces/api';
-import DropZone from '../Forms/Inputs/DropZone';
-import { validateCsv } from 'utils/file';
+import DropZone from '../../Forms/Inputs/DropZone';
+import { parseCsvColumns, validateCsv } from 'utils/file';
 import {
   DocumentChartBarIcon,
   ExclamationCircleIcon,
@@ -15,17 +15,20 @@ import {
 import { uploadCsv } from 'services/page-carto';
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
+import { Column } from 'interfaces/column';
 
 type CsvUploaderProps = {
-  onFileUploaded: (file: UploadedFile) => void;
-  onFileParse?: (columnNames: string[] | undefined) => void;
-  onCancel: () => void;
+  onUpload: (file: UploadedFile) => void;
+  onParse?: (columnNames: Column[]) => void;
+  onCancel?: () => void;
+  onChange: (fileId: number) => void;
 };
 
 export const CsvUploader: React.FC<CsvUploaderProps> = ({
-  onFileUploaded,
-  onFileParse,
+  onUpload,
+  onParse,
   onCancel,
+  onChange,
 }) => {
   const { addToast } = useToast();
   const [file, setFile] = useState<UploadedFile | undefined>(undefined);
@@ -37,7 +40,8 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
     },
     onSuccess: (data: UploadedFile) => {
       setFile(data);
-      onFileUploaded(data);
+      onUpload(data);
+      onChange(data.id);
       addToast({
         title: `Fichier téléchargé`,
         description: `Fichier ${data.name} téléchargé avec succès`,
@@ -46,11 +50,15 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
     },
   });
 
-  const onUpload = async (file: File) => {
+  const handleUpload = async (csvFile: File) => {
     setErrors('');
     try {
-      const data = await validateCsv(file);
-      onFileParse && onFileParse(data.meta.fields);
+      const data = await validateCsv(csvFile);
+      if (onParse) {
+        const columns = parseCsvColumns(data.meta.fields || []);
+        onParse(columns);
+      }
+
       if (Array.isArray(data.errors) && data.errors.length > 0) {
         console.warn(`CSV Parse errors : `, data.errors);
       }
@@ -62,7 +70,7 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
             .join(', ')}`
         );
       }
-      mutateAsync({ file });
+      mutateAsync({ file: csvFile });
     } catch (e) {
       addToast({
         title: `Erreur lors de la validation du fichier CSV`,
@@ -75,7 +83,7 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
   const handleCancel = () => {
     setFile(undefined);
     setErrors('');
-    onCancel();
+    onCancel && onCancel();
   };
 
   if (isLoading) {
@@ -88,7 +96,6 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
 
   return (
     <div className="self-center">
-      <h2>{`Uploader des données à partir d'un fichier CSV`}</h2>
       {file ? (
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <DocumentChartBarIcon width={64} height={64} />
@@ -100,7 +107,7 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
           </Button>
         </div>
       ) : (
-        <DropZone onUpload={onUpload} />
+        <DropZone onUpload={handleUpload} />
       )}
       {errors && (
         <Alert className="p-2 text-sm" icon={ExclamationCircleIcon}>

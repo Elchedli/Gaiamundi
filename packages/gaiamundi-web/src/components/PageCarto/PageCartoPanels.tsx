@@ -1,16 +1,16 @@
-import { FC } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import { PageCartoPanelData } from './PageCartoPanelData';
 import { ApiData } from 'interfaces/api';
 import { PageCarto } from 'interfaces/page-carto';
+import { FC } from 'react';
+import { PageCartoPanelData } from './PageCartoDataPanel/PageCartoDataPanel';
 
 type PageCartoPanelsProps = {
   pageCarto: ApiData<PageCarto>;
 };
 
 export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
-  const columns = pageCarto.attributes.columns;
+  const dataFragments = pageCarto.attributes.data_fragments;
   const tabs = [
     {
       id: 1,
@@ -20,7 +20,12 @@ export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
     {
       id: 2,
       title: 'Données',
-      content: <PageCartoPanelData columns={columns} />,
+      content: (
+        <PageCartoPanelData
+          dataFragments={dataFragments}
+          pageCartoId={pageCarto.id}
+        />
+      ),
     },
     {
       id: 3,

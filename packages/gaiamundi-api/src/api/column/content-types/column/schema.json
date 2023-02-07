@@ -4,7 +4,8 @@
   "info": {
     "singularName": "column",
     "pluralName": "columns",
-    "displayName": "Column"
+    "displayName": "Column",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -21,10 +22,16 @@
     "validity": {
       "type": "string"
     },
-    "dataset": {
+    "isGeoCode": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "data_fragment": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::dataset.dataset"
+      "relation": "manyToOne",
+      "target": "api::data-fragment.data-fragment",
+      "inversedBy": "columns"
     }
   }
 }

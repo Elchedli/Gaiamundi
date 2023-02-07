@@ -1,5 +1,5 @@
 import { ApiCollection, ApiDocument } from './api';
-import { DatasetColumn } from './dataset-column';
+import { DataFragment } from './data-fragment';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
 import { User } from './user';
@@ -20,7 +20,7 @@ export interface PageCartoStub extends PageCartoBase {
   cover?: number;
   map?: number;
   tags?: number[];
-  columns?: number[];
+  data_fragments?: number[];
 }
 
 export interface PageCarto extends PageCartoBase {
@@ -28,7 +28,7 @@ export interface PageCarto extends PageCartoBase {
   cover: ApiDocument<UploadedFile>;
   map: ApiDocument<GeoMap>;
   tags: ApiCollection<Tag>;
-  columns: ApiCollection<DatasetColumn>;
+  data_fragments: ApiCollection<DataFragment>;
 }
 
 export type PageCartoForm = { name: string; geoMap: GeoMapStub };

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.rdg-cell,
+.rdg-checkbox {
+  border-color: rgb(207, 207, 207) !important;
+  border-width: 1px;
+}
+
+.rdg-cell[role='columnheader'] {
+  background-color: rgb(233, 233, 233);
+}

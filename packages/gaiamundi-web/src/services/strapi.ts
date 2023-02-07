@@ -14,6 +14,8 @@ export enum ContentType {
   PAGE_CARTOS = 'page-cartos',
   GEO_MAPS = 'geo-maps',
   DATASET = 'datasets',
+  DATA_FRAGMENT = 'data-fragments',
+  COLUMN = 'columns',
   USERS = 'users',
   TAGS = 'tags',
 }

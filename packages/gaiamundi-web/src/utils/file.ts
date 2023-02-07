@@ -1,3 +1,4 @@
+import { Column } from 'interfaces/column';
 import Papa from 'papaparse';
 
 const readFile = (file: File): Promise<string> => {
@@ -71,7 +72,30 @@ export const validateCsv = async (file: File) => {
     const csvData = Papa.parse(content, { header: true });
     return csvData;
   } catch (e) {
-    console.log(e);
     throw new Error(`Impossible de valider le format CSV du fichier.`);
   }
+};
+
+export const parseCsvColumns = (columnNames: string[]) => {
+  return columnNames.reduce((acc, curr, idx) => {
+    let metadata: { [key: string]: string } = {};
+    let name = curr;
+    const [match] = name.match(/\[(.+)\]/gi) || [''];
+    if (match) {
+      name = name.replace(match, '');
+      const meta = match.slice(1, -1);
+      metadata = meta.split('&').reduce((params, param) => {
+        const [key, value] = param.split('=');
+        params[key] = value ? value.trim() : '';
+        return params;
+      }, metadata);
+    }
+    acc.push({
+      name: name.trim(),
+      source: 's' in metadata ? metadata['s'] : '',
+      validity: 'v' in metadata ? metadata['v'] : '',
+      isGeoCode: idx === 0,
+    });
+    return acc;
+  }, [] as Column[]);
 };
