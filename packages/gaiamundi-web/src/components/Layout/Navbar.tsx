@@ -5,6 +5,7 @@ import { Button } from 'components/Button/Button';
 import { LogoLink } from './LogoLink';
 import { AccountDropdown } from 'components/Account/AccountDropdown';
 import { useAuth } from 'hooks/useAuth';
+import classNames from 'classnames';
 
 const NavbarMenuItem: React.FC<{
   href: string;
@@ -148,9 +149,11 @@ const Navbar: React.FC<NavbarProps> = ({
   const { isAuthenticated } = useAuth();
   return (
     <nav
-      className={`${
-        isInverted ? 'bg-royal-blue-900 text-gray-700 body-font' : 'bg-white'
-      } shadow-md z-10`}
+      className={classNames(
+        isFluid ? 'w-full' : '',
+        isInverted ? 'bg-royal-blue-900 text-gray-700 body-font' : 'bg-white',
+        'shadow-md z-10'
+      )}
     >
       <div className={`sm:px-6 lg:px-8 ${!isFluid && 'mx-auto max-w-7xl'}`}>
         <div className="">

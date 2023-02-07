@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "columns",
+  "info": {
+    "singularName": "column",
+    "pluralName": "columns",
+    "displayName": "Column",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    },
+    "validity": {
+      "type": "string"
+    },
+    "isGeoCode": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "data_fragment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::data-fragment.data-fragment",
+      "inversedBy": "columns"
+    }
+  }
+}

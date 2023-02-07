@@ -1,19 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Layout } from 'components/Layout/Layout';
+import { AuthProvider } from 'hooks/useAuth';
+import { ToastProvider } from 'hooks/useToast';
+import { AccountEditPage } from 'pages/Account/AccountEditPage';
+import { AccountPage } from 'pages/Account/AccountPage';
+import { DashboardPage } from 'pages/DashboardPage/DashboardPage';
+import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import { HomePage } from 'pages/HomePage/HomePage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
-import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
-import { DashboardPage } from 'pages/DashboardPage/DashboardPage';
-import { AuthProvider } from 'hooks/useAuth';
-import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
-import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
-import { ToastProvider } from 'hooks/useToast';
-import { AccountPage } from 'pages/Account/AccountPage';
-import { AccountEditPage } from 'pages/Account/AccountEditPage';
+import { PageCartoEditPage } from 'pages/PageCartoPage/PageCartoPage';
+import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
+import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
+
+import 'react-data-grid/lib/styles.css';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -44,6 +47,10 @@ export default function App() {
                 <Route
                   path="page-carto/create"
                   element={<NewPageCartoPage />}
+                />
+                <Route
+                  path="page-carto/:id/edit"
+                  element={<PageCartoEditPage />}
                 />
               </Route>
             </Routes>

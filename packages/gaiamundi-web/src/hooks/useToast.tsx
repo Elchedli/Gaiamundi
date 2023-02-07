@@ -1,6 +1,6 @@
-import { createContext, useState, useContext, useCallback } from 'react';
 import { Toast } from 'components/Toast/Toast';
-import { ToastData, ToastContent } from 'interfaces/toast';
+import { ToastContent, ToastData } from 'interfaces/toast';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 const ToastContext = createContext({
   addToast: (_data: ToastData) => {

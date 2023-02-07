@@ -7,7 +7,6 @@
     "maps",
     "statistics"
   ],
-  "homepage": "https://gitlab.com/gaia-mundi/gaiamundi/#readme",
   "bugs": {
     "url": "https://gitlab.com/gaia-mundi/gaiamundi/-/issues"
   },
@@ -35,6 +34,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^28.1.7",
     "@types/node": "^16.18.3",
+    "@types/papaparse": "^5.3.7",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
@@ -72,8 +72,13 @@
     "@heroicons/react": "^2.0.13",
     "axios": "^1.2.0",
     "classnames": "^2.3.2",
+    "eazychart-css": "^0.2.1-alpha.0",
+    "eazychart-react": "0.3.0-alpha.0",
     "excerpt-html": "^1.2.2",
+    "panzoom": "^9.4.3",
+    "papaparse": "^5.3.2",
     "react": "^18.2.0",
+    "react-data-grid": "^7.0.0-beta.22",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.40.0",
     "react-query": "^3.39.2",

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import {
   Children,
   cloneElement,
@@ -12,9 +13,15 @@ import { ButtonComponentProps } from './Button';
 export type ButtonGroupProps = PropsWithChildren<{
   pill?: boolean;
   outline?: boolean;
+  className?: string;
 }>;
 
-const ButtonGroup: FC<ButtonGroupProps> = ({ children, pill, outline }) => {
+const ButtonGroup: FC<ButtonGroupProps> = ({
+  children,
+  pill,
+  outline,
+  className,
+}) => {
   const items = useMemo(
     () =>
       Children.map(
@@ -36,7 +43,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ children, pill, outline }) => {
   );
 
   return (
-    <div className="inline-flex" role="group">
+    <div className={classNames('inline-flex', className)} role="group">
       {items}
     </div>
   );

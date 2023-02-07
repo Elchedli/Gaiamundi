@@ -1,7 +1,7 @@
-import { ComponentProps, FC, ReactNode } from 'react';
 import classNames from 'classnames';
-import ButtonGroup from './ButtonGroup';
 import Spinner from 'components/Icons/Spinner';
+import { ComponentProps, FC, ReactNode } from 'react';
+import ButtonGroup from './ButtonGroup';
 
 export type Color =
   | 'blue'
@@ -143,7 +143,7 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
     data-testid="button-element"
     disabled={disabled}
     className={classNames(
-      'group flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10',
+      'group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10',
       pill ? 'rounded-full' : 'rounded-lg',
       !gradientMonochrome && !gradientDuoTone && colorClasses[color],
       !gradientDuoTone &&
