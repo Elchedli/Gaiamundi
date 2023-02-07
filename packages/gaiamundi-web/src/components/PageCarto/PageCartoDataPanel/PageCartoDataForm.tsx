@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { UploadedFile } from 'interfaces/file';
 import { FC, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
@@ -19,7 +19,10 @@ import { addDataToPageCarto } from 'services/dataset';
 import { CsvUploader } from './CsvUploader';
 import { DatasetColumnPicker } from './DatasetColumnPicker';
 
-type FormData = DatasetStub & { columns: Column[] };
+type FormData = DatasetStub & {
+  fragmentName: string;
+  columns: Column[];
+};
 
 type PageCartoDataFormProps = {
   pageCartoId: number;
@@ -30,6 +33,7 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
   pageCartoId,
   onSubmit,
 }) => {
+  const queryClient = useQueryClient();
   const { user } = useRequireAuth();
   const [columns, setColumns] = useState<Column[]>([]);
   const { addToast } = useToast();
@@ -42,9 +46,10 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
   } = useForm<FormData>();
 
   const { isError, error, isLoading, mutateAsync } = useMutation({
-    mutationFn: async ({ columns, ...dataset }: FormData) => {
+    mutationFn: async ({ columns, fragmentName, ...dataset }: FormData) => {
       return await addDataToPageCarto(
         pageCartoId,
+        fragmentName,
         { ...dataset, owner: user?.id || 0 },
         columns
       );
@@ -55,15 +60,23 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
         description: `Votre jeu de données a été crée avec succès`,
         type: 'success',
       });
+      queryClient.invalidateQueries({ queryKey: ['page-carto', pageCartoId] });
       onSubmit(formData);
     },
   });
 
   const handleFileUpload = (file: UploadedFile) => {
     setValue('name', file?.name || '');
+    setValue('fragmentName', file?.name || '');
   };
 
-  const handleParse = (columns: Column[]) => {
+  const handleFileCancel = () => {
+    setValue('name', '');
+    setValue('fragmentName', '');
+    setColumns([]);
+  };
+
+  const handleFileParse = (columns: Column[]) => {
     setColumns(columns);
   };
 
@@ -92,7 +105,8 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
                   return (
                     <CsvUploader
                       onUpload={handleFileUpload}
-                      onParse={handleParse}
+                      onParse={handleFileParse}
+                      onCancel={handleFileCancel}
                       {...field}
                     />
                   );
@@ -127,15 +141,15 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
             <div className="mt-3">
               <Label htmlFor="name">Nom du jeu de données</Label>
               <TextInput
-                id="name"
+                id="fragmentName"
                 className="w-full"
-                {...register('name', {
+                {...register('fragmentName', {
                   required: `Veuillez saisir le nom de votre jeu de données`,
                 })}
               />
-              {errors.name && (
+              {errors.fragmentName && (
                 <div className="mt-2 text-xs text-red-600">
-                  {errors.name.message}
+                  {errors.fragmentName.message}
                 </div>
               )}
             </div>
