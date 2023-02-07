@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_fragments",
+  "info": {
+    "singularName": "data-fragment",
+    "pluralName": "data-fragments",
+    "displayName": "DataFragment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "columns": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::column.column",
+      "mappedBy": "data_fragment"
+    },
+    "dataset": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dataset.dataset"
+    },
+    "page_carto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page-carto.page-carto",
+      "inversedBy": "data_fragments"
+    }
+  }
+}

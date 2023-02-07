@@ -43,6 +43,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "data_fragments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-fragment.data-fragment",
+      "mappedBy": "page_carto"
     }
   }
 }
