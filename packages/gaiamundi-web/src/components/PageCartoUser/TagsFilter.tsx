@@ -5,12 +5,13 @@ import { Label } from 'components/Forms/Inputs/Label';
 import CloseCross from 'components/Icons/CloseCross';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Badge } from 'components/Tags/Badge';
+import { useAuth } from 'hooks/useAuth';
 import { ApiData, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
 import { GroupedTags } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
-import { getAllTags } from 'services/tag';
+import { getAllTagsByOwner } from 'services/tag';
 import { groupByApiData as groupApiDataBy } from 'utils/strapiUtils';
 
 interface TagsFilterProp {
@@ -18,6 +19,7 @@ interface TagsFilterProp {
 }
 
 export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
+  const { user } = useAuth();
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const {
     data: response,
@@ -25,8 +27,8 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['tags'],
-    queryFn: getAllTags,
+    queryKey: ['tags', user?.id],
+    queryFn: async () => await getAllTagsByOwner(user?.id || 0),
   });
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(

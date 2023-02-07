@@ -10,12 +10,16 @@ export const Dashboard: React.FC = () => {
   const safeChangeTags = (tagsTable: number[]) => setTagsSelected(tagsTable);
 
   return (
-    <div className="grid min-[1024px]:grid-flow-col mt-5 p-4 rounded-lg shadow-xl">
-      <FilterBar
-        onSearchKeywordChange={(name: string) => safeChangeSearchInput(name)}
-        onTagChange={safeChangeTags}
-      />
-      <PageCartoUserList nameInput={inputName} tagSelected={tagsSelected} />
+    <div className="grid grid-cols-4 gap-4">
+      <div className="col-span-1">
+        <FilterBar
+          onSearchKeywordChange={(name: string) => safeChangeSearchInput(name)}
+          onTagChange={safeChangeTags}
+        />
+      </div>
+      <div className="col-span-3">
+        <PageCartoUserList nameInput={inputName} tagSelected={tagsSelected} />
+      </div>
     </div>
   );
 };

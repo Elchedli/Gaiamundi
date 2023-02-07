@@ -11,10 +11,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onTagChange,
 }) => {
   return (
-    <div className="lg:max-w-sm">
+    <div className="w-full">
       <SearchInputDebounce
         id="pageCarto.search"
-        className="max-lg:w-full w-1/9 my-3"
+        className="w-full my-3"
         name="inputSearch"
         placeholder="Recherche ..."
         onDebouncedChange={onSearchKeywordChange}
