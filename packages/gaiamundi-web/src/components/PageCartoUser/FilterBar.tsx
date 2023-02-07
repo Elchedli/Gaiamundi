@@ -1,26 +1,30 @@
+import { ApiData } from 'interfaces/api';
+import { Tag } from 'interfaces/page-carto';
 import { SearchInputDebounce } from '../Forms/Inputs/DebouncedSearchInput';
 import { TagsFilter } from './TagsFilter';
 
 interface FilterBarProps {
   onSearchKeywordChange: (name: string) => void;
   onTagChange: (id: number[]) => void;
+  tags: ApiData<Tag>[];
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
   onSearchKeywordChange,
   onTagChange,
+  tags: response,
 }) => {
   return (
-    <div className="lg:max-w-sm ">
+    <div className="w-full">
       <SearchInputDebounce
         id="pageCarto.search"
-        className="max-lg:w-full my-3"
+        className="w-full my-3"
         name="inputSearch"
         placeholder="Recherche ..."
         onDebouncedChange={onSearchKeywordChange}
       />
 
-      <TagsFilter onChange={onTagChange} />
+      <TagsFilter tags={response} onChange={onTagChange} />
     </div>
   );
 };

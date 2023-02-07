@@ -2,10 +2,10 @@ import axios, { AxiosInstance } from 'axios';
 import config from 'config';
 import {
   ApiCollection,
+  ApiData,
+  ApiDocument,
   ApiErrorResponse,
   ApiResponse,
-  ApiDocument,
-  ApiData,
 } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { User, UserAuthResponse, UserSignUpFields } from 'interfaces/user';
@@ -42,6 +42,11 @@ type FilterOperator =
   | '$or' //	Joins the filters in an "or" expression
   | '$and'; //	Joins the filters in an "and" expression
 
+export type QueryFilterParam = {
+  // eslint-disable-next-line
+  [field: string]: QueryFilterParam | { [operator in FilterOperator]?: any };
+};
+
 export type QueryParams = {
   filters?: {
     // eslint-disable-next-line
@@ -50,7 +55,9 @@ export type QueryParams = {
   populate?:
     | string
     | string[]
-    | { [field: string]: boolean | { populate: { [field: string]: boolean } } };
+    | {
+        [field: string]: boolean | { populate: { [field: string]: boolean } };
+      };
   sort?: string | string[]; // exp. 'createdAt:desc'
   pagination?: {
     page?: number; // default 1

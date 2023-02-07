@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import classNames from 'classnames';
+import { Pagination } from 'components/Pagination/Pagination';
+import { useAuth } from 'hooks/useAuth';
+import { GeoMap } from 'interfaces/geo-map';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import GeoListItem from './GeoListItem';
-import { Pagination } from 'components/Pagination/Pagination';
-import { GeoMap } from 'interfaces/geo-map';
-import { useAuth } from 'hooks/useAuth';
 
 export const GeoMapList = () => {
   const paginationLimit = 9;
@@ -22,9 +22,7 @@ export const GeoMapList = () => {
           owner:
             !selectedTab && user != undefined
               ? {
-                  id: {
-                    $eq: user?.id,
-                  },
+                  id: user.id,
                 }
               : {},
         } as QueryParams['filters'],

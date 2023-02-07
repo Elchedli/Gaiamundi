@@ -1,44 +1,33 @@
-import { Alert } from 'components/Alert/Alert';
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
 import CloseCross from 'components/Icons/CloseCross';
-import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Badge } from 'components/Tags/Badge';
-import { ApiData, ApiError } from 'interfaces/api';
+import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/page-carto';
 import { GroupedTags } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';
-import { useQuery } from 'react-query';
-import { getAllTags } from 'services/tag';
 import { groupByApiData as groupApiDataBy } from 'utils/strapiUtils';
 
 interface TagsFilterProp {
   onChange: (selectedTagIds: number[]) => void;
+  tags: ApiData<Tag>[];
 }
 
-export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
+export const TagsFilter: FC<TagsFilterProp> = ({
+  onChange,
+  tags: response,
+}) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const {
-    data: response,
-    isError,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ['tags'],
-    queryFn: getAllTags,
-  });
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
-      response?.data.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) ||
-        [],
+      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
       (tag: ApiData<Tag>) => tag.attributes.type
     );
   }, [selectedTagIds, response]);
 
   const selectedTags = useMemo(() => {
     return (
-      response?.data.filter((tag) => {
+      response?.filter((tag) => {
         return selectedTagIds.indexOf(tag.id) !== -1;
       }) || []
     );
@@ -46,7 +35,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
 
   const handleAddTag = (tagId: number) => {
     setSelectedTagIds([...selectedTagIds, tagId]);
-    onChange(selectedTagIds);
+    onChange([...selectedTagIds, tagId]);
   };
 
   const handleRemoveTag = (tagId: number) => {
@@ -59,22 +48,6 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
     setSelectedTagIds([]);
     onChange([]);
   };
-
-  if (isLoading) {
-    return <LoadingMessage />;
-  }
-
-  if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
-  }
-
-  if (!response || response.data.length === 0) {
-    return (
-      <Alert type="info" className="grid justify-center items-center">
-        <div>Aucun tag na été trouvé!.</div>
-      </Alert>
-    );
-  }
 
   return (
     <div className="lg:max-w-sm ">
@@ -121,7 +94,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({ onChange }) => {
                 <Badge
                   href="#"
                   key={tag.id}
-                  className="lg:block w-fit"
+                  className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
                   onClick={() => handleAddTag(tag.id)}
                 >
                   {tag.attributes.name}

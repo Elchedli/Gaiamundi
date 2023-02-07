@@ -1,14 +1,14 @@
-import { useQuery } from 'react-query';
-import { useState } from 'react';
+import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { Alert } from 'components/Alert/Alert';
-import { ApiError } from 'interfaces/api';
-import { Pagination } from 'components/Pagination/Pagination';
-import { ContentType, QueryParams, strapi } from 'services/strapi';
-import { PageCarto } from 'interfaces/page-carto';
-import { useAuth } from 'hooks/useAuth';
 import PageCartoItem from 'components/PageCarto/PageCartoItem';
+import { Pagination } from 'components/Pagination/Pagination';
+import { useAuth } from 'hooks/useAuth';
+import { ApiError } from 'interfaces/api';
+import { PageCarto } from 'interfaces/page-carto';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { ContentType, QueryParams, strapi } from 'services/strapi';
 
 export const PageCartoUserList = ({
   nameInput,
@@ -85,32 +85,33 @@ export const PageCartoUserList = ({
     return <ApiErrorAlert error={error as ApiError} />;
   }
 
-  if (!response || response.data.length === 0) {
-    return (
-      <Alert type="info" className="grid justify-center items-center">
-        <div>Aucun contenu à afficher.</div>
-      </Alert>
-    );
-  }
-
-  const { data, meta } = response;
-
   return (
     <div>
-      <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-        {data.map((page) => {
-          return <PageCartoItem key={page.id} {...page} />;
-        })}
-      </div>
-      <div className="flex flex-row mt-5 justify-center">
-        <Pagination
-          page={page}
-          onPaginateNext={() => setPage(page + 1)}
-          onPaginatePrevious={() => setPage(page - 1)}
-          onPaginate={(p: number) => setPage(p)}
-          totalPages={meta.pagination.pageCount || 0}
-        />
-      </div>
+      {!response || response.data.length === 0 ? (
+        <Alert
+          type="info"
+          className="bg-transparent border-transparent w-fit grid justify-center items-center"
+        >
+          <div>Aucun contenu à afficher.</div>
+        </Alert>
+      ) : (
+        <>
+          <div className={`grid grid-cols-3 gap-y-10 gap-x-6`}>
+            {response.data.map((page) => {
+              return <PageCartoItem key={page.id} {...page} />;
+            })}
+          </div>
+          <div className="flex flex-row mt-5 justify-center">
+            <Pagination
+              page={page}
+              onPaginateNext={() => setPage(page + 1)}
+              onPaginatePrevious={() => setPage(page - 1)}
+              onPaginate={(p: number) => setPage(p)}
+              totalPages={response.meta.pagination.pageCount || 0}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };
