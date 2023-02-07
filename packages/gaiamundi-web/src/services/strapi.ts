@@ -39,11 +39,13 @@ type FilterOperator =
   | '$or' //	Joins the filters in an "or" expression
   | '$and'; //	Joins the filters in an "and" expression
 
+export type QueryFilterParam = {
+  // eslint-disable-next-line
+  [field: string]: QueryFilterParam | { [operator in FilterOperator]?: any };
+};
+
 export type QueryParams = {
-  filters?: {
-    // eslint-disable-next-line
-    [field: string]: { [operator in FilterOperator]?: any };
-  };
+  filters?: QueryFilterParam;
   populate?: string | string[] | { [field: string]: { populate: string[] } };
   sort?: string | string[]; // exp. 'createdAt:desc'
   pagination?: {
