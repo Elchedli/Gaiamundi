@@ -1,16 +1,16 @@
-import { useMutation } from 'react-query';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Button } from 'components/Button/Button';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { ApiError } from 'interfaces/api';
-import { PageCartoStub, PageCartoForm } from 'interfaces/page-carto';
-import { useToast } from 'hooks/useToast';
+import { Button } from 'components/Button/Button';
 import { useRequireAuth } from 'hooks/useRequireAuth';
-import { MapPickForm } from './MapPickForm';
-import { TextInput } from './Inputs/TextInput';
-import { Label } from './Inputs/Label';
-import { createPageCarto } from 'services/page-carto';
+import { useToast } from 'hooks/useToast';
+import { ApiError } from 'interfaces/api';
+import { PageCartoForm, PageCartoStub } from 'interfaces/page-carto';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { createGeoMap } from 'services/geo-map';
+import { createPageCarto } from 'services/page-carto';
+import { Label } from './Inputs/Label';
+import { TextInput } from './Inputs/TextInput';
+import { MapPickForm } from './MapForm/MapPicker';
 
 export const NewPageCartoForm = () => {
   const { user } = useRequireAuth();

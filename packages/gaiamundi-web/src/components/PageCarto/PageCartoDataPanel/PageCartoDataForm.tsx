@@ -17,7 +17,7 @@ import { Column } from 'interfaces/column';
 import { DatasetStub } from 'interfaces/dataset';
 import { addDataToPageCarto } from 'services/dataset';
 import { CsvUploader } from './CsvUploader';
-import { DatasetColumnPicker } from './DatasetColumnPicker';
+import DatasetColumnPicker from './DatasetColumnPicker';
 
 type FormData = DatasetStub & {
   fragmentName: string;
