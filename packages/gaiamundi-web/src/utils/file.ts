@@ -6,7 +6,7 @@ import Papa from 'papaparse';
 const readFile = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-
+    console.log('file is : ', file);
     reader.readAsText(file);
 
     reader.onload = function () {
