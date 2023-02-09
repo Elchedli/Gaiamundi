@@ -3,10 +3,7 @@
  */
 
 import { factories } from "@strapi/strapi";
-import {
-  ConvertCSVToPageCartoData,
-  csvUrlParse,
-} from "../../../utils/parsingCSV";
+import { csvUrlParse } from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
@@ -45,10 +42,7 @@ export default factories.createCoreController(
             );
           })
         );
-        const pageCartoData = ConvertCSVToPageCartoData(
-          csvDatas,
-          tableKeys
-        ).fuseObjectsUnique();
+
         ctx.body = csvDatas;
       } catch (err) {
         console.log(err);
