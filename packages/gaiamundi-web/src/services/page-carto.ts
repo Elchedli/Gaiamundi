@@ -27,11 +27,7 @@ export const getPageCartoById = async (id: number) => {
       owner: true,
       data_fragments: {
         populate: {
-          dataset: {
-            populate: {
-              csv: true,
-            },
-          },
+          dataset: true,
           columns: true,
         },
       },

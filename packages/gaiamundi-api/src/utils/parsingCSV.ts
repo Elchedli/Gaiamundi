@@ -1,20 +1,11 @@
-export const testTables: string[][][] = [
-  [
-    ['champmap', 'columnname', 'geocode', 'testchamp'],
-    ['10', 'Viva', '1', 'black'],
-    ['236', 'Suna', '2', 'testchamp'],
-  ],
-  [
-    ['geoId', 'coolumname', 'source', 'Validite'],
-    ['1', 'Paris', 'France', '2025'],
-  ],
-  [
-    ['testchamp', 'Source', 'Validite', 'geo', 'purri'],
-    ['lemon', 'choupa', '2028', '2', 'combo'],
-    ['orange', 'sliman', '2028', '1', 'hourra'],
-  ],
-];
-export const idTables = ['geocode', 'geoId', 'geo'];
+const axios = require("axios");
+import Papa from "papaparse";
+
+export const csvRemoteParse = async (urlCsvFile: string) => {
+  const { data } = await axios.get(urlCsvFile);
+  return Papa.parse(data).data;
+};
+
 const findIdField = (obj: any, idTables: string[]) =>
   Object.keys(obj).find((key) => idTables.includes(key));
 
@@ -65,7 +56,7 @@ const fuseObjectsUniqueId = (
   idTables: string[]
 ): any[] => {
   return tables.reduce((acc, curr) => {
-    const idField: any = findIdField(curr, idTables) || '';
+    const idField: any = findIdField(curr, idTables) || "";
     const geoNeon = curr[idField];
     const existing = acc.find((obj: any) => obj.geoNeon === geoNeon);
 

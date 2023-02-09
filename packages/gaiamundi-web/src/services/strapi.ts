@@ -47,19 +47,18 @@ export type QueryFilterParam = {
   [field: string]: QueryFilterParam | { [operator in FilterOperator]?: any };
 };
 
-export type QueryPopulateParam = {
-  // eslint-disable-next-line
-  [field: string]:
-    | QueryPopulateParam
-    | boolean
-    | { populate: { [field: string]: boolean } };
-};
 export type QueryParams = {
   filters?: {
     // eslint-disable-next-line
     [field: string]: { [operator in FilterOperator]?: any };
   };
-  populate?: string | string[] | QueryPopulateParam;
+  populate?:
+    | string
+    | string[]
+    | {
+        [field: string]: boolean | { populate: { [field: string]: boolean } };
+      };
+
   sort?: string | string[]; // exp. 'createdAt:desc'
   pagination?: {
     page?: number; // default 1

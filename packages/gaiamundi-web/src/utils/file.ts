@@ -6,16 +6,14 @@ import Papa from 'papaparse';
 const readFile = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    console.log('file is : ', file);
-    reader.readAsText(file);
 
+    reader.readAsText(file);
     reader.onload = function () {
       if (!reader.result) {
         return reject(new Error('Unable to read the file!'));
       }
       resolve(reader.result.toString());
     };
-
     reader.onerror = function () {
       reject(reader.error);
     };

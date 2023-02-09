@@ -3,45 +3,53 @@
  */
 
 import { factories } from "@strapi/strapi";
+import {
+  ConvertCSVToPageCartoData,
+  csvRemoteParse,
+} from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
   ({ strapi }) => ({
-    async thumbnail(ctx) {
+    async csvParsing(ctx) {
       try {
-        // get map by id
-        const fileId = ctx.params.id;
-        const entry = await strapi.entityService.findOne(
-          "plugin::upload.file",
-          fileId
+        const id = ctx.params.id;
+        const model = await strapi.entityService.findOne(
+          "api::page-carto.page-carto",
+          id,
+          {
+            populate: {
+              data_fragments: {
+                populate: {
+                  dataset: {
+                    populate: {
+                      csv: true,
+                    },
+                  },
+                  columns: true,
+                },
+              },
+            },
+          }
         );
-        console.log(JSON.stringify(entry), entry.hash);
-        // compute svg path
-        const svgFilename = `${entry.hash}.svg`;
-        const svgPath = path.join(
-          strapi.dirs.static.public,
-          "thumbnails",
-          svgFilename
+
+        const fragments = model.data_fragments;
+        const tableKeys: string[] = [];
+        const csvDatas: Array<any> = await Promise.all(
+          fragments.map(async (fragment): Promise<number> => {
+            tableKeys.push(
+              fragment.columns.find((column) => column.isGeoCode).name
+            );
+            return await csvRemoteParse(
+              "http://localhost:1337" + fragment.dataset.csv.url
+            );
+          })
         );
-        let svg;
-        if (!fs.existsSync(svgPath)) {
-          // generate svg thumbnail
-          const geoJsonPath = path.join(
-            strapi.dirs.static.public,
-            "uploads",
-            `${entry.hash}${entry.ext}`
-          );
-          const data = require(geoJsonPath);
-          svg = geojson2svg()
-            .projection(([x, y]) => [x, -y])
-            .render(data);
-          fs.writeFileSync(svgPath, svg);
-        } else {
-          // get existing svg thumbnail
-          svg = fs.readFileSync(svgPath, { encoding: "utf8", flag: "r" });
-        }
-        ctx.type = "image/svg+xml; charset=utf-8";
-        ctx.body = svg;
+        const pageCartoData = ConvertCSVToPageCartoData(
+          csvDatas,
+          tableKeys
+        ).fuseObjectsUnique();
+        ctx.body = csvDatas;
       } catch (err) {
         console.log(err);
         ctx.body = err;
