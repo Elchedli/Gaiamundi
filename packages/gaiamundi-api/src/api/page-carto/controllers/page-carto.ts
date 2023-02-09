@@ -5,7 +5,7 @@
 import { factories } from "@strapi/strapi";
 import {
   ConvertCSVToPageCartoData,
-  csvRemoteParse,
+  csvUrlParse,
 } from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
@@ -40,7 +40,7 @@ export default factories.createCoreController(
             tableKeys.push(
               fragment.columns.find((column) => column.isGeoCode).name
             );
-            return await csvRemoteParse(
+            return await csvUrlParse(
               "http://localhost:1337" + fragment.dataset.csv.url
             );
           })
