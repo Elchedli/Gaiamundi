@@ -3,7 +3,8 @@
  */
 
 import { factories } from "@strapi/strapi";
-import { csvUrlParse } from "../../../utils/parsingCSV";
+import path from "path";
+import { csvFileParser } from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
@@ -33,13 +34,18 @@ export default factories.createCoreController(
         const fragments = model.data_fragments;
         const tableKeys: string[] = [];
         const csvDatas: Array<any> = await Promise.all(
-          fragments.map(async (fragment): Promise<number> => {
+          fragments.map(async (fragment): Promise<any> => {
+            const file = fragment.dataset.csv;
+            const filename = `${file.hash}${file.ext}`;
+            const csvPath = path.join(
+              strapi.dirs.static.public,
+              "uploads",
+              filename
+            );
             tableKeys.push(
               fragment.columns.find((column) => column.isGeoCode).name
             );
-            return await csvUrlParse(
-              "http://localhost:1337" + fragment.dataset.csv.url
-            );
+            return await csvFileParser(csvPath);
           })
         );
 
