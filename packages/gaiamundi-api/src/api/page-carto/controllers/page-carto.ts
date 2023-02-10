@@ -4,7 +4,7 @@
 
 import { factories } from "@strapi/strapi";
 import path from "path";
-import { csvFileParser } from "../../../utils/parsingCSV";
+import { csvFileParser, fuseObjectsUniqueId } from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
@@ -33,7 +33,7 @@ export default factories.createCoreController(
 
         const fragments = model.data_fragments;
         const tableKeys: string[] = [];
-        const csvDatas: Array<any> = await Promise.all(
+        const csvDataMerged: Array<any> = await Promise.all(
           fragments.map(async (fragment): Promise<any> => {
             const file = fragment.dataset.csv;
             const filename = `${file.hash}${file.ext}`;
@@ -43,13 +43,17 @@ export default factories.createCoreController(
               filename
             );
             tableKeys.push(
-              fragment.columns.find((column) => column.isGeoCode).name
+              fragment.columns
+                .find((column) => column.isGeoCode)
+                .name.toLowerCase()
             );
             return await csvFileParser(csvPath);
           })
-        );
+        )
+          .then((data) => data.flat())
+          .then((data: []) => fuseObjectsUniqueId(data, tableKeys));
 
-        ctx.body = csvDatas;
+        ctx.body = csvDataMerged;
       } catch (err) {
         console.log(err);
         ctx.body = err;
