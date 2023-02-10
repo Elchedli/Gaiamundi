@@ -33,8 +33,8 @@ export default factories.createCoreController(
 
         const fragments = model.data_fragments;
         const tableKeys: string[] = [];
-        const csvDataMerged: Array<any> = await Promise.all(
-          fragments.map(async (fragment): Promise<any> => {
+        const csvDataMerged = await Promise.all(
+          fragments.map(async (fragment): Promise<object[]> => {
             const file = fragment.dataset.csv;
             const filename = `${file.hash}${file.ext}`;
             const csvPath = path.join(
@@ -51,7 +51,7 @@ export default factories.createCoreController(
           })
         )
           .then((data) => data.flat())
-          .then((data: []) => fuseObjectsUniqueId(data, tableKeys));
+          .then((data: []) => fuseObjectsUniqueId(data, tableKeys, "geocode"));
 
         ctx.body = csvDataMerged;
       } catch (err) {

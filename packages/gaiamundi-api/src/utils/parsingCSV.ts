@@ -11,26 +11,29 @@ export const csvFileParser = async (filePath: string) => {
   }
   return null;
 };
-const findIdField = (obj: any, idTables: string[]) =>
+const findIdField = (obj: Object, idTables: string[]) =>
   Object.keys(obj).find((key) => idTables.includes(key));
 
-const mapIdField = (obj: any, idField: string) => {
-  const newObj = { ...obj };
-  newObj.geocode = newObj[idField];
-  idField !== "geocode" ?? delete newObj[idField];
+const mapIdField = (obj: Object, idField: string, desiredKeyName: string) => {
+  const newObj: Object = { ...obj };
+  newObj[desiredKeyName] = newObj[idField];
+  idField !== desiredKeyName && delete newObj[idField];
   return newObj;
 };
 
-export const fuseObjectsUniqueId = (csvList: [], idTables: string[]): any[] => {
-  return csvList.reduce((acc, curr) => {
+export const fuseObjectsUniqueId = (
+  csvList: object[],
+  idTables: string[],
+  desiredKey: string
+) => {
+  return csvList.reduce((acc: Array<object>, curr: Object) => {
     const idField: string = findIdField(curr, idTables) || "";
     const geocode = curr[idField];
-    const existing = acc.find((obj: any) => obj.geocode === geocode);
-
+    const existing = acc.find((obj: Object) => obj[desiredKey] === geocode);
     if (existing) {
-      Object.assign(existing, mapIdField(curr, idField));
+      Object.assign(existing, mapIdField(curr, idField, desiredKey));
     } else {
-      acc.push(mapIdField(curr, idField));
+      acc.push(mapIdField(curr, idField, desiredKey));
     }
 
     return acc;
