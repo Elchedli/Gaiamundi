@@ -9,6 +9,7 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
   if (!error) {
     return null;
   }
+
   return (
     <Alert
       type={'failure'}
@@ -18,7 +19,7 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
       }
     >
       {'message' in error ? error.message : JSON.stringify(error)}
-      {'details' in error ? (
+      {'details' in error && (
         <ul>
           {error?.details?.errors?.map((err, idx) => {
             return (
@@ -28,8 +29,6 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
             );
           })}
         </ul>
-      ) : (
-        JSON.stringify(error)
       )}
     </Alert>
   );
