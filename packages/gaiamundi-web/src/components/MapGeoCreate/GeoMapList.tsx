@@ -47,44 +47,38 @@ export const GeoMapList = () => {
     },
   ];
   return (
-    <div>
-      <h2 className="pb-4 text-3xl font-extrabold">
-        Réutiliser une carte GeoJSON
-      </h2>
-      <div className="flex-column">
-        <div className="flex bg-blue-600 rounded-t-lg p-2">
-          {GeoMap.map((table, index) => (
-            <div
-              key={table.id}
-              className={classNames(
-                'rounded-t-lg p-4 text-sm font-medium leading-5 text-blue-700 cursor-pointer',
-                'ring-blue ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1',
-                index === selectedTab
-                  ? 'bg-white shadow'
-                  : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
-              )}
-              onClick={() => setSelectedTab(index)}
-            >
-              {table.title}
-            </div>
-          ))}
+    <div className="flex-column">
+      <div className="flex bg-blue-600 rounded-t-lg p-2">
+        {GeoMap.map((table, index) => (
+          <div
+            key={table.id}
+            className={classNames(
+              'rounded-t-lg p-4 text-sm font-medium leading-5 text-blue-700 cursor-pointer',
+              'ring-blue ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1',
+              index === selectedTab
+                ? 'bg-white shadow'
+                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+            )}
+            onClick={() => setSelectedTab(index)}
+          >
+            {table.title}
+          </div>
+        ))}
+      </div>
+      <div className="rounded-b-lg border border-blue-700 p-5">
+        <div className="grid grid-cols-3 gap-y-10 gap-x-6">
+          {response?.data.map((page) => {
+            return <GeoListItem key={page.attributes.name} {...page} />;
+          })}
         </div>
-        <div className="rounded-b-lg border border-blue-700 p-5">
-          <h2 className="pb-4 text-3xl font-extrabold">Toutes les cartes</h2>
-          <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-            {response?.data.map((page) => {
-              return <GeoListItem key={page.attributes.name} {...page} />;
-            })}
-          </div>
-          <div className="flex flex-row mt-5 justify-center">
-            <Pagination
-              page={page}
-              onPaginateNext={() => setPage(page + 1)}
-              onPaginatePrevious={() => setPage(page - 1)}
-              onPaginate={(p: number) => setPage(p)}
-              totalPages={response?.meta.pagination.pageCount ?? 0}
-            />
-          </div>
+        <div className="flex flex-row mt-5 justify-center">
+          <Pagination
+            page={page}
+            onPaginateNext={() => setPage(page + 1)}
+            onPaginatePrevious={() => setPage(page - 1)}
+            onPaginate={(p: number) => setPage(p)}
+            totalPages={response?.meta.pagination.pageCount ?? 0}
+          />
         </div>
       </div>
     </div>

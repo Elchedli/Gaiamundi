@@ -1,19 +1,17 @@
 import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
-import config from 'config';
+import { getGeoMapThumbnailUrlById } from 'services/geo-map';
+
 const GeoListItem: React.FC<ApiData<GeoMap>> = ({
-  id,
-  attributes: { yearValidity, name, source, license },
+  attributes: { yearValidity, name, source, license, geoJSON },
 }) => {
   return (
     <div className="group border pb-2 cursor-pointer">
-      <div className="aspect-w-1 aspect-h-1 w-fit overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8">
-        {
-          <img
-            src={`${config.API_URL}/api/geo-maps/thumbnail/${id}`}
-            className="h-40 w-full object-cover object-center group-hover:opacity-75"
-          />
-        }
+      <div className="bg-slate-300">
+        <img
+          src={getGeoMapThumbnailUrlById(geoJSON.data.id)}
+          className="w-full object-contain object-center hover:opacity-75"
+        />
       </div>
       <div className="p-3">
         <h2>{name}</h2>

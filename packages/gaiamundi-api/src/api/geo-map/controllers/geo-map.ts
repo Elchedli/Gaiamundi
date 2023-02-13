@@ -3,9 +3,9 @@
  */
 
 import { factories } from "@strapi/strapi";
-import path from "path";
 import fs from "fs";
 import geojson2svg from "geojson-to-svg";
+import path from "path";
 
 export default factories.createCoreController(
   "api::geo-map.geo-map",

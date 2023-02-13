@@ -1,25 +1,25 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Radio } from 'components/Forms/Inputs/Radio';
 import { TextInput } from 'components/Forms/Inputs/TextInput';
-import { Column } from 'interfaces/column';
+import { GeoProperty } from 'interfaces/geo-map';
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid, {
   Column as DataGridColumn,
   SelectColumn,
 } from 'react-data-grid';
 
-type DatasetColumnPickerProps = {
-  data: Column[];
-  onChange: (selectedColumns: Column[]) => void;
+type GeoPropertyPickerProps = {
+  data: GeoProperty[];
+  onChange: (selectedGeoProperties: GeoProperty[]) => void;
 };
 
-const DatasetColumnPicker = React.forwardRef<
+const GeoPropertyPicker = React.forwardRef<
   HTMLDivElement,
-  DatasetColumnPickerProps
+  GeoPropertyPickerProps
 >(({ data, onChange }, ref) => {
-  const [selectedColumns, setSelectedColumns] = useState<ReadonlySet<string>>(
-    () => new Set<string>()
-  );
+  const [selectedGeoProperties, setSelectedGeoProperties] = useState<
+    ReadonlySet<string>
+  >(() => new Set<string>());
   const [selectedGeoCode, setSelectedGeoCode] = useState<string | null>(null);
   const [searchKeywords, setSearchKeywords] = useState<string>('');
 
@@ -32,7 +32,7 @@ const DatasetColumnPicker = React.forwardRef<
   }, [data, searchKeywords]);
 
   const handleRowSelect = (selection: Set<string>) => {
-    setSelectedColumns(selection);
+    setSelectedGeoProperties(selection);
     if (selectedGeoCode && !selection.has(selectedGeoCode)) {
       setSelectedGeoCode(null);
     }
@@ -43,7 +43,7 @@ const DatasetColumnPicker = React.forwardRef<
   };
 
   useEffect(() => {
-    const selected = Array.from(selectedColumns)
+    const selected = Array.from(selectedGeoProperties)
       .map((name) => {
         return data.find((row) => row.name === name);
       })
@@ -52,12 +52,12 @@ const DatasetColumnPicker = React.forwardRef<
           ({
             ...column,
             isGeoCode: column?.name === selectedGeoCode,
-          } as Column)
+          } as GeoProperty)
       );
     onChange(selected);
-  }, [selectedColumns, selectedGeoCode]);
+  }, [selectedGeoProperties, selectedGeoCode]);
 
-  const columns: DataGridColumn<Column>[] = [
+  const columns: DataGridColumn<GeoProperty>[] = [
     SelectColumn,
     {
       key: 'isGeoCode',
@@ -66,7 +66,7 @@ const DatasetColumnPicker = React.forwardRef<
       minWidth: 80,
       maxWidth: 80,
       formatter({ row }) {
-        return selectedColumns.has(row.name) ? (
+        return selectedGeoProperties.has(row.name) ? (
           <Radio
             name="isGeoCode"
             value={row.name}
@@ -80,15 +80,11 @@ const DatasetColumnPicker = React.forwardRef<
     },
     {
       key: 'name',
-      name: 'Colonne',
+      name: 'Nom',
     },
     {
-      key: 'source',
-      name: 'Source',
-    },
-    {
-      key: 'validity',
-      name: 'Validité',
+      key: 'sample',
+      name: 'Example',
     },
   ];
 
@@ -111,13 +107,13 @@ const DatasetColumnPicker = React.forwardRef<
         rowKeyGetter={({ name }) => name}
         columns={columns}
         rows={filteredRows}
-        selectedRows={selectedColumns}
+        selectedRows={selectedGeoProperties}
         onSelectedRowsChange={handleRowSelect}
       />
     </div>
   );
 });
 
-DatasetColumnPicker.displayName = 'DatasetColumnPicker';
+GeoPropertyPicker.displayName = 'GeoPropertyPicker';
 
-export default DatasetColumnPicker;
+export default GeoPropertyPicker;

@@ -44,6 +44,12 @@
       "relation": "oneToMany",
       "target": "api::page-carto.page-carto",
       "mappedBy": "map"
+    },
+    "properties": {
+      "displayName": "Properties",
+      "type": "component",
+      "repeatable": true,
+      "component": "data.properties"
     }
   }
 }

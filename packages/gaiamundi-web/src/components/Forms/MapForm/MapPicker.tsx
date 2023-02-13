@@ -1,15 +1,15 @@
-import { FC } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import { NewMapForm } from './NewMapForm';
 import { GeoMapList } from 'components/MapGeoCreate/GeoMapList';
+import { FC } from 'react';
+import { MapForm } from './MapForm';
 
 export const MapPickForm: FC = () => {
   const tabs = [
     {
       id: 1,
       title: "A partir d'une carte GeoJSON",
-      content: <NewMapForm />,
+      content: <MapForm />,
     },
     {
       id: 2,
