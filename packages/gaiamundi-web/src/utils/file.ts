@@ -112,7 +112,6 @@ export const parseGeoJsonProperties = (geoJson: GeoJSON): GeoProperty[] => {
       (feature: Feature) => 'type' in feature && feature.type === 'Feature'
     );
     if (feature?.properties && Object.values(feature?.properties).length > 0) {
-      console.log(feature.properties);
       return Object.entries(feature.properties).map(([name, sample]) => {
         return {
           name: name,
