@@ -1,12 +1,14 @@
-import { FC } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { ApiError } from 'interfaces/api';
+import { FC } from 'react';
 import { Alert } from './Alert';
 
 export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
   error,
 }) => {
-  console.log(error);
+  if (!error) {
+    return null;
+  }
   return (
     <Alert
       type={'failure'}
@@ -15,7 +17,20 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
         error && 'description' in error ? error.description : ''
       }
     >
-      {error && 'message' in error ? error.message : JSON.stringify(error)}
+      {'message' in error ? error.message : JSON.stringify(error)}
+      {'details' in error ? (
+        <ul>
+          {error?.details?.errors?.map((err, idx) => {
+            return (
+              <li key={idx}>
+                {err.name}: {err.message}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        JSON.stringify(error)
+      )}
     </Alert>
   );
 };

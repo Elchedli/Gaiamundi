@@ -115,8 +115,8 @@ export const parseGeoJsonProperties = (geoJson: GeoJSON): GeoProperty[] => {
       console.log(feature.properties);
       return Object.entries(feature.properties).map(([name, sample]) => {
         return {
-          name,
-          sample,
+          name: name,
+          sample: `${sample}`,
           isGeoCode: false,
         };
       });

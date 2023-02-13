@@ -61,7 +61,7 @@ export const MapForm: FC = () => {
             defaultValue={undefined}
             rules={{
               required:
-                'Vous devez sélectionner les colonnes ainsi que le Géo Code.',
+                'Vous devez sélectionner les propriétés ainsi que le Géo Code.',
               validate: (cols) => {
                 return cols.length > 0 && cols.some((c) => c.isGeoCode);
               },

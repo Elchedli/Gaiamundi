@@ -1,14 +1,13 @@
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import LoadingSpinner from 'components/Icons/LoadingSpinner';
-import config from 'config';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { GeoProperty } from 'interfaces/geo-map';
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
-import { uploadGeoJson } from 'services/geo-map';
+import { getGeoMapThumbnailUrlById, uploadGeoJson } from 'services/geo-map';
 import { parseGeoJsonProperties, validateGeoJsonFile } from 'utils/file';
 import DropZone from '../Inputs/DropZone';
 
@@ -81,7 +80,7 @@ const GeoJsonUploader = React.forwardRef<HTMLDivElement, GeoJsonUploaderProps>(
         {file ? (
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <img
-              src={`${config.API_URL}/api/geo-maps/thumbnail/${file.id}`}
+              src={getGeoMapThumbnailUrlById(file.id)}
               width={128}
               height={128}
             />

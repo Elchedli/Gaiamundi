@@ -1,3 +1,4 @@
+import config from 'config';
 import { ApiData, ApiErrorResponse } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { GeoMapStub } from 'interfaces/geo-map';
@@ -17,4 +18,8 @@ export const getGeoJson = async (geoJSON: ApiData<UploadedFile>) => {
     .catch(({ error }: ApiErrorResponse) => {
       throw error;
     });
+};
+
+export const getGeoMapThumbnailUrlById = (id: number) => {
+  return `${config.API_URL}/api/geo-maps/thumbnail/${id}`;
 };

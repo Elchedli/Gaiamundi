@@ -3,6 +3,13 @@ export interface ApiError {
   name?: string;
   message?: string;
   description?: string;
+  details?: {
+    errors?: Array<{
+      message: string;
+      name: string;
+      path: string[];
+    }>;
+  };
 }
 
 export interface ApiErrorResponse {
