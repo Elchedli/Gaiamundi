@@ -4,12 +4,15 @@
 
 import { factories } from "@strapi/strapi";
 import path from "path";
-import { csvFileParser, fuseObjectsUniqueId } from "../../../utils/parsingCSV";
+import {
+  csvFileParser,
+  mergeCsvObjectByGeocode,
+} from "../../../utils/parsingCSV";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
   ({ strapi }) => ({
-    async csvParsing(ctx) {
+    async get(ctx) {
       try {
         const id = ctx.params.id;
         const model = await strapi.entityService.findOne(
@@ -51,7 +54,9 @@ export default factories.createCoreController(
           })
         )
           .then((data) => data.flat())
-          .then((data: []) => fuseObjectsUniqueId(data, tableKeys, "geocode"));
+          .then((data: []) =>
+            mergeCsvObjectByGeocode(data, tableKeys, "geocode")
+          );
 
         ctx.body = csvDataMerged;
       } catch (err) {

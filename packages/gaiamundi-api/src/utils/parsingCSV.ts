@@ -21,7 +21,7 @@ const mapIdField = (obj: Object, idField: string, desiredKeyName: string) => {
   return newObj;
 };
 
-export const fuseObjectsUniqueId = (
+export const mergeCsvObjectByGeocode = (
   csvList: object[],
   idTables: string[],
   desiredKey: string
