@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToggleSwitch renders correctly 1`] = `
+<div>
+  <div
+    class="flex items-center"
+  >
+    <button
+      aria-checked="false"
+      aria-labelledby="headlessui-label-:r1:"
+      class="bg-gray-200 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      data-headlessui-state=""
+      data-testid="toggle-switch"
+      id="headlessui-switch-:r0:"
+      role="switch"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+      />
+    </button>
+    <label
+      class="ml-4 cursor-pointer"
+      id="headlessui-label-:r1:"
+    >
+      Test
+    </label>
+  </div>
+</div>
+`;
