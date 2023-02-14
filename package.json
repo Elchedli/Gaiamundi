@@ -43,6 +43,7 @@
     "bootstrap": "lerna bootstrap",
     "setup": "lerna clean -y && rm -rf node_modules/ && yarn && lerna bootstrap",
     "test": "lerna run test --stream",
+    "test:web": "lerna run test --scope=gaiamundi-web --stream",
     "build": "lerna run build --stream",
     "start:web": "lerna run start --scope=gaiamundi-web --stream",
     "start:desktop": "lerna run start --scope=gaiamundi-desktop --stream",
