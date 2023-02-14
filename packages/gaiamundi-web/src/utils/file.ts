@@ -8,14 +8,12 @@ const readFile = (file: File): Promise<string> => {
     const reader = new FileReader();
 
     reader.readAsText(file);
-
     reader.onload = function () {
       if (!reader.result) {
         return reject(new Error('Unable to read the file!'));
       }
       resolve(reader.result.toString());
     };
-
     reader.onerror = function () {
       reject(reader.error);
     };

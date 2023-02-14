@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 
-import { useToast } from 'hooks/useToast';
-import { UploadedFile } from 'interfaces/file';
-import LoadingSpinner from 'components/Icons/LoadingSpinner';
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { ApiError } from 'interfaces/api';
-import DropZone from '../../Forms/Inputs/DropZone';
-import { parseCsvColumns, validateCsv } from 'utils/file';
 import {
   DocumentChartBarIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid';
-import { uploadCsv } from 'services/page-carto';
 import { Alert } from 'components/Alert/Alert';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
+import LoadingSpinner from 'components/Icons/LoadingSpinner';
+import { useToast } from 'hooks/useToast';
+import { ApiError } from 'interfaces/api';
 import { Column } from 'interfaces/column';
+import { UploadedFile } from 'interfaces/file';
+import { uploadCsv } from 'services/page-carto';
+import { parseCsvColumns, validateCsv } from 'utils/file';
+import DropZone from '../../Forms/Inputs/DropZone';
 
 type CsvUploaderProps = {
   onUpload: (file: UploadedFile) => void;
