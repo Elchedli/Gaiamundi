@@ -1,16 +1,16 @@
-import { useForm } from 'react-hook-form';
-import { useRequireAuth } from 'hooks/useRequireAuth';
-import { Link, useNavigate } from 'react-router-dom';
-import { useToast } from 'hooks/useToast';
-import { UserSignUpFields } from 'interfaces/user';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { ApiError } from 'interfaces/api';
-import { useMutation } from 'react-query';
+import { Button } from 'components/Button/Button';
 import { Label } from 'components/Forms/Inputs/Label';
 import { TextInput } from 'components/Forms/Inputs/TextInput';
-import { EMAIL_REGEX } from 'utils/utils';
-import { Button } from 'components/Button/Button';
+import { useRequireAuth } from 'hooks/useRequireAuth';
+import { useToast } from 'hooks/useToast';
+import { ApiError } from 'interfaces/api';
+import { UserSignUpFields } from 'interfaces/user';
+import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import { Link, useNavigate } from 'react-router-dom';
 import { updateCurrentUser } from 'services/user';
+import { EMAIL_REGEX } from 'utils/utils';
 
 export const AccountEditForm: React.FC = () => {
   const { addToast } = useToast();
@@ -150,7 +150,7 @@ export const AccountEditForm: React.FC = () => {
           <Link to="/account">
             <Button
               type="button"
-              className="text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
+              className="text-sm font-medium leading-5 transition duration-150 ease-in-out border rounded-md focus:outline-none focus:border-blue-300 focus:shadow-outline-blue"
             >
               Annuler
             </Button>
