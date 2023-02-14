@@ -9,7 +9,9 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/papaparse": "^5.3.7"
+  },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^1.1.2",
     "@strapi/plugin-i18n": "4.5.3",

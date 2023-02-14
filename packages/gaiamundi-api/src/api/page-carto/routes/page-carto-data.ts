@@ -2,7 +2,7 @@ module.exports = {
   routes: [
     {
       method: "GET",
-      path: "/pagecarto/:id/data",
+      path: "/page-cartos/:id/data",
       handler: "page-carto.get",
     },
   ],
