@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from 'hooks/useAuth';
-import { AccountAvatar } from './AccountAvatar';
 import { useOnClickOutside } from 'hooks/useClickOutside';
 import { useToast } from 'hooks/useToast';
+import { AccountAvatar } from './AccountAvatar';
 
 type AccountDropdownItemProps = {
   href?: string;
@@ -71,16 +71,14 @@ export const AccountDropdown: React.FC = () => {
         >
           <div className="absolute right-0 w-48 mt-2 origin-top-right rounded-lg shadow-xl">
             <div className="py-1 bg-white rounded shadow-xs">
-              <AccountDropdownItem href={'/dashboard'} title={'Dashboard'} />
-              <AccountDropdownItem href={'/account'} title={'Account'} />
-              <AccountDropdownItem href={'/account/team'} title={'Team'} />
               <AccountDropdownItem
-                href={'/account/billing'}
-                title={'Billing'}
+                href={'/dashboard'}
+                title={'Tableau de bord'}
               />
+              <AccountDropdownItem href={'/account'} title={'Mon compte'} />
               <AccountDropdownItem
                 href={'/'}
-                title={'Sign out'}
+                title={'Déconnexion'}
                 onClick={handleSignOut}
               />
             </div>
