@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Switch } from '@headlessui/react';
+import { useState } from 'react';
 
 interface ToggleSwitchProps {
   label: string;
@@ -24,6 +24,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     <Switch.Group>
       <div className="flex items-center">
         <Switch
+          data-testid="toggle-switch"
           checked={enabled}
           onChange={handleChange}
           className={`${
