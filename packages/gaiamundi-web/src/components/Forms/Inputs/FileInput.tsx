@@ -23,6 +23,7 @@ export const FileInput: FC<FileInputProps> = ({
   if (isHidden) {
     return (
       <TextInput
+        data-testid="hidden-text-input"
         id="dropzone-file"
         className="hidden"
         aria-describedby="file_upload_help"
