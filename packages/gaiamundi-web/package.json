@@ -88,7 +88,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll",
+    "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
     "lint": "eslint ./src/ --ext ts,js,tsx,jsx",
