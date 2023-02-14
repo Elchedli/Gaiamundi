@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import { TextInput } from 'components/Forms/Inputs/TextInput';
 
-describe('TextInput Assertions', () => {
+describe('TextInput', () => {
   it('should render the input with correct classname and properties', () => {
     const { getByTestId } = render(<TextInput data-testid="input" />);
     const input = getByTestId('input');
@@ -36,16 +36,17 @@ describe('TextInput Assertions', () => {
     const input = getByTestId('input');
     expect(input).toHaveClass('shadow-sm');
   });
-});
 
-describe('TextInput Events', () => {
-  test('should handle changes in the input value', () => {
+  it('should handle changes to the input value', () => {
     const onChange = jest.fn();
     const { getByTestId } = render(
       <TextInput data-testid="input" onChange={onChange} />
     );
     const input = getByTestId('input');
     fireEvent.change(input, { target: { value: 'test' } });
-    expect(onChange).toHaveBeenCalledWith(expect.any(Object));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ target: expect.any(Object) })
+    );
   });
 });
