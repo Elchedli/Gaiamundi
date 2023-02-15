@@ -16,14 +16,14 @@ describe('FileInput', () => {
 
   it('renders a hidden text input when isHidden prop is set to true', () => {
     const { getByTestId } = render(<FileInput {...defaultProps} isHidden />);
-    expect(getByTestId('hidden-text-input').getAttribute('class')).toContain(
+    expect(getByTestId('hidden-file-input').getAttribute('class')).toContain(
       'hidden'
     );
   });
 
   it('calls onUpload prop with selected file when file is selected', () => {
     const { getByTestId } = render(<FileInput {...defaultProps} isHidden />);
-    const fileInput = getByTestId('hidden-text-input');
+    const fileInput = getByTestId('hidden-file-input');
     const file = new File(['test-file'], 'test-file.json', {
       type: 'text/plain',
     });
