@@ -19,6 +19,7 @@ const DropZone: React.FC<DropZoneProps> = ({ onUpload }) => {
 
   return (
     <div
+      data-testid="dropzone"
       onDrop={handleDrop}
       onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}
     >
