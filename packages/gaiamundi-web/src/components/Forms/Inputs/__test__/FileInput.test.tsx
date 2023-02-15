@@ -28,6 +28,7 @@ describe('FileInput', () => {
       type: 'text/plain',
     });
     fireEvent.change(fileInput, { target: { files: [file] } });
+    expect(defaultProps.onUpload).toHaveBeenCalledTimes(1);
     expect(defaultProps.onUpload).toHaveBeenCalledWith(file);
   });
 
