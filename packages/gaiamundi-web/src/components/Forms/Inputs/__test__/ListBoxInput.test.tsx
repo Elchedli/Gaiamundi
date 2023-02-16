@@ -12,14 +12,12 @@ describe('ListBoxInput', () => {
 
   it('renders the options list when button is clicked', () => {
     const onChange = jest.fn();
-    const { getByRole, getByTestId } = render(
+    const { getByRole, getAllByTestId } = render(
       <ListBoxInput defaultValue={1} options={options} onChange={onChange} />
     );
 
     fireEvent.click(getByRole('button'));
-    expect(getByTestId('Option 1')).toBeInTheDocument();
-    expect(getByTestId('Option 2')).toBeInTheDocument();
-    expect(getByTestId('Option 3')).toBeInTheDocument();
+    expect(getAllByTestId('list-boxinput')).toHaveLength(3);
   });
 
   it('updates the selected value when an option is clicked', () => {
