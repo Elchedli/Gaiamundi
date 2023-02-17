@@ -50,7 +50,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
   };
 
   return (
-    <div className="lg:max-w-sm ">
+    <div className="lg:max-w-sm">
       <div>
         {selectedTagIds.length > 0 && (
           <div className="flex justify-between">
