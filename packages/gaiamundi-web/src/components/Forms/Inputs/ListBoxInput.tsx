@@ -1,7 +1,6 @@
-import { Fragment, useMemo, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
-import { useEffect } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
 type ListBoxInputProps<T> = {
   defaultValue: T;
@@ -57,6 +56,7 @@ export const ListBoxInput = <T extends string | number>({
               <Listbox.Option
                 key={value.toString()}
                 value={value}
+                data-testid="list-boxinput"
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                     active ? 'bg-lime-100 text-lime-900' : 'text-gray-900'
