@@ -1,7 +1,7 @@
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { PageCartoEditor } from 'components/PageCarto/PageCartoEditor';
+import { PageCartoEditor } from 'components/PageCarto/Editor/PageCartoEditor';
 import { ApiError } from 'interfaces/api';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';

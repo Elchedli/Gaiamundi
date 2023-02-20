@@ -1,5 +1,5 @@
 import { Header } from 'components/Layout/Header';
-import { Dashboard } from 'components/PageCartoUser/Dashboard';
+import { Dashboard } from 'components/PageCarto/Dashboard/Dashboard';
 
 export const DashboardPage: React.FC = () => {
   return (

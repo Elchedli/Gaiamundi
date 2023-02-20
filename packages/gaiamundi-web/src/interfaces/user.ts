@@ -14,8 +14,8 @@ export interface User extends UserSignUpFields {
   provider: 'local';
   confirmed: boolean;
   blocked: boolean;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export type UserAuthResponse = {
