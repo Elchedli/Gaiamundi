@@ -21,7 +21,6 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
   const { showModal, hideModal } = useModal();
 
   const fragments = dataFragments?.data || [];
-
   const rows = useMemo(
     () =>
       fragments.reduce((acc, curr) => {
@@ -39,7 +38,6 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
       }, [] as (Column & { dataset: string })[]),
     [dataFragments]
   );
-
   return (
     <div>
       <div className="mt-5 text-right">
