@@ -1,5 +1,5 @@
 import { Header } from 'components/Layout/Header';
-import { PageCartoList } from 'components/PageCarto/PageCartoList';
+import { PageCartoList } from 'components/PageCarto/List/PageCartoList';
 
 export const HomePage: React.FC = () => {
   return (

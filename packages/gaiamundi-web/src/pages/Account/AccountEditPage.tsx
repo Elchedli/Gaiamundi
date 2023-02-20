@@ -1,6 +1,6 @@
-import { useRequireAuth } from 'hooks/useRequireAuth';
-import { AccountEditForm } from 'components/Forms/AccountEditForm';
 import { Header } from 'components/Layout/Header';
+import { AccountEditForm } from 'components/User/AccountEditForm';
+import { useRequireAuth } from 'hooks/useRequireAuth';
 
 export const AccountEditPage: React.FC = () => {
   const { user } = useRequireAuth();
