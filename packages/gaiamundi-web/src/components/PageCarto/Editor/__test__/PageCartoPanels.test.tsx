@@ -8,7 +8,7 @@ import {
   mockOwnerApiDocument,
   mockTagsApiCollection,
 } from 'utils/mocks/data';
-import { PageCartoPanels } from '../../PageCartoPanels';
+import { PageCartoPanels } from '../PageCartoPanels';
 describe('PageCartoPanels', () => {
   const mockPageCartoData: ApiData<PageCarto> = {
     id: 1,
