@@ -2,7 +2,7 @@ import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { FC } from 'react';
 
-import { GeoMapList } from 'components/GeoMap/GeoMapList';
+import { GeoMapList } from 'components/GeoMap/List/GeoMapList';
 import { MapForm } from './MapForm';
 
 export const MapPickForm: FC = () => {
