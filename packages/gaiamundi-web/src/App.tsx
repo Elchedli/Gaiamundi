@@ -16,6 +16,7 @@ import { PageCartoEditPage } from 'pages/PageCartoPage/PageCartoPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
 
+import { PageCartoTestDataPanel } from 'components/PageCarto/Editor/PageCartoDataPanel/PageCartoTestDataPanel';
 import 'react-data-grid/lib/styles.css';
 
 // Create a client
@@ -51,6 +52,11 @@ export default function App() {
                 <Route
                   path="page-carto/:id/edit"
                   element={<PageCartoEditPage />}
+                />
+
+                <Route
+                  path="page-carto/test"
+                  element={<PageCartoTestDataPanel />}
                 />
               </Route>
             </Routes>
