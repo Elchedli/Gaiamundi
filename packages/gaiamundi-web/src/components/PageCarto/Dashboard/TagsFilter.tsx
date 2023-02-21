@@ -85,8 +85,8 @@ export const TagsFilter: FC<TagsFilterProp> = ({
         </div>
       </div>
 
-      {Object.entries(groupedTags).map(([group, tags]) => (
-        <>
+      {Object.entries(groupedTags).map(([group, tags], index) => (
+        <div key={index}>
           {tags.length > 0 && <Label className="text-xl">{group}</Label>}
           <div className="my-3">
             {tags.map((tag: ApiData<Tag>) => {
@@ -105,7 +105,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
               );
             })}
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
