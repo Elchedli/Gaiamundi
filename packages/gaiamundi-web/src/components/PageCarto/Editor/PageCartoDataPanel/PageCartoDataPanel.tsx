@@ -60,6 +60,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
+            enableVirtualization={false}
             className="border"
             columns={[
               {

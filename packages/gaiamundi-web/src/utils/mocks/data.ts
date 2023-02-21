@@ -131,7 +131,7 @@ export const mockDatasetApiDocument: ApiDocument<Dataset> = {
   data: {
     id: 122,
     attributes: {
-      name: 'hi',
+      name: 'firstDataset',
       origin: 3,
       isPublic: true,
       owner: mockOwnerApiDocument,
@@ -196,7 +196,7 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
             name: 'fourthColumn',
             source: 'source4',
             validity: '2024',
-            isGeoCode: true,
+            isGeoCode: false,
           },
         ],
         dataset: mockDatasetApiDocument,
