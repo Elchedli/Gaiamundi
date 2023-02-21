@@ -63,6 +63,29 @@ describe('PageCartoPanelData', () => {
   });
 
   //could not show modal data on click() fix it with Mohamed
+  // it('modal should be called on button click', () => {
+  //   const mockCallback = jest.fn();
+  //   const { getByText, container } = render(
+  //     <ModalProvider>
+  //       <PageCartoPanelData
+  //         dataFragments={mockDataFragmentsApiCollection}
+  //         pageCartoId={1}
+  //       />
+  //     </ModalProvider>
+  //   );
+  //   fireEvent.click(
+  //     container.querySelector('button[data-testid="button-element"]')
+  //   );
+
+  //   expect(mockCallback).toBeCalled();
+  //   // const importButton = getByText('Importer un jeu de données');
+  //   fireEvent.click(importButton);
+  //   // expect(container).toMatchSnapshot();
+
+  //   const importModalTitle = getByText('Importer un jeu de données');
+  //   expect(importModalTitle).toBeInTheDocument();
+  // });
+
   /*it('should open the modal on button click', () => {
     const intersectionObserverMock = () => ({
       observe: () => null,
