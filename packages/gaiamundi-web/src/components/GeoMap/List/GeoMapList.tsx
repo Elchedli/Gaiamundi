@@ -46,6 +46,7 @@ export const GeoMapList = () => {
       title: 'Toutes les cartes',
     },
   ];
+
   return (
     <div className="flex-column">
       <div className="flex bg-blue-600 rounded-t-lg p-2">
