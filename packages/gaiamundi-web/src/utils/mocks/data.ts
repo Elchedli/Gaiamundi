@@ -80,23 +80,6 @@ export const mockCoverApiDocument: ApiDocument<UploadedFile> = {
   },
 };
 
-export const mockGeoMapApiDocument: ApiDocument<GeoMap> = {
-  data: {
-    id: 1,
-    attributes: {
-      name: 'Test Map',
-      yearValidity: 2022,
-      source: 'Test Source',
-      license: 'Test License',
-      properties: [],
-      owner: mockOwnerApiDocument,
-      geoJSON: mockGeoJsonApiDocument,
-      created_at: '2022-02-07T00:00:00.000Z',
-      updated_at: '2022-02-07T00:00:00.000Z',
-    },
-  },
-};
-
 export const mockTagsApiCollection: ApiCollection<Tag> = {
   data: [
     {
@@ -208,6 +191,23 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
   meta: {
     pagination: {
       total: 10,
+    },
+  },
+};
+
+export const mockGeoMapApiDocument: ApiDocument<GeoMap> = {
+  data: {
+    id: 1,
+    attributes: {
+      name: 'Test Map',
+      yearValidity: 2022,
+      source: 'Test Source',
+      license: 'Test License',
+      properties: [],
+      owner: mockOwnerApiDocument,
+      geoJSON: mockGeoJsonApiDocument,
+      created_at: '2022-02-07T00:00:00.000Z',
+      updated_at: '2022-02-07T00:00:00.000Z',
     },
   },
 };
