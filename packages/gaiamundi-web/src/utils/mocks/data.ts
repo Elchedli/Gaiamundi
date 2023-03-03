@@ -226,7 +226,9 @@ export const mockPageCartoData: ApiData<PageCarto> = {
     updated_at: '2022-02-07T00:00:00.000Z',
   },
 };
-
+export const mockPageCartoApiDocument: ApiDocument<PageCarto> = {
+  data: { ...mockPageCartoData },
+};
 export const mockGeoMapData: ApiData<GeoMap> = {
   id: 1,
   attributes: {
