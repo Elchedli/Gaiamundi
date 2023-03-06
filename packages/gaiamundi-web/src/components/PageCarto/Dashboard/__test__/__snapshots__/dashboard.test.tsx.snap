@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard check if query works correctly 1`] = `
+<div>
+  <div
+    class="p-3 my-3 rounded border border-blue-500 bg-blue-200 text-blue-700 grid h-fit justify-center items-center"
+    role="alert"
+  >
+    <div
+      class="flex flex-row"
+    >
+      <div>
+        <div>
+          Aucun tag na été trouvé!.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
