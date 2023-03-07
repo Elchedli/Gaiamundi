@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { mockDataFragmentsApiCollection } from 'utils/mocks/data';
 import { PageCartoPanelData } from '../PageCartoDataPanel';
+
 describe('PageCartoPanelData', () => {
   it('should render the component', () => {
     const { getByText } = render(
@@ -13,7 +14,7 @@ describe('PageCartoPanelData', () => {
   });
 
   it('should display an info alert if no data is present', () => {
-    const { getByText } = render(
+    const { container, getByRole } = render(
       <PageCartoPanelData
         dataFragments={{
           data: [],
@@ -26,43 +27,36 @@ describe('PageCartoPanelData', () => {
         pageCartoId={1}
       />
     );
-    expect(
-      getByText(`Aucun jeu de donnée n'a a été importé`)
-    ).toBeInTheDocument();
+    expect(getByRole('alert')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should display the data table if data is present', async () => {
-    const { getByText, queryByText } = render(
+    const { container, getByText, getAllByRole } = render(
       <PageCartoPanelData
         dataFragments={mockDataFragmentsApiCollection}
         pageCartoId={286}
+        isTested={true}
       />
     );
-    expect(
-      queryByText(`Aucun jeu de donnée n'a a été importé`)
-    ).not.toBeInTheDocument();
-    expect(getByText('Colonne')).toBeInTheDocument();
-    expect(getByText('Source')).toBeInTheDocument();
-    expect(getByText('Validité')).toBeInTheDocument();
-    expect(getByText('Jeu de données')).toBeInTheDocument();
-
-    const secondColumnRow = getByText('secondColumn').parentNode;
-    expect(secondColumnRow).toHaveTextContent('firstDataset');
-    expect(secondColumnRow).toHaveTextContent('source2');
-    expect(secondColumnRow).toHaveTextContent('2022');
-
-    const thirdColumnRow = getByText('thirdColumn').parentNode;
-    expect(thirdColumnRow).toHaveTextContent('firstDataset');
-    expect(thirdColumnRow).toHaveTextContent('source3');
-    expect(thirdColumnRow).toHaveTextContent('2023');
-
-    const fourthColumnRow = getByText('fourthColumn').parentNode;
-    expect(fourthColumnRow).toHaveTextContent('firstDataset');
-    expect(fourthColumnRow).toHaveTextContent('source4');
-    expect(fourthColumnRow).toHaveTextContent('2024');
+    const datasetName =
+      mockDataFragmentsApiCollection.data[0].attributes.dataset.data.attributes
+        .name;
+    const tabColumn = mockDataFragmentsApiCollection.data[0].attributes.columns;
+    const tabHeader = getAllByRole('columnheader');
+    expect(tabHeader).toHaveLength(4);
+    tabColumn
+      .filter((column) => !column.isGeoCode)
+      .forEach((column) => {
+        const row = getByText(column.name).parentNode;
+        expect(row).toHaveTextContent(datasetName);
+        expect(row).toHaveTextContent(column.source);
+        expect(row).toHaveTextContent(column.validity);
+      });
+    expect(container).toMatchSnapshot();
   });
 
-  //could not show modal data on click() fix it with Mohamed
+  //could not show modal data on click()
   // it('modal should be called on button click', () => {
   //   const mockCallback = jest.fn();
   //   const { getByText, container } = render(

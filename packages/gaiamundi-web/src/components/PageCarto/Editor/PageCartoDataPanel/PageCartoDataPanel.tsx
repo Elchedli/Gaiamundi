@@ -12,11 +12,13 @@ import { PageCartoDataForm } from './PageCartoDataForm';
 type PageCartoPanelDataProps = {
   dataFragments: ApiCollection<DataFragment>;
   pageCartoId: number;
+  isTested?: boolean;
 };
 
 export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
   dataFragments,
   pageCartoId,
+  isTested = false,
 }) => {
   const { showModal, hideModal } = useModal();
 
@@ -60,7 +62,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
-            enableVirtualization={false}
+            enableVirtualization={!isTested}
             className="border"
             columns={[
               {
