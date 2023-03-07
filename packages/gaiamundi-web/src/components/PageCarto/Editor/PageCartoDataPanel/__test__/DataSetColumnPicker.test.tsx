@@ -3,6 +3,7 @@ import { mockDataFragmentsApiCollection } from 'utils/mocks/data';
 import DatasetColumnPicker from '../DatasetColumnPicker';
 
 describe('DatasetColumnPicker', () => {
+  window.HTMLElement.prototype.scrollIntoView = jest.fn();
   it('renders with correct data', () => {
     const onChangeMock = jest.fn();
     render(
@@ -18,7 +19,6 @@ describe('DatasetColumnPicker', () => {
   });
 
   it('selects and deselects columns', () => {
-    window.HTMLElement.prototype.scrollIntoView = jest.fn();
     const onChangeMock = jest.fn();
     const { container } = render(
       <DatasetColumnPicker
@@ -47,37 +47,38 @@ describe('DatasetColumnPicker', () => {
         onChange={onChangeMock}
       />
     );
-
-    // container
-    //   .querySelector('.pointer-events-none')
-    //   ?.parentNode?.querySelector('input')
-    //   ?.click();
     const input = container.querySelector('input:nth-child(2)');
     const column1 = screen.getByText('firstColumn');
     const column2 = screen.getByText('secondColumn');
-    fireEvent.change(input, { target: { value: 'firstColumn' } });
+    fireEvent.change(input as HTMLElement, {
+      target: { value: 'firstColumn' },
+    });
     expect(column1).toBeInTheDocument();
     expect(column2).not.toBeInTheDocument();
   });
 
-  it('selects geoCode column', () => {
-    const onChangeMock = jest.fn();
-    render(
+  it('selects geoCode column', async () => {
+    const onChange = jest.fn();
+    const { container } = render(
       <DatasetColumnPicker
         data={mockDataFragmentsApiCollection.data[0].attributes.columns}
-        onChange={onChangeMock}
+        onChange={onChange}
       />
     );
-    const column1 = screen.getByText('column1');
-    const geoCodeRadio = screen.getByText('GéoCode');
+    container
+      .querySelectorAll("div[role='grid']:nth-child(2) > div")[1]
+      .querySelector('input')
+      ?.click();
+    container
+      .querySelectorAll("div[role='grid']:nth-child(2) > div")[1]
+      .querySelectorAll('input')[1]
+      .click();
 
-    fireEvent.click(column1);
-    fireEvent.click(geoCodeRadio);
-    expect(onChangeMock).toHaveBeenCalledWith([
+    expect(onChange).toHaveBeenCalledWith([
       {
-        name: 'column1',
+        name: 'firstColumn',
         source: 'source1',
-        validity: 'validity1',
+        validity: '2021',
         isGeoCode: true,
       },
     ]);
