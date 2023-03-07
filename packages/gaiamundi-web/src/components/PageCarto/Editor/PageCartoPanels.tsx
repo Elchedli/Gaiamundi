@@ -15,7 +15,7 @@ export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
     {
       id: 1,
       title: 'Hypertexte',
-      content: <div className="text-center ">en cours de développement</div>,
+      content: <div className="text-center">en cours de développement</div>,
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
     {
       id: 3,
       title: 'Indicateurs',
-      content: <div className="text-center ">en cours de développement</div>,
+      content: <div className="text-center">en cours de développement</div>,
     },
   ];
 

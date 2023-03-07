@@ -172,8 +172,33 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
     {
       id: 1,
       attributes: {
-        name: 'FirstDataSet',
-        columns: [],
+        name: 'FirstFragment',
+        columns: [
+          {
+            name: 'firstColumn',
+            source: 'source1',
+            validity: '2021',
+            isGeoCode: true,
+          },
+          {
+            name: 'secondColumn',
+            source: 'source2',
+            validity: '2022',
+            isGeoCode: false,
+          },
+          {
+            name: 'thirdColumn',
+            source: 'source3',
+            validity: '2023',
+            isGeoCode: false,
+          },
+          {
+            name: 'fourthColumn',
+            source: 'source4',
+            validity: '2024',
+            isGeoCode: true,
+          },
+        ],
         dataset: mockDatasetApiDocument,
         created_at: '2022-02-07T00:00:00.000Z',
         updated_at: '2022-02-07T00:00:00.000Z',
