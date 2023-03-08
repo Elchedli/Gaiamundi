@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar should render authentication menu when not authenticated 1`] = `
+<div>
+  <nav
+    class="bg-white shadow-md z-10"
+  >
+    <div
+      class="sm:px-6 lg:px-8 mx-auto max-w-7xl"
+    >
+      <div
+        class=""
+      >
+        <div
+          class="flex items-center justify-between h-16 px-4 sm:px-0"
+        >
+          <div
+            class="flex items-center"
+          >
+            <a
+              href="/"
+            >
+              <svg
+                height="38"
+                viewBox="0 0 400 76"
+                width="200"
+              >
+                <defs
+                  id="defs34"
+                >
+                  <rect
+                    height="35.97667"
+                    id="rect248"
+                    width="163.26823"
+                    x="35.374524"
+                    y="1.1788015"
+                  />
+                  <rect
+                    height="34.610613"
+                    id="rect248-7"
+                    width="28.96704"
+                    x="35.374523"
+                    y="1.1788015"
+                  />
+                </defs>
+                <text
+                  id="text246"
+                  style="font-size: 26.6667px; white-space: pre; fill: #000000;"
+                  transform="matrix(2.1768629,0,0,2.1768629,-3.6143566,4.8736603)"
+                >
+                  <tspan
+                    id="tspan499"
+                    x="35.375"
+                    y="24.773467"
+                  >
+                    <tspan
+                      id="tspan497"
+                      style="font-family: DejaVu Serif;"
+                    >
+                      Gaïamundi
+                    </tspan>
+                  </tspan>
+                </text>
+                <g
+                  id="Layer_1"
+                  transform="matrix(2.9937644,0,0,2.9937644,-0.70475605,2.323416)"
+                >
+                  <g
+                    id="g410"
+                  >
+                    <path
+                      d="m 12,5 c 3.859,0.001 7,3.142 7,7.001 C 19,15.859 15.859,18.999 12,19 8.141,19 5,15.86 5,12.001 5,8.142 8.141,5.001 12,5 M 12,3 C 7.029,3.001 3,7.03 3,12.001 3,16.971 7.029,21 12,21 16.97,20.999 21,16.97 21,12.001 21,7.03 16.971,3.001 12,3 Z"
+                      id="path408"
+                    />
+                  </g>
+                  <path
+                    d="M 16.182,7.819 C 16.053,7.691 15.867,7.641 15.691,7.692 L 9.74,9.398 C 9.574,9.446 9.445,9.575 9.398,9.741 l -1.707,5.951 c -0.051,0.175 -0.002,0.363 0.127,0.491 0.095,0.095 0.223,0.146 0.354,0.146 0.045,0 0.092,-0.006 0.138,-0.02 l 5.95,-1.708 c 0.165,-0.047 0.295,-0.177 0.342,-0.343 l 1.707,-5.949 c 0.05,-0.173 0.002,-0.361 -0.127,-0.49 z m -7.282,7.282 1.383,-4.817 3.434,3.435 z"
+                    id="path412"
+                  />
+                </g>
+              </svg>
+            </a>
+            <div
+              class="flex items-baseline ml-10"
+              data-testid="navigations"
+            >
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/#features"
+              >
+                Fonctionnalités
+              </a>
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/#docs"
+              >
+                Documentation
+              </a>
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/#team"
+              >
+                Equipe
+              </a>
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/blog"
+              >
+                Blog
+              </a>
+            </div>
+          </div>
+          <div
+            data-testid="loginButtons"
+          >
+            <a
+              href="/login"
+            >
+              <button
+                class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg bg-lime-300 border border-transparent hover:bg-lime-400 focus:ring-4 focus:ring-lime-300 disabled:hover:bg-lime-700 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800 dark:disabled:hover:bg-lime-600 inline-flex mx-1"
+                data-testid="button-element"
+                type="button"
+              >
+                <span
+                  class="flex items-center text-sm px-4 py-2 rounded-md"
+                >
+                  Se connecter
+                </span>
+              </button>
+            </a>
+            <a
+              href="/signup"
+            >
+              <button
+                class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800  inline-flex mx-1"
+                data-testid="button-element"
+                type="button"
+              >
+                <span
+                  class="flex items-center text-sm px-4 py-2 rounded-md"
+                >
+                  Créer un compte
+                </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Navbar should render logged-in menu when authenticated and not on home page 1`] = `
+<div>
+  <nav
+    class="bg-white shadow-md z-10"
+  >
+    <div
+      class="sm:px-6 lg:px-8 mx-auto max-w-7xl"
+    >
+      <div
+        class=""
+      >
+        <div
+          class="flex items-center justify-between h-16 px-4 sm:px-0"
+        >
+          <div
+            class="flex items-center"
+          >
+            <a
+              href="/"
+            >
+              <svg
+                height="38"
+                viewBox="0 0 400 76"
+                width="200"
+              >
+                <defs
+                  id="defs34"
+                >
+                  <rect
+                    height="35.97667"
+                    id="rect248"
+                    width="163.26823"
+                    x="35.374524"
+                    y="1.1788015"
+                  />
+                  <rect
+                    height="34.610613"
+                    id="rect248-7"
+                    width="28.96704"
+                    x="35.374523"
+                    y="1.1788015"
+                  />
+                </defs>
+                <text
+                  id="text246"
+                  style="font-size: 26.6667px; white-space: pre; fill: #000000;"
+                  transform="matrix(2.1768629,0,0,2.1768629,-3.6143566,4.8736603)"
+                >
+                  <tspan
+                    id="tspan499"
+                    x="35.375"
+                    y="24.773467"
+                  >
+                    <tspan
+                      id="tspan497"
+                      style="font-family: DejaVu Serif;"
+                    >
+                      Gaïamundi
+                    </tspan>
+                  </tspan>
+                </text>
+                <g
+                  id="Layer_1"
+                  transform="matrix(2.9937644,0,0,2.9937644,-0.70475605,2.323416)"
+                >
+                  <g
+                    id="g410"
+                  >
+                    <path
+                      d="m 12,5 c 3.859,0.001 7,3.142 7,7.001 C 19,15.859 15.859,18.999 12,19 8.141,19 5,15.86 5,12.001 5,8.142 8.141,5.001 12,5 M 12,3 C 7.029,3.001 3,7.03 3,12.001 3,16.971 7.029,21 12,21 16.97,20.999 21,16.97 21,12.001 21,7.03 16.971,3.001 12,3 Z"
+                      id="path408"
+                    />
+                  </g>
+                  <path
+                    d="M 16.182,7.819 C 16.053,7.691 15.867,7.641 15.691,7.692 L 9.74,9.398 C 9.574,9.446 9.445,9.575 9.398,9.741 l -1.707,5.951 c -0.051,0.175 -0.002,0.363 0.127,0.491 0.095,0.095 0.223,0.146 0.354,0.146 0.045,0 0.092,-0.006 0.138,-0.02 l 5.95,-1.708 c 0.165,-0.047 0.295,-0.177 0.342,-0.343 l 1.707,-5.949 c 0.05,-0.173 0.002,-0.361 -0.127,-0.49 z m -7.282,7.282 1.383,-4.817 3.434,3.435 z"
+                    id="path412"
+                  />
+                </g>
+              </svg>
+            </a>
+            <div
+              class="flex items-baseline ml-10"
+              data-testid="navigations"
+            >
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/dashboard"
+              >
+                Tableau de bord
+              </a>
+              <a
+                class="mr-4 px-3 py-2 rounded text-sm font-medium focus:outline-none text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                href="/account"
+              >
+                Compte
+              </a>
+            </div>
+          </div>
+          <div
+            class="flex flex-row items-center hidden md:flex"
+          >
+            <div
+              class="flex flex-row"
+            >
+              <button
+                class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg bg-lime-300 border border-transparent hover:bg-lime-400 focus:ring-4 focus:ring-lime-300 disabled:hover:bg-lime-700 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800 dark:disabled:hover:bg-lime-600 inline-flex mx-1"
+                data-testid="button-element"
+                type="button"
+              >
+                <span
+                  class="flex items-center text-sm px-4 py-2 rounded-md !px-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                  Nouvelle PageCarto
+                </span>
+              </button>
+              <button
+                class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 inline-flex mx-1"
+                data-testid="button-element"
+                type="button"
+              >
+                <span
+                  class="flex items-center text-sm px-4 py-2 rounded-md"
+                >
+                  Déconnexion
+                </span>
+              </button>
+            </div>
+            <div
+              class="flex items-center ml-4 md:ml-6"
+            >
+              <div
+                class="relative ml-3"
+              >
+                <button
+                  class="flex items-center max-w-xs text-sm text-white rounded-full focus:outline-none focus:shadow-solid"
+                >
+                  <span
+                    class="inline-block w-8 h-8 overflow-hidden bg-gray-200 rounded-full"
+                  >
+                    <svg
+                      class="w-8 h-8"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+`;
