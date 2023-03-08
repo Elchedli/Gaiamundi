@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
+import config from 'config';
 import { useModal } from 'hooks/useModal';
 import { ApiCollection } from 'interfaces/api';
 import { Column } from 'interfaces/column';
@@ -12,13 +13,11 @@ import { PageCartoDataForm } from './PageCartoDataForm';
 type PageCartoPanelDataProps = {
   dataFragments: ApiCollection<DataFragment>;
   pageCartoId: number;
-  isTested?: boolean;
 };
 
 export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
   dataFragments,
   pageCartoId,
-  isTested = false,
 }) => {
   const { showModal, hideModal } = useModal();
 
@@ -62,7 +61,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
-            enableVirtualization={!isTested}
+            enableVirtualization={config.ENVIRONMENT === 'development'}
             className="border"
             columns={[
               {

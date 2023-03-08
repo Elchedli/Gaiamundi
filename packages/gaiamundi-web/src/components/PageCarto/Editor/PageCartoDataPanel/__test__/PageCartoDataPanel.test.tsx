@@ -36,7 +36,6 @@ describe('PageCartoPanelData', () => {
       <PageCartoPanelData
         dataFragments={mockDataFragmentsApiCollection}
         pageCartoId={286}
-        isTested={true}
       />
     );
     const datasetName =
@@ -55,59 +54,4 @@ describe('PageCartoPanelData', () => {
       });
     expect(container).toMatchSnapshot();
   });
-
-  //could not show modal data on click()
-  // it('modal should be called on button click', () => {
-  //   const mockCallback = jest.fn();
-  //   const { getByText, container } = render(
-  //     <ModalProvider>
-  //       <PageCartoPanelData
-  //         dataFragments={mockDataFragmentsApiCollection}
-  //         pageCartoId={1}
-  //       />
-  //     </ModalProvider>
-  //   );
-  //   fireEvent.click(
-  //     container.querySelector('button[data-testid="button-element"]')
-  //   );
-
-  //   expect(mockCallback).toBeCalled();
-  //   // const importButton = getByText('Importer un jeu de données');
-  //   fireEvent.click(importButton);
-  //   // expect(container).toMatchSnapshot();
-
-  //   const importModalTitle = getByText('Importer un jeu de données');
-  //   expect(importModalTitle).toBeInTheDocument();
-  // });
-
-  /*it('should open the modal on button click', () => {
-    const intersectionObserverMock = () => ({
-      observe: () => null,
-    });
-    window.IntersectionObserver = jest
-      .fn()
-      .mockImplementation(intersectionObserverMock);
-    const queryClient = new QueryClient();
-    const { getByText, container } = render(
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <ModalProvider>
-              <PageCartoPanelData
-                dataFragments={mockDataFragmentsApiCollection}
-                pageCartoId={1}
-              />
-            </ModalProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    );
-
-    const importButton = getByText('Importer un jeu de données');
-    fireEvent.click(importButton);
-    expect(container).toMatchSnapshot();
-
-    const importModalTitle = getByText('Importer un jeu de données');
-    expect(importModalTitle).toBeInTheDocument();
-  });*/
 });
