@@ -99,6 +99,29 @@ exports[`PageCartoUserList renders loading message when loading 1`] = `
 </div>
 `;
 
+exports[`PageCartoUserList renders message when there is no data 1`] = `
+<div>
+  <div>
+    <div
+      class="p-3 my-3 rounded border border-blue-500 bg-blue-200 text-blue-700 bg-transparent border-transparent w-fit grid justify-center items-center"
+      role="alert"
+    >
+      <div
+        class="flex flex-row"
+      >
+        <div>
+          <div
+            data-testid="error-message"
+          >
+            Aucun contenu à afficher.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`PageCartoUserList renders pages when there is data 1`] = `
 <div>
   <div>

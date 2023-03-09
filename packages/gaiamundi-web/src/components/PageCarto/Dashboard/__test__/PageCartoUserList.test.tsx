@@ -61,7 +61,7 @@ describe('PageCartoUserList', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('renders "Aucun contenu à afficher" message when there is no data', () => {
+  it('renders message when there is no data', () => {
     (useQuery as jest.Mock).mockReturnValueOnce({
       data: {
         data: [],
