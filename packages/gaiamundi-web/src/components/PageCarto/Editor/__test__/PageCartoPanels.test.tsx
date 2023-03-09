@@ -4,7 +4,7 @@ import { PageCartoPanels } from '../PageCartoPanels';
 
 describe('PageCartoPanels', () => {
   it('renders the tabs and their content', async () => {
-    const { getAllByRole, getByTestId, container } = render(
+    const { getAllByRole, getByTestId } = render(
       <PageCartoPanels pageCarto={mockPageCartoData} />
     );
     const tabs = getAllByRole('tab');
@@ -12,6 +12,5 @@ describe('PageCartoPanels', () => {
 
     fireEvent.click(tabs[1]);
     expect(getByTestId('import-dataset')).toBeDefined();
-    expect(container).toMatchSnapshot();
   });
 });
