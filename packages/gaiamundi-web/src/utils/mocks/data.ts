@@ -6,6 +6,10 @@ import { GeoMap } from 'interfaces/geo-map';
 import { PageCarto, Tag } from 'interfaces/page-carto';
 import { User } from 'interfaces/user';
 
+import mockMapJson from './map.json';
+
+export const mockMapPath = mockMapJson;
+
 export const mockUser: User = {
   id: 1,
   username: 'testuser',
@@ -131,7 +135,7 @@ export const mockDatasetApiDocument: ApiDocument<Dataset> = {
   data: {
     id: 122,
     attributes: {
-      name: 'hi',
+      name: 'firstDataset',
       origin: 3,
       isPublic: true,
       owner: mockOwnerApiDocument,
@@ -172,8 +176,33 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
     {
       id: 1,
       attributes: {
-        name: 'FirstDataSet',
-        columns: [],
+        name: 'FirstFragment',
+        columns: [
+          {
+            name: 'firstColumn',
+            source: 'source1',
+            validity: '2021',
+            isGeoCode: true,
+          },
+          {
+            name: 'secondColumn',
+            source: 'source2',
+            validity: '2022',
+            isGeoCode: false,
+          },
+          {
+            name: 'thirdColumn',
+            source: 'source3',
+            validity: '2023',
+            isGeoCode: false,
+          },
+          {
+            name: 'fourthColumn',
+            source: 'source4',
+            validity: '2024',
+            isGeoCode: false,
+          },
+        ],
         dataset: mockDatasetApiDocument,
         created_at: '2022-02-07T00:00:00.000Z',
         updated_at: '2022-02-07T00:00:00.000Z',
@@ -249,6 +278,22 @@ export const mockGeoMapData: ApiData<GeoMap> = {
     },
     created_at: '2022-02-07T00:00:00.000Z',
     updated_at: '2022-02-07T00:00:00.000Z',
+  },
+};
+
+export const mockGeoMapApiCollection: ApiCollection<GeoMap> = {
+  data: Array.from({ length: 3 }, (_, index) => ({
+    id: index + 1,
+    attributes: {
+      ...mockGeoMapData.attributes,
+      name: `Test Map ${index + 1}`,
+    },
+  })),
+  meta: {
+    pagination: {
+      pageCount: 1,
+      total: 3,
+    },
   },
 };
 

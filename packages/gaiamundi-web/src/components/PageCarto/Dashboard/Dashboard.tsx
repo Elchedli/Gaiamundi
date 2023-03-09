@@ -54,7 +54,10 @@ export const Dashboard: React.FC = () => {
         />
       </div>
       <div className="col-span-3">
-        <PageCartoUserList nameInput={inputName} tagSelected={tagsSelected} />
+        <PageCartoUserList
+          searchKeywords={inputName}
+          selectedTags={tagsSelected}
+        />
       </div>
     </div>
   );

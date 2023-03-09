@@ -8,7 +8,10 @@ export const LoadingMessage = ({
   label = 'Loading ...',
 }: LoadingMessageProps): JSX.Element => {
   return (
-    <div className="flex grow justify-center items-center">
+    <div
+      className="flex grow justify-center items-center"
+      data-testid="loading-message"
+    >
       <div className="flex flex-col">
         <LoadingSpinner fill="#88CDD3" width="100" className="m-auto" />
         <h1 className="text-center text-xl font-semibold">{label}</h1>

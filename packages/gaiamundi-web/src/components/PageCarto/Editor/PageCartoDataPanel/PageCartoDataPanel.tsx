@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
+import config from 'config';
 import { useModal } from 'hooks/useModal';
 import { ApiCollection } from 'interfaces/api';
 import { Column } from 'interfaces/column';
@@ -20,8 +21,8 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
 }) => {
   const { showModal, hideModal } = useModal();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fragments = dataFragments?.data || [];
-
   const rows = useMemo(
     () =>
       fragments.reduce((acc, curr) => {
@@ -37,7 +38,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
           });
         return acc.concat(cols);
       }, [] as (Column & { dataset: string })[]),
-    [dataFragments]
+    [fragments]
   );
 
   return (
@@ -45,6 +46,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
       <div className="mt-5 text-right">
         <Button
           icon={PlusIcon}
+          data-testid="import-dataset"
           onClick={() =>
             showModal({
               title: 'Importer un jeu de données',
@@ -62,6 +64,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
+            enableVirtualization={config.ENVIRONMENT !== 'test'}
             className="border"
             columns={[
               {

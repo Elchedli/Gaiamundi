@@ -11,11 +11,11 @@ import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 
 export const PageCartoUserList = ({
-  nameInput,
-  tagSelected,
+  searchKeywords,
+  selectedTags,
 }: {
-  nameInput: string;
-  tagSelected: number[];
+  searchKeywords: string;
+  selectedTags: number[];
 }) => {
   const paginationLimit = 9;
   const [page, setPage] = useState(1);
@@ -27,7 +27,7 @@ export const PageCartoUserList = ({
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['page-carto-user', page, nameInput, tagSelected],
+    queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
     queryFn: () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
         filters: {
@@ -39,17 +39,17 @@ export const PageCartoUserList = ({
           $or: [
             {
               name:
-                nameInput != ''
+                searchKeywords != ''
                   ? {
-                      $contains: nameInput,
+                      $contains: searchKeywords,
                     }
                   : {},
             },
             {
               html:
-                nameInput != ''
+                searchKeywords != ''
                   ? {
-                      $contains: nameInput,
+                      $contains: searchKeywords,
                     }
                   : {},
             },
@@ -58,9 +58,9 @@ export const PageCartoUserList = ({
             {
               tags: {
                 id:
-                  tagSelected.length != 0
+                  selectedTags.length != 0
                     ? {
-                        $in: tagSelected,
+                        $in: selectedTags,
                       }
                     : {},
               },
@@ -92,7 +92,7 @@ export const PageCartoUserList = ({
           type="info"
           className="bg-transparent border-transparent w-fit grid justify-center items-center"
         >
-          <div>Aucun contenu à afficher.</div>
+          <div data-testid="error-message">Aucun contenu à afficher.</div>
         </Alert>
       ) : (
         <>
