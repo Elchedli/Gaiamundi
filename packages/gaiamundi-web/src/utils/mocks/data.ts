@@ -131,7 +131,7 @@ export const mockDatasetApiDocument: ApiDocument<Dataset> = {
   data: {
     id: 122,
     attributes: {
-      name: 'hi',
+      name: 'firstDataset',
       origin: 3,
       isPublic: true,
       owner: mockOwnerApiDocument,
@@ -196,7 +196,7 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
             name: 'fourthColumn',
             source: 'source4',
             validity: '2024',
-            isGeoCode: true,
+            isGeoCode: false,
           },
         ],
         dataset: mockDatasetApiDocument,
@@ -274,6 +274,22 @@ export const mockGeoMapData: ApiData<GeoMap> = {
     },
     created_at: '2022-02-07T00:00:00.000Z',
     updated_at: '2022-02-07T00:00:00.000Z',
+  },
+};
+
+export const mockGeoMapApiCollection: ApiCollection<GeoMap> = {
+  data: Array.from({ length: 3 }, (_, index) => ({
+    id: index + 1,
+    attributes: {
+      ...mockGeoMapData.attributes,
+      name: `Test Map ${index + 1}`,
+    },
+  })),
+  meta: {
+    pagination: {
+      pageCount: 1,
+      total: 3,
+    },
   },
 };
 
