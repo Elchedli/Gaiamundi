@@ -109,7 +109,7 @@ exports[`pageCartoEditor renders the correct children components 1`] = `
             tabindex="0"
           >
             <div
-              class="text-center "
+              class="text-center"
             >
               en cours de développement
             </div>
