@@ -10,10 +10,23 @@ jest.mock('react-query', () => ({
   useQuery: jest.fn(),
 }));
 
-//Errors :
-// ResizeObserver is not defined
-//Unable to find the geo domain key in the feature properties
+// ResizeObserver is not defined used by eazychart
+class ResizeObserver {
+  observe() {
+    /* noop */
+  }
+  unobserve() {
+    /* noop */
+  }
+  disconnect() {
+    /* noop */
+  }
+}
+
+// Unable to find the geo domain key in the feature properties
 describe('PageCartoMap', () => {
+  window.ResizeObserver = ResizeObserver;
+
   beforeEach(() => {
     // Mock useAuth hook to return a fake user object
     (useAuth as jest.Mock).mockReturnValue({
@@ -27,7 +40,7 @@ describe('PageCartoMap', () => {
   });
 
   it('renders loading message while data is being fetched', async () => {
-    render(<PageCartoMap map={mockGeoMapData} />);
-    // expect(container).toMatchSnapshot();
+    const { container } = render(<PageCartoMap map={mockGeoMapData} />);
+    expect(container).toMatchSnapshot();
   });
 });
