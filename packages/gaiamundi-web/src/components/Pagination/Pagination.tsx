@@ -13,7 +13,7 @@ export const Pagination = (props: PaginationProps) => {
     props;
   const isPageLessTotal = page < totalPages;
   return (
-    <div className="flex flex-row mt-5">
+    <div className="flex flex-row mt-5" data-testid="pagination">
       {page > 1 && (
         <Button className="mr-3" onClick={onPaginatePrevious}>
           {'< Précédent'}
@@ -21,7 +21,7 @@ export const Pagination = (props: PaginationProps) => {
       )}
       {page > 2 && <Button onClick={() => onPaginate(1)}>1</Button>}
       {page > 1 && (
-        <Button className="mx-2" onClick={onPaginatePrevious}>
+        <Button className="mx-2" onClick={() => onPaginate(page - 1)}>
           {page - 1}
         </Button>
       )}
@@ -29,7 +29,7 @@ export const Pagination = (props: PaginationProps) => {
         {page}
       </Button>
       {isPageLessTotal && (
-        <Button className="mx-2" onClick={onPaginateNext}>
+        <Button className="mx-2" onClick={() => onPaginate(page + 1)}>
           {page + 1}
         </Button>
       )}

@@ -92,13 +92,14 @@ describe('PageCartoList', () => {
       data: pageCartos,
     });
 
-    const { getByText } = render(
+    const { getByTestId } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
-
-    expect(getByText('1')).toBeInTheDocument();
-    expect(getByText('2')).toBeInTheDocument();
+    const pagination = getByTestId('pagination');
+    expect(pagination.children).toHaveLength(3);
+    expect(pagination.children[0].textContent).toEqual('1');
+    expect(pagination.children[1].textContent).toEqual('2');
   });
 });
