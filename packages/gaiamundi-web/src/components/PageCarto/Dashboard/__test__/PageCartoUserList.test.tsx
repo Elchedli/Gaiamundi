@@ -8,9 +8,7 @@ import { mockPageCartoData, mockUser } from 'utils/mocks/data';
 import { PageCartoUserList } from '../PageCartoUserList';
 
 jest.mock('hooks/useAuth');
-jest.mock('react-query', () => ({
-  useQuery: jest.fn(),
-}));
+jest.mock('react-query');
 
 describe('PageCartoUserList', () => {
   beforeEach(() => {
@@ -33,7 +31,7 @@ describe('PageCartoUserList', () => {
     });
 
     const { container, getByTestId } = render(
-      <PageCartoUserList nameInput="" tagSelected={[]} />
+      <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(getByTestId('loading-message')).toBeInTheDocument();
@@ -54,7 +52,7 @@ describe('PageCartoUserList', () => {
     });
 
     const { container, getByText } = render(
-      <PageCartoUserList nameInput="" tagSelected={[]} />
+      <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(getByText(mockError.message)).toBeInTheDocument();
@@ -77,7 +75,7 @@ describe('PageCartoUserList', () => {
     });
 
     const { container, getByTestId } = render(
-      <PageCartoUserList nameInput="" tagSelected={[]} />
+      <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(getByTestId('error-message')).toBeInTheDocument();
@@ -107,7 +105,7 @@ describe('PageCartoUserList', () => {
 
     const { container, getByText, getByTestId } = render(
       <Router>
-        <PageCartoUserList nameInput="" tagSelected={[]} />
+        <PageCartoUserList searchKeywords="" selectedTags={[]} />
       </Router>
     );
 

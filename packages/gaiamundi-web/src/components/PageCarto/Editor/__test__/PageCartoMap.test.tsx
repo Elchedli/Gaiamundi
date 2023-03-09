@@ -1,8 +1,7 @@
 import { render } from '@testing-library/react';
 import { useAuth } from 'hooks/useAuth';
 import { useQuery } from 'react-query';
-import { mockGeoMapData } from 'utils/mocks/data';
-import { mockMapPath } from 'utils/mocks/map';
+import { mockGeoMapData, mockMapPath } from 'utils/mocks/data';
 import { PageCartoMap } from '../PageCartoMap';
 
 jest.mock('hooks/useAuth');

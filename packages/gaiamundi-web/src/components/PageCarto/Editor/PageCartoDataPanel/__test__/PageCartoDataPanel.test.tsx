@@ -35,16 +35,16 @@ describe('PageCartoPanelData', () => {
     const { container, getByText, getAllByRole } = render(
       <PageCartoPanelData
         dataFragments={mockDataFragmentsApiCollection}
-        pageCartoId={286}
+        pageCartoId={1}
       />
     );
     const datasetName =
       mockDataFragmentsApiCollection.data[0].attributes.dataset.data.attributes
         .name;
-    const tabColumn = mockDataFragmentsApiCollection.data[0].attributes.columns;
-    const tabHeader = getAllByRole('columnheader');
-    expect(tabHeader).toHaveLength(4);
-    tabColumn
+    const columns = mockDataFragmentsApiCollection.data[0].attributes.columns;
+    const columnHeaders = getAllByRole('columnheader');
+    expect(columnHeaders).toHaveLength(4);
+    columns
       .filter((column) => !column.isGeoCode)
       .forEach((column) => {
         const row = getByText(column.name).parentNode;

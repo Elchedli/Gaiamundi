@@ -21,6 +21,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
 }) => {
   const { showModal, hideModal } = useModal();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fragments = dataFragments?.data || [];
   const rows = useMemo(
     () =>
@@ -37,8 +38,9 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
           });
         return acc.concat(cols);
       }, [] as (Column & { dataset: string })[]),
-    [dataFragments]
+    [fragments]
   );
+
   return (
     <div>
       <div className="mt-5 text-right">
@@ -62,7 +64,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
-            enableVirtualization={config.ENVIRONMENT === 'development'}
+            enableVirtualization={config.ENVIRONMENT !== 'test'}
             className="border"
             columns={[
               {

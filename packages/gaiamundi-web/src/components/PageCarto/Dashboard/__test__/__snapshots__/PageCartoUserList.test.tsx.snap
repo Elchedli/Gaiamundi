@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PageCartoUserList renders "Aucun contenu à afficher" message when there is no data 1`] = `
-<div>
-  <div>
-    <div
-      class="p-3 my-3 rounded border border-blue-500 bg-blue-200 text-blue-700 bg-transparent border-transparent w-fit grid justify-center items-center"
-      role="alert"
-    >
-      <div
-        class="flex flex-row"
-      >
-        <div>
-          <div
-            data-testid="error-message"
-          >
-            Aucun contenu à afficher.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`PageCartoUserList renders error message when there is an error 1`] = `
 <div>
   <div

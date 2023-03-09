@@ -6,6 +6,10 @@ import { GeoMap } from 'interfaces/geo-map';
 import { PageCarto, Tag } from 'interfaces/page-carto';
 import { User } from 'interfaces/user';
 
+import mockMapJson from './map.json';
+
+export const mockMapPath = mockMapJson;
+
 export const mockUser: User = {
   id: 1,
   username: 'testuser',
