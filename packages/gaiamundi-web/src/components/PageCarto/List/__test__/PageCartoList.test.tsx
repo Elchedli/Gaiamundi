@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ApiCollection } from 'interfaces/api';
 import { PageCarto } from 'interfaces/page-carto';
 import { useQuery } from 'react-query';
@@ -13,33 +13,33 @@ describe('PageCartoList', () => {
   test('Renders loading message when data is loading', () => {
     // Mock the useQuery hook
     (useQuery as jest.Mock).mockReturnValue({ isLoading: true });
-    render(
+    const { getByTestId } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
-    expect(screen.getByText('Loading ...')).toBeInTheDocument();
+    expect(getByTestId('loading-message')).toBeInTheDocument();
   });
 
   test('Renders error message when data fetching fails', () => {
     const error = { message: 'Test error' };
     (useQuery as jest.Mock).mockReturnValue({ isError: true, error });
-    render(
+    const { getByText } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
-    expect(screen.getByText(error.message)).toBeInTheDocument();
+    expect(getByText(error.message)).toBeInTheDocument();
   });
 
   test('Renders info message when there is no data', () => {
     (useQuery as jest.Mock).mockReturnValue({ data: { data: [], meta: {} } });
-    render(
+    const { getByText } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
-    expect(screen.getByText('Aucun contenu à afficher.')).toBeInTheDocument();
+    expect(getByText('Aucun contenu à afficher.')).toBeInTheDocument();
   });
 
   test('Renders page carto items when there is data', () => {
@@ -61,13 +61,13 @@ describe('PageCartoList', () => {
     (useQuery as jest.Mock).mockReturnValue({
       data: pageCartos,
     });
-    render(
+    const { getByText } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
     pageCartos.data.forEach((pageCarto) => {
-      expect(screen.getByText(pageCarto.attributes.name)).toBeInTheDocument();
+      expect(getByText(pageCarto.attributes.name)).toBeInTheDocument();
     });
   });
 
@@ -92,13 +92,13 @@ describe('PageCartoList', () => {
       data: pageCartos,
     });
 
-    render(
+    const { getByText } = render(
       <Router>
         <PageCartoList />
       </Router>
     );
 
-    expect(screen.getByText('1')).toBeInTheDocument();
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(getByText('1')).toBeInTheDocument();
+    expect(getByText('2')).toBeInTheDocument();
   });
 });
