@@ -10,6 +10,7 @@ exports[`pageCartoEditor renders the correct children components 1`] = `
     >
       <div
         class="flex grow justify-center items-center"
+        data-testid="loading-message"
       >
         <div
           class="flex flex-col"
@@ -51,6 +52,7 @@ exports[`pageCartoEditor renders the correct children components 1`] = `
     >
       <div
         class="h-full w-full p-2"
+        data-testid="pagecarto-panels"
       >
         <div
           aria-orientation="horizontal"
