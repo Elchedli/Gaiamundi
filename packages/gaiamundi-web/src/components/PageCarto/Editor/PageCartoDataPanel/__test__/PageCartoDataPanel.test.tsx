@@ -4,13 +4,13 @@ import { PageCartoPanelData } from '../PageCartoDataPanel';
 
 describe('PageCartoPanelData', () => {
   it('should render the component', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <PageCartoPanelData
         dataFragments={mockDataFragmentsApiCollection}
         pageCartoId={1}
       />
     );
-    expect(getByText('Importer un jeu de données')).toBeInTheDocument();
+    expect(getByTestId('import-dataset')).toBeInTheDocument();
   });
 
   it('should display an info alert if no data is present', () => {

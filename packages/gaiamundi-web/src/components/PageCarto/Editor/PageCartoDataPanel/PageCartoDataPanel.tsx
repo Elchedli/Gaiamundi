@@ -44,6 +44,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
       <div className="mt-5 text-right">
         <Button
           icon={PlusIcon}
+          data-testid="import-dataset"
           onClick={() =>
             showModal({
               title: 'Importer un jeu de données',
