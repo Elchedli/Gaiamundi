@@ -1,3 +1,227 @@
+export const mockMapReal = {
+  data: {
+    id: 286,
+    attributes: {
+      name: 'Sarah',
+      html: '<p>Braun</p>',
+      createdAt: '2023-02-07T12:40:22.173Z',
+      updatedAt: '2023-02-07T15:44:22.029Z',
+      publishedAt: '2023-02-07T12:40:22.171Z',
+      map: {
+        data: {
+          id: 1,
+          attributes: {
+            name: 'CoolMap',
+            yearValidity: '2025',
+            source: 'Gronobl',
+            license: 'NiceLicense',
+            createdAt: '2022-12-19T14:58:19.365Z',
+            updatedAt: '2023-02-13T13:16:19.671Z',
+            geoJSON: {
+              data: {
+                id: 80,
+                attributes: {
+                  name: 'lyoundepart.json',
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: null,
+                  hash: 'lyoundepart_8eedc9b6f9',
+                  ext: '.json',
+                  mime: 'application/json',
+                  size: 229.36,
+                  url: '/uploads/lyoundepart_8eedc9b6f9.json',
+                  previewUrl: null,
+                  provider: 'local',
+                  provider_metadata: null,
+                  createdAt: '2023-02-13T13:16:07.561Z',
+                  updatedAt: '2023-02-13T13:16:07.561Z',
+                },
+              },
+            },
+          },
+        },
+      },
+      owner: {
+        data: {
+          id: 2,
+          attributes: {
+            username: 'shidono',
+            email: 'shidonosan@gmail.com',
+            provider: 'local',
+            confirmed: true,
+            blocked: false,
+            createdAt: '2022-12-16T13:01:13.881Z',
+            updatedAt: '2023-02-13T14:11:12.357Z',
+          },
+        },
+      },
+      data_fragments: {
+        data: [
+          {
+            id: 8,
+            attributes: {
+              createdAt: '2023-02-10T09:48:19.388Z',
+              updatedAt: '2023-02-20T13:31:41.861Z',
+              name: 'exampleParsing1.csv',
+              dataset: {
+                data: {
+                  id: 9,
+                  attributes: {
+                    name: 'exampleParsing1.csv',
+                    origin: 'Africa',
+                    isPublic: false,
+                    createdAt: '2023-02-10T09:48:19.317Z',
+                    updatedAt: '2023-02-10T09:48:19.317Z',
+                  },
+                },
+              },
+              columns: [
+                {
+                  id: 33,
+                  name: 'champmap',
+                  source: 'test',
+                  validity: '2056',
+                  isGeoCode: false,
+                },
+                {
+                  id: 34,
+                  name: 'columnname',
+                  source: 'hallo',
+                  validity: '2011',
+                  isGeoCode: false,
+                },
+                {
+                  id: 35,
+                  name: 'geocode',
+                  source: '',
+                  validity: '',
+                  isGeoCode: true,
+                },
+                {
+                  id: 36,
+                  name: 'testchamp',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+              ],
+            },
+          },
+          {
+            id: 9,
+            attributes: {
+              createdAt: '2023-02-10T09:49:01.046Z',
+              updatedAt: '2023-02-10T09:49:01.046Z',
+              name: 'example2',
+              dataset: {
+                data: {
+                  id: 10,
+                  attributes: {
+                    name: 'exampleParsing2.csv',
+                    origin: 'Georgia',
+                    isPublic: false,
+                    createdAt: '2023-02-10T09:49:00.963Z',
+                    updatedAt: '2023-02-10T09:49:00.963Z',
+                  },
+                },
+              },
+              columns: [
+                {
+                  id: 37,
+                  name: 'geoId',
+                  source: '',
+                  validity: '',
+                  isGeoCode: true,
+                },
+                {
+                  id: 38,
+                  name: 'coolumname',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+                {
+                  id: 39,
+                  name: 'source',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+                {
+                  id: 40,
+                  name: 'Validite',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+              ],
+            },
+          },
+          {
+            id: 10,
+            attributes: {
+              createdAt: '2023-02-10T09:49:19.823Z',
+              updatedAt: '2023-02-10T09:49:19.823Z',
+              name: 'exampleParsing3.csv',
+              dataset: {
+                data: {
+                  id: 11,
+                  attributes: {
+                    name: 'exampleParsing3.csv',
+                    origin: 'Malibu',
+                    isPublic: false,
+                    createdAt: '2023-02-10T09:49:19.731Z',
+                    updatedAt: '2023-02-10T09:49:19.731Z',
+                  },
+                },
+              },
+              columns: [
+                {
+                  id: 41,
+                  name: 'testchamp',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+                {
+                  id: 42,
+                  name: 'Source',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+                {
+                  id: 43,
+                  name: 'Validite',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+                {
+                  id: 44,
+                  name: 'geo',
+                  source: '',
+                  validity: '',
+                  isGeoCode: true,
+                },
+                {
+                  id: 45,
+                  name: 'purri',
+                  source: '',
+                  validity: '',
+                  isGeoCode: false,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  },
+  meta: {},
+};
 export const mockMapPath = {
   type: 'FeatureCollection',
   features: [

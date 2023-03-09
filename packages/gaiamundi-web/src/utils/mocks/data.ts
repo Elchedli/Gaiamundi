@@ -80,23 +80,6 @@ export const mockCoverApiDocument: ApiDocument<UploadedFile> = {
   },
 };
 
-export const mockGeoMapApiDocument: ApiDocument<GeoMap> = {
-  data: {
-    id: 1,
-    attributes: {
-      name: 'Test Map',
-      yearValidity: 2022,
-      source: 'Test Source',
-      license: 'Test License',
-      properties: [],
-      owner: mockOwnerApiDocument,
-      geoJSON: mockGeoJsonApiDocument,
-      created_at: '2022-02-07T00:00:00.000Z',
-      updated_at: '2022-02-07T00:00:00.000Z',
-    },
-  },
-};
-
 export const mockTagsApiCollection: ApiCollection<Tag> = {
   data: [
     {
@@ -131,7 +114,7 @@ export const mockDatasetApiDocument: ApiDocument<Dataset> = {
   data: {
     id: 122,
     attributes: {
-      name: 'firstDataset',
+      name: 'hi',
       origin: 3,
       isPublic: true,
       owner: mockOwnerApiDocument,
@@ -196,7 +179,7 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
             name: 'fourthColumn',
             source: 'source4',
             validity: '2024',
-            isGeoCode: false,
+            isGeoCode: true,
           },
         ],
         dataset: mockDatasetApiDocument,
@@ -208,6 +191,23 @@ export const mockDataFragmentsApiCollection: ApiCollection<DataFragment> = {
   meta: {
     pagination: {
       total: 10,
+    },
+  },
+};
+
+export const mockGeoMapApiDocument: ApiDocument<GeoMap> = {
+  data: {
+    id: 1,
+    attributes: {
+      name: 'Test Map',
+      yearValidity: 2022,
+      source: 'Test Source',
+      license: 'Test License',
+      properties: [],
+      owner: mockOwnerApiDocument,
+      geoJSON: mockGeoJsonApiDocument,
+      created_at: '2022-02-07T00:00:00.000Z',
+      updated_at: '2022-02-07T00:00:00.000Z',
     },
   },
 };
@@ -226,7 +226,9 @@ export const mockPageCartoData: ApiData<PageCarto> = {
     updated_at: '2022-02-07T00:00:00.000Z',
   },
 };
-
+export const mockPageCartoApiDocument: ApiDocument<PageCarto> = {
+  data: { ...mockPageCartoData },
+};
 export const mockGeoMapData: ApiData<GeoMap> = {
   id: 1,
   attributes: {
