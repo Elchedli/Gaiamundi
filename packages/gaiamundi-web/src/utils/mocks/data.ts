@@ -277,6 +277,22 @@ export const mockGeoMapData: ApiData<GeoMap> = {
   },
 };
 
+export const mockGeoMapApiCollection: ApiCollection<GeoMap> = {
+  data: Array.from({ length: 3 }, (_, index) => ({
+    id: index + 1,
+    attributes: {
+      ...mockGeoMapData.attributes,
+      name: `Test Map ${index + 1}`,
+    },
+  })),
+  meta: {
+    pagination: {
+      pageCount: 1,
+      total: 3,
+    },
+  },
+};
+
 export const tags: ApiData<Tag>[] = [
   {
     id: 1,

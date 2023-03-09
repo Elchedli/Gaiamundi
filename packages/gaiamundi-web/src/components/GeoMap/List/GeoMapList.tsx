@@ -36,7 +36,7 @@ export const GeoMapList = () => {
     },
   });
 
-  const GeoMap = [
+  const geoMapTabs = [
     {
       id: 0,
       title: 'Mes cartes',
@@ -46,10 +46,14 @@ export const GeoMapList = () => {
       title: 'Toutes les cartes',
     },
   ];
+
   return (
     <div className="flex-column">
-      <div className="flex bg-blue-600 rounded-t-lg p-2">
-        {GeoMap.map((table, index) => (
+      <div
+        data-testid="map-choice"
+        className="flex bg-blue-600 rounded-t-lg p-2"
+      >
+        {geoMapTabs.map((table, index) => (
           <div
             key={table.id}
             className={classNames(
