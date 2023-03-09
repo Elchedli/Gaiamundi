@@ -92,7 +92,7 @@ export const PageCartoUserList = ({
           type="info"
           className="bg-transparent border-transparent w-fit grid justify-center items-center"
         >
-          <div>Aucun contenu à afficher.</div>
+          <div data-testid="error-message">Aucun contenu à afficher.</div>
         </Alert>
       ) : (
         <>
