@@ -4,18 +4,14 @@ import { PageCartoPanels } from '../PageCartoPanels';
 
 describe('PageCartoPanels', () => {
   it('renders the tabs and their content', async () => {
-    const { getAllByRole, getByText, container } = render(
+    const { getAllByRole, getByTestId, container } = render(
       <PageCartoPanels pageCarto={mockPageCartoData} />
     );
     const tabs = getAllByRole('tab');
-
-    expect(tabs[0]).toBeInTheDocument();
-    expect(tabs[1]).toBeInTheDocument();
-    expect(tabs[2]).toBeInTheDocument();
+    expect(tabs).toHaveLength(3);
 
     fireEvent.click(tabs[1]);
-
-    expect(getByText('secondColumn')).toBeInTheDocument();
+    expect(getByTestId('import-dataset')).toBeDefined();
     expect(container).toMatchSnapshot();
   });
 });

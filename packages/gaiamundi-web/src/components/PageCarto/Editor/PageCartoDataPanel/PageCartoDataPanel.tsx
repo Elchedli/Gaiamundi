@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
+import config from 'config';
 import { useModal } from 'hooks/useModal';
 import { ApiCollection } from 'interfaces/api';
 import { Column } from 'interfaces/column';
@@ -43,6 +44,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
       <div className="mt-5 text-right">
         <Button
           icon={PlusIcon}
+          data-testid="import-dataset"
           onClick={() =>
             showModal({
               title: 'Importer un jeu de données',
@@ -60,6 +62,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         )}
         {fragments.length > 0 && (
           <DataGrid
+            enableVirtualization={config.ENVIRONMENT === 'development'}
             className="border"
             columns={[
               {
