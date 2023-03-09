@@ -35,7 +35,7 @@ export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
   ];
 
   return (
-    <div className="h-full w-full p-2">
+    <div className="h-full w-full p-2" data-testid="pagecarto-panels">
       <Tab.Group>
         <Tab.List className="flex bg-blue-600 rounded-t-lg p-1 pb-0">
           {tabs.map((tab) => (

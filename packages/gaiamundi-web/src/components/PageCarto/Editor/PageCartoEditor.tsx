@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import { ApiData } from 'interfaces/api';
 import { PageCarto } from 'interfaces/page-carto';
-
+import { FC } from 'react';
 import { PageCartoMap } from './PageCartoMap';
 import { PageCartoPanels } from './PageCartoPanels';
 

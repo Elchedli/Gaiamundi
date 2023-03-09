@@ -4,6 +4,7 @@ exports[`PageCartoPanels renders the tabs and their content 1`] = `
 <div>
   <div
     class="h-full w-full p-2"
+    data-testid="pagecarto-panels"
   >
     <div
       aria-orientation="horizontal"

@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pageCartoEditor renders the correct children components 1`] = `
+<div>
+  <div
+    class="grid grid-cols-3 gap-4 h-full"
+  >
+    <div
+      class="col-span-2"
+    >
+      <div
+        class="flex grow justify-center items-center"
+        data-testid="loading-message"
+      >
+        <div
+          class="flex flex-col"
+        >
+          <svg
+            class="m-auto"
+            fill="#88CDD3"
+            viewBox="0 0 40 40"
+            width="200"
+          >
+            <path
+              d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+              opacity="0.5"
+            />
+            <path
+              d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0 C22.32,8.481,24.301,9.057,26.013,10.047z"
+            >
+              <animatetransform
+                attributeName="transform"
+                attributeType="xml"
+                dur="0.8s"
+                from="0 20 20"
+                repeatCount="indefinite"
+                to="360 20 20"
+                type="rotate"
+              />
+            </path>
+          </svg>
+          <h1
+            class="text-center text-xl font-semibold"
+          >
+            Chargement de la carte ...
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-span"
+    >
+      <div
+        class="h-full w-full p-2"
+        data-testid="pagecarto-panels"
+      >
+        <div
+          aria-orientation="horizontal"
+          class="flex bg-blue-600 rounded-t-lg p-1 pb-0"
+          role="tablist"
+        >
+          <button
+            aria-controls="headlessui-tabs-panel-:r3:"
+            aria-selected="true"
+            class="rounded-t-lg p-2 text-sm font-medium leading-5 text-blue-700 ring-blue ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1 bg-white shadow"
+            data-headlessui-state="selected"
+            id="headlessui-tabs-tab-:r0:"
+            role="tab"
+            tabindex="0"
+            type="button"
+          >
+            Hypertexte
+          </button>
+          <button
+            aria-controls="headlessui-tabs-panel-:r4:"
+            aria-selected="false"
+            class="rounded-t-lg p-2 text-sm font-medium leading-5 text-blue-700 ring-blue ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1 text-blue-100 hover:bg-white/[0.12] hover:text-white"
+            data-headlessui-state=""
+            id="headlessui-tabs-tab-:r1:"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Données
+          </button>
+          <button
+            aria-controls="headlessui-tabs-panel-:r5:"
+            aria-selected="false"
+            class="rounded-t-lg p-2 text-sm font-medium leading-5 text-blue-700 ring-blue ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1 text-blue-100 hover:bg-white/[0.12] hover:text-white"
+            data-headlessui-state=""
+            id="headlessui-tabs-tab-:r2:"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Indicateurs
+          </button>
+        </div>
+        <div
+          class="h-full rounded-b-lg border border-blue-700"
+        >
+          <div
+            aria-labelledby="headlessui-tabs-tab-:r0:"
+            class="px-2 pb-5 overflow-y-scroll"
+            data-headlessui-state="selected"
+            id="headlessui-tabs-panel-:r3:"
+            role="tabpanel"
+            style="max-height: calc(100vh - 64px * 2);"
+            tabindex="0"
+          >
+            <div
+              class="text-center "
+            >
+              en cours de développement
+            </div>
+          </div>
+          <span
+            aria-labelledby="headlessui-tabs-tab-:r1:"
+            id="headlessui-tabs-panel-:r4:"
+            role="tabpanel"
+            style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"
+            tabindex="-1"
+          />
+          <span
+            aria-labelledby="headlessui-tabs-tab-:r2:"
+            id="headlessui-tabs-panel-:r5:"
+            role="tabpanel"
+            style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"
+            tabindex="-1"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
