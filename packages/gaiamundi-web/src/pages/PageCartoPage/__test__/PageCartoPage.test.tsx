@@ -9,7 +9,6 @@ import { PageCartoEditPage } from '../PageCartoPage';
 jest.mock('react-query', () => ({
   useQuery: jest.fn(),
 }));
-
 jest.mock('react-router-dom', () => ({
   useParams: jest.fn(),
 }));
@@ -18,15 +17,15 @@ describe('PageCartoEditPage', () => {
   beforeEach(() => {
     (useParams as jest.Mock).mockReturnValue({ id: 123 });
   });
-
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  test('should render loading message while query is in progress', async () => {
+  it('should render loading message while query is in progress', async () => {
     (useQuery as jest.Mock).mockReturnValue({
       isLoading: true,
     });
+
     render(<PageCartoEditPage />);
     expect(screen.getByText('Loading ...')).toBeInTheDocument();
     expect(useParams).toHaveBeenCalled();
@@ -39,7 +38,7 @@ describe('PageCartoEditPage', () => {
     expect(getPageCartoById).toHaveBeenCalledWith(123);
   });
 
-  test('should render error alert when there is an error', async () => {
+  it('should render error alert when there is an error', async () => {
     const error = { message: 'Something went wrong' };
     (useQuery as jest.Mock).mockReturnValue({
       isError: true,
@@ -59,7 +58,7 @@ describe('PageCartoEditPage', () => {
     expect(getPageCartoById).toHaveBeenCalledWith(123);
   });
 
-  test('should render page carto editor when there is a response', async () => {
+  it('should render page carto editor when there is a response', async () => {
     (useQuery as jest.Mock)
       .mockImplementationOnce(() => {
         // Mock implementation for first query key
@@ -70,6 +69,7 @@ describe('PageCartoEditPage', () => {
       });
 
     const { container } = render(<PageCartoEditPage />);
+
     expect(container.querySelector('.col-span')?.className).toBeTruthy();
     expect(useParams).toHaveBeenCalled();
     expect(useQuery).toHaveBeenCalledWith({
