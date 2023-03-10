@@ -99,7 +99,7 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
     <div className="self-center">
       {file ? (
         <div
-          data-testid="file-loaded-minipage"
+          data-testid="file-thumbnail"
           className="flex flex-col items-center justify-center pt-5 pb-6"
         >
           <DocumentChartBarIcon width={64} height={64} />

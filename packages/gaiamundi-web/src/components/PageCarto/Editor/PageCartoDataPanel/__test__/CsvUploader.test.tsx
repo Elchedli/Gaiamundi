@@ -47,12 +47,12 @@ describe('CsvUploader', () => {
     expect(fileInput.files).toHaveLength(1);
     expect(fileInput?.files?.item(0)).toStrictEqual(file);
     await waitFor(() => {
-      // wait for the mini page when the upload and criteria are successful
-      const loadedFilePage = getByTestId('file-loaded-minipage');
+      // wait for the file thumbnail when the upload and criteria are successful
+      const loadedFilePage = getByTestId('file-thumbnail');
       expect(loadedFilePage).toBeInTheDocument();
-      //click on the cancel button to get back to the upload mini page "DropZone"
+      //click on the cancel button to get back to the dropZone component
       userEvent.click(loadedFilePage.querySelector('button') as HTMLElement);
-      //check if the mini page is removed
+      //check if the file-thumbnail is removed
       expect(container.contains(loadedFilePage)).not.toBeTruthy();
     });
   });
