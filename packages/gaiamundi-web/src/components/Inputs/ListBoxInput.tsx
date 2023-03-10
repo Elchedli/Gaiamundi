@@ -1,8 +1,10 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
+import classNames from 'classnames';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 
 type ListBoxInputProps<T> = {
+  className?: string;
   defaultValue: T;
   options: Array<{
     value: T;
@@ -12,6 +14,7 @@ type ListBoxInputProps<T> = {
 };
 
 export const ListBoxInput = <T extends string | number>({
+  className,
   defaultValue,
   options,
   onChange,
@@ -34,7 +37,7 @@ export const ListBoxInput = <T extends string | number>({
   );
   const selectedLabel = selectedOption?.label;
   return (
-    <div className="relative">
+    <div className={classNames(className, 'relative')}>
       <Listbox value={selected} onChange={handleSelect}>
         <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-white py-2 pl-3 pr-10 text-left border shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
           <span className="block truncate">{selectedLabel}</span>

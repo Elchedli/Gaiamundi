@@ -2,6 +2,7 @@ import { ApiCollection, ApiDocument } from './api';
 import { DataFragment } from './data-fragment';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
+import { Indicator } from './indicator';
 import { User } from './user';
 
 export interface Tag {
@@ -22,6 +23,7 @@ export interface PageCartoStub extends PageCartoBase {
   map?: number;
   tags?: number[];
   data_fragments?: number[];
+  indicators?: number[];
 }
 
 export interface PageCarto extends PageCartoBase {
@@ -30,6 +32,7 @@ export interface PageCarto extends PageCartoBase {
   map: ApiDocument<GeoMap>;
   tags: ApiCollection<Tag>;
   data_fragments: ApiCollection<DataFragment>;
+  indicators: ApiCollection<Indicator>;
 }
 
 export type PageCartoForm = { name: string; geoMap: GeoMapStub };

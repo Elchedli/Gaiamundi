@@ -226,6 +226,7 @@ export const mockPageCartoData: ApiData<PageCarto> = {
     cover: mockCoverApiDocument,
     html: '<p>Test HTML</p>',
     data_fragments: mockDataFragmentsApiCollection,
+    indicators: { data: [], meta: { pagination: { total: 0 } } },
     created_at: '2022-02-07T00:00:00.000Z',
     updated_at: '2022-02-07T00:00:00.000Z',
   },
