@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useAuth } from 'hooks/useAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -30,7 +30,7 @@ describe('CsvUploader', () => {
 
   it('should upload a CSV file and click on cancel button when upload is successful', async () => {
     const file = new File(['a,b,c\n1,2,3'], 'file.csv', { type: 'text/csv' });
-    const { container, getByTestId, findByTestId } = render(
+    const { container, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <CsvUploader
           onUpload={onUploadMock}
@@ -40,16 +40,20 @@ describe('CsvUploader', () => {
         />
       </QueryClientProvider>
     );
-    const fileInput = getByTestId('hidden-file-input');
+    const fileInput = getByTestId('hidden-file-input') as HTMLInputElement;
     expect(fileInput).toBeInTheDocument();
     //upload file so we can open the mini page that contains a name and a red cancel button
     userEvent.upload(fileInput, file);
-    // wait for the mini page when the upload and criteria are successful
-    const loadedFilePage = await findByTestId('file-loaded-minipage');
-    expect(loadedFilePage).toBeInTheDocument();
-    //click on the cancel button to get back to the upload mini page "DropZone"
-    userEvent.click(loadedFilePage.querySelector('button') as HTMLElement);
-    //check if the mini page is removed
-    expect(container.contains(loadedFilePage)).not.toBeTruthy();
+    expect(fileInput.files).toHaveLength(1);
+    expect(fileInput?.files?.item(0)).toStrictEqual(file);
+    await waitFor(() => {
+      // wait for the mini page when the upload and criteria are successful
+      const loadedFilePage = getByTestId('file-loaded-minipage');
+      expect(loadedFilePage).toBeInTheDocument();
+      //click on the cancel button to get back to the upload mini page "DropZone"
+      userEvent.click(loadedFilePage.querySelector('button') as HTMLElement);
+      //check if the mini page is removed
+      expect(container.contains(loadedFilePage)).not.toBeTruthy();
+    });
   });
 });
