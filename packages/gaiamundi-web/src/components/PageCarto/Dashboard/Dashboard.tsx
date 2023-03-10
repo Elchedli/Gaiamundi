@@ -40,7 +40,7 @@ export const Dashboard: React.FC = () => {
   if (!response || response.data.length === 0) {
     return (
       <Alert type="info" className="grid h-fit justify-center items-center">
-        <div>Aucun tag na été trouvé!.</div>
+        <div data-testid="error-message">Aucun tag na été trouvé!.</div>
       </Alert>
     );
   }
