@@ -4,3 +4,7 @@ export interface Column {
   validity: string;
   isGeoCode: boolean;
 }
+
+export interface DatasetColumn extends Column {
+  dataset: string;
+}

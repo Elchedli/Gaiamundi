@@ -3,33 +3,15 @@ import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
 import config from 'config';
 import { useModal } from 'hooks/useModal';
-import { ApiCollection } from 'interfaces/api';
-import { Indicator } from 'interfaces/indicator';
-import { FC, useMemo } from 'react';
+import { usePageCarto } from 'hooks/usePageCarto';
+import { FC } from 'react';
 import DataGrid from 'react-data-grid';
 import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
 
-type PageCartoIndicatorPanelProps = {
-  indicators: ApiCollection<Indicator>;
-  pageCartoId: number;
-};
-
-export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
-  indicators,
-  pageCartoId,
-}) => {
+export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
-  const rows = useMemo(
-    () =>
-      (indicators?.data || []).map(({ id, attributes }) => {
-        return {
-          id,
-          ...attributes,
-        };
-      }),
-    [indicators]
-  );
-
+  const { pageCartoId } = usePageCarto();
+  const { indicators: dataGridRows } = usePageCarto();
   return (
     <div>
       <div className="mt-5 text-right">
@@ -48,10 +30,10 @@ export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
         </Button>
       </div>
       <div className="my-2">
-        {indicators?.data.length === 0 && (
+        {dataGridRows.length === 0 && (
           <Alert type="info">{`Aucun indicateur n'a a été défini`}</Alert>
         )}
-        {indicators?.data.length > 0 && (
+        {dataGridRows.length > 0 && (
           <DataGrid
             enableVirtualization={config.ENVIRONMENT !== 'test'}
             className="border"
@@ -77,7 +59,7 @@ export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
                 name: 'Validité',
               },
             ]}
-            rows={rows}
+            rows={dataGridRows}
           />
         )}
       </div>

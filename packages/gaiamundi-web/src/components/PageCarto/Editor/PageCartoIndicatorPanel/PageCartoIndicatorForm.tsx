@@ -5,39 +5,35 @@ import { useMutation, useQueryClient } from 'react-query';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import { Label } from 'components/Inputs/Label';
+import { TextAreaInput } from 'components/Inputs/TextAreaInput';
 import { TextInput } from 'components/Inputs/TextInput';
+import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
-// import { DatasetStub } from 'interfaces/dataset';
-import { TextAreaInput } from 'components/Inputs/TextAreaInput';
 import { IndicatorStub } from 'interfaces/indicator';
 import { addIndicatorToPageCarto } from 'services/indicator';
+import DatasetVariablePicker from './DatasetVariablePicker';
 import EquationInput from './EquationInput';
 
-// type FormData = DatasetStub & {
-//   fragmentName: string;
-//   columns: Column[];
-// };
-
 type PageCartoIndicatorFormProps = {
-  pageCartoId: number;
   onSubmit: (dataForm: IndicatorStub) => void;
 };
 
 export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
-  pageCartoId,
   onSubmit,
 }) => {
+  const { pageCartoId } = usePageCarto();
   const queryClient = useQueryClient();
-  // const [columns] = useState<Column[]>([]);
   const { addToast } = useToast();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    // setValue,
     control,
+    watch,
   } = useForm<IndicatorStub>();
+
+  const formValues = watch();
 
   const { isError, error, isLoading, mutateAsync } = useMutation({
     mutationFn: async (indicator: IndicatorStub) => {
@@ -63,26 +59,26 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
       <form onSubmit={handleSubmit(onSubmitForm)}>
         {isError && <ApiErrorAlert error={error as ApiError} />}
         <div className="flex flex-row">
-          {/* <div className="flex flex-col w-1/2 p-2">
+          <div className="flex flex-col w-1/2 p-2">
             <div className="mt-3">
               <Label>1. Sélectionnez les colonnes à utiliser :</Label>
               <Controller
-                name="columns"
+                name="variables"
                 control={control}
                 defaultValue={undefined}
                 rules={{
                   required:
                     'Vous devez sélectionner les colonnes ainsi que le Géo Code.',
-                  validate: (cols) => {
-                    return cols.length > 0 && cols.some((c) => c.isGeoCode);
+                  validate: (variables) => {
+                    return variables.length > 0;
                   },
                 }}
                 render={({ field }) => {
-                  return <DatasetColumnPicker data={columns} {...field} />;
+                  return <DatasetVariablePicker {...field} />;
                 }}
               />
             </div>
-          </div> */}
+          </div>
           <div className="flex flex-col w-1/2 p-2">
             <div className="mt-3">
               <Label htmlFor="name">Nom</Label>
@@ -123,7 +119,12 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
                   required: 'Vous devez définir une formule de calcul.',
                 }}
                 render={({ field }) => {
-                  return <EquationInput {...field} />;
+                  return (
+                    <EquationInput
+                      variables={formValues.variables}
+                      {...field}
+                    />
+                  );
                 }}
               />
             </div>

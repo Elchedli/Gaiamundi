@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { useAuth } from 'hooks/useAuth';
 import { useQuery } from 'react-query';
-import { mockGeoMapData, mockMapPath } from 'utils/mocks/data';
+import { mockMapPath } from 'utils/mocks/data';
 import { PageCartoMap } from '../PageCartoMap';
 
 jest.mock('hooks/useAuth');
@@ -39,7 +39,7 @@ describe('PageCartoMap', () => {
   });
 
   it('renders loading message while data is being fetched', async () => {
-    const { container } = render(<PageCartoMap map={mockGeoMapData} />);
+    const { container } = render(<PageCartoMap />);
     expect(container).toMatchSnapshot();
   });
 });

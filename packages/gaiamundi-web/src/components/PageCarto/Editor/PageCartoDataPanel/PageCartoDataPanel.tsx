@@ -1,45 +1,18 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
+import { FC } from 'react';
+import DataGrid from 'react-data-grid';
+
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
 import config from 'config';
 import { useModal } from 'hooks/useModal';
-import { ApiCollection } from 'interfaces/api';
-import { Column } from 'interfaces/column';
-import { DataFragment } from 'interfaces/data-fragment';
-import { FC, useMemo } from 'react';
-import DataGrid from 'react-data-grid';
+import { usePageCarto } from 'hooks/usePageCarto';
 import { PageCartoDataForm } from './PageCartoDataForm';
 
-type PageCartoPanelDataProps = {
-  dataFragments: ApiCollection<DataFragment>;
-  pageCartoId: number;
-};
-
-export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
-  dataFragments,
-  pageCartoId,
-}) => {
+export const PageCartoPanelData: FC = () => {
   const { showModal, hideModal } = useModal();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fragments = dataFragments?.data || [];
-  const rows = useMemo(
-    () =>
-      fragments.reduce((acc, curr) => {
-        const cols = curr.attributes.columns
-          .filter((column) => {
-            return !column.isGeoCode;
-          })
-          .map((column) => {
-            return {
-              ...column,
-              dataset: curr.attributes.dataset.data.attributes.name,
-            };
-          });
-        return acc.concat(cols);
-      }, [] as (Column & { dataset: string })[]),
-    [fragments]
-  );
+  const { pageCartoId } = usePageCarto();
+  const { columns: dataGridRows } = usePageCarto();
 
   return (
     <div>
@@ -59,10 +32,10 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
         </Button>
       </div>
       <div className="my-2">
-        {fragments.length === 0 && (
+        {dataGridRows.length === 0 && (
           <Alert type="info">{`Aucun jeu de donnée n'a a été importé`}</Alert>
         )}
-        {fragments.length > 0 && (
+        {dataGridRows.length > 0 && (
           <DataGrid
             enableVirtualization={config.ENVIRONMENT !== 'test'}
             className="border"
@@ -84,7 +57,7 @@ export const PageCartoPanelData: FC<PageCartoPanelDataProps> = ({
                 name: 'Jeu de données',
               },
             ]}
-            rows={rows}
+            rows={dataGridRows}
           />
         )}
       </div>

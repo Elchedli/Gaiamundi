@@ -17,7 +17,7 @@ export interface ApiErrorResponse {
   error?: ApiError;
 }
 
-export type ApiResponse<T> = T | ApiErrorResponse;
+export type ApiResponse<T> = T;
 
 export type ApiPaginationMeta = {
   //

@@ -1,83 +1,55 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { Radio } from 'components/Inputs/Radio';
 import { TextInput } from 'components/Inputs/TextInput';
+import { usePageCarto } from 'hooks/usePageCarto';
 import { Column } from 'interfaces/column';
+import { IndicatorVariable } from 'interfaces/indicator';
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid, {
   Column as DataGridColumn,
   SelectColumn,
 } from 'react-data-grid';
+import { getCharRange } from 'utils/utils';
 
-type DatasetColumnPickerProps = {
-  data: Column[];
-  onChange: (selectedColumns: Column[]) => void;
+type DatasetVariablePickerProps = {
+  onChange: (variables: IndicatorVariable[]) => void;
 };
 
-const DatasetColumnPicker = React.forwardRef<
+const ALPHABET_RANGE = getCharRange('A', 'Z');
+
+const DatasetVariablePicker = React.forwardRef<
   HTMLDivElement,
-  DatasetColumnPickerProps
->(({ data, onChange }, ref) => {
+  DatasetVariablePickerProps
+>(({ onChange }, ref) => {
+  const { columns } = usePageCarto();
   const [selectedColumns, setSelectedColumns] = useState<ReadonlySet<string>>(
     () => new Set<string>()
   );
-  const [selectedGeoCode, setSelectedGeoCode] = useState<string | null>(null);
   const [searchKeywords, setSearchKeywords] = useState<string>('');
 
   const filteredRows = useMemo(() => {
     return searchKeywords
-      ? data.filter((row) => {
+      ? columns.filter((row) => {
           return row.name.includes(searchKeywords);
         })
-      : data;
-  }, [data, searchKeywords]);
+      : columns;
+  }, [columns, searchKeywords]);
 
   const handleRowSelect = (selection: Set<string>) => {
     setSelectedColumns(selection);
-    if (selectedGeoCode && !selection.has(selectedGeoCode)) {
-      setSelectedGeoCode(null);
-    }
-  };
-
-  const handleGeoCodeSelect = (selected: string) => {
-    setSelectedGeoCode(selected);
   };
 
   useEffect(() => {
-    const selected = Array.from(selectedColumns)
-      .map((name) => {
-        return data.find((row) => row.name === name);
-      })
-      .map(
-        (column) =>
-          ({
-            ...column,
-            isGeoCode: column?.name === selectedGeoCode,
-          } as Column)
-      );
+    const selected = Array.from(selectedColumns).map((name, idx) => {
+      return {
+        columnName: name,
+        alias: ALPHABET_RANGE[idx],
+      };
+    });
     onChange(selected);
-  }, [data, onChange, selectedColumns, selectedGeoCode]);
+  }, [onChange, selectedColumns]);
 
-  const columns: DataGridColumn<Column>[] = [
+  const dataGridColumns: DataGridColumn<Column>[] = [
     SelectColumn,
-    {
-      key: 'isGeoCode',
-      name: 'GéoCode',
-      width: 80,
-      minWidth: 80,
-      maxWidth: 80,
-      formatter({ row }) {
-        return selectedColumns.has(row.name) ? (
-          <Radio
-            name="isGeoCode"
-            value={row.name}
-            checked={row.name === selectedGeoCode}
-            onChange={() => handleGeoCodeSelect(row.name)}
-          />
-        ) : null;
-      },
-      cellClass: 'text-center',
-      frozen: true,
-    },
     {
       key: 'name',
       name: 'Colonne',
@@ -109,7 +81,7 @@ const DatasetColumnPicker = React.forwardRef<
         }}
         className="fill-grid"
         rowKeyGetter={({ name }) => name}
-        columns={columns}
+        columns={dataGridColumns}
         rows={filteredRows}
         selectedRows={selectedColumns}
         onSelectedRowsChange={handleRowSelect}
@@ -118,6 +90,6 @@ const DatasetColumnPicker = React.forwardRef<
   );
 });
 
-DatasetColumnPicker.displayName = 'DatasetColumnPicker';
+DatasetVariablePicker.displayName = 'DatasetVariablePicker';
 
-export default DatasetColumnPicker;
+export default DatasetVariablePicker;

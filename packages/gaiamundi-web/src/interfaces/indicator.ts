@@ -1,12 +1,18 @@
 import { ApiDocument } from './api';
 import { PageCarto } from './page-carto';
 
+export type IndicatorVariable = {
+  columnName: string;
+  alias: string;
+};
+
 export interface IndicatorBase {
   name: string;
   description: string;
   source: string;
   validity: number;
   equation: string;
+  variables: IndicatorVariable[];
 }
 
 export interface IndicatorStub extends IndicatorBase {
