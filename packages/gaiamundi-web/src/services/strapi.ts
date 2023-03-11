@@ -16,6 +16,8 @@ export enum ContentType {
   DATASET = 'datasets',
   DATA_FRAGMENT = 'data-fragments',
   COLUMN = 'columns',
+  INDICATOR = 'indicators',
+  EQUATION = 'equations',
   USERS = 'users',
   TAGS = 'tags',
 }

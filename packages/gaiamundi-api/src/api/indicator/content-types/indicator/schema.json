@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "indicators",
+  "info": {
+    "singularName": "indicator",
+    "pluralName": "indicators",
+    "displayName": "Indicator"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "source": {
+      "type": "string"
+    },
+    "validity": {
+      "type": "integer"
+    },
+    "page_carto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page-carto.page-carto",
+      "inversedBy": "indicators"
+    }
+  }
+}

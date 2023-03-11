@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "equations",
+  "info": {
+    "singularName": "equation",
+    "pluralName": "equations",
+    "displayName": "Equation"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

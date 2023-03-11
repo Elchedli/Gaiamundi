@@ -1,30 +1,27 @@
-import { useQuery } from 'react-query';
-import { FC, useCallback, useRef } from 'react';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
 import panzoom, { PanZoom } from 'panzoom';
+import { FC, useCallback, useRef } from 'react';
+import { useQuery } from 'react-query';
 
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Alert } from 'components/Alert/Alert';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { Button } from 'components/Button/Button';
+import ButtonGroup from 'components/Button/ButtonGroup';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
+import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
 
-import 'eazychart-css';
-import ButtonGroup from 'components/Button/ButtonGroup';
-import { Button } from 'components/Button/Button';
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
-import { GeoMap } from 'interfaces/geo-map';
-
-type PageCartoMapProps = {
-  map: ApiData<GeoMap>;
-};
-
-export const PageCartoMap: FC<PageCartoMapProps> = ({ map }) => {
+export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
-  const geoJson = map.attributes.geoJSON.data;
-  const { data, isError, isLoading, error } = useQuery({
-    queryKey: ['geoJSON', geoJson.id],
+  const { map } = usePageCarto();
+  const geoJson = map?.data.attributes.geoJSON.data as ApiData<UploadedFile>;
+  const { data, isError, isLoading, isIdle, error } = useQuery({
+    queryKey: ['geoJSON', geoJson?.id],
     queryFn: async () => getGeoJson(geoJson),
     // The query will not execute until the userId exists
     enabled: !!geoJson,
@@ -63,7 +60,7 @@ export const PageCartoMap: FC<PageCartoMapProps> = ({ map }) => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isIdle) {
     return <LoadingMessage label={'Chargement de la carte ...'} />;
   }
 
@@ -81,7 +78,11 @@ export const PageCartoMap: FC<PageCartoMapProps> = ({ map }) => {
         <Button icon={PlusIcon} onClick={zoomIn} />
         <Button icon={MinusIcon} onClick={zoomOut} />
       </ButtonGroup>
-      <div className="w-full h-full overflow-hidden" ref={panZoomCallback}>
+      <div
+        className="w-full h-full overflow-hidden"
+        ref={panZoomCallback}
+        data-testid={'map-chart'}
+      >
         <ResponsiveChartContainer>
           <MapChart
             map={{

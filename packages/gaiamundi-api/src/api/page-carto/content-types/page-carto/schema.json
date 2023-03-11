@@ -49,6 +49,12 @@
       "relation": "oneToMany",
       "target": "api::data-fragment.data-fragment",
       "mappedBy": "page_carto"
+    },
+    "indicators": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::indicator.indicator",
+      "mappedBy": "page_carto"
     }
   }
 }

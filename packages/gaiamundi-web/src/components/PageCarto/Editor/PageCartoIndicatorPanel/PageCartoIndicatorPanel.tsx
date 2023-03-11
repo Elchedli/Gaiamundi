@@ -1,18 +1,17 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { FC } from 'react';
-import DataGrid from 'react-data-grid';
-
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
 import config from 'config';
 import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
-import { PageCartoDataForm } from './PageCartoDataForm';
+import { FC } from 'react';
+import DataGrid from 'react-data-grid';
+import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
 
-export const PageCartoPanelData: FC = () => {
+export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
-  const { pageCartoId } = usePageCarto();
-  const { columns: dataGridRows } = usePageCarto();
+  const { pageCartoId, columns } = usePageCarto();
+  const { indicators: dataGridRows } = usePageCarto();
   return (
     <div>
       <div className="mt-5 text-right">
@@ -21,18 +20,18 @@ export const PageCartoPanelData: FC = () => {
           data-testid="import-dataset"
           onClick={() =>
             showModal({
-              title: 'Importer un jeu de données',
-              Component: PageCartoDataForm,
-              props: { pageCartoId, onSubmit: hideModal },
+              title: 'Nouvel Indicateur',
+              Component: PageCartoIndicatorForm,
+              props: { pageCartoId, columns, onSubmit: hideModal },
             })
           }
         >
-          Importer un jeu de données
+          Nouvel Indicateur
         </Button>
       </div>
       <div className="my-2">
         {dataGridRows.length === 0 && (
-          <Alert type="info">{`Aucun jeu de donnée n'a a été importé`}</Alert>
+          <Alert type="info">{`Aucun indicateur n'a a été défini`}</Alert>
         )}
         {dataGridRows.length > 0 && (
           <DataGrid
@@ -40,8 +39,16 @@ export const PageCartoPanelData: FC = () => {
             className="border"
             columns={[
               {
+                key: 'id',
+                name: '#',
+              },
+              {
                 key: 'name',
-                name: 'Colonne',
+                name: 'Indicateur',
+              },
+              {
+                key: 'description',
+                name: 'Description',
               },
               {
                 key: 'source',
@@ -51,12 +58,13 @@ export const PageCartoPanelData: FC = () => {
                 key: 'validity',
                 name: 'Validité',
               },
-              {
-                key: 'dataset',
-                name: 'Jeu de données',
-              },
             ]}
-            rows={dataGridRows}
+            rows={dataGridRows.map(({ id, attributes }) => {
+              return {
+                id,
+                ...attributes,
+              };
+            })}
           />
         )}
       </div>

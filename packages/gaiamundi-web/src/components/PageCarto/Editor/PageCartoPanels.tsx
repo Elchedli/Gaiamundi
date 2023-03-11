@@ -1,16 +1,10 @@
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import { ApiData } from 'interfaces/api';
-import { PageCarto } from 'interfaces/page-carto';
 import { FC } from 'react';
 import { PageCartoPanelData } from './PageCartoDataPanel/PageCartoDataPanel';
+import { PageCartoIndicatorPanel } from './PageCartoIndicatorPanel/PageCartoIndicatorPanel';
 
-type PageCartoPanelsProps = {
-  pageCarto: ApiData<PageCarto>;
-};
-
-export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
-  const dataFragments = pageCarto.attributes.data_fragments;
+export const PageCartoPanels: FC = () => {
   const tabs = [
     {
       id: 1,
@@ -20,17 +14,12 @@ export const PageCartoPanels: FC<PageCartoPanelsProps> = ({ pageCarto }) => {
     {
       id: 2,
       title: 'Données',
-      content: (
-        <PageCartoPanelData
-          dataFragments={dataFragments}
-          pageCartoId={pageCarto.id}
-        />
-      ),
+      content: <PageCartoPanelData />,
     },
     {
       id: 3,
       title: 'Indicateurs',
-      content: <div className="text-center">en cours de développement</div>,
+      content: <PageCartoIndicatorPanel />,
     },
   ];
 

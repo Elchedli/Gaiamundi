@@ -1,21 +1,17 @@
 import React from 'react';
 import {
-  useQuery,
-  useQueryClient,
   QueryObserverResult,
   RefetchOptions,
   UseMutateFunction,
+  useQuery,
+  useQueryClient,
 } from 'react-query';
 
-import { User } from 'interfaces/user';
-import { strapi } from '../services/strapi';
-import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Alert } from 'components/Alert/Alert';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { User } from 'interfaces/user';
+import { strapi } from 'services/strapi';
 import { useLocalStorageState } from './useLocalStorageState';
-
-// const updateAccount = async (id: number, userData: UserSignUpFields) => {
-//   return (await strapi.update(ContentType.USERS, id, userData)) as User;
-// };
 
 export interface AuthContextValue {
   user: User | undefined;

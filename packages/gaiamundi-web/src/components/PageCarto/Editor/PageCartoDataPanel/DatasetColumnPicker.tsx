@@ -55,7 +55,7 @@ const DatasetColumnPicker = React.forwardRef<
           } as Column)
       );
     onChange(selected);
-  }, [selectedColumns, selectedGeoCode]);
+  }, [data, onChange, selectedColumns, selectedGeoCode]);
 
   const columns: DataGridColumn<Column>[] = [
     SelectColumn,
