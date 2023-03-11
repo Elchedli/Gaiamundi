@@ -10,7 +10,7 @@ import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
 
 export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
-  const { pageCartoId } = usePageCarto();
+  const { pageCartoId, columns } = usePageCarto();
   const { indicators: dataGridRows } = usePageCarto();
   return (
     <div>
@@ -22,7 +22,7 @@ export const PageCartoIndicatorPanel: FC = () => {
             showModal({
               title: 'Nouvel Indicateur',
               Component: PageCartoIndicatorForm,
-              props: { pageCartoId, onSubmit: hideModal },
+              props: { pageCartoId, columns, onSubmit: hideModal },
             })
           }
         >
@@ -59,7 +59,12 @@ export const PageCartoIndicatorPanel: FC = () => {
                 name: 'Validité',
               },
             ]}
-            rows={dataGridRows}
+            rows={dataGridRows.map(({ id, attributes }) => {
+              return {
+                id,
+                ...attributes,
+              };
+            })}
           />
         )}
       </div>

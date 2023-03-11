@@ -1,7 +1,6 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { TextInput } from 'components/Inputs/TextInput';
-import { usePageCarto } from 'hooks/usePageCarto';
-import { Column } from 'interfaces/column';
+import { Column, DatasetColumn } from 'interfaces/column';
 import { IndicatorVariable } from 'interfaces/indicator';
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid, {
@@ -11,6 +10,7 @@ import DataGrid, {
 import { getCharRange } from 'utils/utils';
 
 type DatasetVariablePickerProps = {
+  columns: DatasetColumn[];
   onChange: (variables: IndicatorVariable[]) => void;
 };
 
@@ -19,8 +19,7 @@ const ALPHABET_RANGE = getCharRange('A', 'Z');
 const DatasetVariablePicker = React.forwardRef<
   HTMLDivElement,
   DatasetVariablePickerProps
->(({ onChange }, ref) => {
-  const { columns } = usePageCarto();
+>(({ columns, onChange }, ref) => {
   const [selectedColumns, setSelectedColumns] = useState<ReadonlySet<string>>(
     () => new Set<string>()
   );

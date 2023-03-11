@@ -61,6 +61,7 @@ export const CsvUploader: React.FC<CsvUploaderProps> = ({
       }
 
       if (Array.isArray(data.errors) && data.errors.length > 0) {
+        // eslint-disable-next-line no-console
         console.warn(`CSV Parse errors : `, data.errors);
       }
       // This is done to set the displayed filename after the file is uploaded

@@ -1,18 +1,21 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import * as pageCartoService from 'services/page-carto';
 import { mockPageCartoData } from 'utils/mocks/data';
 import { PageCartoPanels } from '../PageCartoPanels';
 
-describe('PageCartoPanels', () => {
-  beforeAll(() => {
-    jest.spyOn(pageCartoService, 'getPageCartoById').mockReturnValue(
-      Promise.resolve({
+// Mock the usePageCarto hook to return a fake response object
+jest.mock('services/page-carto', () => {
+  return {
+    getPageCartoById() {
+      return Promise.resolve({
         data: mockPageCartoData,
-      })
-    );
-  });
+      });
+    },
+  };
+});
 
+describe('PageCartoPanels', () => {
   afterAll(() => {
     jest.clearAllMocks();
   });
@@ -21,13 +24,18 @@ describe('PageCartoPanels', () => {
     const queryClient = new QueryClient();
     const { getAllByRole, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
-        <PageCartoPanels />
+        <PageCartoProvider id={mockPageCartoData.id}>
+          <PageCartoPanels />
+        </PageCartoProvider>
       </QueryClientProvider>
     );
-    const tabs = getAllByRole('tab');
-    expect(tabs).toHaveLength(3);
 
-    fireEvent.click(tabs[1]);
-    expect(getByTestId('import-dataset')).toBeDefined();
+    await waitFor(() => {
+      const tabs = getAllByRole('tab');
+      expect(tabs).toHaveLength(3);
+
+      fireEvent.click(tabs[1]);
+      expect(getByTestId('import-dataset')).toBeDefined();
+    });
   });
 });

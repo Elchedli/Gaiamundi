@@ -7,22 +7,25 @@ import { Button } from 'components/Button/Button';
 import { Label } from 'components/Inputs/Label';
 import { TextAreaInput } from 'components/Inputs/TextAreaInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
+import { DatasetColumn } from 'interfaces/column';
 import { IndicatorStub } from 'interfaces/indicator';
 import { addIndicatorToPageCarto } from 'services/indicator';
 import DatasetVariablePicker from './DatasetVariablePicker';
 import EquationInput from './EquationInput';
 
 type PageCartoIndicatorFormProps = {
+  pageCartoId: number;
+  columns: DatasetColumn[];
   onSubmit: (dataForm: IndicatorStub) => void;
 };
 
 export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
+  pageCartoId,
+  columns,
   onSubmit,
 }) => {
-  const { pageCartoId } = usePageCarto();
   const queryClient = useQueryClient();
   const { addToast } = useToast();
   const {
@@ -74,7 +77,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
                   },
                 }}
                 render={({ field }) => {
-                  return <DatasetVariablePicker {...field} />;
+                  return <DatasetVariablePicker columns={columns} {...field} />;
                 }}
               />
             </div>
@@ -121,7 +124,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
                 render={({ field }) => {
                   return (
                     <EquationInput
-                      variables={formValues.variables}
+                      variables={formValues.variables || []}
                       {...field}
                     />
                   );

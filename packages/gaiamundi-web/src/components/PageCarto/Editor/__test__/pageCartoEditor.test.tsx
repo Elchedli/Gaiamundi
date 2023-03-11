@@ -1,23 +1,22 @@
 import { render } from '@testing-library/react';
+import { usePageCarto } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import * as pageCartoService from 'services/page-carto';
-import { mockPageCartoData } from 'utils/mocks/data';
 import { PageCartoEditor } from '../PageCartoEditor';
 
-describe('pageCartoEditor', () => {
-  beforeAll(() => {
-    jest.spyOn(pageCartoService, 'getPageCartoById').mockReturnValue(
-      Promise.resolve({
-        data: mockPageCartoData,
-      })
-    );
-  });
+jest.mock('hooks/usePageCarto');
 
+describe('pageCartoEditor', () => {
   afterAll(() => {
     jest.clearAllMocks();
   });
 
   it('renders the correct children components', async () => {
+    (usePageCarto as jest.Mock).mockReturnValue({
+      isLoading: true,
+      isError: false,
+      error: undefined,
+      data: undefined,
+    });
     const queryClient = new QueryClient();
     const { getByTestId, container } = render(
       <QueryClientProvider client={queryClient}>

@@ -20,8 +20,8 @@ export const PageCartoMap: FC = () => {
   const panzoomRef = useRef<PanZoom | null>(null);
   const { map } = usePageCarto();
   const geoJson = map?.data.attributes.geoJSON.data as ApiData<UploadedFile>;
-  const { data, isError, isLoading, error } = useQuery({
-    queryKey: ['geoJSON', geoJson.id],
+  const { data, isError, isLoading, isIdle, error } = useQuery({
+    queryKey: ['geoJSON', geoJson?.id],
     queryFn: async () => getGeoJson(geoJson),
     // The query will not execute until the userId exists
     enabled: !!geoJson,
@@ -60,7 +60,7 @@ export const PageCartoMap: FC = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isIdle) {
     return <LoadingMessage label={'Chargement de la carte ...'} />;
   }
 
@@ -78,7 +78,11 @@ export const PageCartoMap: FC = () => {
         <Button icon={PlusIcon} onClick={zoomIn} />
         <Button icon={MinusIcon} onClick={zoomOut} />
       </ButtonGroup>
-      <div className="w-full h-full overflow-hidden" ref={panZoomCallback}>
+      <div
+        className="w-full h-full overflow-hidden"
+        ref={panZoomCallback}
+        data-testid={'map-chart'}
+      >
         <ResponsiveChartContainer>
           <MapChart
             map={{

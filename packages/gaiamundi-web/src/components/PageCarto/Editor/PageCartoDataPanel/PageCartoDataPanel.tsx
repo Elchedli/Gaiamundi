@@ -13,7 +13,6 @@ export const PageCartoPanelData: FC = () => {
   const { showModal, hideModal } = useModal();
   const { pageCartoId } = usePageCarto();
   const { columns: dataGridRows } = usePageCarto();
-
   return (
     <div>
       <div className="mt-5 text-right">
