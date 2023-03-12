@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { PageCartoPanelData } from './PageCartoDataPanel/PageCartoDataPanel';
+import { PageCartoDataPanel } from './PageCartoDataPanel/PageCartoDataPanel';
 import { PageCartoIndicatorPanel } from './PageCartoIndicatorPanel/PageCartoIndicatorPanel';
 
 export const PageCartoPanels: FC = () => {
@@ -14,7 +14,7 @@ export const PageCartoPanels: FC = () => {
     {
       id: 2,
       title: 'Données',
-      content: <PageCartoPanelData />,
+      content: <PageCartoDataPanel />,
     },
     {
       id: 3,
