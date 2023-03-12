@@ -31,13 +31,11 @@ export type ApiPaginationMeta = {
   total: number;
 };
 
-export interface ApiData<T> {
+export type ApiData<T> = T & {
   id: number;
-  attributes: T & {
-    created_at: string;
-    updated_at: string;
-  };
-}
+  created_at: string;
+  updated_at: string;
+};
 
 export interface ApiDocument<T> {
   data: ApiData<T>;

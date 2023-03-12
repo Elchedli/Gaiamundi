@@ -59,12 +59,7 @@ export const PageCartoIndicatorPanel: FC = () => {
                 name: 'Validité',
               },
             ]}
-            rows={dataGridRows.map(({ id, attributes }) => {
-              return {
-                id,
-                ...attributes,
-              };
-            })}
+            rows={dataGridRows}
           />
         )}
       </div>

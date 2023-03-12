@@ -1,4 +1,4 @@
-import { ApiDocument } from './api';
+import { ApiData } from './api';
 import { UploadedFile } from './file';
 import { User } from './user';
 
@@ -22,6 +22,6 @@ export interface GeoMapStub extends GeoMapBase {
 }
 
 export interface GeoMap extends GeoMapBase {
-  owner: ApiDocument<User>;
-  geoJSON: ApiDocument<UploadedFile>;
+  owner: ApiData<User>;
+  geoJSON: ApiData<UploadedFile>;
 }

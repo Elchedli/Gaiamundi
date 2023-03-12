@@ -3,13 +3,17 @@ import { GeoMap } from 'interfaces/geo-map';
 import { getGeoMapThumbnailUrlById } from 'services/geo-map';
 
 const GeoListItem: React.FC<ApiData<GeoMap>> = ({
-  attributes: { yearValidity, name, source, license, geoJSON },
+  yearValidity,
+  name,
+  source,
+  license,
+  geoJSON,
 }) => {
   return (
     <div className="group border pb-2 cursor-pointer">
       <div className="bg-slate-300">
         <img
-          src={getGeoMapThumbnailUrlById(geoJSON.data.id)}
+          src={getGeoMapThumbnailUrlById(geoJSON.id)}
           className="w-full object-contain object-center hover:opacity-75"
         />
       </div>

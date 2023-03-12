@@ -1,4 +1,4 @@
-import { ApiDocument } from './api';
+import { ApiData } from './api';
 import { Column } from './column';
 import { Dataset } from './dataset';
 
@@ -13,5 +13,5 @@ export interface DataFragmentStub extends DataFragmentBase {
 }
 
 export interface DataFragment extends DataFragmentBase {
-  dataset: ApiDocument<Dataset>;
+  dataset: ApiData<Dataset>;
 }

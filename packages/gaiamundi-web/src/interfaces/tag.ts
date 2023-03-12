@@ -1,7 +1,6 @@
 import { ApiData } from './api';
 
 export interface Tag {
-  id: number;
   name: string;
   type: string;
 }

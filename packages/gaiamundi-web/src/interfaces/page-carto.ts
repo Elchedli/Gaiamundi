@@ -1,4 +1,4 @@
-import { ApiCollection, ApiDocument } from './api';
+import { ApiData } from './api';
 import { DataFragment } from './data-fragment';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
@@ -27,12 +27,12 @@ export interface PageCartoStub extends PageCartoBase {
 }
 
 export interface PageCarto extends PageCartoBase {
-  owner: ApiDocument<User>;
-  cover: ApiDocument<UploadedFile>;
-  map: ApiDocument<GeoMap>;
-  tags: ApiCollection<Tag>;
-  data_fragments: ApiCollection<DataFragment>;
-  indicators: ApiCollection<Indicator>;
+  owner: ApiData<User>;
+  cover: ApiData<UploadedFile>;
+  map: ApiData<GeoMap>;
+  tags: ApiData<Tag>[];
+  data_fragments: ApiData<DataFragment>[];
+  indicators: ApiData<Indicator>[];
 }
 
 export type PageCartoForm = { name: string; geoMap: GeoMapStub };

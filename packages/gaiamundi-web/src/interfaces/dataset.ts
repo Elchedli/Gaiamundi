@@ -1,4 +1,4 @@
-import { ApiDocument } from './api';
+import { ApiData } from './api';
 import { UploadedFile } from './file';
 import { User } from './user';
 
@@ -14,6 +14,6 @@ export interface DatasetStub extends DatasetBase {
 }
 
 export interface Dataset extends DatasetBase {
-  owner: ApiDocument<User>;
-  csv: ApiDocument<UploadedFile>;
+  owner: ApiData<User>;
+  csv: ApiData<UploadedFile>;
 }

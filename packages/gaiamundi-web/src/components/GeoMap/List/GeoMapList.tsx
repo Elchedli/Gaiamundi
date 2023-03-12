@@ -72,7 +72,7 @@ export const GeoMapList = () => {
       <div className="rounded-b-lg border border-blue-700 p-5">
         <div className="grid grid-cols-3 gap-y-10 gap-x-6">
           {response?.data.map((page) => {
-            return <GeoListItem key={page.attributes.name} {...page} />;
+            return <GeoListItem key={page.name} {...page} />;
           })}
         </div>
         <div className="flex flex-row mt-5 justify-center">

@@ -157,7 +157,7 @@ exports[`PageCartoUserList renders pages when there is data 1`] = `
                     class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
                   >
                     <span>
-                      tag1
+                      Tag A
                     </span>
                   </span>
                 </a>
@@ -168,7 +168,18 @@ exports[`PageCartoUserList renders pages when there is data 1`] = `
                     class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
                   >
                     <span>
-                      tag2
+                      Tag B
+                    </span>
+                  </span>
+                </a>
+                <a
+                  href="#"
+                >
+                  <span
+                    class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
+                  >
+                    <span>
+                      Tag C
                     </span>
                   </span>
                 </a>
@@ -229,7 +240,7 @@ exports[`PageCartoUserList renders pages when there is data 1`] = `
                     class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
                   >
                     <span>
-                      tag1
+                      Tag A
                     </span>
                   </span>
                 </a>
@@ -240,7 +251,18 @@ exports[`PageCartoUserList renders pages when there is data 1`] = `
                     class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
                   >
                     <span>
-                      tag2
+                      Tag B
+                    </span>
+                  </span>
+                </a>
+                <a
+                  href="#"
+                >
+                  <span
+                    class="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 inline-block"
+                  >
+                    <span>
+                      Tag C
                     </span>
                   </span>
                 </a>

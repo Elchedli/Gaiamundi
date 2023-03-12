@@ -1,10 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import {
-  mockDataFragmentsApiCollection,
-  mockPageCartoData,
-} from 'utils/mocks/data';
+import { mockDataFragments, mockPageCartoData } from 'utils/mocks/data';
 import { PageCartoPanelData } from '../PageCartoDataPanel';
 
 jest.mock('services/page-carto', () => {
@@ -15,13 +12,10 @@ jest.mock('services/page-carto', () => {
           id === mockPageCartoData.id
             ? mockPageCartoData
             : {
-                id: mockPageCartoData.id,
-                attributes: {
-                  ...mockPageCartoData.attributes,
-                  data_fragments: {
-                    data: [],
-                    meta: { pagination: { total: 0 } },
-                  },
+                ...mockPageCartoData,
+                data_fragments: {
+                  data: [],
+                  meta: { pagination: { total: 0 } },
                 },
               },
       });
@@ -58,10 +52,8 @@ describe('PageCartoPanelData', () => {
       </QueryClientProvider>
     );
     await waitFor(() => {
-      const datasetName =
-        mockDataFragmentsApiCollection.data[0].attributes.dataset.data
-          .attributes.name;
-      const columns = mockDataFragmentsApiCollection.data[0].attributes.columns;
+      const datasetName = mockDataFragments[0].dataset.name;
+      const columns = mockDataFragments[0].columns;
       const columnHeaders = getAllByRole('columnheader');
       expect(columnHeaders).toHaveLength(4);
       columns

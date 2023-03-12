@@ -1,11 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
 import { TagsFilter } from 'components/PageCarto/Dashboard/TagsFilter';
-import { tags } from 'utils/mocks/data';
+import { mockTags } from 'utils/mocks/data';
 
 describe('TagsFilter', () => {
   it('displays tags grouped by type', () => {
     const { getByText } = render(
-      <TagsFilter onChange={jest.fn()} tags={tags} />
+      <TagsFilter onChange={jest.fn()} tags={mockTags} />
     );
     const typeALabel = getByText('Géographique');
     const tagA = getByText('Tag A');
@@ -22,7 +22,7 @@ describe('TagsFilter', () => {
   it('adds and removes selected tags', async () => {
     const onChange = jest.fn();
     const { getByText } = render(
-      <TagsFilter onChange={onChange} tags={tags} />
+      <TagsFilter onChange={onChange} tags={mockTags} />
     );
     fireEvent.click(getByText('Tag A'));
     expect(onChange).toHaveBeenCalledWith([1]);
@@ -35,7 +35,7 @@ describe('TagsFilter', () => {
   it('displays selected tags and allows them to be removed', () => {
     const onChange = jest.fn();
     const { getByText } = render(
-      <TagsFilter onChange={onChange} tags={tags} />
+      <TagsFilter onChange={onChange} tags={mockTags} />
     );
     const tagA = getByText('Tag A');
     fireEvent.click(tagA);
@@ -49,7 +49,7 @@ describe('TagsFilter', () => {
   it('resets selection when "Effacer tout" button is clicked (add and remove must work)', () => {
     const onChange = jest.fn();
     const { getByText } = render(
-      <TagsFilter onChange={onChange} tags={tags} />
+      <TagsFilter onChange={onChange} tags={mockTags} />
     );
     fireEvent.click(getByText('Tag A'));
     fireEvent.click(getByText('Tag B'));

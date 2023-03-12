@@ -1,11 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
 import { FilterBar } from 'components/PageCarto/Dashboard/FilterBar';
-import { tags } from 'utils/mocks/data';
+import { mockTags } from 'utils/mocks/data';
 
 const props = {
   onSearchKeywordChange: jest.fn(),
   onTagChange: jest.fn(),
-  tags,
+  tags: mockTags,
 };
 
 describe('FilterBar', () => {
