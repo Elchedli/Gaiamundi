@@ -2,7 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockDataFragments, mockPageCartoData } from 'utils/mocks/data';
-import { PageCartoPanelData } from '../PageCartoDataPanel';
+import { PageCartoDataPanel } from '../PageCartoDataPanel';
 
 jest.mock('services/page-carto', () => {
   return {
@@ -33,7 +33,7 @@ describe('PageCartoPanelData', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoPanelData />
+          <PageCartoDataPanel />
         </PageCartoProvider>
       </QueryClientProvider>
     );
@@ -47,7 +47,7 @@ describe('PageCartoPanelData', () => {
     const { container, getByText, getAllByRole } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoPanelData />
+          <PageCartoDataPanel />
         </PageCartoProvider>
       </QueryClientProvider>
     );
@@ -73,7 +73,7 @@ describe('PageCartoPanelData', () => {
     const { container, getByRole } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={0}>
-          <PageCartoPanelData />
+          <PageCartoDataPanel />
         </PageCartoProvider>
       </QueryClientProvider>
     );

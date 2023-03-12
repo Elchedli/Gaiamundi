@@ -9,7 +9,7 @@ import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { PageCartoDataForm } from './PageCartoDataForm';
 
-export const PageCartoPanelData: FC = () => {
+export const PageCartoDataPanel: FC = () => {
   const { showModal, hideModal } = useModal();
   const { pageCartoId } = usePageCarto();
   const { columns: dataGridRows } = usePageCarto();

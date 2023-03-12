@@ -42,7 +42,7 @@ type EquationInputProps = {
 
 const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
   ({ variables, onChange }, ref) => {
-    const [formula, setFormula] = useState('a');
+    const [formula, setFormula] = useState('A');
     const inputRef = useRef<HTMLInputElement>(null);
     const { data: response, isLoading } = useQuery({
       queryKey: ['equations'],
@@ -65,7 +65,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
     }
 
     const options = response?.data || [];
-    const defaultValue = options.length ? options[0].value : 'a';
+    const defaultValue = options.length ? options[0].value : formula;
 
     const handleEquationSelect = (selectedFormula: string) => {
       setFormula(selectedFormula);
