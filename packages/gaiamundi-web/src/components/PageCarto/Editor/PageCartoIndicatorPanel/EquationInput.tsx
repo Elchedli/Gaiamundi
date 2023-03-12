@@ -52,7 +52,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
       keepPreviousData: true,
       onSuccess(response) {
         const defaultValue = response.data.length
-          ? response.data[0].attributes.value
+          ? response.data[0].value
           : null;
         if (defaultValue) {
           setFormula(defaultValue);
@@ -64,7 +64,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
       return <LoadingMessage />;
     }
 
-    const options = (response?.data || []).map(({ attributes }) => attributes);
+    const options = response?.data || [];
     const defaultValue = options.length ? options[0].value : 'a';
 
     const handleEquationSelect = (selectedFormula: string) => {

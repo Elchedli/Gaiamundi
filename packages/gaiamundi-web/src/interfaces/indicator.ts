@@ -1,4 +1,4 @@
-import { ApiDocument } from './api';
+import { ApiData } from './api';
 import { PageCarto } from './page-carto';
 
 export type IndicatorVariable = {
@@ -20,5 +20,5 @@ export interface IndicatorStub extends IndicatorBase {
 }
 
 export interface Indicator extends IndicatorBase {
-  page_carto: ApiDocument<PageCarto>;
+  page_carto: ApiData<PageCarto>;
 }

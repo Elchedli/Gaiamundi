@@ -15,7 +15,7 @@ import { PageCarto } from 'interfaces/page-carto';
 
 type PageCartoContextValue = UseQueryResult<ApiDocument<PageCarto>, unknown> & {
   pageCartoId: number;
-  map?: ApiDocument<GeoMap>;
+  map?: GeoMap;
   columns: DatasetColumn[];
   indicators: ApiData<Indicator>[];
 };
@@ -46,31 +46,28 @@ export const PageCartoProvider = ({
 
   const pageCarto = query.data;
 
-  const map = pageCarto?.data?.attributes.map;
+  const map = pageCarto?.data?.map;
   // Compute columns by merging data fragments
   const columns = useMemo(
     () =>
-      (pageCarto?.data?.attributes.data_fragments?.data || []).reduce(
-        (acc, curr) => {
-          const cols = curr.attributes.columns
-            .filter((column) => {
-              return !column.isGeoCode;
-            })
-            .map((column) => {
-              return {
-                ...column,
-                dataset: curr.attributes.dataset.data.attributes.name,
-              };
-            });
-          return acc.concat(cols);
-        },
-        [] as DatasetColumn[]
-      ),
+      (pageCarto?.data?.data_fragments || []).reduce((acc, curr) => {
+        const cols = curr.columns
+          .filter((column) => {
+            return !column.isGeoCode;
+          })
+          .map((column) => {
+            return {
+              ...column,
+              dataset: curr.dataset.name,
+            };
+          });
+        return acc.concat(cols);
+      }, [] as DatasetColumn[]),
     [pageCarto]
   );
 
   const indicators = useMemo(
-    () => pageCarto?.data?.attributes.indicators?.data || [],
+    () => pageCarto?.data?.indicators || [],
     [pageCarto]
   );
 

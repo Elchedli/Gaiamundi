@@ -32,7 +32,7 @@ export const NewPageCartoForm = () => {
     onSuccess: ({ data }) => {
       addToast({
         title: 'Page carto crée',
-        description: `Votre nouvelle page ${data.attributes.name} a été crée avec succès`,
+        description: `Votre nouvelle page ${data.name} a été crée avec succès`,
         type: 'success',
       });
       navigate(`/page-carto/${data.id}/edit`);

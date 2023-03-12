@@ -11,27 +11,22 @@ describe('PageCartoItem', () => {
         <PageCartoItem {...mockPageCartoData} />
       </Router>
     );
-    expect(getByText(mockPageCartoData.attributes.name)).toBeInTheDocument();
+    expect(getByText(mockPageCartoData.name)).toBeInTheDocument();
 
     expect(
-      getByText(
-        'Carte : ' + mockPageCartoData.attributes.map.data.attributes.name
-      )
+      getByText('Carte : ' + mockPageCartoData.map.name)
     ).toBeInTheDocument();
     expect(
-      getByText(
-        'Créer par : ' +
-          mockPageCartoData.attributes.owner.data.attributes.username
-      )
+      getByText('Créer par : ' + mockPageCartoData.owner.username)
     ).toBeInTheDocument();
-    mockPageCartoData.attributes.tags.data.forEach((tag) => {
-      expect(getByText(tag.attributes.name)).toBeInTheDocument();
+    mockPageCartoData.tags.forEach((tag) => {
+      expect(getByText(tag.name)).toBeInTheDocument();
     });
     expect(getByText('Test HTML')).toBeInTheDocument();
     const imgElement = getByRole('img');
     expect(imgElement).toHaveAttribute(
       'src',
-      `${config.API_URL}${mockPageCartoData.attributes.cover.data.attributes.formats.thumbnail.url}`
+      `${config.API_URL}${mockPageCartoData.cover.formats.thumbnail.url}`
     );
   });
 });

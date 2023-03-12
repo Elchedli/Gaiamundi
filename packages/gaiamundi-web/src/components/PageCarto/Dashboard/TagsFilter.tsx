@@ -21,7 +21,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
   const groupedTags: GroupedTags = useMemo(() => {
     return groupApiDataBy(
       response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
-      (tag: ApiData<Tag>) => tag.attributes.type
+      (tag: ApiData<Tag>) => tag.type
     );
   }, [selectedTagIds, response]);
 
@@ -75,10 +75,10 @@ export const TagsFilter: FC<TagsFilterProp> = ({
                 href="#"
                 className="px-4 py-2 rounded-full text-gray-200 bg-gray-600 border border-gray-300 font-semibold text-sm inline-flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease"
                 onClick={() => handleRemoveTag(tag.id)}
-                key={tag.attributes.id}
+                key={tag.id}
                 iconAfter={<CloseCross />}
               >
-                {tag.attributes.name}
+                {tag.name}
               </Badge>
             );
           })}
@@ -97,9 +97,9 @@ export const TagsFilter: FC<TagsFilterProp> = ({
                   className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
                   onClick={() => handleAddTag(tag.id)}
                 >
-                  {tag.attributes.name}
+                  {tag.name}
                   <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
-                    {tag.attributes.count}
+                    {tag.count}
                   </span>
                 </Badge>
               );

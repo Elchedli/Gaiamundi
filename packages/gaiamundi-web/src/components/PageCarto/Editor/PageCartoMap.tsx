@@ -19,10 +19,10 @@ export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   const { map } = usePageCarto();
-  const geoJson = map?.data.attributes.geoJSON.data as ApiData<UploadedFile>;
+  const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
-    queryFn: async () => getGeoJson(geoJson),
+    queryFn: async () => getGeoJson(geoJson as ApiData<UploadedFile>),
     // The query will not execute until the userId exists
     enabled: !!geoJson,
   });

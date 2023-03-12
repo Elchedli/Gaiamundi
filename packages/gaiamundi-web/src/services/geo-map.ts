@@ -14,7 +14,7 @@ export const uploadGeoJson = async (file: File) => {
 
 export const getGeoJson = async (geoJSON: ApiData<UploadedFile>) => {
   return await strapi.request
-    .get<void, any>(geoJSON.attributes.url)
+    .get<void, any>(geoJSON.url)
     .catch(({ error }: ApiErrorResponse) => {
       throw error;
     });

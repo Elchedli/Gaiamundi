@@ -45,11 +45,9 @@ describe('PageCartoList', () => {
   test('Renders page carto items when there is data', () => {
     const pageCartos: ApiCollection<PageCarto> = {
       data: Array.from({ length: 2 }, (_, index) => ({
+        ...mockPageCartoData,
         id: index + 1,
-        attributes: {
-          ...mockPageCartoData.attributes,
-          name: `Test pageCarto ${index + 1}`,
-        },
+        name: `Test pageCarto ${index + 1}`,
       })),
       meta: {
         pagination: {
@@ -67,18 +65,16 @@ describe('PageCartoList', () => {
       </Router>
     );
     pageCartos.data.forEach((pageCarto) => {
-      expect(getByText(pageCarto.attributes.name)).toBeInTheDocument();
+      expect(getByText(pageCarto.name)).toBeInTheDocument();
     });
   });
 
   test('Renders pagination when there is data', () => {
     const pageCartos = {
       data: Array.from({ length: 12 }, (_, index) => ({
+        ...mockPageCartoData,
         id: index + 1,
-        attributes: {
-          ...mockPageCartoData.attributes,
-          name: `Test pageCarto ${index + 1}`,
-        },
+        name: `Test pageCarto ${index + 1}`,
       })),
       meta: {
         pagination: {
