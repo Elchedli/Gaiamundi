@@ -4,7 +4,8 @@
   "info": {
     "singularName": "indicator",
     "pluralName": "indicators",
-    "displayName": "Indicator"
+    "displayName": "Indicator",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -29,6 +30,15 @@
       "relation": "manyToOne",
       "target": "api::page-carto.page-carto",
       "inversedBy": "indicators"
+    },
+    "equation": {
+      "type": "string",
+      "required": true
+    },
+    "variables": {
+      "type": "component",
+      "repeatable": true,
+      "component": "data.variables"
     }
   }
 }
