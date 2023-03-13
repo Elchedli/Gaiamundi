@@ -1,6 +1,7 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
+import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
 import { FC, useCallback, useRef } from 'react';
 import { useQuery } from 'react-query';
@@ -95,7 +96,7 @@ export const PageCartoMap: FC = () => {
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
             geoJson={data}
-            data={data.features.map((feature: any, idx: number) => {
+            data={data.features.map((feature: Feature, idx: number) => {
               return {
                 admin: feature.properties?.admin,
                 value: idx,
