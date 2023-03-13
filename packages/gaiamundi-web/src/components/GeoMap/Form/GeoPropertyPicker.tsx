@@ -56,6 +56,7 @@ const GeoPropertyPicker = React.forwardRef<
           } as GeoProperty)
       );
     onChange(selected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGeoProperties, selectedGeoCode]);
 
   const columns: DataGridColumn<GeoProperty>[] = [
