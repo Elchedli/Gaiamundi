@@ -44,8 +44,8 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
     },
     onSuccess: (_response, formData) => {
       addToast({
-        title: 'Jeu de données importé',
-        description: `Votre jeu de données a été crée avec succès`,
+        title: 'Indicateur crée',
+        description: `Votre indicateur a été crée avec succès`,
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['page-carto', pageCartoId] });
@@ -58,7 +58,10 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
   };
 
   return (
-    <div className="p-4 bg-slate-100 border border-slate-300 rounded shadow-xl">
+    <div
+      className="p-4 bg-slate-100 border border-slate-300 rounded shadow-xl"
+      data-testid="indicator-form"
+    >
       <form onSubmit={handleSubmit(onSubmitForm)}>
         {isError && <ApiErrorAlert error={error as ApiError} />}
         <div className="flex flex-row">
@@ -86,6 +89,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
             <div className="mt-3">
               <Label htmlFor="name">Nom</Label>
               <TextInput
+                data-testid="name-input"
                 id="name"
                 className="w-full"
                 {...register('name', {
@@ -101,6 +105,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
             <div className="mt-3">
               <Label htmlFor="name">Description</Label>
               <TextAreaInput
+                data-testid="description-input"
                 id="description"
                 {...register('description', {
                   required: `Veuillez saisir la description`,
@@ -134,6 +139,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
             <div className="mt-3">
               <Label htmlFor="origin">Source</Label>
               <TextInput
+                data-testid="source-input"
                 id="source"
                 className="w-full"
                 {...register('source', {
@@ -149,6 +155,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
             <div className="mt-3">
               <Label htmlFor="origin">Validity</Label>
               <TextInput
+                data-testid="validity-input"
                 id="validity"
                 className="w-full"
                 {...register('validity', {
@@ -163,6 +170,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
             </div>
             <div className="flex justify-end mt-3">
               <Button
+                data-testid="submit-button"
                 type="submit"
                 size="lg"
                 isLoading={isLoading}

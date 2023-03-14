@@ -3,9 +3,9 @@ import { DataFragment } from 'interfaces/data-fragment';
 import { Dataset } from 'interfaces/dataset';
 import { UploadedFile } from 'interfaces/file';
 import { GeoMap } from 'interfaces/geo-map';
+import { Indicator } from 'interfaces/indicator';
 import { PageCarto, Tag } from 'interfaces/page-carto';
 import { User } from 'interfaces/user';
-
 import mockMapJson from './map.json';
 
 export const mockMapPath = mockMapJson;
@@ -173,6 +173,31 @@ export const mockDataFragments: ApiData<DataFragment>[] = [
   },
 ];
 
+export const indicatorsMockData: ApiData<Indicator>[] = [
+  {
+    id: 4,
+    name: 'mockIndicator1',
+    description: 'This is a mock indicator',
+    source: 'mock',
+    validity: 2,
+    created_at: '2023-03-14T10:06:41.979Z',
+    updated_at: '2023-03-14T10:06:41.979Z',
+    equation: 'A+2',
+    variables: [],
+  },
+  {
+    id: 5,
+    name: 'mockIndicator2',
+    description: 'This is a mock indicator',
+    source: 'mock',
+    validity: 4,
+    variables: [],
+    created_at: '2023-03-14T10:12:37.285Z',
+    updated_at: '2023-03-14T10:12:37.285Z',
+    equation: 'A*2',
+  },
+];
+
 export const mockPageCartoData: ApiData<PageCarto> = {
   id: 1,
   name: 'Page Carto 1',
@@ -180,9 +205,9 @@ export const mockPageCartoData: ApiData<PageCarto> = {
   tags: mockTags,
   map: mockGeoMap,
   cover: mockCover,
+  indicators: indicatorsMockData,
   html: '<p>Test HTML</p>',
   data_fragments: mockDataFragments,
-  indicators: [],
   created_at: '2022-02-07T00:00:00.000Z',
   updated_at: '2022-02-07T00:00:00.000Z',
 };
