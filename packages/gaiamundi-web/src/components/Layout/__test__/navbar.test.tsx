@@ -21,7 +21,7 @@ describe('Navbar', () => {
       </Router>
     );
 
-    const loginButtons = getByTestId('loginButtons').childNodes;
+    const loginButtons = getByTestId('login-buttons').childNodes;
     expect(loginButtons[0]).toHaveAttribute('href', '/login');
     expect(loginButtons[1]).toHaveAttribute('href', '/signup');
   });

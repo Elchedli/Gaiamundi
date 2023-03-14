@@ -56,7 +56,7 @@ const anonymousMenuItems = [
 
 const AuthSidebarMenu = (): JSX.Element => {
   return (
-    <div data-testid="loginButtons">
+    <div data-testid="login-buttons">
       <Link to="/login">
         <Button
           color="lime"
