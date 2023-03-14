@@ -90,7 +90,7 @@ export const PageCartoUserList = ({
       {!response || response.data.length === 0 ? (
         <Alert
           type="info"
-          className="bg-transparent border-transparent w-fit grid justify-center items-center"
+          className="bg-transparent border-transparent w-full grid justify-center items-center"
         >
           <div data-testid="error-message">Aucun contenu à afficher.</div>
         </Alert>
