@@ -31,9 +31,9 @@ export const Badge: FC<BadgeProps> = ({
   );
 
   return href ? (
-    <div>
+    <a href={href}>
       <Content />
-    </div>
+    </a>
   ) : (
     <Content />
   );
