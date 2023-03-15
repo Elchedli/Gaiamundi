@@ -6,9 +6,9 @@ import { defaultFunctions, defaultVariables } from 'equation-resolver';
 import { IndicatorVariable } from 'interfaces/indicator';
 import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
 import {
-  defaultErrorHandler,
   EquationContext,
   EquationOptions,
+  defaultErrorHandler,
 } from 'react-equation';
 import { useQuery } from 'react-query';
 import { getEquations } from 'services/equation';
@@ -97,6 +97,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
           onChange={handleEquationSelect}
         />
         <TextInput
+          data-testid="equation-input"
           ref={inputRef}
           id="equation"
           className="w-full"
