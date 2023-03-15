@@ -43,7 +43,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
             <div className="mt-3">
               {tags.map((tag, index) => {
                 return (
-                  <Badge className="inline-block" href="#" key={index}>
+                  <Badge className="inline-block" key={index}>
                     {tag.name}
                   </Badge>
                 );
