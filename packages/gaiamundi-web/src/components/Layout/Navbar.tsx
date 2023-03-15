@@ -117,6 +117,7 @@ const SideNavigation: React.FC = () => {
             className="inline-flex mx-1"
             color={'lime'}
             icon={PlusIcon}
+            data-testid="newPageCarto-button"
             onClick={() => navigate('/page-carto/create')}
           >
             Nouvelle PageCarto

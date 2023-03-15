@@ -32,14 +32,17 @@ describe('Navbar', () => {
       user: mockUser,
     }));
 
-    const { getByTestId, getAllByTestId } = render(
+    const { getByTestId } = render(
       <Router>
         <Navbar />
       </Router>
     );
 
+    //should check that the navigations buttons on the navbar are equal to 4 in homepage
     expect(getByTestId('navigations').childNodes).toHaveLength(4);
-    fireEvent.click(getAllByTestId('button-element')[0]);
+    //should click new page carto button to change navigation buttons.
+    fireEvent.click(getByTestId('newPageCarto-button'));
+    //should check that the navigations buttons on the navbar are equal to 2 in newpagecarto page
     expect(getByTestId('navigations').childNodes).toHaveLength(2);
   });
 });
