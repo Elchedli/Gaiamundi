@@ -1,19 +1,48 @@
+import { Alert } from 'components/Alert/Alert';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { SearchInputDebounce } from 'components/Inputs/DebouncedSearchInput';
-import { ApiData } from 'interfaces/api';
-import { Tag } from 'interfaces/page-carto';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { useAuth } from 'hooks/useAuth';
+import { ApiError } from 'interfaces/api';
+import { useQuery } from 'react-query';
+import { getAllTagsByOwner } from 'services/tag';
 import { TagsFilter } from './TagsFilter';
 
 interface FilterBarProps {
   onSearchKeywordChange: (name: string) => void;
   onTagChange: (id: number[]) => void;
-  tags: ApiData<Tag>[];
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
   onSearchKeywordChange,
   onTagChange,
-  tags: response,
 }) => {
+  const { user } = useAuth();
+
+  const {
+    data: response,
+    isError,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ['tags', user?.id],
+    queryFn: async () => getAllTagsByOwner(user?.id || 0),
+  });
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+
+  if (isError) {
+    return <ApiErrorAlert error={error as ApiError} />;
+  }
+
+  if (!response || response.data.length === 0) {
+    return (
+      <Alert type="info" className="grid h-fit justify-center items-center">
+        <div data-testid="error-message">Aucun tag n&apos;a été trouvé !</div>
+      </Alert>
+    );
+  }
   return (
     <div className="w-full">
       <SearchInputDebounce
@@ -24,7 +53,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         onDebouncedChange={onSearchKeywordChange}
       />
 
-      <TagsFilter tags={response} onChange={onTagChange} />
+      <TagsFilter tags={response.data} onChange={onTagChange} />
     </div>
   );
 };
