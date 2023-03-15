@@ -15,7 +15,7 @@ describe('FilterBar', () => {
   test('renders without error', () => {
     render(<FilterBar {...props} />);
   });
-  test('passes onSearchKeywordChange prop', async () => {
+  it('passes onSearchKeywordChange prop', async () => {
     const { getByPlaceholderText } = render(<FilterBar {...props} />);
     const input = getByPlaceholderText('Recherche ...');
     expect(input).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('FilterBar', () => {
     expect(props.onSearchKeywordChange).toHaveBeenCalled();
   });
 
-  test('passes onTagChange prop', () => {
+  it('passes onTagChange prop', () => {
     const { getByText } = render(<FilterBar {...props} />);
     const tag1 = getByText('Tag A');
     const tag2 = getByText('Tag B');
