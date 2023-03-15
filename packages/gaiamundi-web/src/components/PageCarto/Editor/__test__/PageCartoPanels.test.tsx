@@ -45,7 +45,7 @@ describe('PageCartoPanels', () => {
       fireEvent.click(tabs[2]);
 
       expect(tabDataset).not.toBeInTheDocument();
-      expect(getByTestId('import-indicator')).toBeInTheDocument();
+      expect(getByTestId('create-indicator')).toBeInTheDocument();
     });
   });
 });
