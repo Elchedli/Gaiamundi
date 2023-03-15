@@ -20,6 +20,26 @@ jest.mock('services/page-carto', () => {
   };
 });
 
+jest.mock('services/equation', () => {
+  return {
+    getEquations() {
+      return Promise.resolve({
+        data: [],
+      });
+    },
+  };
+});
+
+jest.mock('services/indicator', () => {
+  return {
+    addIndicatorToPageCarto() {
+      return Promise.resolve({
+        data: [],
+      });
+    },
+  };
+});
+
 describe('Indicator form tests', () => {
   afterAll(() => {
     jest.clearAllMocks();
@@ -46,6 +66,7 @@ describe('Indicator form tests', () => {
     });
   });
 
+  // Fill out the form fields and check if the submit was called
   it('should function properly', async () => {
     const queryClient = new QueryClient();
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -66,6 +87,7 @@ describe('Indicator form tests', () => {
         </PageCartoProvider>
       </QueryClientProvider>
     );
+
     await waitFor(async () => {
       expect(getByTestId('indicator-form')).toBeInTheDocument();
       const nameInput = getByTestId('name-input');
@@ -75,13 +97,12 @@ describe('Indicator form tests', () => {
       const validityInput = getByTestId('validity-input');
       const submitButton = getByTestId('submit-button');
       const checkboxes = getAllByRole('checkbox');
+
       fireEvent.change(nameInput, { target: { value: 'mockIndicator' } });
       fireEvent.change(descriptionInput, {
         target: { value: 'this is a mock indicator' },
       });
-
       fireEvent.click(checkboxes[0]);
-
       fireEvent.change(equationInput, {
         target: { value: 'A+2' },
       });
@@ -98,6 +119,7 @@ describe('Indicator form tests', () => {
       expect(equationInput).toHaveValue('A+2');
       expect(sourceInput).toHaveValue('france-geojson');
       expect(validityInput).toHaveValue('2');
+
       await waitFor(() => {
         act(() => {
           fireEvent.click(submitButton);
