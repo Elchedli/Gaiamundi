@@ -56,7 +56,7 @@ const anonymousMenuItems = [
 
 const AuthSidebarMenu = (): JSX.Element => {
   return (
-    <div>
+    <div data-testid="login-buttons">
       <Link to="/login">
         <Button
           color="lime"
@@ -88,7 +88,7 @@ const NavbarMenu: React.FC<{ isInverted: boolean }> = ({ isInverted }) => {
   const menuItems =
     isAuthenticated && !isHomePage ? loggedInMenuItems : anonymousMenuItems;
   return (
-    <div className="flex items-baseline ml-10">
+    <div data-testid="navigations" className="flex items-baseline ml-10">
       {menuItems.map(({ title, href }) => {
         return (
           <NavbarMenuItem
@@ -117,6 +117,7 @@ const SideNavigation: React.FC = () => {
             className="inline-flex mx-1"
             color={'lime'}
             icon={PlusIcon}
+            data-testid="newPageCarto-button"
             onClick={() => navigate('/page-carto/create')}
           >
             Nouvelle PageCarto
