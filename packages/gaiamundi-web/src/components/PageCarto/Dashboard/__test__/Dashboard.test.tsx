@@ -18,39 +18,43 @@ describe('Dashboard', () => {
     }));
   });
 
-  it('renders loading message when loading', () => {
-    (useQuery as jest.Mock).mockReturnValueOnce({
-      data: null,
+  it('should render a loading message when loading', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
       isError: false,
       error: null,
       isLoading: true,
-    });
+    }));
 
     const { getByTestId } = render(<Dashboard />);
 
-    expect(getByTestId('loading-message')).toBeInTheDocument();
+    expect(
+      getByTestId('page-carto-user-list-loading-message')
+    ).toBeInTheDocument();
   });
 
-  it('renders error message when there is an error', () => {
+  it('should render an error message when one occurs', () => {
     const mockError = {
       message: 'An error occurred',
       statusCode: 500,
     };
 
-    (useQuery as jest.Mock).mockReturnValueOnce({
-      data: null,
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
       isError: true,
       error: mockError,
       isLoading: false,
-    });
+    }));
 
-    const { getByText } = render(<Dashboard />);
+    const { getByTestId } = render(<Dashboard />);
 
-    expect(getByText(mockError.message)).toBeInTheDocument();
+    expect(
+      getByTestId('pagecarto-user-list-error-message')
+    ).toBeInTheDocument();
   });
 
-  it('renders message when there is no data', () => {
-    (useQuery as jest.Mock).mockReturnValueOnce({
+  it('should render an error message when there is no data', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
       data: {
         data: [],
         meta: {
@@ -62,10 +66,12 @@ describe('Dashboard', () => {
       isError: false,
       error: null,
       isLoading: false,
-    });
+    }));
 
     const { getByTestId } = render(<Dashboard />);
 
-    expect(getByTestId('error-message')).toBeInTheDocument();
+    expect(
+      getByTestId('pagecarto-user-list-error-message')
+    ).toBeInTheDocument();
   });
 });

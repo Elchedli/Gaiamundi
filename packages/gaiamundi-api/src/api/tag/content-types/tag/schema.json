@@ -4,7 +4,8 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "Tag"
+    "displayName": "Tag",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -19,7 +20,7 @@
     "type": {
       "type": "enumeration",
       "enum": [
-        "Géographie",
+        "Géographique",
         "Thématique"
       ],
       "required": true

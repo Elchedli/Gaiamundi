@@ -29,7 +29,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     queryFn: async () => getAllTagsByOwner(user?.id || 0),
   });
   if (isLoading) {
-    return <LoadingMessage />;
+    return <LoadingMessage data-testid="filter-bar-loading-message" />;
   }
 
   if (isError) {
@@ -39,7 +39,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   if (!response || response.data.length === 0) {
     return (
       <Alert type="info" className="grid h-fit justify-center items-center">
-        <div data-testid="error-message">Aucun tag n&apos;a été trouvé !</div>
+        <div data-testid="filter-bar-error-message">
+          Aucun tag n&apos;a été trouvé !
+        </div>
       </Alert>
     );
   }

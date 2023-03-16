@@ -1,9 +1,9 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockDataFragmentsApiCollection } from 'utils/mocks/data';
+import { mockDataFragments } from 'utils/mocks/data';
 import DatasetColumnPicker from '../DatasetColumnPicker';
 
-const mockColumns = mockDataFragmentsApiCollection.data[0].attributes.columns;
+const mockColumns = mockDataFragments[0].columns;
 
 describe('DatasetColumnPicker', () => {
   window.HTMLElement.prototype.scrollIntoView = jest.fn();

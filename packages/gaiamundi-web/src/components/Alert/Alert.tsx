@@ -1,6 +1,6 @@
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
-import { XCircleIcon } from '@heroicons/react/24/solid';
 
 export interface FlowbiteAlertTheme {
   base: string;
@@ -46,6 +46,7 @@ export const Alert: FC<AlertProps> = ({
   onDismiss,
   rounded = true,
   className,
+  ...rest
 }) => {
   const color = ALERT_COLOR_MAP[type];
   const bgColor = `bg-${color}-200`;
@@ -62,6 +63,7 @@ export const Alert: FC<AlertProps> = ({
         className
       )}
       role="alert"
+      {...rest}
     >
       <div className="flex flex-row">
         {Icon && (

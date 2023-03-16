@@ -62,7 +62,12 @@ export const PageCartoMap: FC = () => {
   };
 
   if (isLoading || isIdle) {
-    return <LoadingMessage label={'Chargement de la carte ...'} />;
+    return (
+      <LoadingMessage
+        label={'Chargement de la carte ...'}
+        data-testid="loading-message"
+      />
+    );
   }
 
   if (isError) {

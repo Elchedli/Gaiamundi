@@ -1,18 +1,33 @@
 import { fireEvent, render } from '@testing-library/react';
 import { FilterBar } from 'components/PageCarto/Dashboard/FilterBar';
-import { mockTags } from 'utils/mocks/data';
+import { useAuth } from 'hooks/useAuth';
+import { useQuery } from 'react-query';
+import { mockTags, mockUser } from 'utils/mocks/data';
 
 const props = {
   onSearchKeywordChange: jest.fn(),
   onTagChange: jest.fn(),
-  tags: mockTags,
 };
 
+jest.mock('hooks/useAuth');
+jest.mock('react-query');
+
 describe('FilterBar', () => {
-  test('renders without error', () => {
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      isAuthenticated: true,
+      user: mockUser,
+    }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [...mockTags] },
+    }));
+  });
+
+  test('should render without error', () => {
     render(<FilterBar {...props} />);
   });
-  test('passes onSearchKeywordChange prop', async () => {
+
+  test('should pass the onSearchKeywordChange prop', async () => {
     const { getByPlaceholderText } = render(<FilterBar {...props} />);
     const input = getByPlaceholderText('Recherche ...');
     expect(input).toBeInTheDocument();
@@ -21,7 +36,7 @@ describe('FilterBar', () => {
     expect(props.onSearchKeywordChange).toHaveBeenCalled();
   });
 
-  test('passes onTagChange prop', () => {
+  test('should pass the onTagChange prop', () => {
     const { getByText } = render(<FilterBar {...props} />);
     const tag1 = getByText('Tag A');
     const tag2 = getByText('Tag B');
