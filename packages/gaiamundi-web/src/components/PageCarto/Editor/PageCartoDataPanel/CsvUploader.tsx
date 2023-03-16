@@ -78,6 +78,7 @@ export const CsvUploader = forwardRef<HTMLDivElement, CsvUploaderProps>(
         });
       }
     };
+
     const handleCancel = () => {
       setFile(undefined);
       setErrors('');
