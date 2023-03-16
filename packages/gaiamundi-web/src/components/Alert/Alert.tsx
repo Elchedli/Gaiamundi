@@ -36,7 +36,6 @@ export interface AlertProps
   icon?: FC<ComponentProps<'svg'>>;
   onDismiss?: boolean | (() => void);
   rounded?: boolean;
-  dataTestId?: string;
 }
 
 export const Alert: FC<AlertProps> = ({
@@ -47,7 +46,7 @@ export const Alert: FC<AlertProps> = ({
   onDismiss,
   rounded = true,
   className,
-  dataTestId,
+  ...rest
 }) => {
   const color = ALERT_COLOR_MAP[type];
   const bgColor = `bg-${color}-200`;
@@ -64,7 +63,7 @@ export const Alert: FC<AlertProps> = ({
         className
       )}
       role="alert"
-      data-testid={dataTestId}
+      {...rest}
     >
       <div className="flex flex-row">
         {Icon && (

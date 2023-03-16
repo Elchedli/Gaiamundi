@@ -65,9 +65,9 @@ describe('PageCartoMap', () => {
         </PageCartoProvider>
       </QueryClientProvider>
     );
-
-    const loadingMessage = getByTestId('loading-message');
-    expect(loadingMessage).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByTestId('loading-message')).toBeInTheDocument();
+    });
   });
 
   it('renders map once geojson data is fetched', async () => {

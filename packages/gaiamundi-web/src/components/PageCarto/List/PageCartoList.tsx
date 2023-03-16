@@ -26,7 +26,7 @@ export const PageCartoList = () => {
   });
 
   if (isLoading) {
-    return <LoadingMessage />;
+    return <LoadingMessage data-testid="loading-message" />;
   }
 
   if (isError) {

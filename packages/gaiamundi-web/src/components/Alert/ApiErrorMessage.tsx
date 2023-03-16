@@ -5,8 +5,7 @@ import { Alert } from './Alert';
 
 export const ApiErrorAlert: FC<{
   error: ApiError | Error | undefined;
-  dataTestId?: string;
-}> = ({ error, dataTestId = 'error-message' }) => {
+}> = ({ error, ...rest }) => {
   if (!error) {
     return null;
   }
@@ -18,7 +17,7 @@ export const ApiErrorAlert: FC<{
       additionalContent={
         error && 'description' in error ? error.description : ''
       }
-      dataTestId={dataTestId}
+      {...rest}
     >
       {'message' in error ? error.message : JSON.stringify(error)}
       {'details' in error && (

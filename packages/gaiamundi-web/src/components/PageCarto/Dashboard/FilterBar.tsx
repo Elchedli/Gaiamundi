@@ -29,7 +29,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     queryFn: async () => getAllTagsByOwner(user?.id || 0),
   });
   if (isLoading) {
-    return <LoadingMessage dataTestId="filter-bar-loading-message" />;
+    return <LoadingMessage data-testid="filter-bar-loading-message" />;
   }
 
   if (isError) {

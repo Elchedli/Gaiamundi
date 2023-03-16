@@ -4,6 +4,7 @@ exports[`PageCartoUserList should render error message when one occcurs 1`] = `
 <div>
   <div
     class="p-3 my-3 rounded border border-red-500 bg-red-200 text-red-700"
+    data-testid="pagecarto-user-list-error-message"
     role="alert"
   >
     <div

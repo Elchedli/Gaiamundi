@@ -78,14 +78,16 @@ export const PageCartoUserList = ({
   });
 
   if (isLoading) {
-    return <LoadingMessage dataTestId="page-carto-user-list-loading-message" />;
+    return (
+      <LoadingMessage data-testid="page-carto-user-list-loading-message" />
+    );
   }
 
   if (isError) {
     return (
       <ApiErrorAlert
         error={error as ApiError}
-        dataTestId="pagecarto-user-list-error-message"
+        data-testid="pagecarto-user-list-error-message"
       />
     );
   }
