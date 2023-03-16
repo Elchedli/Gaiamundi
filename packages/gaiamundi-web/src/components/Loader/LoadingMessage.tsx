@@ -2,15 +2,17 @@ import LoadingSpinner from 'components/Icons/LoadingSpinner';
 
 interface LoadingMessageProps {
   label?: string;
+  dataTestId?: string;
 }
 
 export const LoadingMessage = ({
   label = 'Loading ...',
+  dataTestId = 'loading-message',
 }: LoadingMessageProps): JSX.Element => {
   return (
     <div
       className="flex grow justify-center items-center"
-      data-testid="loading-message"
+      data-testid={dataTestId}
     >
       <div className="flex flex-col">
         <LoadingSpinner fill="#88CDD3" width="100" className="m-auto" />

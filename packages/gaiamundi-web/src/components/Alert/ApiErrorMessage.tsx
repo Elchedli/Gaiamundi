@@ -3,9 +3,10 @@ import { ApiError } from 'interfaces/api';
 import { FC } from 'react';
 import { Alert } from './Alert';
 
-export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
-  error,
-}) => {
+export const ApiErrorAlert: FC<{
+  error: ApiError | Error | undefined;
+  dataTestId?: string;
+}> = ({ error, dataTestId = 'error-message' }) => {
   if (!error) {
     return null;
   }
@@ -17,6 +18,7 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
       additionalContent={
         error && 'description' in error ? error.description : ''
       }
+      dataTestId={dataTestId}
     >
       {'message' in error ? error.message : JSON.stringify(error)}
       {'details' in error && (

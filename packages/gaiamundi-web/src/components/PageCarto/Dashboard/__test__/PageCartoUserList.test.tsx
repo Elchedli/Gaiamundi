@@ -22,7 +22,7 @@ describe('PageCartoUserList', () => {
     jest.clearAllMocks();
   });
 
-  it('renders loading message when loading', () => {
+  it('should render loading message when loading', () => {
     (useQuery as jest.Mock).mockReturnValueOnce({
       data: null,
       isError: false,
@@ -34,11 +34,13 @@ describe('PageCartoUserList', () => {
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
-    expect(getByTestId('loading-message')).toBeInTheDocument();
+    expect(
+      getByTestId('page-carto-user-list-loading-message')
+    ).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
-  it('renders error message when there is an error', () => {
+  it('should render error message when one occcurs', () => {
     const mockError = {
       message: 'An error occurred',
       statusCode: 500,
@@ -59,7 +61,7 @@ describe('PageCartoUserList', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('renders message when there is no data', () => {
+  it('should render error message when there is no data', () => {
     (useQuery as jest.Mock).mockReturnValueOnce({
       data: {
         data: [],
@@ -78,11 +80,13 @@ describe('PageCartoUserList', () => {
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
-    expect(getByTestId('error-message')).toBeInTheDocument();
+    expect(
+      getByTestId('pagecarto-user-list-error-message')
+    ).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
-  it('renders pages when there is data', () => {
+  it('should render pages when there is data', () => {
     const pageCartos: ApiCollection<PageCarto> = {
       data: Array.from({ length: 2 }, (_, index) => ({
         ...mockPageCartoData,
