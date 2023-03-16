@@ -10,9 +10,19 @@ const props = {
   onTagChange: jest.fn(),
 };
 
+jest.mock('react-query', () => ({
+  useQuery: jest.fn(),
+}));
+
 jest.mock('hooks/useAuth');
 describe('FilterBar', () => {
-  test('renders without error', () => {
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      isAuthenticated: true,
+      user: mockUser,
+    }));
+  });
+  it('renders without error', () => {
     render(<FilterBar {...props} />);
   });
   it('passes onSearchKeywordChange prop', async () => {
@@ -34,13 +44,6 @@ describe('FilterBar', () => {
     fireEvent.click(getByText('Tag A'));
     fireEvent.click(getByText('Tag B'));
     expect(props.onTagChange).toHaveBeenCalledWith([1, 2]);
-  });
-
-  beforeEach(() => {
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      isAuthenticated: true,
-      user: mockUser,
-    }));
   });
 
   it('renders loading message when loading', () => {
