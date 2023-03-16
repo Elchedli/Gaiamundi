@@ -65,7 +65,7 @@ export const PageCartoMap: FC = () => {
   const geoJsonData = useMemo(() => {
     return data
       ? {
-          type: 'FeatureCollection',
+          ...data,
           features: data.features.map((feature: Feature) => {
             return rewind(feature as any, { reverse: true });
           }),
