@@ -6,6 +6,7 @@ import panzoom, { PanZoom } from 'panzoom';
 import { FC, useCallback, useRef } from 'react';
 import { useQuery } from 'react-query';
 
+import rewind from '@turf/rewind';
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
@@ -91,11 +92,16 @@ export const PageCartoMap: FC = () => {
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
-              fill: 'black',
+              fill: 'white',
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
-            geoJson={data}
+            geoJson={{
+              type: 'FeatureCollection',
+              features: data.features.map((feature: Feature) => {
+                return rewind(feature as any, { reverse: true });
+              }),
+            }}
             data={data.features.map((feature: Feature, idx: number) => {
               return {
                 admin: feature.properties?.admin,
