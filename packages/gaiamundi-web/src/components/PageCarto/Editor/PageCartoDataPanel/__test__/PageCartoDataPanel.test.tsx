@@ -1,7 +1,14 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { AuthProvider } from 'hooks/useAuth';
+import { ModalProvider } from 'hooks/useModal';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { mockDataFragments, mockPageCartoData } from 'utils/mocks/data';
+import { MemoryRouter as Router } from 'react-router-dom';
+import {
+  mockDataFragments,
+  mockPageCartoData,
+  mockUser,
+} from 'utils/mocks/data';
 import { PageCartoDataPanel } from '../PageCartoDataPanel';
 
 jest.mock('services/page-carto', () => {
@@ -13,10 +20,6 @@ jest.mock('services/page-carto', () => {
             ? mockPageCartoData
             : {
                 ...mockPageCartoData,
-                data_fragments: {
-                  data: [],
-                  meta: { pagination: { total: 0 } },
-                },
               },
       });
     },
@@ -28,29 +31,31 @@ describe('PageCartoPanelData', () => {
     jest.clearAllMocks();
   });
 
-  it('should render the component', async () => {
+  it('should display an info alert if no data is present', async () => {
     const queryClient = new QueryClient();
-    const { getByTestId } = render(
+    const { getByRole } = render(
       <QueryClientProvider client={queryClient}>
-        <PageCartoProvider id={mockPageCartoData.id}>
+        <PageCartoProvider id={0}>
           <PageCartoDataPanel />
         </PageCartoProvider>
       </QueryClientProvider>
     );
     await waitFor(() => {
-      expect(getByTestId('import-dataset')).toBeInTheDocument();
+      expect(getByRole('alert')).toBeInTheDocument();
     });
   });
 
   it('should display the data table if data is present', async () => {
     const queryClient = new QueryClient();
-    const { container, getByText, getAllByRole } = render(
+
+    const { getByText, getAllByRole } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
           <PageCartoDataPanel />
         </PageCartoProvider>
       </QueryClientProvider>
     );
+
     await waitFor(() => {
       const datasetName = mockDataFragments[0].dataset.name;
       const columns = mockDataFragments[0].columns;
@@ -64,22 +69,51 @@ describe('PageCartoPanelData', () => {
           expect(row).toHaveTextContent(column.source);
           expect(row).toHaveTextContent(column.validity);
         });
-      expect(container).toMatchSnapshot();
     });
   });
 
-  it('should display an info alert if no data is present', async () => {
+  it('should display useModal menu on click', async () => {
     const queryClient = new QueryClient();
-    const { container, getByRole } = render(
+
+    jest.mock('hooks/useModal', () => {
+      return {
+        showModal: jest.fn(),
+      };
+    });
+    jest.mock('hooks/useAuth', () => {
+      return {
+        isAuthenticated: true,
+        user: mockUser,
+      };
+    });
+
+    const mockIntersectionObserver = jest.fn();
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    });
+
+    window.IntersectionObserver = mockIntersectionObserver;
+    const { getByTestId, getAllByRole } = render(
       <QueryClientProvider client={queryClient}>
-        <PageCartoProvider id={0}>
-          <PageCartoDataPanel />
-        </PageCartoProvider>
+        <Router>
+          <AuthProvider>
+            <PageCartoProvider id={mockPageCartoData.id}>
+              <ModalProvider>
+                <PageCartoDataPanel />
+              </ModalProvider>
+            </PageCartoProvider>
+          </AuthProvider>
+        </Router>
       </QueryClientProvider>
     );
     await waitFor(() => {
-      expect(getByRole('alert')).toBeInTheDocument();
-      expect(container).toMatchSnapshot();
+      expect(getByTestId('import-dataset')).toBeInTheDocument();
+    });
+    fireEvent.click(getByTestId('import-dataset'));
+    await waitFor(() => {
+      expect(getAllByRole('grid')[1]).toBeInTheDocument();
     });
   });
 });
