@@ -4,6 +4,7 @@ import { useAuth } from 'hooks/useAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockUser } from 'utils/mocks/data';
 import { CsvUploader } from '../CsvUploader';
+
 jest.mock('hooks/useAuth');
 
 jest.mock('services/page-carto', () => {
@@ -37,9 +38,6 @@ describe('CsvUploader', () => {
 
   it('should upload a CSV file and click on cancel button when upload is successful', async () => {
     const file = new File(['a,b,c\n1,2,3'], 'file.csv', { type: 'text/csv' });
-    // mockAxios.post.mockImplementationOnce(() =>
-    //   Promise.resolve({ data: file })
-    // );
     const { container, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <CsvUploader
@@ -50,12 +48,16 @@ describe('CsvUploader', () => {
         />
       </QueryClientProvider>
     );
+
     const fileInput = getByTestId('hidden-file-input') as HTMLInputElement;
+
     expect(fileInput).toBeInTheDocument();
+
     //upload file so we can open the mini page that contains a name and a red cancel button
     userEvent.upload(fileInput, file);
     expect(fileInput.files).toHaveLength(1);
     expect(fileInput?.files?.item(0)).toStrictEqual(file);
+
     await waitFor(() => {
       // wait for the file thumbnail when the upload and criteria are successful
       const loadedFilePage = getByTestId('file-thumbnail');
