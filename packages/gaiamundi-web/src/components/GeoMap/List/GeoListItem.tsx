@@ -2,15 +2,15 @@ import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
 import { getGeoMapThumbnailUrlById } from 'services/geo-map';
 
-const GeoListItem: React.FC<ApiData<GeoMap>> = ({
+export const GeoListItem = ({
   yearValidity,
   name,
   source,
   license,
   geoJSON,
-}) => {
+}: ApiData<GeoMap>) => {
   return (
-    <div className="group border pb-2 cursor-pointer">
+    <div className="group pb-2 cursor-pointer">
       <div className="bg-slate-300">
         <img
           src={getGeoMapThumbnailUrlById(geoJSON.id)}
@@ -32,5 +32,3 @@ const GeoListItem: React.FC<ApiData<GeoMap>> = ({
     </div>
   );
 };
-
-export default GeoListItem;

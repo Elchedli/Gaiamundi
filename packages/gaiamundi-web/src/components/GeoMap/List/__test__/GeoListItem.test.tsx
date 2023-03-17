@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import GeoListItem from 'components/GeoMap/List/GeoListItem';
+import { GeoListItem } from 'components/GeoMap/List/GeoListItem';
 import config from 'config';
 import { mockGeoMapData } from 'utils/mocks/data';
 
