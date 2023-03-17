@@ -36,5 +36,5 @@ test('if we dont have herf, we dont have tage link', () => {
   const herf = container.getAttribute('herf');
   const link = container.querySelector('a');
   expect(herf).toBe(null);
-  expect(link).not.toBeInTheDocument();
+  expect(link).not.toBeInTheDocument(); /////
 });
