@@ -45,12 +45,15 @@ export const validateGeoJsonFile = async (file: File): Promise<GeoJSON> => {
     const json = JSON.parse(content);
     if (json.type !== 'FeatureCollection' || !Array.isArray(json.features)) {
       throw new Error(
-        `Le format GeoJSON est invalide (FeatureCollection, features).`
+        `Il doit être de type "FeatureCollection" et contenir un tableau des features`
       );
     }
     return json as GeoJSON;
-  } catch (e) {
-    throw new Error(`Impossible de valider le format GeoJSON du fichier.`);
+  } catch (e: unknown) {
+    throw new Error(
+      `Impossible de valider le format du fichier geojson:
+      ${(e as Error).message}`
+    );
   }
 };
 
