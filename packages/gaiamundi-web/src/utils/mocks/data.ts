@@ -10,6 +10,26 @@ import mockMapJson from './map.json';
 
 export const mockMapPath = mockMapJson;
 
+export const mockFileUpload = {
+  id: 184,
+  name: 'exampleParsing2.csv',
+  alternativeText: null,
+  caption: null,
+  width: null,
+  height: null,
+  formats: null,
+  hash: 'example_Parsing2_ce8756a044',
+  ext: '.csv',
+  mime: 'text/csv',
+  size: 0.05,
+  url: '/uploads/example_Parsing2_ce8756a044.csv',
+  previewUrl: null,
+  provider: 'local',
+  provider_metadata: null,
+  createdAt: '2023-03-16T18:20:09.476Z',
+  updatedAt: '2023-03-16T18:20:09.476Z',
+};
+
 export const mockUser: User = {
   id: 1,
   username: 'testuser',
