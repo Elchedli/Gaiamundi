@@ -1,17 +1,20 @@
 import classNames from 'classnames';
+import { Card } from 'components/Card/Card';
 import { Pagination } from 'components/Pagination/Pagination';
 import { useAuth } from 'hooks/useAuth';
+import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
-import GeoListItem from './GeoListItem';
+import { GeoListItem } from './GeoListItem';
 
 export const GeoMapList = () => {
   const paginationLimit = 9;
 
   const [page, setPage] = useState(1);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedGeoMap, setSelectedGeoMap] = useState({} as ApiData<GeoMap>);
   const { user } = useAuth();
 
   const { data: response } = useQuery({
@@ -46,7 +49,6 @@ export const GeoMapList = () => {
       title: 'Toutes les cartes',
     },
   ];
-
   return (
     <div className="flex-column">
       <div
@@ -72,7 +74,15 @@ export const GeoMapList = () => {
       <div className="rounded-b-lg border border-blue-700 p-5">
         <div className="grid grid-cols-3 gap-y-10 gap-x-6">
           {response?.data.map((page) => {
-            return <GeoListItem key={page.name} {...page} />;
+            return (
+              <Card
+                key={page.id}
+                onClick={() => setSelectedGeoMap(page)}
+                selected={page.id === selectedGeoMap?.id}
+              >
+                <GeoListItem {...page} />
+              </Card>
+            );
           })}
         </div>
         <div className="flex flex-row mt-5 justify-center">
