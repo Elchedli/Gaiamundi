@@ -70,6 +70,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
+    "@turf/rewind": "^6.5.0",
     "axios": "^1.2.0",
     "classnames": "^2.3.2",
     "eazychart-css": "^0.2.1-alpha.0",

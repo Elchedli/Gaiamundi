@@ -3,9 +3,10 @@ import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useCallback, useMemo, useRef } from 'react';
 import { useQuery } from 'react-query';
 
+import rewind from '@turf/rewind';
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
@@ -61,6 +62,17 @@ export const PageCartoMap: FC = () => {
     }
   };
 
+  const geoJsonData = useMemo(() => {
+    return data
+      ? {
+          ...data,
+          features: data.features.map((feature: Feature) => {
+            return rewind(feature as any, { reverse: true });
+          }),
+        }
+      : {};
+  }, [data]);
+
   if (isLoading || isIdle) {
     return (
       <LoadingMessage
@@ -96,11 +108,11 @@ export const PageCartoMap: FC = () => {
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
-              fill: 'black',
+              fill: 'white',
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
-            geoJson={data}
+            geoJson={geoJsonData}
             data={data.features.map((feature: Feature, idx: number) => {
               return {
                 admin: feature.properties?.admin,
