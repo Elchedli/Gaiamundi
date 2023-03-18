@@ -13,8 +13,8 @@ describe('ButtonGroup', () => {
   it('should render children', () => {
     const { getByText } = render(
       <ButtonGroup>
-        <button>Button 1</button>
-        <button>Button 2</button>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
       </ButtonGroup>
     );
     expect(getByText('Button 1')).toBeInTheDocument();
@@ -35,8 +35,8 @@ describe('ButtonGroup', () => {
   it('should add the custom class if added with otherProps', () => {
     const { container } = render(
       <ButtonGroup className="testClass">
-        <button>Button 1</button>
-        <button>Button 2</button>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
       </ButtonGroup>
     );
 
