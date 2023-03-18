@@ -8,5 +8,6 @@ describe('Label', () => {
     const label = container.firstChild;
     expect(label).toHaveClass(`text-red-700`);
     expect(label).toHaveClass(`text-lg`);
+    expect(container).toMatchSnapshot();
   });
 });

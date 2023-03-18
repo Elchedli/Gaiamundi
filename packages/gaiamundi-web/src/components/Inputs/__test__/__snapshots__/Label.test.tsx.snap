@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Label renders color correctly and children classname 1`] = `
+<div>
+  <label
+    class="text-sm font-medium text-red-700 dark:text-red-500 text-lg"
+  />
+</div>
+`;
