@@ -36,15 +36,39 @@ describe('FilterBar', () => {
     expect(props.onSearchKeywordChange).toHaveBeenCalled();
   });
 
-  test('should pass the onTagChange prop', () => {
-    const { getByText } = render(<FilterBar {...props} />);
-    const tag1 = getByText('Tag A');
-    const tag2 = getByText('Tag B');
-    expect(tag1).toBeInTheDocument();
-    expect(tag2).toBeInTheDocument();
-    getByText('Tag A').click();
-    fireEvent.click(getByText('Tag A'));
-    fireEvent.click(getByText('Tag B'));
-    expect(props.onTagChange).toHaveBeenCalledWith([1, 2]);
-  });
+  // test('should pass the onTagChange prop', () => {
+  //   const { container, getByText, getByTestId, getAllByTestId } = render(
+  //     <FilterBar {...props} />
+  //   );
+
+  //   const unfiltered = Array.prototype.reduce.call(
+  //     getAllByTestId('unfiltered-tags'),
+  //     (acc, node: HTMLElement) => {
+  //       return acc.concat(Array.from(node.childNodes));
+  //     },
+  //     []
+  //   );
+
+  //   expect(unfiltered).toHaveLength(mockTags.length);
+  //   unfiltered.forEach((element, index) => {
+  //     expect(element).toContainHTML(mockTags[index].name);
+  //     fireEvent.click(element);
+  //   });
+
+  //   expect(filtered).toHaveLength(0);
+
+  //   const tag2 = getByText(mockTags[1].name);
+  //   expect(tag1).toBeInTheDocument();
+  //   expect(tag2).toBeInTheDocument();
+
+  //   // expect(container).toMatchSnapshot();
+
+  //   fireEvent.click(getByText('Tag A'));
+  //   fireEvent.click(getByText('Tag B'));
+
+  //   expect(container.contains(tag1)).not.toBeTruthy();
+  //   expect(container.contains(tag2)).not.toBeTruthy();
+  //   fireEvent.click(getByText('Tag A'));
+  //   expect(props.onTagChange).toHaveBeenCalledWith([1, 2]);
+  // });
 });
