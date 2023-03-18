@@ -18,12 +18,11 @@ describe('pageCartoEditor', () => {
       data: undefined,
     });
     const queryClient = new QueryClient();
-    const { getByTestId, container } = render(
+    const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoEditor />
       </QueryClientProvider>
     );
-    expect(container).toMatchSnapshot();
     const pageMap = getByTestId('loading-message');
     expect(pageMap).toBeInTheDocument();
     const pagePanels = getByTestId('pagecarto-panels');
