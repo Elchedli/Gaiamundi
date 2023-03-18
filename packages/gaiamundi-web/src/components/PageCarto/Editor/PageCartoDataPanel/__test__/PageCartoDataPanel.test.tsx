@@ -4,11 +4,7 @@ import { ModalProvider } from 'hooks/useModal';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter as Router } from 'react-router-dom';
-import {
-  mockDataFragments,
-  mockPageCartoData,
-  mockUser,
-} from 'utils/mocks/data';
+import { mockDataFragments, mockPageCartoData } from 'utils/mocks/data';
 import { PageCartoDataPanel } from '../PageCartoDataPanel';
 
 jest.mock('services/page-carto', () => {
@@ -33,6 +29,7 @@ describe('PageCartoPanelData', () => {
 
   it('should display an info alert if no data is present', async () => {
     const queryClient = new QueryClient();
+
     const { getByRole } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={0}>
@@ -40,6 +37,7 @@ describe('PageCartoPanelData', () => {
         </PageCartoProvider>
       </QueryClientProvider>
     );
+
     await waitFor(() => {
       expect(getByRole('alert')).toBeInTheDocument();
     });
@@ -74,20 +72,8 @@ describe('PageCartoPanelData', () => {
 
   it('should display useModal menu on click', async () => {
     const queryClient = new QueryClient();
-
-    jest.mock('hooks/useModal', () => {
-      return {
-        showModal: jest.fn(),
-      };
-    });
-    jest.mock('hooks/useAuth', () => {
-      return {
-        isAuthenticated: true,
-        user: mockUser,
-      };
-    });
-
     const mockIntersectionObserver = jest.fn();
+
     mockIntersectionObserver.mockReturnValue({
       observe: () => null,
       unobserve: () => null,
@@ -108,12 +94,18 @@ describe('PageCartoPanelData', () => {
         </Router>
       </QueryClientProvider>
     );
+
     await waitFor(() => {
       expect(getByTestId('import-dataset')).toBeInTheDocument();
     });
+
     fireEvent.click(getByTestId('import-dataset'));
+
     await waitFor(() => {
-      expect(getAllByRole('grid')[1]).toBeInTheDocument();
+      const gridModal = getAllByRole('grid')[1];
+      expect(gridModal).toBeInTheDocument();
+      fireEvent.click(getByTestId('hideModal-button'));
+      expect(gridModal).not.toBeInTheDocument();
     });
   });
 });
