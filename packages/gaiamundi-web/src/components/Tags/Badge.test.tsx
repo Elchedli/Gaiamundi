@@ -6,12 +6,12 @@ describe('Badge', () => {
     const link = container.querySelector('a');
     expect(link).not.toBeInTheDocument();
   });
-});
-test('if we have herf, we have tage link', () => {
-  const { container } = render(<Badge href="#home" />);
-  const link = container.querySelector('a');
-  const href = link?.getAttribute('href');
+  it('if we have herf, we have tage link', () => {
+    const { container } = render(<Badge href="#home" />);
+    const link = container.querySelector('a');
+    const href = link?.getAttribute('href');
 
-  expect(href).not.toBe(null);
-  expect(link).toBeInTheDocument();
+    expect(href).not.toBe(null);
+    expect(link).toBeInTheDocument();
+  });
 });
