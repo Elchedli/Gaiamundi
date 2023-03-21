@@ -5,14 +5,14 @@ import { useAuth } from 'hooks/useAuth';
 import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
 import { PageCartoForm } from 'interfaces/page-carto';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { GeoListItem } from './GeoListItem';
 
 export const GeoMapList = () => {
-  const { register } = useFormContext<PageCartoForm>();
+  const { setValue } = useFormContext<PageCartoForm>();
   const paginationLimit = 9;
   const [page, setPage] = useState(1);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -52,6 +52,17 @@ export const GeoMapList = () => {
     },
   ];
 
+  useEffect(() => {
+    if (selectedGeoMap.id !== undefined) {
+      setValue('mapId', selectedGeoMap.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGeoMap]);
+
+  const handleSelect = (geoMap: ApiData<GeoMap>) => {
+    setSelectedGeoMap(geoMap);
+  };
+
   return (
     <div className="flex-column">
       <div
@@ -82,8 +93,7 @@ export const GeoMapList = () => {
                 key={geoMap.id}
                 id="mapId"
                 onClick={() => {
-                  setSelectedGeoMap(geoMap);
-                  register('mapId', { value: geoMap.id });
+                  handleSelect(geoMap);
                 }}
                 selected={geoMap.id === selectedGeoMap?.id}
               >
