@@ -27,135 +27,165 @@ exports[`GeoMapList renders list of GeoListItem components and snapshot 1`] = `
         class="grid grid-cols-3 gap-y-10 gap-x-6"
       >
         <div
-          class="group border pb-2 cursor-pointer"
+          class="flex-col flex rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
+          data-testid="flowbite-card"
+          id="mapId"
         >
           <div
-            class="bg-slate-300"
+            class="flex h-full flex-col justify-center gap-4"
           >
-            <img
-              class="w-full object-contain object-center hover:opacity-75"
-              src="http://localhost:1337/api/geo-maps/thumbnail/1"
-            />
-          </div>
-          <div
-            class="p-3"
-          >
-            <h2>
-              Test Map 1
-            </h2>
             <div
-              class="text-gray-500"
+              class="group pb-2 cursor-pointer"
             >
               <div
-                class="text-sm my-1"
+                class="bg-slate-300"
               >
+                <img
+                  class="w-full object-contain object-center hover:opacity-75"
+                  src="http://localhost:1337/api/geo-maps/thumbnail/1"
+                />
+              </div>
+              <div
+                class="p-3"
+              >
+                <h2>
+                  Test Map 1
+                </h2>
                 <div
-                  class="my-1 font-bold"
+                  class="text-gray-500"
                 >
-                  Source : 
-                  Test Source
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  License : 
-                  Test License
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  Annee de validitée : 
-                  2022
+                  <div
+                    class="text-sm my-1"
+                  >
+                    <div
+                      class="my-1 font-bold"
+                    >
+                      Source : 
+                      Test Source
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      License : 
+                      Test License
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      Annee de validitée : 
+                      2022
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="group border pb-2 cursor-pointer"
+          class="flex-col flex rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
+          data-testid="flowbite-card"
+          id="mapId"
         >
           <div
-            class="bg-slate-300"
+            class="flex h-full flex-col justify-center gap-4"
           >
-            <img
-              class="w-full object-contain object-center hover:opacity-75"
-              src="http://localhost:1337/api/geo-maps/thumbnail/1"
-            />
-          </div>
-          <div
-            class="p-3"
-          >
-            <h2>
-              Test Map 2
-            </h2>
             <div
-              class="text-gray-500"
+              class="group pb-2 cursor-pointer"
             >
               <div
-                class="text-sm my-1"
+                class="bg-slate-300"
               >
+                <img
+                  class="w-full object-contain object-center hover:opacity-75"
+                  src="http://localhost:1337/api/geo-maps/thumbnail/1"
+                />
+              </div>
+              <div
+                class="p-3"
+              >
+                <h2>
+                  Test Map 2
+                </h2>
                 <div
-                  class="my-1 font-bold"
+                  class="text-gray-500"
                 >
-                  Source : 
-                  Test Source
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  License : 
-                  Test License
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  Annee de validitée : 
-                  2022
+                  <div
+                    class="text-sm my-1"
+                  >
+                    <div
+                      class="my-1 font-bold"
+                    >
+                      Source : 
+                      Test Source
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      License : 
+                      Test License
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      Annee de validitée : 
+                      2022
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="group border pb-2 cursor-pointer"
+          class="flex-col flex rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
+          data-testid="flowbite-card"
+          id="mapId"
         >
           <div
-            class="bg-slate-300"
+            class="flex h-full flex-col justify-center gap-4"
           >
-            <img
-              class="w-full object-contain object-center hover:opacity-75"
-              src="http://localhost:1337/api/geo-maps/thumbnail/1"
-            />
-          </div>
-          <div
-            class="p-3"
-          >
-            <h2>
-              Test Map 3
-            </h2>
             <div
-              class="text-gray-500"
+              class="group pb-2 cursor-pointer"
             >
               <div
-                class="text-sm my-1"
+                class="bg-slate-300"
               >
+                <img
+                  class="w-full object-contain object-center hover:opacity-75"
+                  src="http://localhost:1337/api/geo-maps/thumbnail/1"
+                />
+              </div>
+              <div
+                class="p-3"
+              >
+                <h2>
+                  Test Map 3
+                </h2>
                 <div
-                  class="my-1 font-bold"
+                  class="text-gray-500"
                 >
-                  Source : 
-                  Test Source
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  License : 
-                  Test License
-                </div>
-                <div
-                  class="text-xs mt-2"
-                >
-                  Annee de validitée : 
-                  2022
+                  <div
+                    class="text-sm my-1"
+                  >
+                    <div
+                      class="my-1 font-bold"
+                    >
+                      Source : 
+                      Test Source
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      License : 
+                      Test License
+                    </div>
+                    <div
+                      class="text-xs mt-2"
+                    >
+                      Annee de validitée : 
+                      2022
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

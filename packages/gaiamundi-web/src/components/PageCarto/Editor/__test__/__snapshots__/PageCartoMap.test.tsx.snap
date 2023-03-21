@@ -39,7 +39,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -48,7 +48,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -57,7 +57,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -66,7 +66,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -75,7 +75,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -84,7 +84,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -93,7 +93,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -102,7 +102,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -111,7 +111,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -120,7 +120,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -129,7 +129,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -138,7 +138,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -147,7 +147,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -156,7 +156,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -165,7 +165,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -174,7 +174,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -183,7 +183,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -192,7 +192,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -201,7 +201,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -210,7 +210,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -219,7 +219,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -228,7 +228,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -237,7 +237,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -246,7 +246,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -255,7 +255,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -264,7 +264,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -273,7 +273,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -282,7 +282,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -291,7 +291,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -300,7 +300,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -309,7 +309,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -318,7 +318,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -327,7 +327,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -336,7 +336,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -345,7 +345,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -354,7 +354,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -363,7 +363,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -372,7 +372,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -381,7 +381,7 @@ exports[`PageCartoMap renders map once geojson data is fetched 1`] = `
                     <path
                       class="ez-map-path"
                       d=""
-                      fill="black"
+                      fill="white"
                       stroke="black"
                       stroke-linecap="round"
                       stroke-linejoin="round"

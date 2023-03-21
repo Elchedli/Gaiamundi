@@ -9,6 +9,13 @@ jest.mock('hooks/useAuth');
 jest.mock('react-query', () => ({
   useQuery: jest.fn(),
 }));
+jest.mock('react-hook-form', () => ({
+  ...jest.requireActual('react-hook-form'),
+  useFormContext: () => ({
+    handleSubmit: () => jest.fn(),
+    getValues: () => jest.fn(),
+  }),
+}));
 
 describe('GeoMapList', () => {
   beforeEach(() => {

@@ -4,14 +4,16 @@ import { Pagination } from 'components/Pagination/Pagination';
 import { useAuth } from 'hooks/useAuth';
 import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
+import { PageCartoForm } from 'interfaces/page-carto';
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
 import { GeoListItem } from './GeoListItem';
 
 export const GeoMapList = () => {
+  const { register } = useFormContext<PageCartoForm>();
   const paginationLimit = 9;
-
   const [page, setPage] = useState(1);
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedGeoMap, setSelectedGeoMap] = useState({} as ApiData<GeoMap>);
@@ -49,6 +51,7 @@ export const GeoMapList = () => {
       title: 'Toutes les cartes',
     },
   ];
+
   return (
     <div className="flex-column">
       <div
@@ -73,14 +76,18 @@ export const GeoMapList = () => {
       </div>
       <div className="rounded-b-lg border border-blue-700 p-5">
         <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-          {response?.data.map((page) => {
+          {response?.data.map((geoMap) => {
             return (
               <Card
-                key={page.id}
-                onClick={() => setSelectedGeoMap(page)}
-                selected={page.id === selectedGeoMap?.id}
+                key={geoMap.id}
+                id="mapId"
+                onClick={() => {
+                  setSelectedGeoMap(geoMap);
+                  register('mapId', { value: geoMap.id });
+                }}
+                selected={geoMap.id === selectedGeoMap?.id}
               >
-                <GeoListItem {...page} />
+                <GeoListItem {...geoMap} />
               </Card>
             );
           })}
