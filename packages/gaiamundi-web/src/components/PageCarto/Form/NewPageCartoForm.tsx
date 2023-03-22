@@ -70,7 +70,12 @@ export const NewPageCartoForm = () => {
   });
 
   const onSubmit = (data: PageCartoForm) => {
-    geoMapMutation.mutateAsync(data);
+    if (data.mapId) {
+      const pageCartoData = { ...data, map: data.mapId, html: '' };
+      pageCartoMutation.mutateAsync(pageCartoData);
+    } else {
+      geoMapMutation.mutateAsync(data);
+    }
   };
 
   return (
