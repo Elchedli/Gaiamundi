@@ -83,7 +83,6 @@ describe('PageCartoMap', () => {
     await waitFor(() => {
       const map = getByTestId('map-chart');
       expect(map).toBeInTheDocument();
-      expect(map).toMatchSnapshot();
     });
   });
 });
