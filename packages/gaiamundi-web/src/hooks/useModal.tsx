@@ -86,6 +86,7 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 <div className="absolute top-0 right-0 cursor-pointer">
                   <XCircleIcon
                     onClick={hideModal}
+                    data-testid="hideModal-button"
                     className="m-2 h-8 w-8 text-blue-800"
                   />
                 </div>

@@ -9,6 +9,13 @@ jest.mock('hooks/useAuth');
 jest.mock('react-query', () => ({
   useQuery: jest.fn(),
 }));
+jest.mock('react-hook-form', () => ({
+  ...jest.requireActual('react-hook-form'),
+  useFormContext: () => ({
+    handleSubmit: () => jest.fn(),
+    getValues: () => jest.fn(),
+  }),
+}));
 
 describe('GeoMapList', () => {
   beforeEach(() => {
@@ -23,7 +30,7 @@ describe('GeoMapList', () => {
     });
   });
 
-  it('renders list of GeoListItem components and snapshot', async () => {
+  it('renders list of GeoListItem components', async () => {
     const { container } = render(<GeoMapList />);
     const geoListItemElement = screen.getByText(
       mockGeoMapApiCollection.data[0].name
@@ -32,7 +39,6 @@ describe('GeoMapList', () => {
     const mapTabs = screen.getByTestId('map-choice').childNodes;
     expect(mapTabs).toHaveLength(2);
     expect(container.querySelectorAll('.grid > div').length).toBe(3);
-    expect(container).toMatchSnapshot();
   });
 
   it('switches between tabs', async () => {

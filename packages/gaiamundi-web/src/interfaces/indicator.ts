@@ -20,5 +20,5 @@ export interface IndicatorStub extends IndicatorBase {
 }
 
 export interface Indicator extends IndicatorBase {
-  page_carto: ApiData<PageCarto>;
+  page_carto?: ApiData<PageCarto>;
 }

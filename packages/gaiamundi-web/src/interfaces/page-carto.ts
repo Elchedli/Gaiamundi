@@ -35,4 +35,8 @@ export interface PageCarto extends PageCartoBase {
   indicators: ApiData<Indicator>[];
 }
 
-export type PageCartoForm = { name: string; geoMap: GeoMapStub };
+export type PageCartoForm = {
+  mapId?: number;
+  name: string;
+  geoMap: GeoMapStub;
+};

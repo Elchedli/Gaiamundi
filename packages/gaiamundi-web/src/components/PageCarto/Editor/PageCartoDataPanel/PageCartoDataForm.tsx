@@ -157,6 +157,7 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
               <Label htmlFor="origin">Origine du fichier</Label>
               <TextInput
                 id="origin"
+                data-testid="origin-input"
                 className="w-full"
                 {...register('origin', {
                   required: `Veuillez saisir l'origine de votre fichier de données`,
@@ -191,6 +192,7 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
               <Button
                 type="submit"
                 size="lg"
+                data-testid="validateform-button"
                 isLoading={isLoading}
                 disabled={!isValid}
               >

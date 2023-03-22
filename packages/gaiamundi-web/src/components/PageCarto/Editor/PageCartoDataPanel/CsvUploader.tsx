@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useMutation } from 'react-query';
 
 import {
@@ -25,100 +25,98 @@ type CsvUploaderProps = {
   onChange: (fileId: number) => void;
 };
 
-export const CsvUploader: React.FC<CsvUploaderProps> = ({
-  onUpload,
-  onParse,
-  onCancel,
-  onChange,
-}) => {
-  const { addToast } = useToast();
-  const [file, setFile] = useState<UploadedFile | undefined>(undefined);
-  const [errors, setErrors] = useState<string>('');
+export const CsvUploader = forwardRef<HTMLDivElement, CsvUploaderProps>(
+  ({ onUpload, onParse, onCancel, onChange }, _ref) => {
+    CsvUploader.displayName = 'legend';
+    const { addToast } = useToast();
+    const [file, setFile] = useState<UploadedFile | undefined>(undefined);
+    const [errors, setErrors] = useState<string>('');
 
-  const { mutateAsync, isError, isLoading, error } = useMutation({
-    mutationFn: async (data: { file: File }) => {
-      return await uploadCsv(data.file);
-    },
-    onSuccess: (data: UploadedFile) => {
-      setFile(data);
-      onUpload(data);
-      onChange(data.id);
-      addToast({
-        title: `Fichier téléchargé`,
-        description: `Fichier ${data.name} téléchargé avec succès`,
-        type: 'success',
-      });
-    },
-  });
+    const { mutateAsync, isError, isLoading, error } = useMutation({
+      mutationFn: async (data: { file: File }) => {
+        return await uploadCsv(data.file);
+      },
+      onSuccess: (data: UploadedFile) => {
+        setFile(data);
+        onUpload(data);
+        onChange(data.id);
+        addToast({
+          title: `Fichier téléchargé`,
+          description: `Fichier ${data.name} téléchargé avec succès`,
+          type: 'success',
+        });
+      },
+    });
 
-  const handleUpload = async (csvFile: File) => {
-    setErrors('');
-    try {
-      const data = await validateCsv(csvFile);
-      if (onParse) {
-        const columns = parseCsvColumns(data.meta.fields || []);
-        onParse(columns);
-      }
+    const handleUpload = async (csvFile: File) => {
+      setErrors('');
+      try {
+        const data = await validateCsv(csvFile);
+        if (onParse) {
+          const columns = parseCsvColumns(data.meta.fields || []);
+          onParse(columns);
+        }
 
-      if (Array.isArray(data.errors) && data.errors.length > 0) {
-        // eslint-disable-next-line no-console
-        console.warn(`CSV Parse errors : `, data.errors);
+        if (Array.isArray(data.errors) && data.errors.length > 0) {
+          // eslint-disable-next-line no-console
+          console.warn(`CSV Parse errors : `, data.errors);
+        }
+        // This is done to set the displayed filename after the file is uploaded
+        if (data.errors.length > 0) {
+          setErrors(
+            `Le fichier CSV contient des erreurs dans les lignes : ${data.errors
+              .map((e) => e.row)
+              .join(', ')}`
+          );
+        }
+        mutateAsync({ file: csvFile });
+      } catch (e) {
+        addToast({
+          title: `Erreur lors de la validation du fichier CSV`,
+          description: (e as Error).message,
+          type: 'error',
+        });
       }
-      // This is done to set the displayed filename after the file is uploaded
-      if (data.errors.length > 0) {
-        setErrors(
-          `Le fichier CSV contient des erreurs dans les lignes : ${data.errors
-            .map((e) => e.row)
-            .join(', ')}`
-        );
-      }
-      mutateAsync({ file: csvFile });
-    } catch (e) {
-      addToast({
-        title: `Erreur lors de la validation du fichier CSV`,
-        description: (e as Error).message,
-        type: 'error',
-      });
+    };
+
+    const handleCancel = () => {
+      setFile(undefined);
+      setErrors('');
+      onCancel && onCancel();
+    };
+
+    if (isLoading) {
+      return <LoadingSpinner />;
     }
-  };
 
-  const handleCancel = () => {
-    setFile(undefined);
-    setErrors('');
-    onCancel && onCancel();
-  };
+    if (isError) {
+      <ApiErrorAlert error={error as ApiError} />;
+    }
 
-  if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="self-center">
+        {file ? (
+          <div
+            data-testid="file-thumbnail"
+            className="flex flex-col items-center justify-center pt-5 pb-6"
+          >
+            <DocumentChartBarIcon width={64} height={64} />
+            <span className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              {file.name} ({file.mime})
+            </span>
+            <Button color="red" onClick={handleCancel} size="xs">
+              Annuler
+            </Button>
+          </div>
+        ) : (
+          <DropZone onUpload={handleUpload} />
+        )}
+        {errors && (
+          <Alert className="p-2 text-sm" icon={ExclamationCircleIcon}>
+            {errors}
+          </Alert>
+        )}
+      </div>
+    );
   }
-
-  if (isError) {
-    <ApiErrorAlert error={error as ApiError} />;
-  }
-
-  return (
-    <div className="self-center">
-      {file ? (
-        <div
-          data-testid="file-thumbnail"
-          className="flex flex-col items-center justify-center pt-5 pb-6"
-        >
-          <DocumentChartBarIcon width={64} height={64} />
-          <span className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            {file.name} ({file.mime})
-          </span>
-          <Button color="red" onClick={handleCancel} size="xs">
-            Annuler
-          </Button>
-        </div>
-      ) : (
-        <DropZone onUpload={handleUpload} />
-      )}
-      {errors && (
-        <Alert className="p-2 text-sm" icon={ExclamationCircleIcon}>
-          {errors}
-        </Alert>
-      )}
-    </div>
-  );
-};
+);

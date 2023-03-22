@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileInput calls onUpload prop with selected file when file is selected 1`] = `
+<div>
+  <div>
+    <div
+      class="relative"
+    >
+      <input
+        aria-describedby="file_upload_help"
+        class="border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 rounded-lg p-2.5 text-sm hidden"
+        data-testid="hidden-file-input"
+        id="dropzone-file"
+        type="file"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FileInput renders a hidden text input when isHidden prop is set to true 1`] = `
+<div>
+  <div>
+    <div
+      class="relative"
+    >
+      <input
+        aria-describedby="file_upload_help"
+        class="border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 rounded-lg p-2.5 text-sm hidden"
+        data-testid="hidden-file-input"
+        id="dropzone-file"
+        type="file"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FileInput should call onUpload prop when a file is selected 1`] = `
+<div>
+  <label
+    class="text-sm font-medium text-gray-900 dark:text-gray-300 block mb-2 text-md font-semibold text-gray-900 dark:text-gray-300"
+    for="file_upload"
+  >
+    Upload a file
+  </label>
+  <div>
+    <div
+      class="relative"
+    >
+      <input
+        aria-describedby="file_upload_help"
+        class="border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 rounded-lg p-2.5 text-sm !p-0 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        type="file"
+      />
+    </div>
+  </div>
+  <div
+    class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+    id="user_avatar_help"
+  >
+    Localisez et sélectionnez le fichier que vous souhaitez télécharger.
+  </div>
+</div>
+`;

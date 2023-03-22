@@ -70,12 +70,20 @@ export const NewPageCartoForm = () => {
   });
 
   const onSubmit = (data: PageCartoForm) => {
-    geoMapMutation.mutateAsync(data);
+    if (data.mapId) {
+      const pageCartoData = { ...data, map: data.mapId, html: '' };
+      pageCartoMutation.mutateAsync(pageCartoData);
+    } else {
+      geoMapMutation.mutateAsync(data);
+    }
   };
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        data-testid="new-page-carto-from"
+      >
         {pageCartoMutation.isError && (
           <ApiErrorAlert error={pageCartoMutation.error as ApiError} />
         )}
@@ -89,6 +97,7 @@ export const NewPageCartoForm = () => {
             <TextInput
               id="cartoPageName"
               className="w-1/3"
+              data-testid="carto-page-name"
               {...form.register('name', {
                 required: 'Veuillez saisir le nom du page carto',
               })}

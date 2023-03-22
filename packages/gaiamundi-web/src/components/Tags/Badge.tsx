@@ -3,7 +3,7 @@ import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
 
 interface BadgeProps
   extends PropsWithChildren<Omit<ComponentProps<'span'>, 'color'>> {
-  href: string;
+  href?: string;
   iconBefore?: ReactNode;
   iconAfter?: ReactNode;
 }

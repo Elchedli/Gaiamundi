@@ -3,35 +3,34 @@ import { ApiError } from 'interfaces/api';
 import { FC } from 'react';
 import { Alert } from './Alert';
 
-export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
-  error,
-}) => {
+export const ApiErrorAlert: FC<{
+  error: ApiError | Error | undefined;
+}> = ({ error, ...rest }) => {
   if (!error) {
     return null;
   }
 
   return (
-    <div data-testid="error-message">
-      <Alert
-        type={'failure'}
-        icon={XMarkIcon}
-        additionalContent={
-          error && 'description' in error ? error.description : ''
-        }
-      >
-        {'message' in error ? error.message : JSON.stringify(error)}
-        {'details' in error && (
-          <ul>
-            {error?.details?.errors?.map((err, idx) => {
-              return (
-                <li key={idx}>
-                  {err.name}: {err.message}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </Alert>
-    </div>
+    <Alert
+      type={'failure'}
+      icon={XMarkIcon}
+      additionalContent={
+        error && 'description' in error ? error.description : ''
+      }
+      {...rest}
+    >
+      {'message' in error ? error.message : JSON.stringify(error)}
+      {'details' in error && (
+        <ul>
+          {error?.details?.errors?.map((err, idx) => {
+            return (
+              <li key={idx}>
+                {err.name}: {err.message}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Alert>
   );
 };

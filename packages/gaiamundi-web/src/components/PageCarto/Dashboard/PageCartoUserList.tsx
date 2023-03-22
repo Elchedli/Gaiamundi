@@ -78,11 +78,18 @@ export const PageCartoUserList = ({
   });
 
   if (isLoading) {
-    return <LoadingMessage />;
+    return (
+      <LoadingMessage data-testid="page-carto-user-list-loading-message" />
+    );
   }
 
   if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
+    return (
+      <ApiErrorAlert
+        error={error as ApiError}
+        data-testid="pagecarto-user-list-error-message"
+      />
+    );
   }
 
   return (
@@ -92,7 +99,9 @@ export const PageCartoUserList = ({
           type="info"
           className="bg-transparent border-transparent w-full grid justify-center items-center"
         >
-          <div data-testid="error-message">Aucun contenu à afficher.</div>
+          <div data-testid="pagecarto-user-list-error-message">
+            Aucun contenu à afficher.
+          </div>
         </Alert>
       ) : (
         <>

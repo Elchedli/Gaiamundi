@@ -11,14 +11,15 @@ describe('ButtonGroup', () => {
   });
 
   it('should render children', () => {
-    const { getByText } = render(
+    const { container, getByText } = render(
       <ButtonGroup>
-        <button>Button 1</button>
-        <button>Button 2</button>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
       </ButtonGroup>
     );
     expect(getByText('Button 1')).toBeInTheDocument();
     expect(getByText('Button 2')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should add the "pill | outline" class if the "pill | outline" prop is true', () => {
@@ -30,16 +31,17 @@ describe('ButtonGroup', () => {
       </ButtonGroup>
     );
     expect(container.querySelector('span')).toHaveClass('rounded-full');
+    expect(container).toMatchSnapshot();
   });
 
   it('should add the custom class if added with otherProps', () => {
     const { container } = render(
       <ButtonGroup className="testClass">
-        <button>Button 1</button>
-        <button>Button 2</button>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
       </ButtonGroup>
     );
-
     expect(container.firstChild).toHaveClass('testClass');
+    expect(container).toMatchSnapshot();
   });
 });

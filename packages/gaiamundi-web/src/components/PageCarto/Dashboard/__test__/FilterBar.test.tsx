@@ -21,7 +21,6 @@ describe('FilterBar', () => {
       isAuthenticated: true,
       user: mockUser,
     }));
-
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [...mockTags] },
     }));
@@ -59,7 +58,7 @@ describe('FilterBar', () => {
       isLoading: true,
     }));
     const { getByTestId } = render(<FilterBar {...props} />);
-    const loadingMessage = getByTestId('loading-message');
+    const loadingMessage = getByTestId('filter-bar-loading-message');
     expect(loadingMessage).toBeInTheDocument();
   });
   it('should return the error message', () => {

@@ -50,7 +50,7 @@ const GeoJsonUploader = React.forwardRef<HTMLDivElement, GeoJsonUploaderProps>(
         } else {
           addToast({
             title: `Erreur lors d'analyse du fichier GeoJSON`,
-            description: `Impossible d'extraire les propriétés GeoJSON.`,
+            description: `Assurez-vous que les features contiennent la propriété "properties"!!`,
             type: 'error',
           });
         }

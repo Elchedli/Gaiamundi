@@ -29,11 +29,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     queryFn: async () => getAllTagsByOwner(user?.id || 0),
   });
   if (isLoading) {
-    return <LoadingMessage />;
+    return <LoadingMessage data-testid="filter-bar-loading-message" />;
   }
 
   if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
+    return (
+      <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
+    );
   }
 
   if (!response || response.data.length === 0) {

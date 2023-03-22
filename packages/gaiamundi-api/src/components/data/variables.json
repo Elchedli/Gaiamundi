@@ -2,11 +2,12 @@
   "collectionName": "components_data_variables",
   "info": {
     "displayName": "Variables",
-    "icon": "ad"
+    "icon": "ad",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "column": {
+    "columnName": {
       "type": "string",
       "required": true
     },

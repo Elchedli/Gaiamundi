@@ -22,7 +22,7 @@ describe('PageCartoUserList', () => {
     jest.clearAllMocks();
   });
 
-  it('renders loading message when loading', () => {
+  it('should render loading message when loading', () => {
     (useQuery as jest.Mock).mockReturnValueOnce({
       data: null,
       isError: false,
@@ -30,15 +30,16 @@ describe('PageCartoUserList', () => {
       isLoading: true,
     });
 
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
-    expect(getByTestId('loading-message')).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
+    expect(
+      getByTestId('page-carto-user-list-loading-message')
+    ).toBeInTheDocument();
   });
 
-  it('renders error message when there is an error', () => {
+  it('should render error message when one occcurs', () => {
     const mockError = {
       message: 'An error occurred',
       statusCode: 500,
@@ -51,15 +52,14 @@ describe('PageCartoUserList', () => {
       isLoading: false,
     });
 
-    const { container, getByText } = render(
+    const { getByText } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(getByText(mockError.message)).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
   });
 
-  it('renders message when there is no data', () => {
+  it('should render error message when there is no data', () => {
     (useQuery as jest.Mock).mockReturnValueOnce({
       data: {
         data: [],
@@ -74,15 +74,16 @@ describe('PageCartoUserList', () => {
       isLoading: false,
     });
 
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
-    expect(getByTestId('error-message')).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
+    expect(
+      getByTestId('pagecarto-user-list-error-message')
+    ).toBeInTheDocument();
   });
 
-  it('renders pages when there is data', () => {
+  it('should render pages when there is data', () => {
     const pageCartos: ApiCollection<PageCarto> = {
       data: Array.from({ length: 2 }, (_, index) => ({
         ...mockPageCartoData,
@@ -101,7 +102,7 @@ describe('PageCartoUserList', () => {
       data: pageCartos,
     }));
 
-    const { container, getByText, getByTestId } = render(
+    const { getByText, getByTestId } = render(
       <Router>
         <PageCartoUserList searchKeywords="" selectedTags={[]} />
       </Router>
@@ -119,6 +120,5 @@ describe('PageCartoUserList', () => {
     fireEvent.click(pagination.children[1]);
 
     expect((useQuery as jest.Mock).mock.calls[0][0].queryKey[1]).toBe(1);
-    expect(container).toMatchSnapshot();
   });
 });

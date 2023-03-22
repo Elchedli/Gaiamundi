@@ -17,7 +17,7 @@ export const PageCartoIndicatorPanel: FC = () => {
       <div className="mt-5 text-right">
         <Button
           icon={PlusIcon}
-          data-testid="import-dataset"
+          data-testid="create-indicator"
           onClick={() =>
             showModal({
               title: 'Nouvel Indicateur',
