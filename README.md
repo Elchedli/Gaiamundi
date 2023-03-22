@@ -4,7 +4,7 @@ The following project is a mono-repo built using [Lerna](https://lerna.js.org/)
 
 ## Requirements
 
-- Install lerna globally : `yarn add -G lerna`
+- Install lerna globally : `npm install -g lerna`
 - Node v16
 
 ## Installation
