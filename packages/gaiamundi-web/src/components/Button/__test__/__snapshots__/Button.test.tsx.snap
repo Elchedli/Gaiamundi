@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component calls onClick when clicked 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component handles click event 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button Label
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders color correctly 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders gradient duo tone correctly 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:ring-cyan-300 dark:focus:ring-cyan-800"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders gradient monochrome correctly 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders label 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button Label
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders pill correctly 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-full text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders size correctly 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-base px-5 py-2.5 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Button Component renders without crashing 1`] = `
+<div>
+  <button
+    class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600"
+    data-testid="button-element"
+    type="button"
+  >
+    <span
+      class="flex items-center text-sm px-4 py-2 rounded-md"
+    >
+      <span
+        class="ml-4 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+      >
+        Button
+      </span>
+    </span>
+  </button>
+</div>
+`;

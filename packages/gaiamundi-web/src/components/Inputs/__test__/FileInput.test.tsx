@@ -15,14 +15,19 @@ describe('FileInput', () => {
   });
 
   it('renders a hidden text input when isHidden prop is set to true', () => {
-    const { getByTestId } = render(<FileInput {...defaultProps} isHidden />);
+    const { container, getByTestId } = render(
+      <FileInput {...defaultProps} isHidden />
+    );
     expect(getByTestId('hidden-file-input').getAttribute('class')).toContain(
       'hidden'
     );
+    expect(container).toMatchSnapshot();
   });
 
   it('calls onUpload prop with selected file when file is selected', () => {
-    const { getByTestId } = render(<FileInput {...defaultProps} isHidden />);
+    const { container, getByTestId } = render(
+      <FileInput {...defaultProps} isHidden />
+    );
     const fileInput = getByTestId('hidden-file-input');
     const file = new File(['test-file'], 'test-file.json', {
       type: 'text/plain',
@@ -30,6 +35,7 @@ describe('FileInput', () => {
     fireEvent.change(fileInput, { target: { files: [file] } });
     expect(defaultProps.onUpload).toHaveBeenCalledTimes(1);
     expect(defaultProps.onUpload).toHaveBeenCalledWith(file);
+    expect(container).toMatchSnapshot();
   });
 
   it('should call onUpload prop when a file is selected', () => {
@@ -40,5 +46,6 @@ describe('FileInput', () => {
     expect(label?.textContent).toBe('Upload a file');
     expect(input).not.toBeNull();
     expect(input?.getAttribute('type')).toBe('file');
+    expect(container).toMatchSnapshot();
   });
 });

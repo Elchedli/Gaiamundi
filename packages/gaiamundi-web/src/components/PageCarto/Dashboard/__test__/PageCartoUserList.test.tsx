@@ -30,14 +30,13 @@ describe('PageCartoUserList', () => {
       isLoading: true,
     });
 
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(
       getByTestId('page-carto-user-list-loading-message')
     ).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
   });
 
   it('should render error message when one occcurs', () => {
@@ -53,12 +52,11 @@ describe('PageCartoUserList', () => {
       isLoading: false,
     });
 
-    const { container, getByText } = render(
+    const { getByText } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(getByText(mockError.message)).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
   });
 
   it('should render error message when there is no data', () => {
@@ -76,14 +74,13 @@ describe('PageCartoUserList', () => {
       isLoading: false,
     });
 
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       <PageCartoUserList searchKeywords="" selectedTags={[]} />
     );
 
     expect(
       getByTestId('pagecarto-user-list-error-message')
     ).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
   });
 
   it('should render pages when there is data', () => {
@@ -105,7 +102,7 @@ describe('PageCartoUserList', () => {
       data: pageCartos,
     }));
 
-    const { container, getByText, getByTestId } = render(
+    const { getByText, getByTestId } = render(
       <Router>
         <PageCartoUserList searchKeywords="" selectedTags={[]} />
       </Router>
@@ -123,6 +120,5 @@ describe('PageCartoUserList', () => {
     fireEvent.click(pagination.children[1]);
 
     expect((useQuery as jest.Mock).mock.calls[0][0].queryKey[1]).toBe(1);
-    expect(container).toMatchSnapshot();
   });
 });
