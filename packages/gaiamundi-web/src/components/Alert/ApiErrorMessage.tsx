@@ -11,25 +11,27 @@ export const ApiErrorAlert: FC<{ error: ApiError | Error | undefined }> = ({
   }
 
   return (
-    <Alert
-      type={'failure'}
-      icon={XMarkIcon}
-      additionalContent={
-        error && 'description' in error ? error.description : ''
-      }
-    >
-      {'message' in error ? error.message : JSON.stringify(error)}
-      {'details' in error && (
-        <ul>
-          {error?.details?.errors?.map((err, idx) => {
-            return (
-              <li key={idx}>
-                {err.name}: {err.message}
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </Alert>
+    <div data-testid="error-message">
+      <Alert
+        type={'failure'}
+        icon={XMarkIcon}
+        additionalContent={
+          error && 'description' in error ? error.description : ''
+        }
+      >
+        {'message' in error ? error.message : JSON.stringify(error)}
+        {'details' in error && (
+          <ul>
+            {error?.details?.errors?.map((err, idx) => {
+              return (
+                <li key={idx}>
+                  {err.name}: {err.message}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </Alert>
+    </div>
   );
 };

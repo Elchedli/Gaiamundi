@@ -1,12 +1,13 @@
 import { render } from '@testing-library/react';
 import { useAuth } from 'hooks/useAuth';
+import { useQuery } from 'react-query';
 import { mockUser } from 'utils/mocks/data';
 import { Dashboard } from '../Dashboard';
-import { FilterBar } from '../FilterBar';
 
 jest.mock('react-query', () => ({
   useQuery: jest.fn(),
 }));
+
 jest.mock('hooks/useAuth');
 
 describe('Dashboard', () => {
@@ -16,19 +17,38 @@ describe('Dashboard', () => {
       user: mockUser,
     }));
   });
-  it('renders without error', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should render whithout error', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
+      isError: false,
+      error: null,
+      isLoading: false,
+    }));
     render(<Dashboard />);
   });
-  it('render component filter bar whithout error', () => {
-    const safeChangeSearchInput = jest.fn();
-    const safeChangeTags = jest.fn();
-    const { getByTestId } = render(
-      <FilterBar
-        onSearchKeywordChange={safeChangeSearchInput}
-        onTagChange={safeChangeTags}
-      />
-    );
-    expect(getByTestId(safeChangeSearchInput)).toBeInTheDocument();
-    expect(getByTestId(safeChangeTags)).toBeInTheDocument();
+  it('should render FilterBar component', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
+      isError: false,
+      error: null,
+      isLoading: false,
+    }));
+    const { getByTestId } = render(<Dashboard />);
+    const filterBar = getByTestId('filter-bar');
+    expect(filterBar).toBeInTheDocument();
+  });
+  it('should render PageCartoUserList component', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
+      isError: false,
+      error: null,
+      isLoading: false,
+    }));
+    const { getByTestId } = render(<Dashboard />);
+    const pageCartoUserList = getByTestId('page-carto-user-list');
+    expect(pageCartoUserList).toBeInTheDocument();
   });
 });
