@@ -56,8 +56,7 @@ export const GeoMapList = () => {
     if (selectedGeoMap.id !== undefined) {
       setValue('mapId', selectedGeoMap.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedGeoMap]);
+  }, [selectedGeoMap, setValue]);
 
   const handleSelect = (geoMap: ApiData<GeoMap>) => {
     setSelectedGeoMap(geoMap);
