@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonGroup should add the "pill | outline" class if the "pill | outline" prop is true 1`] = `
+<div>
+  <div
+    class="inline-flex"
+    role="group"
+  >
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-full text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-r-none"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-full bg-white text-gray-900 transition-all duration-75 ease-in group-hover:bg-opacity-0 group-hover:text-inherit dark:bg-gray-900 dark:text-white rounded-r-none"
+      >
+        Button 1
+      </span>
+    </button>
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-full text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 !rounded-none border-l-0 pl-0"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-full bg-white text-gray-900 transition-all duration-75 ease-in group-hover:bg-opacity-0 group-hover:text-inherit dark:bg-gray-900 dark:text-white !rounded-none"
+      >
+        Button 2
+      </span>
+    </button>
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-full text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-l-none border-l-0 pl-0"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-full bg-white text-gray-900 transition-all duration-75 ease-in group-hover:bg-opacity-0 group-hover:text-inherit dark:bg-gray-900 dark:text-white rounded-l-none"
+      >
+        Button 3
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ButtonGroup should add the custom class if added with otherProps 1`] = `
+<div>
+  <div
+    class="inline-flex testClass"
+    role="group"
+  >
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-r-none"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-md rounded-r-none"
+      >
+        Button 1
+      </span>
+    </button>
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-l-none border-l-0 pl-0"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-md rounded-l-none"
+      >
+        Button 2
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ButtonGroup should render children 1`] = `
+<div>
+  <div
+    class="inline-flex"
+    role="group"
+  >
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-r-none"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-md rounded-r-none"
+      >
+        Button 1
+      </span>
+    </button>
+    <button
+      class="group inline-flex h-min w-fit items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 rounded-l-none border-l-0 pl-0"
+      data-testid="button-element"
+      type="button"
+    >
+      <span
+        class="flex items-center text-sm px-4 py-2 rounded-md rounded-l-none"
+      >
+        Button 2
+      </span>
+    </button>
+  </div>
+</div>
+`;
