@@ -1,12 +1,11 @@
 image: node:16.19.1
 
 stages:          # List of stages for jobs, and their order of execution
-  - build
+  - install
   - test
-  # - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
+install-job:       # This job runs in the build stage, which runs first.
+  stage: install
   script:
     - echo "Installing lerna"
     - npm i -g lerna
@@ -28,9 +27,8 @@ lint-test-job:   # This job also runs in the test stage.
     - yarn lint
     - echo "No lint issues found."
 
-# deploy-job:      # This job runs in the deploy stage.
-#   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-#   environment: production
-#   script:
-#     - echo "Deploying application..."
-#     - echo "Application successfully deployed."
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+
