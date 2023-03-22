@@ -300,6 +300,7 @@ class Strapi {
     const formData = new FormData();
     formData.append('files', file);
     formData.append('ref', ref);
+    //ajouter un id aprés
     return this.request
       .post<FormData, UploadedFile[]>('/api/upload', formData)
       .then(([uploadedfile]) => {

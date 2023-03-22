@@ -52,6 +52,8 @@ export default function App() {
                   path="page-carto/:id/edit"
                   element={<PageCartoEditPage />}
                 />
+
+                {/* <Route path="learnSvg" element={<PageCartoEditPage />} /> */}
               </Route>
             </Routes>
           </AuthProvider>

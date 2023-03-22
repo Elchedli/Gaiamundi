@@ -23,3 +23,16 @@ export const getGeoJson = async (geoJSON: ApiData<UploadedFile>) => {
 export const getGeoMapThumbnailUrlById = (id: number) => {
   return `${config.API_URL}/api/geo-maps/thumbnail/${id}`;
 };
+
+// export const changePageCartoScreenshot = async (id: number, svg: any) => {
+//   const params = {
+//     svg,
+//     id,
+//   };
+
+//   return await strapi.request
+//     .get<void, any>(`${config.API_URL}/api/geo-maps/screenshot`, { params })
+//     .catch(({ error }: ApiErrorResponse) => {
+//       throw error;
+//     });
+// };

@@ -43,7 +43,29 @@ export default factories.createCoreController(
         svg = fs.readFileSync(svgPath, { encoding: "utf8", flag: "r" });
       }
       ctx.type = "image/svg+xml; charset=utf-8";
+      console.log("svg : ", typeof svg);
       ctx.body = svg;
+    },
+    async screenshot(ctx) {
+      const fileId = ctx.params.id;
+      const svgScreenshot = ctx.params.svg;
+      
+      const entry = await strapi.entityService.findOne(
+        "plugin::upload.file",
+        fileId
+      );
+      console.log(JSON.stringify(entry), entry.hash);
+      // compute svg path
+      const svgFilename = `${entry.hash}.svg`;
+      const screenshotPath = path.join(
+        strapi.dirs.static.public,
+        "screenshots",
+        svgFilename
+      );
+
+      fs.writeFileSync(screenshotPath, svgScreenshot);
+
+      ctx.body = "changed";
     },
   })
 );
