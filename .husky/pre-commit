@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn test
+yarn test:web
 lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents
