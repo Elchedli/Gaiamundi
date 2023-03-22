@@ -95,6 +95,7 @@ export const GeoMapList = () => {
                   handleSelect(geoMap);
                 }}
                 selected={geoMap.id === selectedGeoMap?.id}
+                role="card"
               >
                 <GeoListItem {...geoMap} />
               </Card>
