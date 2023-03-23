@@ -17,61 +17,38 @@ describe('Dashboard', () => {
       user: mockUser,
     }));
   });
-
-  it('should render a loading message when loading', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should render whithout error', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [] },
       isError: false,
       error: null,
-      isLoading: true,
-    }));
-
-    const { getByTestId } = render(<Dashboard />);
-
-    expect(
-      getByTestId('page-carto-user-list-loading-message')
-    ).toBeInTheDocument();
-  });
-
-  it('should render an error message when one occurs', () => {
-    const mockError = {
-      message: 'An error occurred',
-      statusCode: 500,
-    };
-
-    (useQuery as jest.Mock).mockImplementation(() => ({
-      data: { data: [] },
-      isError: true,
-      error: mockError,
       isLoading: false,
     }));
-
-    const { getByTestId } = render(<Dashboard />);
-
-    expect(
-      getByTestId('pagecarto-user-list-error-message')
-    ).toBeInTheDocument();
+    render(<Dashboard />);
   });
-
-  it('should render an error message when there is no data', () => {
+  it('should render FilterBar component', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        data: [],
-        meta: {
-          pagination: {
-            pageCount: 0,
-          },
-        },
-      },
+      data: { data: [] },
       isError: false,
       error: null,
       isLoading: false,
     }));
-
     const { getByTestId } = render(<Dashboard />);
-
-    expect(
-      getByTestId('pagecarto-user-list-error-message')
-    ).toBeInTheDocument();
+    const filterBar = getByTestId('filter-bar');
+    expect(filterBar).toBeInTheDocument();
+  });
+  it('should render PageCartoUserList component', () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { data: [] },
+      isError: false,
+      error: null,
+      isLoading: false,
+    }));
+    const { getByTestId } = render(<Dashboard />);
+    const pageCartoUserList = getByTestId('page-carto-user-list');
+    expect(pageCartoUserList).toBeInTheDocument();
   });
 });

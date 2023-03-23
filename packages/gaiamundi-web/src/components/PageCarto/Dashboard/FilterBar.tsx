@@ -33,20 +33,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   }
 
   if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
+    return (
+      <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
+    );
   }
 
   if (!response || response.data.length === 0) {
     return (
       <Alert type="info" className="grid h-fit justify-center items-center">
-        <div data-testid="filter-bar-error-message">
-          Aucun tag n&apos;a été trouvé !
-        </div>
+        <div data-testid="empty-message">Aucun tag n&apos;a été trouvé !</div>
       </Alert>
     );
   }
   return (
-    <div className="w-full">
+    <div className="w-full" data-testid="tags-filter">
       <SearchInputDebounce
         id="pageCarto.search"
         className="w-full my-3"

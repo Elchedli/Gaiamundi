@@ -10,13 +10,13 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      <div className="col-span-1">
+      <div className="col-span-1" data-testid="filter-bar">
         <FilterBar
           onSearchKeywordChange={(name: string) => safeChangeSearchInput(name)}
           onTagChange={safeChangeTags}
         />
       </div>
-      <div className="col-span-3">
+      <div className="col-span-3" data-testid="page-carto-user-list">
         <PageCartoUserList
           searchKeywords={inputName}
           selectedTags={tagsSelected}
