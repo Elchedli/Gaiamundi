@@ -311,10 +311,10 @@ class Strapi {
   /**
    * Uploads a Blob.
    */
-  uploadBlob(file: File, ref: string, refId: string) {
+  uploadBlob(file: File, ref: string, refId: string, filename: string) {
     const formData = new FormData();
     formData.append('ref', ref);
-    // formData.append('files', file, filename);
+    formData.append('files', file, filename);
     formData.append('refId', refId);
     formData.append('field', 'cover');
     return this.request
