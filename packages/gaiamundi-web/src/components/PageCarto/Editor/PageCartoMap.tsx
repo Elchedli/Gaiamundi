@@ -16,12 +16,13 @@ import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
-import { ExtractionByScreenshot } from 'utils/ExportChartAsPNG';
+import { uploadCover } from 'services/page-carto';
+import { SvgtoPng } from 'utils/ExportChartAsPNG';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
-  const { map } = usePageCarto();
+  const { map, pageCartoId } = usePageCarto();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -47,18 +48,13 @@ export const PageCartoMap: FC = () => {
 
   const saveScreenshot = async () => {
     if (elementRef.current) {
-      const rect = elementRef.current.getBBox();
       const svgData = elementRef.current;
-      // getGeoJson(geoJson as ApiData<UploadedFile>)
-      ExtractionByScreenshot(
-        rect.width + 10,
-        rect.height + 10,
-        'test',
-        svgData
+      // const mapScreenshot = await ExtractScreenshotBySvg(svgData);
+      const mapScreenshot = await SvgtoPng(
+        svgData,
+        map?.name + '_screenshot.png'
       );
-      // changePageCartoScreenshot();
-      // console.log(svgData);
-      console.log('width : ', rect.width, 'height : ', rect.height);
+      await uploadCover(mapScreenshot, pageCartoId.toString());
     }
   };
 

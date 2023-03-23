@@ -1,19 +1,4 @@
-import { uploadCover } from 'services/page-carto';
-
-export const downloadImage = (
-  url: string,
-  fileName: string,
-  fileType: 'svg' | 'png'
-) => {
-  const a = document.createElement('a');
-  a.download = `${fileName}.${fileType}`;
-  document.body.appendChild(a);
-  a.href = url;
-  a.click();
-  a.remove();
-};
-
-export const createImageCanvas = (
+const createImageCanvas = (
   image: HTMLImageElement,
   width: number,
   height: number
@@ -26,20 +11,39 @@ export const createImageCanvas = (
   return canvas;
 };
 
-export const ExtractionByScreenshot = (
-  width: number,
-  height: number,
-  name: string,
-  SvgScreenshot: SVGSVGElement
-) => {
+export const ExtractScreenshotBySvg = async (SvgScreenshot: SVGSVGElement) => {
   const img = new Image();
-  img.addEventListener('load', () => {
-    const canvas = createImageCanvas(img, width, height);
-    canvas.toBlob(function (blob: any) {
-      uploadCover(blob);
-    }, 'image/png');
-  });
+  const { width, height } = SvgScreenshot.getBBox();
   const svgString = new XMLSerializer().serializeToString(SvgScreenshot);
   const dataUrl = 'data:image/svg+xml;base64,' + window.btoa(svgString);
   img.src = dataUrl;
+  return await new Promise<File>((resolve) => {
+    img.onload = async () => {
+      const canvas = createImageCanvas(img, width + 1, height + 1);
+      const blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve, 'image/png')
+      );
+      resolve(blob as File);
+    };
+  });
+};
+
+export const Svg2Base64 = (SvgScreenshot: SVGSVGElement) => {
+  // const svg = document.querySelector('svg');
+  const xml = new XMLSerializer().serializeToString(SvgScreenshot);
+  const svg64 = window.btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+  const b64start = 'data:image/svg+xml;base64,';
+  const image64 = b64start + svg64;
+  return image64;
+};
+
+export const SvgtoPng = (SvgScreenshot: SVGSVGElement, filename: string) => {
+  const imageBase64 = Svg2Base64(SvgScreenshot);
+  return fetch(imageBase64)
+    .then(function (res) {
+      return res.arrayBuffer();
+    })
+    .then((buf) => {
+      return new File([buf], filename, { type: 'image/png' });
+    });
 };
