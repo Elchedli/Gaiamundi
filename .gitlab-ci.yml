@@ -15,7 +15,8 @@ test-job:       # This job runs in test stage
     - yarn test
     - echo "Unit tests were successful"
     - echo "Linting code... This will take about 10 seconds."
-  #  - yarn lint
+    - cd packages/gaiamundi-web
+    - yarn run lint
     - echo "No lint issues found."
   only:
     - merge_requests	
