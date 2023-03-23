@@ -18,4 +18,8 @@ test-job:       # This job runs in test stage
   #  - yarn lint
     - echo "No lint issues found."
 
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
 
