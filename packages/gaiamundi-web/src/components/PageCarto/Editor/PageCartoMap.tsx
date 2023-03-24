@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { CameraIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
@@ -16,11 +16,13 @@ import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
+import { uploadCover } from 'services/page-carto';
+import { ExtractScreenshotBySvg } from 'utils/exportChartAsPng';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
-  const { map } = usePageCarto();
+  const { map, pageCartoId } = usePageCarto();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -71,6 +73,18 @@ export const PageCartoMap: FC = () => {
     }
   };
 
+  const saveScreenshot = async () => {
+    if (elementRef.current) {
+      const svgData = elementRef.current;
+      const mapScreenshot = await ExtractScreenshotBySvg(svgData);
+      uploadCover(
+        mapScreenshot,
+        pageCartoId.toString(),
+        map?.name + '_screenshot.png'
+      );
+    }
+  };
+
   const geoJsonData = useMemo(() => {
     return data
       ? {
@@ -104,6 +118,7 @@ export const PageCartoMap: FC = () => {
       <ButtonGroup pill={true} className="m-4 absolute z-50">
         <Button icon={PlusIcon} onClick={zoomIn} />
         <Button icon={MinusIcon} onClick={zoomOut} />
+        <Button icon={CameraIcon} onClick={saveScreenshot} />
       </ButtonGroup>
       <div
         className="w-full h-full overflow-hidden"

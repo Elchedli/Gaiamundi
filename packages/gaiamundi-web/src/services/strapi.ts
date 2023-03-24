@@ -306,6 +306,22 @@ class Strapi {
         return uploadedfile;
       });
   }
+
+  /**
+   * Uploads a Blob.
+   */
+  uploadBlob(file: File, ref: string, refId: string, filename: string) {
+    const formData = new FormData();
+    formData.append('ref', ref);
+    formData.append('files', file, filename);
+    formData.append('refId', refId);
+    formData.append('field', 'cover');
+    return this.request
+      .post<FormData, UploadedFile[]>('/api/upload', formData)
+      .then(([uploadedfile]) => {
+        return uploadedfile;
+      });
+  }
 }
 
 export const strapi = new Strapi(config.API_URL);
