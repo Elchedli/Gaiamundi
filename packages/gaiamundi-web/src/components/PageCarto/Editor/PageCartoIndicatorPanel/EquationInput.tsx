@@ -42,7 +42,7 @@ type EquationInputProps = {
 
 const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
   ({ variables, onChange }, ref) => {
-    const [formula, setFormula] = useState('A');
+    const [formula, setFormula] = useState('A-1');
     const inputRef = useRef<HTMLInputElement>(null);
     const { data: response, isLoading } = useQuery({
       queryKey: ['equations'],
@@ -82,7 +82,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
     const equationVariables = variables.reduce((acc, v) => {
       acc[v.alias] = {
         type: 'number',
-        value: 1,
+        value: v.sample,
       };
       return acc;
     }, defaultVariables);
@@ -112,7 +112,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
           <EquationContext
             render={(equation) => (
               <div style={{ fontSize: '150%' }}>
-                Exemple : {equation(`${formula} =`)}
+                Exemple : {equation(`${formula}=`)}
               </div>
             )}
           />

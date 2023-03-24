@@ -53,7 +53,12 @@ export const CsvUploader = forwardRef<HTMLDivElement, CsvUploaderProps>(
       try {
         const data = await validateCsv(csvFile);
         if (onParse) {
-          const columns = parseCsvColumns(data.meta.fields || []);
+          const columns = parseCsvColumns(
+            data.meta.fields || [],
+            data.data as {
+              [key: string]: number | string;
+            }[]
+          );
           onParse(columns);
         }
 

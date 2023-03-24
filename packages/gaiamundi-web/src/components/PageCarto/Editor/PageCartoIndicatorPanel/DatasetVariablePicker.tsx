@@ -39,19 +39,24 @@ const DatasetVariablePicker = React.forwardRef<
 
   useEffect(() => {
     const selected = Array.from(selectedColumns).map((name, idx) => {
+      const selectedCol = columns.find((column) => column.name === name);
       return {
         columnName: name,
         alias: ALPHABET_RANGE[idx],
+        sample: selectedCol ? selectedCol.sample : 1,
       };
     });
     onChange(selected);
-  }, [onChange, selectedColumns]);
-
+  }, [columns, onChange, selectedColumns]);
   const dataGridColumns: DataGridColumn<Column>[] = [
     SelectColumn,
     {
       key: 'name',
       name: 'Colonne',
+    },
+    {
+      key: 'sample',
+      name: 'Échantillon',
     },
     {
       key: 'source',
