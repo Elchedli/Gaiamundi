@@ -17,7 +17,7 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
 import { uploadCover } from 'services/page-carto';
-import { ExtractScreenshotBySvg } from 'utils/exportChartAsPng';
+import { extractScreenshotBySvg } from 'utils/exportChartAsPng';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
@@ -75,8 +75,17 @@ export const PageCartoMap: FC = () => {
 
   const saveScreenshot = async () => {
     if (elementRef.current) {
-      const svgData = elementRef.current;
-      const mapScreenshot = await ExtractScreenshotBySvg(svgData);
+      const svgData = elementRef.current.cloneNode(true) as SVGSVGElement;
+      svgData.setAttribute(
+        'width',
+        elementRef.current.width.baseVal.value.toString()
+      );
+      svgData.setAttribute(
+        'height',
+        elementRef.current.height.baseVal.value.toString()
+      );
+      svgData.style.transform = 'none';
+      const mapScreenshot = await extractScreenshotBySvg(svgData);
       uploadCover(
         mapScreenshot,
         pageCartoId.toString(),
