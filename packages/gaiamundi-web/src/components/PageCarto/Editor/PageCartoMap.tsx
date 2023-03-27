@@ -3,7 +3,7 @@ import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
-import { FC, useCallback, useMemo, useRef } from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useQuery } from 'react-query';
 
 import rewind from '@turf/rewind';
@@ -37,6 +37,11 @@ export const PageCartoMap: FC = () => {
     });
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
+
+  //Whenever the map values change the saveScreenshot is triggered.
+  useEffect(() => {
+    saveScreenshot();
+  }, [map?.geoJSON]);
 
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
@@ -75,7 +80,9 @@ export const PageCartoMap: FC = () => {
 
   const saveScreenshot = async () => {
     if (elementRef.current) {
+      //clone the svg dom so i can reset the place to it's initial position and size for the perfect picture
       const svgData = elementRef.current.cloneNode(true) as SVGSVGElement;
+      // svg container width and height
       svgData.setAttribute(
         'width',
         elementRef.current.width.baseVal.value.toString()
@@ -84,8 +91,11 @@ export const PageCartoMap: FC = () => {
         'height',
         elementRef.current.height.baseVal.value.toString()
       );
+      //this line resets the size and place to the default placement
       svgData.style.transform = 'none';
+      //this function is the one the svg and make it into an image.
       const mapScreenshot = await extractScreenshotBySvg(svgData);
+      //the new image is sended to the api and change it for the specific pageCartos
       uploadCover(
         mapScreenshot,
         pageCartoId.toString(),

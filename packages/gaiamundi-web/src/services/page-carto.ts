@@ -43,13 +43,14 @@ export const uploadCsv = async (file: File) => {
 
 export const uploadCover = async (
   file: File,
-  ref: string,
+  refId: string,
   filename: string
 ) => {
   return await strapi.uploadBlob(
     file,
     'api::page-carto.page-carto',
-    ref,
+    //id of pageCartos.
+    refId,
     filename
   );
 };

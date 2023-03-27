@@ -1,3 +1,4 @@
+//create canvas to extract the image from it
 const createImageCanvas = (image: HTMLImageElement) => {
   const canvas = document.createElement('canvas');
   canvas.width = 384;
@@ -7,8 +8,10 @@ const createImageCanvas = (image: HTMLImageElement) => {
   return canvas;
 };
 
+//Take an svg DOM and turn it into an image file.
 export const extractScreenshotBySvg = async (svgScreenshot: SVGSVGElement) => {
   const img = new Image();
+  //this conversion makes svg to an image using data base64 link
   const svgString = new XMLSerializer().serializeToString(svgScreenshot);
   const dataUrl = 'data:image/svg+xml;base64,' + window.btoa(svgString);
   img.src = dataUrl;

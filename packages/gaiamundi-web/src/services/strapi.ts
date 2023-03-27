@@ -314,7 +314,9 @@ class Strapi {
     const formData = new FormData();
     formData.append('ref', ref);
     formData.append('files', file, filename);
+    //id for pagecartos to put the imageFile in it.
     formData.append('refId', refId);
+    //the field i want to change
     formData.append('field', 'cover');
     return this.request
       .post<FormData, UploadedFile[]>('/api/upload', formData)
