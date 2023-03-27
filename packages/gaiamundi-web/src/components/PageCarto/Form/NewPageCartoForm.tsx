@@ -7,6 +7,7 @@ import { Button } from 'components/Button/Button';
 import { MapPickForm } from 'components/GeoMap/Form/MapPicker';
 import { Label } from 'components/Inputs/Label';
 import { TextInput } from 'components/Inputs/TextInput';
+import { TagsSelector } from 'components/TagsSelector/TagsSelector';
 import { useRequireAuth } from 'hooks/useRequireAuth';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
@@ -107,6 +108,10 @@ export const NewPageCartoForm = () => {
                 {form.getFieldState('name')?.error?.message}
               </div>
             )}
+          </div>
+          <div>
+            <Label htmlFor="Tags">Tags</Label>
+            <TagsSelector />
           </div>
           <div className="mr-10">
             <MapPickForm />
