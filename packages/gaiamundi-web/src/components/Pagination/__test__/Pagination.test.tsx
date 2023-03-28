@@ -67,11 +67,16 @@ describe('Pagination', () => {
         onPaginate={onPaginateMock}
       />
     );
+
     const firstPageButton = getByText('1');
     const lastPageButton = getByText(totalPages);
+
     fireEvent.click(firstPageButton);
+
     expect(onPaginateMock).toHaveBeenCalledWith(1);
+
     fireEvent.click(lastPageButton);
+
     expect(onPaginateMock).toHaveBeenCalledWith(totalPages);
   });
 });
