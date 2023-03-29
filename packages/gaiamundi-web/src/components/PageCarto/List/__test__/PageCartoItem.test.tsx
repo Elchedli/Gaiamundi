@@ -14,11 +14,11 @@ describe('PageCartoItem', () => {
     expect(getByText(mockPageCartoData.name)).toBeInTheDocument();
 
     expect(
-      getByText('Carte : ' + mockPageCartoData.map.name)
+      getByText((content) => content.endsWith(mockPageCartoData.map.name))
     ).toBeInTheDocument();
-    // expect(
-    //   getByText(/</g + mockPageCartoData.owner.username)
-    // ).toBeInTheDocument();
+    expect(
+      getByText((content) => content.endsWith(mockPageCartoData.owner.username))
+    ).toBeInTheDocument();
     mockPageCartoData.tags.forEach((tag) => {
       expect(getByText(tag.name)).toBeInTheDocument();
     });
