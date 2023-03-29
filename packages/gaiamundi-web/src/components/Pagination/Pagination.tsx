@@ -3,19 +3,20 @@ import { Button } from 'components/Button/Button';
 interface PaginationProps {
   page: number;
   totalPages: number;
-  onPaginateNext: () => void;
-  onPaginatePrevious: () => void;
   onPaginate: (p: number) => void;
 }
 
 export const Pagination = (props: PaginationProps) => {
-  const { page, totalPages, onPaginateNext, onPaginatePrevious, onPaginate } =
-    props;
+  const { page, totalPages, onPaginate } = props;
   const isPageLessTotal = page < totalPages;
   return (
     <div className="flex flex-row mt-5" data-testid="pagination">
       {page > 1 && (
-        <Button className="mr-3" onClick={onPaginatePrevious}>
+        <Button
+          className="mr-3"
+          data-testid="pagination-previous"
+          onClick={() => onPaginate(page - 1)}
+        >
           {'< Précédent'}
         </Button>
       )}
@@ -37,7 +38,11 @@ export const Pagination = (props: PaginationProps) => {
         <Button onClick={() => onPaginate(totalPages)}>{totalPages}</Button>
       )}
       {isPageLessTotal && (
-        <Button className="ml-3" onClick={onPaginateNext}>
+        <Button
+          className="ml-3"
+          data-testid="pagination-next"
+          onClick={() => onPaginate(page + 1)}
+        >
           {'Suivant >'}
         </Button>
       )}

@@ -2,8 +2,6 @@ import { fireEvent, render } from '@testing-library/react';
 import { Pagination } from 'components/Pagination/Pagination';
 
 describe('Pagination', () => {
-  const onPaginateNextMock = jest.fn();
-  const onPaginatePreviousMock = jest.fn();
   const onPaginateMock = jest.fn();
   const page = 4;
   const totalPages = 10;
@@ -13,21 +11,19 @@ describe('Pagination', () => {
   });
 
   test('renders pagination buttons', () => {
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPaginateNext={onPaginateNextMock}
-        onPaginatePrevious={onPaginatePreviousMock}
         onPaginate={onPaginateMock}
       />
     );
 
-    const previousButton = getByText('< Précédent');
+    const previousButton = getByTestId('pagination-previous');
     const page1Button = getByText('1');
     const nextPageButton = getByText('3');
     const lastPageButton = getByText('10');
-    const nextButton = getByText('Suivant >');
+    const nextButton = getByTestId('pagination-next');
 
     expect(previousButton).toBeInTheDocument();
     expect(page1Button).toBeInTheDocument();
@@ -37,24 +33,19 @@ describe('Pagination', () => {
   });
 
   test('handles previous and next button clicks', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPaginateNext={onPaginateNextMock}
-        onPaginatePrevious={onPaginatePreviousMock}
         onPaginate={onPaginateMock}
       />
     );
 
-    const previousButton = getByText('< Précédent');
-    const nextPageButton = getByText('Suivant >');
+    fireEvent.click(getByTestId('pagination-previous'));
+    expect(onPaginateMock).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(previousButton);
-    expect(onPaginatePreviousMock).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(nextPageButton);
-    expect(onPaginateNextMock).toHaveBeenCalledTimes(1);
+    fireEvent.click(getByTestId('pagination-next'));
+    expect(onPaginateMock).toHaveBeenCalledTimes(2);
   });
 
   test('handles page button clicks', () => {
@@ -62,20 +53,15 @@ describe('Pagination', () => {
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPaginateNext={onPaginateNextMock}
-        onPaginatePrevious={onPaginatePreviousMock}
         onPaginate={onPaginateMock}
       />
     );
 
-    const firstPageButton = getByText('1');
-    const lastPageButton = getByText(totalPages);
-
-    fireEvent.click(firstPageButton);
+    fireEvent.click(getByText('1'));
 
     expect(onPaginateMock).toHaveBeenCalledWith(1);
 
-    fireEvent.click(lastPageButton);
+    fireEvent.click(getByText(totalPages));
 
     expect(onPaginateMock).toHaveBeenCalledWith(totalPages);
   });
