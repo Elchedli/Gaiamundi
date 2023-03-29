@@ -7,7 +7,7 @@ describe('DebouncedSearchInput', () => {
     const { getByTestId } = render(
       <SearchInputDebounce onDebouncedChange={onDebouncedChange} />
     );
-    const input = getByTestId('debounceInput');
+    const input = getByTestId('debounce-input');
     fireEvent.change(input, { target: { value: 'test' } });
     await new Promise((r) => setTimeout(r, 500));
     expect(onDebouncedChange).toHaveBeenCalledWith('test');
