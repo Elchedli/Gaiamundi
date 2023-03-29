@@ -1,10 +1,9 @@
-import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { Button } from 'components/Button/Button';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { Button } from 'components/Button/Button';
 import { Label } from 'components/Inputs/Label';
 import { TextInput } from 'components/Inputs/TextInput';
 import { useAuth } from 'hooks/useAuth';
@@ -34,12 +33,6 @@ const SignUpForm = ({ email }: Props) => {
     },
   });
   const { authenticate } = useAuth();
-
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
 
   const { mutateAsync, isError, error, isLoading } = useMutation<
     UserAuthResponse,
@@ -174,23 +167,9 @@ const SignUpForm = ({ email }: Props) => {
           )}
         </div>
       </div>
-      <div className="mt-8 mb-8 text-sm font-medium leading-5 text-gray-700">
-        <label htmlFor="check-box">
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-          <span className="ml-2">
-            <Link to="/termsofuse">
-              J&apos;accepte les Conditions d&apos;utilisations.
-            </Link>
-          </span>
-        </label>
-      </div>
       <div className="mt-4">
         <span className="block w-full rounded-md shadow-sm">
-          <Button type="submit" disabled={!isChecked} isLoading={isLoading}>
+          <Button type="submit" isLoading={isLoading}>
             Créer un compte
           </Button>
         </span>
