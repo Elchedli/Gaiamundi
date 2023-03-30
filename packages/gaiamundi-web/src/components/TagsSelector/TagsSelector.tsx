@@ -1,16 +1,17 @@
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
-import { TextAreaInput } from 'components/Inputs/TextAreaInput';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ApiData, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getAllTags } from 'services/tag';
 
 export const TagsSelector: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [searchTags, setSearchTags] = useState<ApiData<Tag>[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     data: response,
@@ -38,7 +39,9 @@ export const TagsSelector: React.FC = () => {
       </Alert>
     );
   }
+
   const handleTagSearch = (inputValue: string) => {
+    setInputValue(inputValue);
     const filteredTags = response.data.filter((tag) =>
       tag.name.toLowerCase().includes(inputValue.toLowerCase())
     );
@@ -52,27 +55,62 @@ export const TagsSelector: React.FC = () => {
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
+    setSearchTags([]);
+    setInputValue('');
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+  const handleTagDeselect = (tag: Tag) => {
+    setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
   return (
-    <div className="grid grid-cols-5 gap-5">
-      <div className="col-span-2">
-        <TextAreaInput
-          placeholder="Rechercher un tag"
+    <div className="w-2/4">
+      <span>
+        {selectedTags.map((tag) => (
+          <span
+            key={tag.name}
+            className="bg-slate-300 selected-tag px-2 py-1 rounded-md mr-2 my-2"
+          >
+            {tag.name}
+            <button
+              className="pl-2 py-2"
+              onClick={() => handleTagDeselect(tag)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="18"
+                height="12"
+              >
+                <path d="M18.293 5.293a1 1 0 0 0-1.414 0L12 10.586 7.707 6.293a1 1 0 0 0-1.414 1.414L10.586 12l-4.293 4.293a1 1 0 1 0 1.414 1.414L12 13.414l4.293 4.293a1 1 0 0 0 1.414-1.414L13.414 12l4.879-4.879a1 1 0 0 0 0-1.414z" />
+              </svg>
+            </button>
+          </span>
+        ))}
+        <input
+          ref={inputRef}
+          className="px-2 py-1 my-1"
+          type="text"
+          placeholder="Search tags"
           onChange={(e) => handleTagSearch(e.target.value)}
+          value={inputValue}
+          autoComplete="on"
         />
-        Tags sélectionnés: {selectedTags.map((tag) => tag.name).join(', ')}
-      </div>
-      <div className="col-span-3">
-        {selectedTags && (
-          <ul>
-            {searchTags.map((tag) => (
-              <li key={tag.id} onClick={() => handleTagSelect(tag)}>
-                {tag.name}
-              </li>
-            ))}
-          </ul>
-        )}
+      </span>
+
+      <div>
+        {searchTags.map((tag) => (
+          <button
+            key={tag.id}
+            className={selectedTags.includes(tag) ? 'selected' : ''}
+            onClick={() => handleTagSelect(tag)}
+          >
+            {tag.name}&nbsp;
+          </button>
+        ))}
       </div>
     </div>
   );
