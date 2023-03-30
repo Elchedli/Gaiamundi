@@ -30,9 +30,10 @@ export const PageCartoMap: FC = () => {
   });
 
   const geoCode = useMemo(() => {
-    return map?.properties.filter((property) => {
+    const geoCodeProperty = map?.properties.find((property) => {
       return property.isGeoCode === true;
-    })[0].name;
+    });
+    return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
   // Set up panzoom on mount, and dispose on unmount
@@ -110,7 +111,7 @@ export const PageCartoMap: FC = () => {
         <ResponsiveChartContainer>
           <MapChart
             map={{
-              geoDomainKey: geoCode ? geoCode : 'admin',
+              geoDomainKey: geoCode,
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
@@ -121,7 +122,7 @@ export const PageCartoMap: FC = () => {
             geoJson={geoJsonData}
             data={data.features.map((feature: Feature, idx: number) => {
               return {
-                [geoCode || 'admin']: feature.properties?.[geoCode || 'admin'],
+                [geoCode]: feature.properties?.[geoCode],
                 value: idx,
               };
             })}
