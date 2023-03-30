@@ -2,6 +2,7 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
+import { Radio } from 'components/Inputs/Radio';
 import { ToggleSwitch } from 'components/Inputs/ToggleSwitch';
 import config from 'config';
 import { useModal } from 'hooks/useModal';
@@ -16,7 +17,7 @@ export const PageCartoIndicatorPanel: FC = () => {
   const { indicators: dataGridRows } = usePageCarto();
 
   const options = [
-    { label: 'Palettes de couleurs', value: 'default' },
+    { label: 'Palettes de couleurs', value: 'default', disabled: true },
     { label: 'Rouge', value: 'rouge' },
     { label: 'Marron', value: 'marron' },
     { label: 'Chinois', value: 'chinois' },
@@ -74,36 +75,53 @@ export const PageCartoIndicatorPanel: FC = () => {
           />
         )}
       </div>
-      <div className="flex-col">
-        <span>Affichage : </span>
-        <div className="inline-block">
-          <input type="radio" name="type-display" />
-          <span>Affichage en fond</span>
-          <br />
-          <input type="radio" name="type-display" />
-          <span>Affichage en rond</span>
+
+      <div className="mt-8 [&>*]:mt-5">
+        <div className="flex">
+          <span>Affichage &nbsp;: </span>
+          <div className="inline-block ml-4">
+            <Radio name="type-display" checked></Radio>
+            <span className="ml-2">Affichage en fond</span>
+            <br />
+            <Radio name="type-display"></Radio>
+            <span className="ml-2">Affichage en rond</span>
+          </div>
         </div>
 
         <ToggleSwitch
           label={'Diamétre proportionel à la valeur'}
-          defaultChecked={false}
+          defaultChecked={true}
           onChange={(_v) => {
             // setValue('isPublic', v);
           }}
         />
-        {/* <span>Diamétre proportionel a la valeur</span> */}
-        <span>Quantile : </span>
-        {/* option count menu  with arrows */}
-        {/* <CounterInput value={10} /> */}
-        <span>Couleurs : </span>
-        <ListBoxInput
-          className="mb-2 w-1/2"
-          defaultValue={'default'}
-          options={options}
-          onChange={() => null}
-        />
-        {/* Options menu "Palette de couleur" */}
-        <Button className="self-center">Afficher</Button>
+
+        <div>
+          <span>Quantile : </span>
+          <select name="quantile" className="p-2">
+            <option value="1" selected>
+              1
+            </option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br />
+        </div>
+
+        <div>
+          <span>Couleurs : </span>
+          <ListBoxInput
+            className="mb-2 w-1/2 inline-block"
+            defaultValue={'default'}
+            options={options}
+            onChange={() => null}
+          />
+        </div>
+        <div className="w-fit mx-auto">
+          <Button className="">Afficher</Button>
+        </div>
       </div>
     </div>
   );
