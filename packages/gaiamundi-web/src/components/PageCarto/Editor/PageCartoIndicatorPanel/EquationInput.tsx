@@ -5,13 +5,10 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { defaultFunctions, defaultVariables } from 'equation-resolver';
 import { IndicatorVariable } from 'interfaces/indicator';
 import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
-import {
-  EquationContext,
-  EquationOptions,
-  defaultErrorHandler,
-} from 'react-equation';
+import { EquationContext, EquationOptions } from 'react-equation';
 import { useQuery } from 'react-query';
 import { getEquations } from 'services/equation';
+import { frenchErrorHandler } from './ErrorHandler';
 
 const VariableList: FC<{ variables: IndicatorVariable[] }> = ({
   variables,
@@ -107,12 +104,13 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
         <EquationOptions
           variables={equationVariables}
           functions={defaultFunctions}
-          errorHandler={defaultErrorHandler}
+          errorHandler={frenchErrorHandler}
         >
           <EquationContext
             render={(equation) => (
-              <div style={{ fontSize: '150%' }}>
-                Exemple : {equation(`${formula}=`)}
+              <div>
+                <div style={{ fontSize: '150%' }}>Exemple :</div>
+                {equation(`${formula}=`)}
               </div>
             )}
           />
