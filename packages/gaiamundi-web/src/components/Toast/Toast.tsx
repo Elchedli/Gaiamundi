@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { ToastContent } from 'interfaces/toast';
 import { useToast } from 'hooks/useToast';
+import { ToastContent } from 'interfaces/toast';
 
 interface Props {
   toast: ToastContent;
@@ -92,6 +92,7 @@ export const Toast: React.FC<Props> = ({ toast }) => {
     <div
       className="flex items-end justify-center px-4 pt-6 pb-3 pointer-events-none sm:px-6 sm:items-start sm:justify-end"
       key={toast.id}
+      onClick={() => removeToast(toast.id)}
     >
       <div className="w-full max-w-sm bg-white rounded-lg shadow-lg pointer-events-auto">
         <div className="overflow-hidden rounded-lg shadow-xs">
