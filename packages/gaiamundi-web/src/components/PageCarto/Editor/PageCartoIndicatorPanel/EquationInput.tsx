@@ -62,7 +62,6 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
     }
 
     const options = response?.data || [];
-    console.log(options);
     const defaultValue = options.length ? options[0].value : formula;
 
     const handleEquationSelect = (selectedFormula: string) => {

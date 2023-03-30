@@ -82,6 +82,27 @@ export const PageCartoMap: FC = () => {
       : {};
   }, [data]);
 
+  const fun = async () => {
+    // const mergedData = await fetchConvertedCsv(pageCartoId);
+    // mergedData.map((data) => {
+    //   let newTable = {};
+    //   indicators.forEach(indicator => {
+    //     newTable[element.name] = data[indicator.]
+    //   });
+    //   return {
+    //     [geoCode]: element.geo,
+    //   };
+    // })}
+    // console.log(data);
+    // // console.log(map?.)
+    // // data.features.map((feature: Feature, idx: number) => {
+    // // return {
+    // //   [geoCode]: feature.properties?.[geoCode],
+    // //   value: idx,
+    // // };
+    // return data;
+  };
+
   if (isLoading || isIdle) {
     return (
       <LoadingMessage
@@ -128,6 +149,7 @@ export const PageCartoMap: FC = () => {
                 value: idx,
               };
             })}
+            smart={fun()}
           />
         </ResponsiveChartContainer>
       </div>
