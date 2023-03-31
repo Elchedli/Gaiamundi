@@ -2,15 +2,13 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useAuth } from 'hooks/useAuth';
 import { useToast } from 'hooks/useToast';
-import { QueryClient, useMutation } from 'react-query';
+import { useMutation } from 'react-query';
 import SignUpForm from '../SignUpForm';
 
 jest.mock('hooks/useAuth');
 jest.mock('react-query');
 jest.mock('hooks/useToast');
 jest.mock('react-router-dom');
-
-const queryClient = new QueryClient();
 
 describe('SignUpForm', () => {
   beforeEach(() => {
