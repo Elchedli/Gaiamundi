@@ -65,7 +65,7 @@ const SignUpForm = ({ email }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} data-testid="sign-up-form">
       {isError && <ApiErrorAlert error={error} />}
       <div className="mt-4">
         <Label
@@ -75,6 +75,7 @@ const SignUpForm = ({ email }: Props) => {
           Nom
         </Label>
         <TextInput
+          data-testid="name-input"
           id="username"
           className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           type="text"
@@ -99,6 +100,7 @@ const SignUpForm = ({ email }: Props) => {
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
+            data-testid="email-input"
             id="email"
             className={`appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 shadow-sm ${
               !!email && 'cursor-not-allowed'
@@ -128,6 +130,7 @@ const SignUpForm = ({ email }: Props) => {
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
+            data-testid="password-input"
             id="password"
             className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
@@ -155,6 +158,7 @@ const SignUpForm = ({ email }: Props) => {
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
+            data-testid="confirm-password-input"
             id="password2"
             className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
@@ -177,12 +181,13 @@ const SignUpForm = ({ email }: Props) => {
       <div className="mt-8 mb-8 text-sm font-medium leading-5 text-gray-700">
         <label htmlFor="check-box">
           <input
+            data-testid="checkbox"
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
           />
           <span className="ml-2">
-            <Link to="/termsofuse">
+            <Link target="_blank" to="/termsofuse">
               J&apos;accepte les Conditions d&apos;utilisations.
             </Link>
           </span>
@@ -190,7 +195,12 @@ const SignUpForm = ({ email }: Props) => {
       </div>
       <div className="mt-4">
         <span className="block w-full rounded-md shadow-sm">
-          <Button type="submit" disabled={!isChecked} isLoading={isLoading}>
+          <Button
+            data-testid="submit-button"
+            type="submit"
+            disabled={!isChecked}
+            isLoading={isLoading}
+          >
             Créer un compte
           </Button>
         </span>
