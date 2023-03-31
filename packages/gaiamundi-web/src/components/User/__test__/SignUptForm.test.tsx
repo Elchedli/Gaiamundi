@@ -44,4 +44,41 @@ describe('SignUpForm', () => {
       expect(mutateAsync).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('should toggle the checkbox when clicked and form is valid', () => {
+    const { getByTestId } = render(<SignUpForm />);
+    userEvent.type(getByTestId('name-input'), 'Jean Dupond');
+    userEvent.type(getByTestId('email-input'), 'JeanDupond@example.com');
+    userEvent.type(getByTestId('password-input'), 'password123');
+    userEvent.type(getByTestId('confirm-password-input'), 'password123');
+
+    const checkbox = getByTestId('checkbox');
+    expect(checkbox).not.toBeChecked();
+
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    fireEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+  });
+
+  it('should not submit form if checkbox is not checked', async () => {
+    const { getByTestId } = render(<SignUpForm />);
+    userEvent.type(getByTestId('name-input'), 'Jean Dupond');
+    userEvent.type(getByTestId('email-input'), 'JeanDupond@example.com');
+    userEvent.type(getByTestId('password-input'), 'password123');
+    userEvent.type(getByTestId('confirm-password-input'), 'password123');
+
+    const checkbox = getByTestId('checkbox');
+    fireEvent.click(checkbox);
+    fireEvent.click(checkbox);
+
+    const mutateAsync = (useMutation as jest.Mock).mock.results[0].value
+      .mutateAsync;
+    fireEvent.click(getByTestId('submit-button'));
+
+    await waitFor(() => {
+      expect(mutateAsync).toHaveBeenCalledTimes(0);
+    });
+  });
 });
