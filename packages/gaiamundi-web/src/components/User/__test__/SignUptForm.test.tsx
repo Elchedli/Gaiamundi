@@ -2,12 +2,13 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useAuth } from 'hooks/useAuth';
 import { useToast } from 'hooks/useToast';
-import { QueryClient, QueryClientProvider, useMutation } from 'react-query';
+import { QueryClient, useMutation } from 'react-query';
 import SignUpForm from '../SignUpForm';
 
 jest.mock('hooks/useAuth');
 jest.mock('react-query');
 jest.mock('hooks/useToast');
+jest.mock('react-router-dom');
 
 const queryClient = new QueryClient();
 
@@ -28,25 +29,18 @@ describe('SignUpForm', () => {
   });
 
   it('renders and submits form correctly', async () => {
-    const { getByText, getByLabelText, getByRole } = render(
-      <QueryClientProvider client={queryClient}>
-        <SignUpForm />
-      </QueryClientProvider>
-    );
-    userEvent.type(getByLabelText('Nom'), 'Jean Dupond');
-    userEvent.type(getByLabelText('Addresse E-mail'), 'JeanDupond@example.com');
-    userEvent.type(getByLabelText('Mot de passe'), 'password123');
-    userEvent.type(
-      getByLabelText('Confirmation du mot de passe'),
-      'password123'
-    );
+    const { getByTestId } = render(<SignUpForm />);
+    userEvent.type(getByTestId('name-input'), 'Jean Dupond');
+    userEvent.type(getByTestId('email-input'), 'JeanDupond@example.com');
+    userEvent.type(getByTestId('password-input'), 'password123');
+    userEvent.type(getByTestId('confirm-password-input'), 'password123');
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = getByTestId('checkbox');
     fireEvent.click(checkbox);
 
     const mutateAsync = (useMutation as jest.Mock).mock.results[0].value
       .mutateAsync;
-    fireEvent.click(getByText('Créer un compte'));
+    fireEvent.click(getByTestId('submit-button'));
 
     await waitFor(() => {
       expect(mutateAsync).toHaveBeenCalledTimes(1);
