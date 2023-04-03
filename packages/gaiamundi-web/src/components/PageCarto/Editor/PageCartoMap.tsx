@@ -15,13 +15,14 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
+import { Indicator, IndicatorVariable } from 'interfaces/indicator';
 import { getGeoJson } from 'services/geo-map';
 import { fetchConvertedCsv } from 'utils/strapiUtils';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
-  const { map, pageCartoId } = usePageCarto();
+  const { map, pageCartoId, indicators } = usePageCarto();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -43,38 +44,35 @@ export const PageCartoMap: FC = () => {
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
-  console.log('merged : ', mergedColumnDatas);
+  // console.log('merged : ', mergedColumnDatas);
   //this function is able to give real data to aliases instead of columnNames from the converted data
-  // const realIndicatorData = (indicator: Indicator) => {
-  //   const draftIndicatorVariables = indicator.variables.map(
-  //     (indicatorVariable: IndicatorVariable) => {
-  //       mergedColumnDatas.forEach((element: any) =>
-  //         console.log('element : ', element)
-  //       );
-  //       // const draftMergedData = mergedColumnDatas.map(
-  //       //   (element: any) => element[indicatorVariable.columnName]
-  //       // );
-  //       // realColumns
-  //       return {
-  //         alias: indicatorVariable.alias,
-  //         // realDataTable: draftMergedData,
-  //       };
-  //     }
-  //   );
-  //   return draftIndicatorVariables;
-  // };
-  // const mapValues = useMemo(() => {
-  //   return indicators.map((indicator) => {
-  //     const tableOfVariables = realIndicatorData(indicator);
-  //     /** takes all real variables from indicator surname */
-  //     // const makeFormula = /** A (nom reel a travers l'indicateur) --formule Mathématique-- B ...*/
-  //     return {
-  //       [indicator.name]: tableOfVariables,
-  //     };
-  //   });
-  // }, [mergedColumnDatas]);
+  const realIndicatorData = (indicator: Indicator) => {
+    const draftIndicatorVariables = indicator.variables?.map(
+      (indicatorVariable: IndicatorVariable) => {
+        console.log('indicatorVariable : ', indicatorVariable);
+        const draftMergedData = mergedColumnDatas?.map(
+          (element: any) => element[indicatorVariable.columnName]
+        );
+        return {
+          alias: indicatorVariable.alias,
+          realDataTable: draftMergedData,
+        };
+      }
+    );
+    return draftIndicatorVariables;
+  };
+  const mapValues = useMemo(() => {
+    return indicators?.map((indicator) => {
+      const tableOfVariables = realIndicatorData(indicator);
+      /** takes all real variables from indicator surname */
+      // const makeFormula = /** A (nom reel a travers l'indicateur) --formule Mathématique-- B ...*/
+      return {
+        [indicator.name]: tableOfVariables,
+      };
+    });
+  }, [mergedColumnDatas]);
 
-  // console.log(mapValues);
+  console.log(mapValues);
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
     if (element) {
