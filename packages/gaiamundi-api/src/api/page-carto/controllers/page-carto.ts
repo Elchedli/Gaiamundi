@@ -3,11 +3,7 @@
  */
 
 import { factories } from "@strapi/strapi";
-import {
-  GeoIndexedData,
-  mergeDataByGeocode,
-  parseDataByFragment,
-} from "../../../utils/file";
+import { optimiseCsvData } from "../../../utils/file";
 
 export default factories.createCoreController(
   "api::page-carto.page-carto",
@@ -39,13 +35,9 @@ export default factories.createCoreController(
       }
 
       const fragments = pageCarto.data_fragments;
-      const geoIndexedDataCollection: GeoIndexedData[] = await Promise.all(
-        fragments.map((fragment) => {
-          return parseDataByFragment(fragment);
-        })
-      );
-      const geoIndexedData = mergeDataByGeocode(geoIndexedDataCollection);
-      ctx.body = Object.values(geoIndexedData);
+      const geoIndexedDataCollection = await optimiseCsvData(fragments);
+
+      ctx.body = geoIndexedDataCollection;
     },
   })
 );

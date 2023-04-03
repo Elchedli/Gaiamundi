@@ -9,27 +9,12 @@ export type GeoIndexedData = {
   [geoCode: string]: Record<string, CsvCellValue>;
 };
 
-export const getFilePath = (
-  file: PluginUploadFile["attributes"],
-  dirname: string
-) => {
+const getFilePath = (file: PluginUploadFile["attributes"], dirname: string) => {
   const filename = `${file.hash}${file.ext}`;
   return path.join(strapi.dirs.static.public, dirname, filename);
 };
 
-export const pickCsvColumns = (
-  csvRows: Array<Record<string, CsvCellValue>>,
-  columns: string[]
-): Array<Record<string, CsvCellValue>> => {
-  return csvRows.map((row) => {
-    return columns.reduce((result, column) => {
-      result[column] = row[column];
-      return result;
-    }, {} as Record<string, CsvCellValue>);
-  });
-};
-
-export const parseCsvFile = (filePath: string) => {
+const parseCsvFile = (filePath: string) => {
   if (fs.existsSync(filePath)) {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return Papa.parse<Record<string, CsvCellValue>>(fileContent, {
@@ -40,39 +25,49 @@ export const parseCsvFile = (filePath: string) => {
   return Promise.reject(new Error(`Unable to read file : ${filePath}`));
 };
 
-export const indexDataByGeoCode = (
-  data: Array<Record<string, CsvCellValue>>,
-  geoCodeColumn: string
+const findIdField = (obj: Object, idTables: string[]) =>
+  Object.keys(obj).find((key) => idTables.includes(key));
+
+const mapIdField = (obj: Object, idField: string, desiredKeyName: string) => {
+  const newObj: Object = { ...obj };
+  newObj[desiredKeyName] = newObj[idField];
+  idField !== desiredKeyName && delete newObj[idField];
+  return newObj;
+};
+
+const mergeCsvObjectByGeocode = (
+  csvList: object[],
+  idTables: string[],
+  desiredKey: string
 ) => {
-  return data.reduce((acc, curr) => {
-    const geoCode = curr[geoCodeColumn] as string;
-    if (geoCode) {
-      acc[geoCode] = curr;
+  return csvList.reduce((acc: Array<object>, curr: Object) => {
+    const idField: string = findIdField(curr, idTables) || "";
+    const geocode = curr[idField];
+    const existing = acc.find((obj: Object) => obj[desiredKey] === geocode);
+    if (existing) {
+      Object.assign(existing, mapIdField(curr, idField, desiredKey));
+    } else {
+      acc.push(mapIdField(curr, idField, desiredKey));
     }
+
     return acc;
-  }, {} as GeoIndexedData);
+  }, []);
 };
 
-export const parseDataByFragment = async (fragment) => {
-  const csvPath = getFilePath(fragment.dataset.csv, "uploads");
-  const geoCodeColumn = fragment.columns.find(({ isGeoCode }) => isGeoCode);
-  if (!geoCodeColumn) {
-    throw new Error(`Unable to find the geocode for fragment #${fragment.id}`);
-  }
-  const { data } = await parseCsvFile(csvPath);
-  const columns: string[] = fragment.columns.map(({ name }) => name);
-  const fragmentData = pickCsvColumns(data, columns);
-  return indexDataByGeoCode(fragmentData, geoCodeColumn.name);
-};
+export const optimiseCsvData = async (fragments) => {
+  const tableKeys: string[] = [];
+  const allCsvData = await Promise.all(
+    fragments.map(async (fragment): Promise<object[]> => {
+      const csvPath = getFilePath(fragment.dataset.csv, "uploads");
+      tableKeys.push(
+        fragment.columns.find((column) => column.isGeoCode).name.toLowerCase()
+      );
+      const { data } = await parseCsvFile(csvPath);
+      return data;
+    })
+  )
+    .then((data) => data.flat())
+    .then((data: []) => mergeCsvObjectByGeocode(data, tableKeys, "geocode"));
 
-export const mergeDataByGeocode = (dataCollection: GeoIndexedData[]) => {
-  return dataCollection.reduce((dataDict, geoIndexedData) => {
-    return Object.entries(geoIndexedData).reduce((acc, [geoCode, row]) => {
-      acc[geoCode] = {
-        ...(geoCode in acc ? acc[geoCode] : {}),
-        ...row,
-      };
-      return acc;
-    }, dataDict);
-  }, {});
+  return allCsvData;
 };
