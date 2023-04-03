@@ -66,16 +66,16 @@ export const TagsSelector: React.FC = () => {
   };
 
   return (
-    <div className="w-2/4">
-      <span>
+    <div className="w-2/5">
+      <div className="flex flex-wrap">
         {selectedTags.map((tag) => (
           <span
             key={tag.name}
-            className="bg-slate-300 selected-tag px-2 py-1 rounded-md mr-2 my-2"
+            className="bg-blue-500 selected-tag px-1 py-1 rounded-md mr-2 my-2 overflow-hidden whitespace-nowrap break-words"
           >
             {tag.name}
             <button
-              className="pl-2 py-2"
+              className="pl-1 py-1"
               onClick={() => handleTagDeselect(tag)}
             >
               <svg
@@ -92,23 +92,32 @@ export const TagsSelector: React.FC = () => {
         ))}
         <input
           ref={inputRef}
-          className="px-2 py-1 my-1"
+          className="px-2 py-1 my-1 border-2"
           type="text"
           placeholder="Search tags"
           onChange={(e) => handleTagSearch(e.target.value)}
           value={inputValue}
-          autoComplete="on"
         />
-      </span>
-
+      </div>
       <div>
         {searchTags.map((tag) => (
           <button
             key={tag.id}
-            className={selectedTags.includes(tag) ? 'selected' : ''}
+            className="bg-slate-300 selected-tag px-1 py-1 rounded-md mr-2 my-2"
             onClick={() => handleTagSelect(tag)}
           >
             {tag.name}&nbsp;
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="18"
+                height="12"
+              >
+                <path d="M12 5v7h7v2h-7v7h-2v-7H5v-2h5V5h2z" />
+              </svg>
+            </button>
           </button>
         ))}
       </div>
