@@ -15,7 +15,9 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
-import { Indicator, IndicatorVariable } from 'interfaces/indicator';
+import { Indicator } from 'interfaces/indicator';
+
+import { evaluate } from 'mathjs';
 import { getGeoJson } from 'services/geo-map';
 import { fetchConvertedCsv } from 'utils/strapiUtils';
 
@@ -44,31 +46,27 @@ export const PageCartoMap: FC = () => {
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
-  const realIndicatorData = (indicator: Indicator) => {
-    const draftIndicatorVariables = indicator.variables?.map(
-      (indicatorVariable: IndicatorVariable) => {
-        const draftMergedData = mergedColumnDatas?.map(
-          //the + is needed to convert string value to number in a more concise variable since parseInt is returning undefined
-          (element: any) => +element[indicatorVariable.columnName.toLowerCase()]
+  const realIndicatorData = (column: any) => {
+    const mapInfo: { [key: string]: string | number } = {
+      geocode: +column.geocode,
+    };
+    indicators.forEach((indicator: Indicator) => {
+      const indicatorFormula = indicator.equation;
+      let realDataFormula = indicatorFormula;
+      indicator.variables.forEach((variable) => {
+        realDataFormula = realDataFormula.replaceAll(
+          variable.alias,
+          column[variable.columnName.toLowerCase()]
         );
-        return {
-          alias: indicatorVariable.alias,
-          valueTable: draftMergedData,
-        };
-      }
-    );
-    return draftIndicatorVariables;
+        mapInfo[indicator.name] = evaluate(realDataFormula);
+      });
+    });
+    return mapInfo;
   };
 
   const mapValues = useMemo(() => {
-    return indicators?.map((indicator) => {
-      const tableOfVariables = realIndicatorData(indicator);
-      /** takes all real variables from indicator surname */
-      // const makeFormula = /** A (nom reel a travers l'indicateur) --formule Mathématique-- B ...*/
-      return {
-        [indicator.name]: tableOfVariables,
-        equation: indicator.equation,
-      };
+    return mergedColumnDatas?.map((Column: any) => {
+      return realIndicatorData(Column);
     });
   }, [mergedColumnDatas]);
 
@@ -159,10 +157,11 @@ export const PageCartoMap: FC = () => {
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
             geoJson={geoJsonData}
-            data={data.features.map((feature: Feature, idx: number) => {
+            data={mapValues?.map((mapValue: any) => {
+              console.log({ mapValue });
               return {
-                [geoCode]: feature.properties?.[geoCode],
-                value: idx,
+                [geoCode]: mapValue.geocode.toString(),
+                value: mapValue.Equationtest,
               };
             })}
           />
