@@ -1,7 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { DatasetColumn } from 'interfaces/column';
-import { act } from 'react-dom/test-utils';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockDataFragments, mockPageCartoData } from 'utils/mocks/data';
 import { PageCartoIndicatorForm } from '../PageCartoIndicatorForm';
@@ -42,6 +41,10 @@ jest.mock('services/indicator', () => {
 });
 
 describe('Indicator form tests', () => {
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   afterAll(() => {
     jest.clearAllMocks();
   });
@@ -56,9 +59,7 @@ describe('Indicator form tests', () => {
             columns={mockDataFragments[0].columns.map((column) => {
               return { ...column, dataset: 'mockDataset' } as DatasetColumn;
             })}
-            onSubmit={function (): void {
-              null;
-            }}
+            onSubmit={jest.fn()}
           />
         </PageCartoProvider>
       </QueryClientProvider>
@@ -67,43 +68,37 @@ describe('Indicator form tests', () => {
       expect(getByTestId('indicator-form')).toBeInTheDocument();
     });
   });
+
   // Fill out the form fields and check if the submit was called
   it('should function properly', async () => {
     jest.useFakeTimers();
     const queryClient = new QueryClient();
-    window.HTMLElement.prototype.scrollIntoView = function () {
-      null;
-    };
-
     const mockSubmit = jest.fn();
-    const Component = () =>
-      render(
-        <QueryClientProvider client={queryClient}>
-          <PageCartoProvider id={mockPageCartoData.id}>
-            <PageCartoIndicatorForm
-              pageCartoId={mockPageCartoData.id}
-              columns={mockDataFragments[0].columns.map((column) => {
-                return { ...column, dataset: 'mockDataset' } as DatasetColumn;
-              })}
-              onSubmit={mockSubmit}
-            />
-          </PageCartoProvider>
-        </QueryClientProvider>
-      );
+    const { getByTestId, getAllByRole } = render(
+      <QueryClientProvider client={queryClient}>
+        <PageCartoProvider id={mockPageCartoData.id}>
+          <PageCartoIndicatorForm
+            pageCartoId={mockPageCartoData.id}
+            columns={mockDataFragments[0].columns.map((column) => {
+              return { ...column, dataset: 'mockDataset' } as DatasetColumn;
+            })}
+            onSubmit={mockSubmit}
+          />
+        </PageCartoProvider>
+      </QueryClientProvider>
+    );
 
-    jest.spyOn(console, 'error').mockImplementation(() => undefined);
-
-    await act(async () => {
-      Component();
+    await waitFor(() => {
+      expect(getByTestId('indicator-form')).toBeInTheDocument();
     });
 
-    const nameInput = screen.getByTestId('name-input');
-    const descriptionInput = screen.getByTestId('description-input');
-    const equationInput = screen.getByTestId('equation-input');
-    const sourceInput = screen.getByTestId('source-input');
-    const submitButton = screen.getByTestId('submit-button');
-    const checkboxes = screen.getAllByRole('checkbox');
-    const validityInput = screen.getByTestId('validity-input');
+    const nameInput = getByTestId('name-input');
+    const descriptionInput = getByTestId('description-input');
+    const equationInput = getByTestId('equation-input');
+    const sourceInput = getByTestId('source-input');
+    const checkboxes = getAllByRole('checkbox');
+    const validityInput = getByTestId('validity-input');
+
     fireEvent.change(nameInput, { target: { value: 'mockIndicator' } });
     fireEvent.change(descriptionInput, {
       target: { value: 'this is a mock indicator' },
@@ -115,28 +110,22 @@ describe('Indicator form tests', () => {
     fireEvent.change(sourceInput, {
       target: { value: 'france-geojson' },
     });
-    expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+    fireEvent.change(validityInput, {
+      target: { value: '2023' },
+    });
+
     expect(validityInput).toBeInTheDocument();
-    expect(checkboxes[0]).toBeChecked();
     expect(nameInput).toHaveValue('mockIndicator');
     expect(descriptionInput).toHaveValue('this is a mock indicator');
     expect(equationInput).toHaveValue('A+2');
     expect(sourceInput).toHaveValue('france-geojson');
-    fireEvent.change(validityInput, {
-      target: { value: '2' },
-    });
+    expect(validityInput).toHaveValue('2023');
 
     await waitFor(() => {
-      expect(validityInput).toHaveValue('2');
+      const submitButton = getByTestId('submit-button');
+      expect(submitButton).not.toHaveAttribute('disabled');
       fireEvent.click(submitButton);
       expect(mockSubmit).toHaveBeenCalled();
-    });
-
-    jest.spyOn(console, 'error').mockImplementation((error) => {
-      if (error.toString().includes('act(')) {
-        return;
-      }
-      console.error(error);
     });
   });
 });

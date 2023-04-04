@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { FilterBar } from 'components/PageCarto/Dashboard/FilterBar';
 import { useAuth } from 'hooks/useAuth';
 import { useQuery } from 'react-query';
@@ -44,15 +44,16 @@ describe('FilterBar', () => {
     const [tagName1, tagName2] = [mockTags[0].name, mockTags[1].name];
     const tag1 = getByText(tagName1);
     const tag2 = getByText(tagName2);
+
     expect(tag1).toBeInTheDocument();
     expect(tag2).toBeInTheDocument();
 
-    await waitFor(() => {
-      fireEvent.click(getByText(tagName1));
-      fireEvent.click(getByText(tagName2));
-    });
+    fireEvent.click(getByText(tagName1));
+    fireEvent.click(getByText(tagName2));
+
     expect(props.onTagChange).toHaveBeenCalledWith([1, 2]);
   });
+
   it('should return the loading message', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [] },
