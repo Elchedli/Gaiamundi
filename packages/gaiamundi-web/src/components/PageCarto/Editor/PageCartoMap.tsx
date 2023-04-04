@@ -46,8 +46,6 @@ export const PageCartoMap: FC = () => {
           minZoom: 0.25,
           maxZoom: 4,
           smoothScroll: true,
-          bounds: true,
-          boundsPadding: 0.4,
         });
       }
     }
