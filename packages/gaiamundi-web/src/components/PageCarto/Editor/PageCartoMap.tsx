@@ -44,23 +44,22 @@ export const PageCartoMap: FC = () => {
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
-  // console.log('merged : ', mergedColumnDatas);
-  //this function is able to give real data to aliases instead of columnNames from the converted data
   const realIndicatorData = (indicator: Indicator) => {
     const draftIndicatorVariables = indicator.variables?.map(
       (indicatorVariable: IndicatorVariable) => {
-        console.log('indicatorVariable : ', indicatorVariable);
         const draftMergedData = mergedColumnDatas?.map(
-          (element: any) => element[indicatorVariable.columnName]
+          //the + is needed to convert string value to number in a more concise variable since parseInt is returning undefined
+          (element: any) => +element[indicatorVariable.columnName.toLowerCase()]
         );
         return {
           alias: indicatorVariable.alias,
-          realDataTable: draftMergedData,
+          valueTable: draftMergedData,
         };
       }
     );
     return draftIndicatorVariables;
   };
+
   const mapValues = useMemo(() => {
     return indicators?.map((indicator) => {
       const tableOfVariables = realIndicatorData(indicator);
@@ -68,6 +67,7 @@ export const PageCartoMap: FC = () => {
       // const makeFormula = /** A (nom reel a travers l'indicateur) --formule Mathématique-- B ...*/
       return {
         [indicator.name]: tableOfVariables,
+        equation: indicator.equation,
       };
     });
   }, [mergedColumnDatas]);
