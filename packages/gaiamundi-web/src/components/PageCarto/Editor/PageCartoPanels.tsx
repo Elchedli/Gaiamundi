@@ -2,6 +2,7 @@ import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { PageCartoDataPanel } from './PageCartoDataPanel/PageCartoDataPanel';
+import TextEditor from './PageCartoHyperTextPanel/TextEditor';
 import { PageCartoIndicatorPanel } from './PageCartoIndicatorPanel/PageCartoIndicatorPanel';
 
 export const PageCartoPanels: FC = () => {
@@ -9,7 +10,7 @@ export const PageCartoPanels: FC = () => {
     {
       id: 1,
       title: 'Hypertexte',
-      content: <div className="text-center">en cours de développement</div>,
+      content: <TextEditor />,
     },
     {
       id: 2,
