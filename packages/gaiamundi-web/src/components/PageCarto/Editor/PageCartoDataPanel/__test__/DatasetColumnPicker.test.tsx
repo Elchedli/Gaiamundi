@@ -76,8 +76,6 @@ describe('DatasetColumnPicker', () => {
 
     await waitFor(() => {
       fireEvent.click(columnCheckbox as Element);
-    });
-    await waitFor(() => {
       const columnRadio = dataGridRow.querySelector('input[type=radio]');
       expect(columnRadio).not.toBeNull();
       fireEvent.click(columnRadio as Element);
