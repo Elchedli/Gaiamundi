@@ -8,7 +8,7 @@ import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
 import { EquationContext, EquationOptions } from 'react-equation';
 import { useQuery } from 'react-query';
 import { getEquations } from 'services/equation';
-import { frenchErrorHandler } from './ErrorHandler';
+import { customErrorHandler } from './ErrorHandler';
 
 const VariableList: FC<{ variables: IndicatorVariable[] }> = ({
   variables,
@@ -104,12 +104,12 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
         <EquationOptions
           variables={equationVariables}
           functions={defaultFunctions}
-          errorHandler={frenchErrorHandler}
+          errorHandler={customErrorHandler}
         >
           <EquationContext
             render={(equation) => (
               <div>
-                <div style={{ fontSize: '150%' }}>Exemple :</div>
+                <div className="text-2xl">Exemple :</div>
                 {equation(`${formula}=`)}
               </div>
             )}

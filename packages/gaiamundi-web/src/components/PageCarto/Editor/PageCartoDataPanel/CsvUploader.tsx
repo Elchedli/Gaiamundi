@@ -55,9 +55,7 @@ export const CsvUploader = forwardRef<HTMLDivElement, CsvUploaderProps>(
         if (onParse) {
           const columns = parseCsvColumns(
             data.meta.fields || [],
-            data.data as {
-              [key: string]: number | string;
-            }[]
+            data.data as Record<string, number | string>[]
           );
           onParse(columns);
         }

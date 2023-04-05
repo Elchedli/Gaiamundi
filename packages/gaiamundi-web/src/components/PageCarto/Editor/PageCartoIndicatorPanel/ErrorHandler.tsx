@@ -10,7 +10,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => (
   </div>
 );
 
-export const frenchErrorHandler = {
+export const customErrorHandler = {
   // Parser errors
 
   /** `2 3` */

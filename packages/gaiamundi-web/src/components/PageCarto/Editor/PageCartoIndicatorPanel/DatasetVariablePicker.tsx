@@ -39,11 +39,11 @@ const DatasetVariablePicker = React.forwardRef<
 
   useEffect(() => {
     const selected = Array.from(selectedColumns).map((name, idx) => {
-      const selectedCol = columns.find((column) => column.name === name);
+      const selectedColumn = columns.find((column) => column.name === name);
       return {
         columnName: name,
         alias: ALPHABET_RANGE[idx],
-        sample: selectedCol ? selectedCol.sample : 1,
+        sample: selectedColumn ? selectedColumn.sample : 1,
       };
     });
     onChange(selected);
