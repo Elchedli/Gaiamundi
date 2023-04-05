@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { DatasetColumn } from 'interfaces/column';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -71,7 +71,6 @@ describe('Indicator form tests', () => {
 
   // Fill out the form fields and check if the submit was called
   it('should function properly', async () => {
-    jest.useFakeTimers();
     const queryClient = new QueryClient();
     const mockSubmit = jest.fn();
     const { getByTestId, getAllByRole } = render(
@@ -93,33 +92,42 @@ describe('Indicator form tests', () => {
     });
 
     const nameInput = getByTestId('name-input');
-    const descriptionInput = getByTestId('description-input');
-    const equationInput = getByTestId('equation-input');
-    const sourceInput = getByTestId('source-input');
-    const checkboxes = getAllByRole('checkbox');
-    const validityInput = getByTestId('validity-input');
-
     fireEvent.change(nameInput, { target: { value: 'mockIndicator' } });
+    expect(nameInput).toHaveValue('mockIndicator');
+
+    const descriptionInput = getByTestId('description-input');
     fireEvent.change(descriptionInput, {
       target: { value: 'this is a mock indicator' },
     });
-    fireEvent.click(checkboxes[0]);
+    expect(descriptionInput).toHaveValue('this is a mock indicator');
+
+    await waitFor(() => {
+      expect(getByTestId('equation-input')).toBeInTheDocument();
+    });
+
+    const equationInput = getByTestId('equation-input');
     fireEvent.change(equationInput, {
       target: { value: 'A+2' },
     });
+    expect(equationInput).toHaveValue('A+2');
+
+    const sourceInput = getByTestId('source-input');
     fireEvent.change(sourceInput, {
       target: { value: 'france-geojson' },
     });
+    expect(sourceInput).toHaveValue('france-geojson');
+
+    const validityInput = getByTestId('validity-input');
+    expect(validityInput).toBeInTheDocument();
     fireEvent.change(validityInput, {
       target: { value: '2023' },
     });
-
-    expect(validityInput).toBeInTheDocument();
-    expect(nameInput).toHaveValue('mockIndicator');
-    expect(descriptionInput).toHaveValue('this is a mock indicator');
-    expect(equationInput).toHaveValue('A+2');
-    expect(sourceInput).toHaveValue('france-geojson');
     expect(validityInput).toHaveValue('2023');
+
+    act(() => {
+      const checkboxes = getAllByRole('checkbox');
+      fireEvent.click(checkboxes[0]);
+    });
 
     await waitFor(() => {
       const submitButton = getByTestId('submit-button');
