@@ -20,8 +20,13 @@ import { Indicator } from 'interfaces/indicator';
 import { evaluate } from 'mathjs';
 import { getGeoJson } from 'services/geo-map';
 import { fetchConvertedCsv } from 'utils/strapiUtils';
+import { chosenIndicatorProps } from './PageCartoEditor';
 
-export const PageCartoMap: FC = () => {
+interface pageCartoMapProps {
+  chosenIndicator: chosenIndicatorProps;
+}
+
+export const PageCartoMap: FC<pageCartoMapProps> = ({ chosenIndicator }) => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   const { map, pageCartoId, indicators } = usePageCarto();
@@ -46,31 +51,32 @@ export const PageCartoMap: FC = () => {
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
-  const realIndicatorData = (column: any) => {
-    const mapInfo: { [key: string]: string | number } = {
-      geocode: +column.geocode,
-    };
-    indicators.forEach((indicator: Indicator) => {
-      const indicatorFormula = indicator.equation;
-      let realDataFormula = indicatorFormula;
+  const realIndicatorData = (indicator: Indicator) => {
+    return mergedColumnDatas.map((mergedColumn: any) => {
+      let realDataFormula = indicator.equation;
       indicator.variables.forEach((variable) => {
         realDataFormula = realDataFormula.replaceAll(
           variable.alias,
-          column[variable.columnName.toLowerCase()]
+          mergedColumn[variable.columnName.toLowerCase()]
         );
-        mapInfo[indicator.name] = evaluate(realDataFormula);
       });
+      return {
+        geocode: mergedColumn.geocode,
+        formula: evaluate(realDataFormula),
+      };
     });
-    return mapInfo;
   };
 
   const mapValues = useMemo(() => {
-    return mergedColumnDatas?.map((Column: any) => {
-      return realIndicatorData(Column);
-    });
-  }, [mergedColumnDatas]);
+    //change variable after
+    const indicator = indicators.find(
+      (indicator: Indicator) => indicator.name === chosenIndicator.indicatorName
+    );
+    if (indicator != undefined) return realIndicatorData(indicator);
+    return [];
+  }, [mergedColumnDatas, chosenIndicator]);
 
-  console.log(mapValues);
+  // console.log(mapValues);
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
     if (element) {
@@ -157,11 +163,11 @@ export const PageCartoMap: FC = () => {
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
             geoJson={geoJsonData}
-            data={mapValues?.map((mapValue: any) => {
-              console.log({ mapValue });
+            data={mapValues.map((mapValue: any) => {
+              // console.log({ mapValue });
               return {
-                [geoCode]: mapValue.geocode.toString(),
-                value: mapValue.Equationtest,
+                [geoCode]: mapValue.geocode,
+                value: mapValue.formula,
               };
             })}
           />

@@ -11,10 +11,14 @@ import { FC } from 'react';
 import DataGrid from 'react-data-grid';
 import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
 
-export const PageCartoIndicatorPanel: FC = () => {
+interface PageCartoIndicatorPanelProps {
+  changeIndicator: (indicateurName: string, type: string) => void;
+}
+export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
+  changeIndicator,
+}) => {
   const { showModal, hideModal } = useModal();
-  const { pageCartoId, columns } = usePageCarto();
-  const { indicators: dataGridRows } = usePageCarto();
+  const { pageCartoId, columns, indicators: dataGridRows } = usePageCarto();
 
   const options = [
     { label: 'Palettes de couleurs', value: 'default', disabled: true },
@@ -24,6 +28,8 @@ export const PageCartoIndicatorPanel: FC = () => {
     { label: 'Non chinois (palette)', value: 'nonchinois' },
   ];
 
+  const changeIndicatorMap = (indicatorName: string, type: string) =>
+    changeIndicator(indicatorName, type);
   return (
     <div>
       <div className="mt-5 text-right">
@@ -51,12 +57,32 @@ export const PageCartoIndicatorPanel: FC = () => {
             className="border"
             columns={[
               {
+                key: 'basic',
+                name: 'Fond',
+                formatter: ({ row }) => (
+                  <Radio
+                    name="indicator"
+                    onChange={() => changeIndicatorMap(row.name, 'basic')}
+                  />
+                ),
+              },
+              {
+                key: 'round',
+                name: 'Rond',
+                formatter: ({ row }) => (
+                  <Radio
+                    name="indicator"
+                    onChange={() => changeIndicatorMap(row.name, 'round')}
+                  />
+                ),
+              },
+              {
                 key: 'id',
                 name: '#',
               },
               {
                 key: 'name',
-                name: 'Indicateur',
+                name: 'Indicateurs',
               },
               {
                 key: 'description',
@@ -80,7 +106,7 @@ export const PageCartoIndicatorPanel: FC = () => {
         <div className="flex">
           <span>Affichage &nbsp;: </span>
           <div className="inline-block ml-4">
-            <Radio name="type-display" checked></Radio>
+            <Radio name="type-display" defaultChecked></Radio>
             <span className="ml-2">Affichage en fond</span>
             <br />
             <Radio name="type-display"></Radio>
@@ -95,13 +121,10 @@ export const PageCartoIndicatorPanel: FC = () => {
             // setValue('isPublic', v);
           }}
         />
-
         <div>
           <span>Quantile : </span>
-          <select name="quantile" className="p-2">
-            <option value="1" selected>
-              1
-            </option>
+          <select name="quantile" className="p-2" defaultValue="1">
+            <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
