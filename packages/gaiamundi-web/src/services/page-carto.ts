@@ -22,6 +22,7 @@ export const getPageCartoById = async (id: number) => {
       map: {
         populate: {
           geoJSON: true,
+          properties: true,
         },
       },
       owner: true,
