@@ -31,25 +31,29 @@ describe('FilterBar', () => {
   });
 
   it('should pass the onSearchKeywordChange prop', async () => {
-    const { getByPlaceholderText } = render(<FilterBar {...props} />);
-    const input = getByPlaceholderText('Recherche ...');
+    const { getByTestId } = render(<FilterBar {...props} />);
+    const input = getByTestId('search-input');
     expect(input).toBeInTheDocument();
     fireEvent.change(input, { target: { value: 'Yes' } });
     await new Promise((r) => setTimeout(r, 500));
     expect(props.onSearchKeywordChange).toHaveBeenCalled();
   });
 
-  it('should pass the onTagChange prop', () => {
+  it('should pass the onTagChange prop', async () => {
     const { getByText } = render(<FilterBar {...props} />);
-    const tag1 = getByText('Tag A');
-    const tag2 = getByText('Tag B');
+    const [tagName1, tagName2] = [mockTags[0].name, mockTags[1].name];
+    const tag1 = getByText(tagName1);
+    const tag2 = getByText(tagName2);
+
     expect(tag1).toBeInTheDocument();
     expect(tag2).toBeInTheDocument();
-    getByText('Tag A').click();
-    fireEvent.click(getByText('Tag A'));
-    fireEvent.click(getByText('Tag B'));
+
+    fireEvent.click(getByText(tagName1));
+    fireEvent.click(getByText(tagName2));
+
     expect(props.onTagChange).toHaveBeenCalledWith([1, 2]);
   });
+
   it('should return the loading message', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [] },

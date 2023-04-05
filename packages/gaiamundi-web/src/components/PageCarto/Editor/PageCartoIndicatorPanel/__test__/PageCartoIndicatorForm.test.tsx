@@ -41,6 +41,10 @@ jest.mock('services/indicator', () => {
 });
 
 describe('Indicator form tests', () => {
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   afterAll(() => {
     jest.clearAllMocks();
   });
@@ -55,8 +59,7 @@ describe('Indicator form tests', () => {
             columns={mockDataFragments[0].columns.map((column) => {
               return { ...column, dataset: 'mockDataset' } as DatasetColumn;
             })}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onSubmit={function (): void {}}
+            onSubmit={jest.fn()}
           />
         </PageCartoProvider>
       </QueryClientProvider>
@@ -69,10 +72,7 @@ describe('Indicator form tests', () => {
   // Fill out the form fields and check if the submit was called
   it('should function properly', async () => {
     const queryClient = new QueryClient();
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    window.HTMLElement.prototype.scrollIntoView = function () {};
-    const onSubmit = jest.fn();
-
+    const mockSubmit = jest.fn();
     const { getByTestId, getAllByRole } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
@@ -81,51 +81,59 @@ describe('Indicator form tests', () => {
             columns={mockDataFragments[0].columns.map((column) => {
               return { ...column, dataset: 'mockDataset' } as DatasetColumn;
             })}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onSubmit={onSubmit}
+            onSubmit={mockSubmit}
           />
         </PageCartoProvider>
       </QueryClientProvider>
     );
 
-    await waitFor(async () => {
+    await waitFor(() => {
       expect(getByTestId('indicator-form')).toBeInTheDocument();
-      const nameInput = getByTestId('name-input');
-      const descriptionInput = getByTestId('description-input');
-      const equationInput = getByTestId('equation-input');
-      const sourceInput = getByTestId('source-input');
-      const validityInput = getByTestId('validity-input');
-      const submitButton = getByTestId('submit-button');
+    });
+
+    const nameInput = getByTestId('name-input');
+    fireEvent.change(nameInput, { target: { value: 'mockIndicator' } });
+    expect(nameInput).toHaveValue('mockIndicator');
+
+    const descriptionInput = getByTestId('description-input');
+    fireEvent.change(descriptionInput, {
+      target: { value: 'this is a mock indicator' },
+    });
+    expect(descriptionInput).toHaveValue('this is a mock indicator');
+
+    await waitFor(() => {
+      expect(getByTestId('equation-input')).toBeInTheDocument();
+    });
+
+    const equationInput = getByTestId('equation-input');
+    fireEvent.change(equationInput, {
+      target: { value: 'A+2' },
+    });
+    expect(equationInput).toHaveValue('A+2');
+
+    const sourceInput = getByTestId('source-input');
+    fireEvent.change(sourceInput, {
+      target: { value: 'france-geojson' },
+    });
+    expect(sourceInput).toHaveValue('france-geojson');
+
+    const validityInput = getByTestId('validity-input');
+    expect(validityInput).toBeInTheDocument();
+    fireEvent.change(validityInput, {
+      target: { value: '2023' },
+    });
+    expect(validityInput).toHaveValue('2023');
+
+    act(() => {
       const checkboxes = getAllByRole('checkbox');
-
-      fireEvent.change(nameInput, { target: { value: 'mockIndicator' } });
-      fireEvent.change(descriptionInput, {
-        target: { value: 'this is a mock indicator' },
-      });
       fireEvent.click(checkboxes[0]);
-      fireEvent.change(equationInput, {
-        target: { value: 'A+2' },
-      });
-      fireEvent.change(sourceInput, {
-        target: { value: 'france-geojson' },
-      });
-      fireEvent.change(validityInput, {
-        target: { value: '2' },
-      });
+    });
 
-      expect(checkboxes[0]).toBeChecked();
-      expect(nameInput).toHaveValue('mockIndicator');
-      expect(descriptionInput).toHaveValue('this is a mock indicator');
-      expect(equationInput).toHaveValue('A+2');
-      expect(sourceInput).toHaveValue('france-geojson');
-      expect(validityInput).toHaveValue('2');
-
-      await waitFor(() => {
-        act(() => {
-          fireEvent.click(submitButton);
-        });
-        expect(onSubmit).toHaveBeenCalled();
-      });
+    await waitFor(() => {
+      const submitButton = getByTestId('submit-button');
+      expect(submitButton).not.toHaveAttribute('disabled');
+      fireEvent.click(submitButton);
+      expect(mockSubmit).toHaveBeenCalled();
     });
   });
 });

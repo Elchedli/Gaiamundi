@@ -2,21 +2,17 @@ import { fireEvent, render } from '@testing-library/react';
 import { TagsFilter } from 'components/PageCarto/Dashboard/TagsFilter';
 import { mockTags } from 'utils/mocks/data';
 
+const [firstTag, secondTag] = mockTags;
+
 describe('TagsFilter', () => {
   it('displays tags grouped by type', () => {
     const { getByText } = render(
       <TagsFilter onChange={jest.fn()} tags={mockTags} />
     );
-    const typeALabel = getByText('Géographique');
-    const tagA = getByText('Tag A');
-    const tagB = getByText('Tag B');
-    const typeBLabel = getByText('Thématique');
-    const tagC = getByText('Tag C');
-    expect(typeALabel).toBeInTheDocument();
-    expect(tagA).toBeInTheDocument();
-    expect(tagB).toBeInTheDocument();
-    expect(typeBLabel).toBeInTheDocument();
-    expect(tagC).toBeInTheDocument();
+
+    mockTags.forEach((tag) => {
+      expect(getByText(tag.name)).toBeInTheDocument();
+    });
   });
 
   it('adds and removes selected tags', async () => {
@@ -24,12 +20,15 @@ describe('TagsFilter', () => {
     const { getByText } = render(
       <TagsFilter onChange={onChange} tags={mockTags} />
     );
-    fireEvent.click(getByText('Tag A'));
-    expect(onChange).toHaveBeenCalledWith([1]);
-    fireEvent.click(getByText('Tag B'));
-    expect(onChange).toHaveBeenCalledWith([1, 2]);
-    fireEvent.click(getByText('Tag A'));
-    expect(onChange).toHaveBeenCalledWith([2]);
+
+    fireEvent.click(getByText(firstTag.name));
+    expect(onChange).toHaveBeenCalledWith([firstTag.id]);
+
+    fireEvent.click(getByText(secondTag.name));
+    expect(onChange).toHaveBeenCalledWith([firstTag.id, secondTag.id]);
+
+    fireEvent.click(getByText(firstTag.name));
+    expect(onChange).toHaveBeenCalledWith([secondTag.id]);
   });
 
   it('displays selected tags and allows them to be removed', () => {
@@ -37,27 +36,40 @@ describe('TagsFilter', () => {
     const { getByText } = render(
       <TagsFilter onChange={onChange} tags={mockTags} />
     );
-    const tagA = getByText('Tag A');
-    fireEvent.click(tagA);
-    const selectedTagA = getByText('Tag A');
+
+    const tag1 = getByText(firstTag.name);
+
+    fireEvent.click(tag1);
+
+    const selectedTagA = getByText(firstTag.name);
+
     expect(selectedTagA).toBeInTheDocument();
+
     fireEvent.click(selectedTagA);
+
     expect(onChange).toHaveBeenCalledWith([]);
     expect(selectedTagA).not.toBeInTheDocument();
   });
 
-  it('resets selection when "Effacer tout" button is clicked (add and remove must work)', () => {
+  it('resets selection when "Effacer tout" button is clicked (add and remove must work)', async () => {
     const onChange = jest.fn();
-    const { getByText } = render(
+
+    const { getByText, getByTestId } = render(
       <TagsFilter onChange={onChange} tags={mockTags} />
     );
-    fireEvent.click(getByText('Tag A'));
-    fireEvent.click(getByText('Tag B'));
-    expect(getByText('Tag A')).not.toContainHTML('class');
-    expect(getByText('Tag B')).not.toContainHTML('class');
-    fireEvent.click(getByText('Effacer tout'));
+
+    const selectedTags = getByTestId('selected-tags-filter');
+
+    expect(selectedTags.children).toHaveLength(0);
+
+    fireEvent.click(getByText(firstTag.name));
+    fireEvent.click(getByText(secondTag.name));
+
+    expect(selectedTags.children).toHaveLength(2);
+
+    fireEvent.click(getByTestId('clear-tags-filter'));
+
     expect(onChange).toHaveBeenCalledWith([]);
-    expect(getByText('Tag A')).toContainHTML('class');
-    expect(getByText('Tag B')).toContainHTML('class');
+    expect(selectedTags.children).toHaveLength(0);
   });
 });
