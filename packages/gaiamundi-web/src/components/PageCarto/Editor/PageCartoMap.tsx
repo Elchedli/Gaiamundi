@@ -39,6 +39,7 @@ export const PageCartoMap: FC = () => {
   }, [map]);
 
   //Whenever the map values change the saveScreenshot is triggered.
+  //this still unsure about useeffect and map.geoJSON updating.
   useEffect(() => {
     saveScreenshot();
   }, [map?.geoJSON]);
