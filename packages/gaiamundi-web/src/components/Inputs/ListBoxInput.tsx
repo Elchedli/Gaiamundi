@@ -9,7 +9,6 @@ type ListBoxInputProps<T> = {
   options: Array<{
     value: T;
     label: string;
-    disabled?: boolean;
   }>;
   onChange: (value: T) => void;
 };
@@ -56,13 +55,11 @@ export const ListBoxInput = <T extends string | number>({
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {options.map(({ value, label, disabled }) => (
+            {options.map(({ value, label }) => (
               <Listbox.Option
                 key={value.toString()}
                 value={value}
                 data-testid="list-boxinput"
-                disabled={disabled}
-                hidden={disabled}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                     active ? 'bg-lime-100 text-lime-900' : 'text-gray-900'
