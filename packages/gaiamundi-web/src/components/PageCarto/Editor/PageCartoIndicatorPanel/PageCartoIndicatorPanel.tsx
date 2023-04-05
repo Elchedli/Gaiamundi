@@ -103,17 +103,6 @@ export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
       </div>
 
       <div className="mt-8 [&>*]:mt-5">
-        <div className="flex">
-          <span>Affichage &nbsp;: </span>
-          <div className="inline-block ml-4">
-            <Radio name="type-display" defaultChecked></Radio>
-            <span className="ml-2">Affichage en fond</span>
-            <br />
-            <Radio name="type-display"></Radio>
-            <span className="ml-2">Affichage en rond</span>
-          </div>
-        </div>
-
         <ToggleSwitch
           label={'Diamétre proportionel à la valeur'}
           defaultChecked={true}
