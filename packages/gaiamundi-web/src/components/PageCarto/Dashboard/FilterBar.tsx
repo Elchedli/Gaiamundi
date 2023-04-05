@@ -52,6 +52,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         className="w-full my-3"
         name="inputSearch"
         placeholder="Recherche ..."
+        data-testid="search-input"
         onDebouncedChange={onSearchKeywordChange}
       />
 

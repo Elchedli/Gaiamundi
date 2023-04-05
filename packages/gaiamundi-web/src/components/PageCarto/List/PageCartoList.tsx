@@ -49,8 +49,6 @@ export const PageCartoList = () => {
       <div className="flex flex-row mt-5 justify-center">
         <Pagination
           page={page}
-          onPaginateNext={() => setPage(page + 1)}
-          onPaginatePrevious={() => setPage(page - 1)}
           onPaginate={(p: number) => setPage(p)}
           totalPages={meta.pagination.pageCount || 0}
         />

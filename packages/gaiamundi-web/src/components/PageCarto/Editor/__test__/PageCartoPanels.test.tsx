@@ -14,6 +14,16 @@ jest.mock('services/page-carto', () => {
     },
   };
 });
+jest.mock('@excalidraw/excalidraw', () => ({
+  // mock implementation of excalidraw
+}));
+jest.mock('lib0/webcrypto', () => ({
+  // mock implementation of webcrypto
+}));
+
+jest.mock('nanoid', () => ({
+  nanoid: () => 'mocked-id',
+}));
 
 describe('PageCartoPanels', () => {
   afterAll(() => {

@@ -16,7 +16,7 @@ export const SearchInputDebounce: FC<DebouncedSearchInputProps> = ({
 
   return (
     <TextInput
-      data-testid="debounceInput"
+      data-testid="debounce-input"
       {...otherProps}
       onChange={debounce(debounceSearch)}
     />

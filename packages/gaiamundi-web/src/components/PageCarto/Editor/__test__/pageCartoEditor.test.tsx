@@ -4,7 +4,16 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { PageCartoEditor } from '../PageCartoEditor';
 
 jest.mock('hooks/usePageCarto');
+jest.mock('@excalidraw/excalidraw', () => ({
+  // mock implementation of excalidraw
+}));
+jest.mock('lib0/webcrypto', () => ({
+  // mock implementation of webcrypto
+}));
 
+jest.mock('nanoid', () => ({
+  nanoid: () => 'mocked-id',
+}));
 describe('pageCartoEditor', () => {
   afterAll(() => {
     jest.clearAllMocks();
