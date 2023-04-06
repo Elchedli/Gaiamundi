@@ -5,12 +5,15 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
 import { useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { getAllTags } from 'services/tag';
+import { createTag, getAllTags } from 'services/tag';
 
-export const TagsSelector: React.FC = () => {
+export const TagsSelector: React.FC<{ onData: (tags: Tag[]) => void }> = ({
+  onData,
+}) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [searchTags, setSearchTags] = useState<ApiData<Tag>[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
+  const [tagListKey, setTagListKey] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -45,33 +48,54 @@ export const TagsSelector: React.FC = () => {
     const filteredTags = response.data.filter((tag) =>
       tag.name.toLowerCase().includes(inputValue.toLowerCase())
     );
-    setSearchTags(filteredTags);
+    setSearchTags(filteredTags.filter((tag) => !selectedTags.includes(tag)));
   };
 
   const handleTagSelect = (tag: Tag) => {
     const isSelected = selectedTags.includes(tag);
     if (isSelected) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
+      onData([...selectedTags, tag]);
     } else {
       setSelectedTags([...selectedTags, tag]);
+      onData([...selectedTags, tag]);
     }
-    setSearchTags([]);
     setInputValue('');
     if (inputRef.current) {
-      inputRef.current.focus();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
     }
+    setTagListKey(tagListKey + 1);
   };
+
   const handleTagDeselect = (tag: Tag) => {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
+  const handleSubmit = () => {
+    const inputValue = inputRef.current?.value ?? '';
+    if (!searchTags.some((tag) => tag.name === inputValue)) {
+      const newTag: Tag = { name: inputValue, type: 'Géographique' };
+      createTag(newTag);
+      handleTagSelect(newTag);
+      setInputValue('');
+    }
+  };
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.keyCode === 13) {
+      handleSubmit();
+    }
+    onData(selectedTags);
+  }
+
   return (
-    <div className="w-2/5">
+    <div className="w-2/5" key={tagListKey}>
       <div className="flex flex-wrap">
         {selectedTags.map((tag) => (
           <span
             key={tag.name}
-            className="bg-blue-500 selected-tag px-1 py-1 rounded-md mr-2 my-2 overflow-hidden whitespace-nowrap break-words"
+            className="bg-blue-600 text-white selected-tag px-1 py-1 rounded-md mr-2 my-2 overflow-hidden whitespace-nowrap break-words"
           >
             {tag.name}
             <button
@@ -92,22 +116,24 @@ export const TagsSelector: React.FC = () => {
         ))}
         <input
           ref={inputRef}
-          className="px-2 py-1 my-1 border-2"
+          className="px-2 py-1 my-1 border-2 rounded-md"
           type="text"
           placeholder="Search tags"
           onChange={(e) => handleTagSearch(e.target.value)}
           value={inputValue}
+          onKeyDown={handleKeyDown}
         />
       </div>
-      <div>
-        {searchTags.map((tag) => (
-          <button
-            key={tag.id}
-            className="bg-slate-300 selected-tag px-1 py-1 rounded-md mr-2 my-2"
-            onClick={() => handleTagSelect(tag)}
-          >
-            {tag.name}&nbsp;
-            <button>
+      <div className="flex flex-wrap">
+        {inputValue != null &&
+          inputValue !== '' &&
+          searchTags.slice(0, 10).map((tag) => (
+            <button
+              key={tag.id}
+              className="bg-slate-300 selected-tag px-1 py-1 rounded-md mr-2 my-2 flex items-center"
+              onClick={() => handleTagSelect(tag)}
+            >
+              {tag.name}&nbsp;
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -118,8 +144,7 @@ export const TagsSelector: React.FC = () => {
                 <path d="M12 5v7h7v2h-7v7h-2v-7H5v-2h5V5h2z" />
               </svg>
             </button>
-          </button>
-        ))}
+          ))}
       </div>
     </div>
   );

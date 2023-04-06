@@ -34,3 +34,7 @@ export const getAllTagsByOwner = async (ownerId: number) => {
     },
   });
 };
+
+export const createTag = async (data: Tag) => {
+  return await strapi.create<Tag>(ContentType.TAGS, data);
+};

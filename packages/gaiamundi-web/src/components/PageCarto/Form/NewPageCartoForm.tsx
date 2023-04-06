@@ -11,7 +11,8 @@ import { TagsSelector } from 'components/TagsSelector/TagsSelector';
 import { useRequireAuth } from 'hooks/useRequireAuth';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
-import { PageCartoForm, PageCartoStub } from 'interfaces/page-carto';
+import { PageCartoForm, PageCartoStub, Tag } from 'interfaces/page-carto';
+import { useState } from 'react';
 import { createGeoMap } from 'services/geo-map';
 import { createPageCarto } from 'services/page-carto';
 
@@ -20,6 +21,13 @@ export const NewPageCartoForm = () => {
   const { addToast } = useToast();
   const form = useForm<PageCartoForm>();
   const navigate = useNavigate();
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+
+  function handleDataFromTagSelector(tags: Tag[]) {
+    const tagIds = tags.map((tag) => tag.id);
+    const filteredTagIds = tagIds.filter((id) => id !== undefined) as number[];
+    setSelectedTags(filteredTagIds);
+  }
 
   const pageCartoMutation = useMutation({
     mutationFn: async (data: PageCartoStub) => {
@@ -28,6 +36,7 @@ export const NewPageCartoForm = () => {
         map: data.map,
         owner: user?.id,
         html: '',
+        tags: selectedTags,
       });
     },
     onSuccess: ({ data }) => {
@@ -111,7 +120,7 @@ export const NewPageCartoForm = () => {
           </div>
           <div>
             <Label htmlFor="Tags">Tags</Label>
-            <TagsSelector />
+            <TagsSelector onData={handleDataFromTagSelector} />
           </div>
           <div className="mr-10">
             <MapPickForm />
