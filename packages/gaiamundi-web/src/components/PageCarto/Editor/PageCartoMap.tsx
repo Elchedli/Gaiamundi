@@ -17,19 +17,16 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { Indicator } from 'interfaces/indicator';
 
+import { useIndicator } from 'hooks/useIndicator';
 import { evaluate } from 'mathjs';
 import { getGeoJson } from 'services/geo-map';
 import { fetchConvertedCsv } from 'utils/strapiUtils';
-import { chosenIndicatorProps } from './PageCartoEditor';
 
-interface pageCartoMapProps {
-  chosenIndicator: chosenIndicatorProps;
-}
-
-export const PageCartoMap: FC<pageCartoMapProps> = ({ chosenIndicator }) => {
+export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   const { map, pageCartoId, indicators } = usePageCarto();
+  const { chosenIndicator } = useIndicator();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -57,11 +54,11 @@ export const PageCartoMap: FC<pageCartoMapProps> = ({ chosenIndicator }) => {
       indicator.variables.forEach((variable) => {
         realDataFormula = realDataFormula.replaceAll(
           variable.alias,
-          mergedColumn[variable.columnName.toLowerCase()]
+          mergedColumn[variable.columnName]
         );
       });
       return {
-        geocode: mergedColumn.geocode,
+        geocode: mergedColumn.__geoCode__,
         formula: evaluate(realDataFormula),
       };
     });
@@ -76,7 +73,6 @@ export const PageCartoMap: FC<pageCartoMapProps> = ({ chosenIndicator }) => {
     return [];
   }, [mergedColumnDatas, chosenIndicator]);
 
-  // console.log(mapValues);
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
     if (element) {
@@ -164,7 +160,6 @@ export const PageCartoMap: FC<pageCartoMapProps> = ({ chosenIndicator }) => {
             colors={['white', 'pink', 'red']}
             geoJson={geoJsonData}
             data={mapValues.map((mapValue: any) => {
-              // console.log({ mapValue });
               return {
                 [geoCode]: mapValue.geocode,
                 value: mapValue.formula,

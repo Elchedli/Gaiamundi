@@ -5,21 +5,17 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Radio } from 'components/Inputs/Radio';
 import { ToggleSwitch } from 'components/Inputs/ToggleSwitch';
 import config from 'config';
+import { useIndicator } from 'hooks/useIndicator';
 import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { FC } from 'react';
 import DataGrid from 'react-data-grid';
 import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
 
-interface PageCartoIndicatorPanelProps {
-  changeIndicator: (indicateurName: string, type: string) => void;
-}
-export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
-  changeIndicator,
-}) => {
+export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
   const { pageCartoId, columns, indicators: dataGridRows } = usePageCarto();
-
+  const { changeIndicator } = useIndicator();
   const options = [
     { label: 'Palettes de couleurs', value: 'default', disabled: true },
     { label: 'Rouge', value: 'rouge' },
@@ -29,7 +25,7 @@ export const PageCartoIndicatorPanel: FC<PageCartoIndicatorPanelProps> = ({
   ];
 
   const changeIndicatorMap = (indicatorName: string, type: string) =>
-    changeIndicator(indicatorName, type);
+    changeIndicator({ indicatorName, type });
   return (
     <div>
       <div className="mt-5 text-right">

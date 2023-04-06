@@ -4,14 +4,7 @@ import { FC } from 'react';
 import { PageCartoDataPanel } from './PageCartoDataPanel/PageCartoDataPanel';
 import TextEditor from './PageCartoHyperTextPanel/TextEditor';
 import { PageCartoIndicatorPanel } from './PageCartoIndicatorPanel/PageCartoIndicatorPanel';
-
-interface PageCartoPanelslProps {
-  changeIndicator: (indicateurName: string, type: string) => void;
-}
-
-export const PageCartoPanels: FC<PageCartoPanelslProps> = ({
-  changeIndicator,
-}) => {
+export const PageCartoPanels: FC = () => {
   const tabs = [
     {
       id: 1,
@@ -26,7 +19,7 @@ export const PageCartoPanels: FC<PageCartoPanelslProps> = ({
     {
       id: 3,
       title: 'Indicateurs',
-      content: <PageCartoIndicatorPanel changeIndicator={changeIndicator} />,
+      content: <PageCartoIndicatorPanel />,
     },
   ];
 
