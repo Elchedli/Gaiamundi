@@ -7,9 +7,11 @@ import { useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
-export const TagsSelector: React.FC<{ onData: (tags: Tag[]) => void }> = ({
-  onData,
-}) => {
+interface TagsSelectorProps {
+  onData: (tags: Tag[]) => void;
+}
+
+export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [searchTags, setSearchTags] = useState<ApiData<Tag>[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -26,19 +28,18 @@ export const TagsSelector: React.FC<{ onData: (tags: Tag[]) => void }> = ({
     queryFn: async () => getAllTags(),
   });
   if (isLoading) {
-    return <LoadingMessage data-testid="filter-bar-loading-message" />;
+    return <LoadingMessage data-testid="tags-loading-message" />;
   }
 
   if (isError) {
-    return <ApiErrorAlert error={error as ApiError} />;
+    return (
+      <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
+    );
   }
-
   if (!response || response.data.length === 0) {
     return (
       <Alert type="info" className="grid h-fit justify-center items-center">
-        <div data-testid="filter-bar-error-message">
-          Aucun tag n&apos;a été trouvé !
-        </div>
+        <div data-testid="empty-message">Aucun tag n&apos;a été trouvé !</div>
       </Alert>
     );
   }
@@ -80,18 +81,18 @@ export const TagsSelector: React.FC<{ onData: (tags: Tag[]) => void }> = ({
       createTag(newTag);
       handleTagSelect(newTag);
       setInputValue('');
+      onData([...selectedTags, newTag]);
     }
   };
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.keyCode === 13) {
       handleSubmit();
     }
-    onData(selectedTags);
   }
 
   return (
     <div className="w-2/5" key={tagListKey}>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap" data-testid="selected-tags">
         {selectedTags.map((tag) => (
           <span
             key={tag.name}
@@ -122,9 +123,10 @@ export const TagsSelector: React.FC<{ onData: (tags: Tag[]) => void }> = ({
           onChange={(e) => handleTagSearch(e.target.value)}
           value={inputValue}
           onKeyDown={handleKeyDown}
+          data-testid="tags-input"
         />
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap" data-testid="tags-filter">
         {inputValue != null &&
           inputValue !== '' &&
           searchTags.slice(0, 10).map((tag) => (
