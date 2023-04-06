@@ -2,10 +2,6 @@ import { FC } from 'react';
 import { PageCartoMap } from './PageCartoMap';
 import { PageCartoPanels } from './PageCartoPanels';
 
-export interface chosenIndicatorProps {
-  indicatorName: string;
-  type: string;
-}
 export const PageCartoEditor: FC = () => {
   return (
     <div className="grid grid-cols-3 gap-4 h-full">

@@ -23,3 +23,8 @@ export interface IndicatorStub extends IndicatorBase {
 export interface Indicator extends IndicatorBase {
   page_carto?: ApiData<PageCarto>;
 }
+
+export interface indicatorValueProps {
+  geocode: string;
+  formula: number;
+}

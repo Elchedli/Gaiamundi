@@ -15,10 +15,10 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
-import { Indicator } from 'interfaces/indicator';
+import { Indicator, indicatorValueProps } from 'interfaces/indicator';
 
-import { evaluate } from 'mathjs';
 import { getGeoJson } from 'services/geo-map';
+import { solveEquation } from 'utils/equation';
 import { fetchConvertedCsv } from 'utils/strapiUtils';
 
 export const PageCartoMap: FC = () => {
@@ -36,7 +36,6 @@ export const PageCartoMap: FC = () => {
   const { data: mergedColumnDatas } = useQuery({
     queryKey: ['merged-columns', map?.properties],
     queryFn: async () => fetchConvertedCsv(pageCartoId),
-    enabled: !!map?.properties,
   });
 
   const geoCode = useMemo(() => {
@@ -57,12 +56,12 @@ export const PageCartoMap: FC = () => {
       });
       return {
         geocode: mergedColumn.__geoCode__,
-        formula: evaluate(realDataFormula),
+        formula: solveEquation(realDataFormula),
       };
     });
   };
 
-  const mapValues = useMemo(() => {
+  const mapIndicatorValues = useMemo(() => {
     //change variable after
     const indicator = indicators?.find(
       (indicator: Indicator) => indicator.name === chosenIndicator.indicatorName
@@ -157,12 +156,14 @@ export const PageCartoMap: FC = () => {
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
             geoJson={geoJsonData}
-            data={mapValues.map((mapValue: any) => {
-              return {
-                [geoCode]: mapValue.geocode,
-                value: mapValue.formula,
-              };
-            })}
+            data={mapIndicatorValues.map(
+              (IndicatorValue: indicatorValueProps) => {
+                return {
+                  [geoCode]: IndicatorValue.geocode,
+                  value: IndicatorValue.formula,
+                };
+              }
+            )}
           />
         </ResponsiveChartContainer>
       </div>
