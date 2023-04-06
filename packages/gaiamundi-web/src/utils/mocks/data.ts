@@ -175,24 +175,28 @@ export const mockDataFragments: ApiData<DataFragment>[] = [
     columns: [
       {
         name: 'firstColumn',
+        sample: 5,
         source: 'source1',
         validity: '2021',
         isGeoCode: true,
       },
       {
         name: 'secondColumn',
+        sample: 10.3,
         source: 'source2',
         validity: '2022',
         isGeoCode: false,
       },
       {
         name: 'thirdColumn',
+        sample: 0.25,
         source: 'source3',
         validity: '2023',
         isGeoCode: false,
       },
       {
         name: 'fourthColumn',
+        sample: 1000,
         source: 'source4',
         validity: '2024',
         isGeoCode: false,
