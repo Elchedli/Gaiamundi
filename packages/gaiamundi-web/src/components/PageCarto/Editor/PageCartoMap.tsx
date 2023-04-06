@@ -17,9 +17,8 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { Indicator, indicatorValueProps } from 'interfaces/indicator';
 
-import { getGeoJson } from 'services/geo-map';
+import { getConvertedCsv, getGeoJson } from 'services/geo-map';
 import { solveEquation } from 'utils/equation';
-import { fetchConvertedCsv } from 'utils/strapiUtils';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
@@ -35,7 +34,7 @@ export const PageCartoMap: FC = () => {
 
   const { data: mergedColumnDatas } = useQuery({
     queryKey: ['merged-columns', map?.properties],
-    queryFn: async () => fetchConvertedCsv(pageCartoId),
+    queryFn: async () => getConvertedCsv(pageCartoId),
   });
 
   const geoCode = useMemo(() => {
