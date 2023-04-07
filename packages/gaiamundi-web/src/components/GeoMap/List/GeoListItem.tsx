@@ -1,6 +1,7 @@
 import { ApiData } from 'interfaces/api';
 import { GeoMap } from 'interfaces/geo-map';
 import { getGeoMapThumbnailUrlById } from 'services/geo-map';
+import { Popover } from './Popover';
 
 export const GeoListItem = ({
   yearValidity,
@@ -8,14 +9,16 @@ export const GeoListItem = ({
   source,
   license,
   geoJSON,
+  properties,
 }: ApiData<GeoMap>) => {
   return (
     <div className="group pb-2 cursor-pointer">
-      <div className="bg-slate-300">
+      <div className="bg-slate-300 relative">
         <img
           src={getGeoMapThumbnailUrlById(geoJSON.id)}
-          className="w-full object-contain object-center hover:opacity-75"
+          className="w-full object-contain object-center hover:opacity-75 block h-auto"
         />
+        <Popover data-testid="buton-information" property={[...properties]} />
       </div>
       <div className="p-3">
         <h2>{name}</h2>
