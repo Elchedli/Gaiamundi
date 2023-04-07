@@ -11,3 +11,14 @@
 .rdg-cell[role='columnheader'] {
   background-color: rgb(233, 233, 233);
 }
+
+.toolbar {
+  height: auto !important;
+}
+
+.toolbar .toolbar-item:first-child {
+  display: none;
+}
+.toolbar .toolbar-item:nth-child(2) {
+  display: none;
+}

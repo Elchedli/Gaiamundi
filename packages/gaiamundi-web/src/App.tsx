@@ -17,6 +17,7 @@ import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
 import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 
+import { ProtectedRoute } from 'components/PrivateRoute/PrivateRoute';
 import 'react-data-grid/lib/styles.css';
 
 // Create a client
@@ -52,7 +53,11 @@ export default function App() {
                 />
                 <Route
                   path="page-carto/:id/edit"
-                  element={<PageCartoEditPage />}
+                  element={
+                    <ProtectedRoute>
+                      <PageCartoEditPage />
+                    </ProtectedRoute>
+                  }
                 />
               </Route>
             </Routes>

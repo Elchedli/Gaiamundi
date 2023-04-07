@@ -1,5 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ToggleSwitch calls onChange function when switch is clicked 1`] = `
+<div>
+  <div
+    class="flex items-center"
+  >
+    <button
+      aria-checked="true"
+      aria-labelledby="headlessui-label-:r3:"
+      class="bg-blue-600 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      data-headlessui-state="checked"
+      data-testid="toggle-switch"
+      id="headlessui-switch-:r2:"
+      role="switch"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+      />
+    </button>
+    <label
+      class="ml-4 cursor-pointer"
+      id="headlessui-label-:r3:"
+    >
+      Test
+    </label>
+  </div>
+</div>
+`;
+
+exports[`ToggleSwitch displays the correct label 1`] = `
+<div>
+  <div
+    class="flex items-center"
+  >
+    <button
+      aria-checked="false"
+      aria-labelledby="headlessui-label-:r5:"
+      class="bg-gray-200 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      data-headlessui-state=""
+      data-testid="toggle-switch"
+      id="headlessui-switch-:r4:"
+      role="switch"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+      />
+    </button>
+    <label
+      class="ml-4 cursor-pointer"
+      id="headlessui-label-:r5:"
+    >
+      Test Label
+    </label>
+  </div>
+</div>
+`;
+
 exports[`ToggleSwitch renders correctly 1`] = `
 <div>
   <div
@@ -23,6 +83,36 @@ exports[`ToggleSwitch renders correctly 1`] = `
     <label
       class="ml-4 cursor-pointer"
       id="headlessui-label-:r1:"
+    >
+      Test
+    </label>
+  </div>
+</div>
+`;
+
+exports[`ToggleSwitch starts with the correct default state and action working on toggle 1`] = `
+<div>
+  <div
+    class="flex items-center"
+  >
+    <button
+      aria-checked="false"
+      aria-labelledby="headlessui-label-:r7:"
+      class="bg-gray-200 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      data-headlessui-state=""
+      data-testid="toggle-switch"
+      id="headlessui-switch-:r6:"
+      role="switch"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+      />
+    </button>
+    <label
+      class="ml-4 cursor-pointer"
+      id="headlessui-label-:r7:"
     >
       Test
     </label>

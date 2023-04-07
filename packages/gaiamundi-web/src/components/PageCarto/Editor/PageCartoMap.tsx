@@ -29,6 +29,13 @@ export const PageCartoMap: FC = () => {
     enabled: !!geoJson,
   });
 
+  const geoCode = useMemo(() => {
+    const geoCodeProperty = map?.properties.find((property) => {
+      return property.isGeoCode === true;
+    });
+    return geoCodeProperty ? geoCodeProperty.name : 'admin';
+  }, [map]);
+
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
     if (element) {
@@ -39,6 +46,8 @@ export const PageCartoMap: FC = () => {
           minZoom: 0.25,
           maxZoom: 4,
           smoothScroll: true,
+          bounds: true,
+          boundsPadding: 0.4,
         });
       }
     }
@@ -104,7 +113,7 @@ export const PageCartoMap: FC = () => {
         <ResponsiveChartContainer>
           <MapChart
             map={{
-              geoDomainKey: 'admin',
+              geoDomainKey: geoCode,
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
@@ -115,7 +124,7 @@ export const PageCartoMap: FC = () => {
             geoJson={geoJsonData}
             data={data.features.map((feature: Feature, idx: number) => {
               return {
-                admin: feature.properties?.admin,
+                [geoCode]: feature.properties?.[geoCode],
                 value: idx,
               };
             })}

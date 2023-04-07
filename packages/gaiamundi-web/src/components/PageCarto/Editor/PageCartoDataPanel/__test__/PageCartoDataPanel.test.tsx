@@ -58,7 +58,7 @@ describe('PageCartoPanelData', () => {
       const datasetName = mockDataFragments[0].dataset.name;
       const columns = mockDataFragments[0].columns;
       const columnHeaders = getAllByRole('columnheader');
-      expect(columnHeaders).toHaveLength(4);
+      expect(columnHeaders).toHaveLength(5);
       columns
         .filter((column) => !column.isGeoCode)
         .forEach((column) => {

@@ -5,13 +5,10 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { defaultFunctions, defaultVariables } from 'equation-resolver';
 import { IndicatorVariable } from 'interfaces/indicator';
 import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
-import {
-  EquationContext,
-  EquationOptions,
-  defaultErrorHandler,
-} from 'react-equation';
+import { EquationContext, EquationOptions } from 'react-equation';
 import { useQuery } from 'react-query';
 import { getEquations } from 'services/equation';
+import { customErrorHandler } from './ErrorHandler';
 
 const VariableList: FC<{ variables: IndicatorVariable[] }> = ({
   variables,
@@ -42,7 +39,7 @@ type EquationInputProps = {
 
 const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
   ({ variables, onChange }, ref) => {
-    const [formula, setFormula] = useState('A');
+    const [formula, setFormula] = useState('A-1');
     const inputRef = useRef<HTMLInputElement>(null);
     const { data: response, isLoading } = useQuery({
       queryKey: ['equations'],
@@ -82,7 +79,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
     const equationVariables = variables.reduce((acc, v) => {
       acc[v.alias] = {
         type: 'number',
-        value: 1,
+        value: v.sample,
       };
       return acc;
     }, defaultVariables);
@@ -107,12 +104,13 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
         <EquationOptions
           variables={equationVariables}
           functions={defaultFunctions}
-          errorHandler={defaultErrorHandler}
+          errorHandler={customErrorHandler}
         >
           <EquationContext
             render={(equation) => (
-              <div style={{ fontSize: '150%' }}>
-                Exemple : {equation(`${formula} =`)}
+              <div>
+                <div className="text-2xl">Exemple :</div>
+                {equation(`${formula}=`)}
               </div>
             )}
           />

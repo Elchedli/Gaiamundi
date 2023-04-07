@@ -92,7 +92,18 @@ export const mockGeoMap: ApiData<GeoMap> = {
   yearValidity: 2022,
   source: 'Test Source',
   license: 'Test License',
-  properties: [],
+  properties: [
+    {
+      name: 'code',
+      sample: '39',
+      isGeoCode: true,
+    },
+    {
+      name: 'nom',
+      sample: 'Jura',
+      isGeoCode: false,
+    },
+  ],
   owner: mockUser,
   geoJSON: mockGeoJson,
   created_at: '2022-02-07T00:00:00.000Z',
@@ -164,24 +175,28 @@ export const mockDataFragments: ApiData<DataFragment>[] = [
     columns: [
       {
         name: 'firstColumn',
+        sample: 5,
         source: 'source1',
         validity: '2021',
         isGeoCode: true,
       },
       {
         name: 'secondColumn',
+        sample: 10.3,
         source: 'source2',
         validity: '2022',
         isGeoCode: false,
       },
       {
         name: 'thirdColumn',
+        sample: 0.25,
         source: 'source3',
         validity: '2023',
         isGeoCode: false,
       },
       {
         name: 'fourthColumn',
+        sample: 1000,
         source: 'source4',
         validity: '2024',
         isGeoCode: false,
