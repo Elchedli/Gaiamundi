@@ -23,6 +23,7 @@ import { solveEquation } from 'utils/equation';
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
+  // chosenIndicator is PageCarto useState and the rest is a result of usequery search in api
   const { map, pageCartoId, indicators, chosenIndicator } = usePageCarto();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
@@ -32,6 +33,7 @@ export const PageCartoMap: FC = () => {
     enabled: !!geoJson,
   });
 
+  // will fetch merged data from api custom endpoint.
   const { data: mergedColumnDatas } = useQuery({
     queryKey: ['merged-columns', map?.properties],
     queryFn: async () => getConvertedCsv(pageCartoId),
@@ -44,6 +46,7 @@ export const PageCartoMap: FC = () => {
     return geoCodeProperty ? geoCodeProperty.name : 'admin';
   }, [map]);
 
+  //uses an indicator to calculate real data using a string mathematical forumla
   const realIndicatorData = (indicator: Indicator) => {
     return mergedColumnDatas.map((mergedColumn: any) => {
       let realDataFormula = indicator.equation;
@@ -61,12 +64,10 @@ export const PageCartoMap: FC = () => {
   };
 
   const mapIndicatorValues = useMemo(() => {
-    //change variable after
     const indicator = indicators?.find(
       (indicator: Indicator) => indicator.name === chosenIndicator.indicatorName
     );
-    if (indicator != undefined) return realIndicatorData(indicator);
-    return [];
+    return indicator != undefined ? realIndicatorData(indicator) : [];
   }, [mergedColumnDatas, chosenIndicator]);
 
   // Set up panzoom on mount, and dispose on unmount

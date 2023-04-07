@@ -1,3 +1,4 @@
+import { chosenIndicatorProps } from 'hooks/usePageCarto';
 import { ApiCollection, ApiData } from 'interfaces/api';
 import { DataFragment } from 'interfaces/data-fragment';
 import { Dataset } from 'interfaces/dataset';
@@ -10,6 +11,28 @@ import mockMapJson from './map.json';
 
 export const mockMapPath = mockMapJson;
 
+export const mockMergedCsvData = [
+  {
+    testchamp: 'black',
+    Source: 'sliman',
+    Validite: '2028',
+    purri: 'hourra',
+    __geoCode__: '1',
+    variableA: '10',
+    variableB: '5',
+    columnname: 'Viva',
+  },
+  {
+    testchamp: 'testchamp',
+    Source: 'choupa',
+    Validite: '2028',
+    purri: 'combo',
+    __geoCode__: '2',
+    variableA: '15',
+    variableB: '3',
+    columnname: 'Suna',
+  },
+];
 export const mockFileUpload = {
   id: 184,
   name: 'exampleParsing2.csv',
@@ -232,6 +255,11 @@ export const indicatorsMockData: ApiData<Indicator>[] = [
     equation: 'A*2',
   },
 ];
+
+export const mockChosenIndicator: chosenIndicatorProps = {
+  indicatorName: 'mockIndicator1',
+  type: 'basic',
+};
 
 export const mockPageCartoData: ApiData<PageCarto> = {
   id: 1,

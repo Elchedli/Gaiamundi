@@ -19,6 +19,7 @@ export const PageCartoIndicatorPanel: FC = () => {
     indicators: dataGridRows,
     changeIndicator,
   } = usePageCarto();
+
   const options = [
     { label: 'Palettes de couleurs', value: 'default', disabled: true },
     { label: 'Rouge', value: 'rouge' },
@@ -100,7 +101,7 @@ export const PageCartoIndicatorPanel: FC = () => {
           />
         )}
       </div>
-
+      {/* bottom half indicator interface */}
       <div className="mt-8 [&>*]:mt-5">
         <ToggleSwitch
           label={'Diamétre proportionel à la valeur'}
