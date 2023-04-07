@@ -48,7 +48,6 @@ export const Popover = ({ property }: geoPropertyProps) => {
             </h3>
           </div>
           {property.map((element, index) => {
-            console.log(element);
             return (
               <div key={index} className="px-3 py-2">
                 <p>{element.name}</p>
