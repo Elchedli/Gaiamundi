@@ -1,4 +1,4 @@
-import { Tag } from 'interfaces/page-carto';
+import { Tag } from 'interfaces/tag';
 import { ContentType, QueryParams, strapi } from './strapi';
 
 export const getAllTags = async () => {

@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,23 +11,21 @@ import { TagsSelector } from 'components/TagsSelector/TagsSelector';
 import { useRequireAuth } from 'hooks/useRequireAuth';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
-import { PageCartoForm, PageCartoStub, Tag } from 'interfaces/page-carto';
-import { useState } from 'react';
+import { PageCartoForm, PageCartoStub } from 'interfaces/page-carto';
 import { createGeoMap } from 'services/geo-map';
 import { createPageCarto } from 'services/page-carto';
 
 export const NewPageCartoForm = () => {
   const { user } = useRequireAuth();
   const { addToast } = useToast();
-  const form = useForm<PageCartoForm>();
+  const methods = useForm<PageCartoForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    control,
+  } = methods;
   const navigate = useNavigate();
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
-
-  function handleDataFromTagSelector(tags: Tag[]) {
-    const tagIds = tags.map((tag) => tag.id);
-    const filteredTagIds = tagIds.filter((id) => id !== undefined) as number[];
-    setSelectedTags(filteredTagIds);
-  }
 
   const pageCartoMutation = useMutation({
     mutationFn: async (data: PageCartoStub) => {
@@ -36,7 +34,7 @@ export const NewPageCartoForm = () => {
         map: data.map,
         owner: user?.id,
         html: '',
-        tags: selectedTags,
+        tags: data.tags,
       });
     },
     onSuccess: ({ data }) => {
@@ -89,11 +87,8 @@ export const NewPageCartoForm = () => {
   };
 
   return (
-    <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        data-testid="new-page-carto-from"
-      >
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="new-page-carto-from">
         {pageCartoMutation.isError && (
           <ApiErrorAlert error={pageCartoMutation.error as ApiError} />
         )}
@@ -108,19 +103,31 @@ export const NewPageCartoForm = () => {
               id="cartoPageName"
               className="w-1/3"
               data-testid="carto-page-name"
-              {...form.register('name', {
+              {...register('name', {
                 required: 'Veuillez saisir le nom du page carto',
               })}
             />
-            {form.formState.errors.name && (
+            {errors.name && (
               <div className="mt-2 text-xs text-red-600">
-                {form.getFieldState('name')?.error?.message}
+                {errors.name.message}
               </div>
             )}
           </div>
           <div>
             <Label htmlFor="Tags">Tags</Label>
-            <TagsSelector onData={handleDataFromTagSelector} />
+            <Controller
+              name="tags"
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => {
+                return <TagsSelector {...field} />;
+              }}
+            />
+            {errors.tags && (
+              <div className="mt-2 text-xs text-red-600">
+                {errors.tags.message}
+              </div>
+            )}
           </div>
           <div className="mr-10">
             <MapPickForm />
@@ -132,6 +139,7 @@ export const NewPageCartoForm = () => {
               isLoading={
                 geoMapMutation.isLoading || pageCartoMutation.isLoading
               }
+              disabled={!isValid}
             >
               Valider
             </Button>

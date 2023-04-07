@@ -4,10 +4,6 @@ import { useQuery } from 'react-query';
 import { mockTags, mockUser } from 'utils/mocks/data';
 import { TagsSelector } from '../TagsSelector';
 
-const props = {
-  onData: jest.fn(),
-};
-
 const [firstTag, secondTag] = mockTags;
 
 jest.mock('hooks/useAuth');
@@ -24,7 +20,7 @@ describe('TagsSelector', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [firstTag, secondTag] },
     }));
-    render(<TagsSelector {...props} />);
+    render(<TagsSelector onChange={jest.fn()} />);
   });
   it('should return the loading message', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
@@ -33,7 +29,7 @@ describe('TagsSelector', () => {
       error: null,
       isLoading: true,
     }));
-    const { getByTestId } = render(<TagsSelector {...props} />);
+    const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
     const loadingMessage = getByTestId('tags-loading-message');
     expect(loadingMessage).toBeInTheDocument();
   });
@@ -48,7 +44,7 @@ describe('TagsSelector', () => {
       error: mockError,
       isLoading: false,
     }));
-    const { getByTestId } = render(<TagsSelector {...props} />);
+    const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
     const errorMessage = getByTestId('error-message');
     expect(errorMessage).toBeInTheDocument();
   });
@@ -59,7 +55,7 @@ describe('TagsSelector', () => {
       error: null,
       isLoading: false,
     }));
-    const { getByTestId } = render(<TagsSelector {...props} />);
+    const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
     const emptyMessage = getByTestId('empty-message');
     expect(emptyMessage).toBeInTheDocument();
   });
@@ -70,7 +66,7 @@ describe('TagsSelector', () => {
       error: null,
       isLoading: false,
     }));
-    const { getByTestId } = render(<TagsSelector {...props} />);
+    const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
     const input = getByTestId('tags-input');
     fireEvent.change(input, { target: { value: 'a' } });
     const TagsFilter = getByTestId('tags-filter');
@@ -83,7 +79,9 @@ describe('TagsSelector', () => {
       error: null,
       isLoading: false,
     }));
-    const { getByTestId, getByRole } = render(<TagsSelector {...props} />);
+    const { getByTestId, getByRole } = render(
+      <TagsSelector onChange={jest.fn()} />
+    );
     const input = getByTestId('tags-input');
     fireEvent.change(input, { target: { value: 'a' } });
     fireEvent.click(getByRole('button'));

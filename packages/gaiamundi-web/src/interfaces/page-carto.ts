@@ -39,4 +39,5 @@ export type PageCartoForm = {
   mapId?: number;
   name: string;
   geoMap: GeoMapStub;
+  tags: number[];
 };

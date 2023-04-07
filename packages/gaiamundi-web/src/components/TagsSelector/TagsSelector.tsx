@@ -1,21 +1,18 @@
-import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ApiData, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
 interface TagsSelectorProps {
-  onData: (tags: Tag[]) => void;
+  onChange: (tags: number[]) => void;
 }
 
-export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-  const [searchTags, setSearchTags] = useState<ApiData<Tag>[]>([]);
+export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
+  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const [tagListKey, setTagListKey] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -23,10 +20,32 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
     isError,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ['tags'],
-    queryFn: async () => getAllTags(),
+    queryFn: async () => await getAllTags(),
   });
+
+  // useMutation() => POST / PUT
+  // Use the heroicons package
+
+  const tags = useMemo(() => response?.data || [], [response]);
+  const searchTags = useMemo(
+    () =>
+      tags.filter((tag) => {
+        const keywords = inputValue.toLowerCase();
+        return tag.name.toLowerCase().includes(keywords) && tag.id;
+      }),
+    [tags, inputValue]
+  );
+  const selectedTags = useMemo(
+    () =>
+      tags.filter((tag) => {
+        return selectedTagIds.includes(tag.id);
+      }),
+    [tags, selectedTagIds]
+  );
+
   if (isLoading) {
     return <LoadingMessage data-testid="tags-loading-message" />;
   }
@@ -36,30 +55,17 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
       <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
     );
   }
-  if (!response || response.data.length === 0) {
-    return (
-      <Alert type="info" className="grid h-fit justify-center items-center">
-        <div data-testid="empty-message">Aucun tag n&apos;a été trouvé !</div>
-      </Alert>
-    );
-  }
 
   const handleTagSearch = (inputValue: string) => {
     setInputValue(inputValue);
-    const filteredTags = response.data.filter((tag) =>
-      tag.name.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setSearchTags(filteredTags.filter((tag) => !selectedTags.includes(tag)));
   };
 
-  const handleTagSelect = (tag: Tag) => {
-    const isSelected = selectedTags.includes(tag);
-    if (isSelected) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-      onData([...selectedTags, tag]);
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-      onData([...selectedTags, tag]);
+  const handleTagSelect = (tag: ApiData<Tag>) => {
+    const isSelected = selectedTagIds.includes(tag.id);
+    if (!isSelected) {
+      const selectedIds = [...selectedTagIds, tag.id];
+      setSelectedTagIds(selectedIds);
+      onChange(selectedIds);
     }
     setInputValue('');
     if (inputRef.current) {
@@ -67,23 +73,22 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
         inputRef.current?.focus();
       }, 0);
     }
-    setTagListKey(tagListKey + 1);
   };
 
-  const handleTagDeselect = (tag: Tag) => {
-    setSelectedTags(selectedTags.filter((t) => t !== tag));
+  const handleTagDeselect = (tag: ApiData<Tag>) => {
+    setSelectedTagIds(selectedTagIds.filter((id) => id !== tag.id));
   };
 
   const handleSubmit = () => {
     const inputValue = inputRef.current?.value ?? '';
-    if (!searchTags.some((tag) => tag.name === inputValue)) {
-      const newTag: Tag = { name: inputValue, type: 'Géographique' };
-      createTag(newTag);
-      handleTagSelect(newTag);
-      setInputValue('');
-      onData([...selectedTags, newTag]);
-    }
+    const newTag: Tag = { name: inputValue, type: 'Géographique' };
+    createTag(newTag);
+    handleTagSelect(newTag);
+    setInputValue('');
+    onChange([...selectedTagIds, newTag]);
+    refetch();
   };
+
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.keyCode === 13) {
       handleSubmit();
@@ -91,11 +96,11 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onData }) => {
   }
 
   return (
-    <div className="w-2/5" key={tagListKey}>
+    <div className="w-2/5">
       <div className="flex flex-wrap" data-testid="selected-tags">
         {selectedTags.map((tag) => (
           <span
-            key={tag.name}
+            key={tag.id}
             className="bg-blue-600 text-white selected-tag px-1 py-1 rounded-md mr-2 my-2 overflow-hidden whitespace-nowrap break-words"
           >
             {tag.name}
