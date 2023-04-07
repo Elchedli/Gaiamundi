@@ -53,8 +53,8 @@ export const Popover = ({ property }: geoPropertyProps) => {
                 <p>{element.name}</p>
                 <p>
                   {element.isGeoCode
-                    ? "c'est un code geo"
-                    : "c'est pas un code geo"}
+                    ? 'Code Géographie'
+                    : 'Ce code ne correspond pas à la géographie'}
                 </p>
                 <p>{element.sample}</p>
               </div>

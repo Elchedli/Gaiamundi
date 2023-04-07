@@ -22,7 +22,7 @@ describe('popover component', () => {
     fireEvent.click(button);
     expect(getByText('properties')).toBeInTheDocument();
     expect(getByText(mockGeoMapData.properties[0].name)).toBeInTheDocument();
-    expect(getByText("c'est un code geo")).toBeInTheDocument();
+    expect(getByText('Code Géographie')).toBeInTheDocument();
     expect(getByText(mockGeoMapData.properties[0].sample)).toBeInTheDocument();
   });
 });
