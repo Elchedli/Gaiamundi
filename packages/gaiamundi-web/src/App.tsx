@@ -40,7 +40,7 @@ export default function App() {
                 <Route path="account" element={<AccountPage />} />
                 <Route path="account/edit" element={<AccountEditPage />} />
                 <Route path="signup" element={<SignUpPage />} />
-                <Route path="termsofuse" element={<TermsOfUse />} />
+                <Route path="terms-of-use" element={<TermsOfUse />} />
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route
                   path="forgot-password"
