@@ -296,28 +296,22 @@ class Strapi {
   /**
    * Uploads a file.
    */
-  uploadFile(file: File, ref: string) {
+  uploadFile(
+    file: File,
+    ref: string,
+    filename?: string,
+    refId?: number,
+    field?: string
+  ) {
     const formData = new FormData();
-    formData.append('files', file);
-    formData.append('ref', ref);
-    return this.request
-      .post<FormData, UploadedFile[]>('/api/upload', formData)
-      .then(([uploadedfile]) => {
-        return uploadedfile;
-      });
-  }
-
-  /**
-   * Uploads a Blob.
-   */
-  uploadBlob(file: File, ref: string, refId: string, filename: string) {
-    const formData = new FormData();
-    formData.append('ref', ref);
     formData.append('files', file, filename);
-    //id for pagecartos to put the imageFile in it.
-    formData.append('refId', refId);
-    //the field i want to change
-    formData.append('field', 'cover');
+    formData.append('ref', ref);
+    if (refId) {
+      formData.append('refId', refId.toString());
+    }
+    if (field) {
+      formData.append('field', field);
+    }
     return this.request
       .post<FormData, UploadedFile[]>('/api/upload', formData)
       .then(([uploadedfile]) => {
