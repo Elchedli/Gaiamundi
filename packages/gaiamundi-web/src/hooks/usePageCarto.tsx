@@ -1,5 +1,5 @@
 import { DatasetColumn } from 'interfaces/column';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useQuery, UseQueryResult } from 'react-query';
 import { getPageCartoById } from 'services/page-carto';
 
@@ -18,8 +18,6 @@ type PageCartoContextValue = UseQueryResult<ApiDocument<PageCarto>, unknown> & {
   map?: GeoMap;
   columns: DatasetColumn[];
   indicators: ApiData<Indicator>[];
-  chosenIndicator: chosenIndicatorProps;
-  changeIndicator: (data: chosenIndicatorProps) => void;
 };
 
 const PageCartoContext = React.createContext<PageCartoContextValue | null>(
@@ -32,19 +30,10 @@ export interface PageCartoProviderProps {
   id: number;
 }
 
-export interface chosenIndicatorProps {
-  indicatorName: string;
-  type: string;
-}
-
 export const PageCartoProvider = ({
   id,
   children,
 }: PageCartoProviderProps): JSX.Element => {
-  const [chosenIndicator, setchooseIndicator] = useState<chosenIndicatorProps>({
-    indicatorName: '',
-    type: '',
-  });
   const query = useQuery({
     queryKey: ['page-carto', id],
     queryFn: async () => {
@@ -96,15 +85,7 @@ export const PageCartoProvider = ({
 
   return (
     <PageCartoContext.Provider
-      value={{
-        pageCartoId: id,
-        map,
-        columns,
-        indicators,
-        chosenIndicator,
-        changeIndicator: setchooseIndicator,
-        ...query,
-      }}
+      value={{ pageCartoId: id, map, columns, indicators, ...query }}
     >
       {children}
     </PageCartoContext.Provider>

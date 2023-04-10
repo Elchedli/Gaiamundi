@@ -1,4 +1,4 @@
-import { chosenIndicatorProps } from 'hooks/usePageCarto';
+import { chosenIndicatorProps } from 'hooks/useIndicator';
 import { ApiCollection, ApiData } from 'interfaces/api';
 import { DataFragment } from 'interfaces/data-fragment';
 import { Dataset } from 'interfaces/dataset';

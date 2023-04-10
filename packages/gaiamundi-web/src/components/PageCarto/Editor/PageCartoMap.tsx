@@ -17,6 +17,7 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { Indicator, indicatorValueProps } from 'interfaces/indicator';
 
+import { useIndicator } from 'hooks/useIndicator';
 import { getConvertedCsv, getGeoJson } from 'services/geo-map';
 import { solveEquation } from 'utils/equation';
 
@@ -24,7 +25,8 @@ export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   // chosenIndicator is PageCarto useState and the rest is a result of usequery search in api
-  const { map, pageCartoId, indicators, chosenIndicator } = usePageCarto();
+  const { map, pageCartoId, indicators } = usePageCarto();
+  const { chosenIndicator, chosenPalette } = useIndicator();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -154,7 +156,10 @@ export const PageCartoMap: FC = () => {
               fill: 'white',
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
-            colors={['white', 'pink', 'red']}
+            // colors={['white', 'pink', 'red']}
+            colors={chosenPalette}
+            //violet, vert, bleu ciel, jaune, rouge
+            //rouge,jaune,bleu ciel, vert,violet
             geoJson={geoJsonData}
             data={mapIndicatorValues.map(
               (IndicatorValue: indicatorValueProps) => {
