@@ -9,7 +9,7 @@ export const Popover: React.FC<GeoPropertyProps> = ({ properties }) => {
   function handleClik() {
     setIsVisible(!isVisible);
   }
-  ///
+
   return (
     <>
       <button
