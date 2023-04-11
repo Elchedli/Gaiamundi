@@ -2,10 +2,10 @@ import { render, fireEvent } from '@testing-library/react';
 import { Popover } from '../Popover';
 import { mockGeoMapData } from 'utils/mocks/data';
 
-describe('popover component', () => {
+describe('Popover', () => {
   it('should toggle visibility on button click', () => {
     const { getByTestId, queryByRole } = render(
-      <Popover property={mockGeoMapData.properties} />
+      <Popover properties={mockGeoMapData.properties} />
     );
     const button = getByTestId('button');
     fireEvent.click(button);
@@ -16,7 +16,7 @@ describe('popover component', () => {
 
   it('should render the tooltip with the correct data', () => {
     const { getByTestId, getByText } = render(
-      <Popover property={mockGeoMapData.properties} />
+      <Popover properties={mockGeoMapData.properties} />
     );
     const button = getByTestId('button');
     fireEvent.click(button);

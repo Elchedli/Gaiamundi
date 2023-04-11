@@ -18,7 +18,7 @@ export const GeoListItem = ({
           src={getGeoMapThumbnailUrlById(geoJSON.id)}
           className="w-full object-contain object-center hover:opacity-75 block h-auto"
         />
-        <Popover data-testid="buton-information" property={[...properties]} />
+        <Popover data-testid="buton-information" properties={[...properties]} />
       </div>
       <div className="p-3">
         <h2>{name}</h2>

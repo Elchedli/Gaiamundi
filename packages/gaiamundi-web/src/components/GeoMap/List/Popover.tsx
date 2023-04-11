@@ -1,10 +1,10 @@
 import { GeoProperty } from 'interfaces/geo-map';
 import { useState } from 'react';
-
-interface geoPropertyProps {
-  property: GeoProperty[];
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
+interface GeoPropertyProps {
+  properties: GeoProperty[];
 }
-export const Popover = ({ property }: geoPropertyProps) => {
+export const Popover: React.FC<GeoPropertyProps> = ({ properties }) => {
   const [isVisible, setIsVisible] = useState(false);
   function handleClik() {
     setIsVisible(!isVisible);
@@ -19,25 +19,11 @@ export const Popover = ({ property }: geoPropertyProps) => {
         onClick={handleClik}
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 ml-65 absolute bottom-0 dark:focus:ring-blue-800"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-          />
-        </svg>
+        <InformationCircleIcon width={24} height={24} />
       </button>
 
       {isVisible ? (
         <div
-          data-popover
           id="popover-default"
           role="tooltip"
           className="absolute mb-20 z-10 ml-60 -mt-40 inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm  dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
@@ -47,9 +33,9 @@ export const Popover = ({ property }: geoPropertyProps) => {
               properties
             </h3>
           </div>
-          {property.map((element, index) => {
+          {properties.map((element) => {
             return (
-              <div key={index} className="px-3 py-2">
+              <>
                 <p>{element.name}</p>
                 <p>
                   {element.isGeoCode
@@ -57,7 +43,7 @@ export const Popover = ({ property }: geoPropertyProps) => {
                     : 'Ce code ne correspond pas à la géographie'}
                 </p>
                 <p>{element.sample}</p>
-              </div>
+              </>
             );
           })}
           <div data-popper-arrow></div>
