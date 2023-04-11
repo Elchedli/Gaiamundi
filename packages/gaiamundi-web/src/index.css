@@ -25,3 +25,6 @@
 .ml-65 {
   margin-left: 17rem; /* 272px */
 }
+.td {
+  border: 2px solid black;
+}

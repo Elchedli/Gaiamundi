@@ -36,13 +36,28 @@ export const Popover: React.FC<GeoPropertyProps> = ({ properties }) => {
           {properties.map((element) => {
             return (
               <>
-                <p>{element.name}</p>
-                <p>
-                  {element.isGeoCode
-                    ? 'Code Géographie'
-                    : 'Ce code ne correspond pas à la géographie'}
-                </p>
-                <p>{element.sample}</p>
+                <table>
+                  <tr>
+                    <td>Nom</td>
+                    <td>Echantillon</td>
+                    <td>Géocode</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>{element.name}</p>
+                    </td>
+                    <td>
+                      <p>
+                        {element.isGeoCode
+                          ? 'Code Géographie'
+                          : 'Ce code ne correspond pas à la géographie'}
+                      </p>
+                    </td>
+                    <td>
+                      <p>{element.sample}</p>
+                    </td>
+                  </tr>
+                </table>
               </>
             );
           })}
