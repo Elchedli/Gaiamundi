@@ -46,3 +46,13 @@ export const updatedTitle = async (id: number, title: string) => {
     data: { name: title },
   });
 };
+export const uploadCover = async (file: File, refId: number) => {
+  return await strapi.uploadFile(
+    file,
+    'api::page-carto.page-carto',
+    `${refId}_thumbnail.png`,
+    // Id of pageCartos.
+    refId,
+    'cover'
+  );
+};

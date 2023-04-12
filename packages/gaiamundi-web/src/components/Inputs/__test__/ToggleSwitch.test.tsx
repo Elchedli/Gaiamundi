@@ -11,24 +11,26 @@ describe('ToggleSwitch', () => {
 
   it('calls onChange function when switch is clicked', () => {
     const onChange = jest.fn();
-    const { getByTestId } = render(
+    const { container, getByTestId } = render(
       <ToggleSwitch label="Test" defaultChecked={false} onChange={onChange} />
     );
     fireEvent.click(getByTestId('toggle-switch'));
     expect(onChange).toHaveBeenCalledWith(true);
+    expect(container).toMatchSnapshot();
   });
 
   it('displays the correct label', () => {
     const label = 'Test Label';
-    const { getByText } = render(
+    const { container, getByText } = render(
       <ToggleSwitch label={label} defaultChecked={false} onChange={jest.fn()} />
     );
     expect(getByText(label)).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('starts with the correct default state and action working on toggle', async () => {
     const defaultChecked = true;
-    const { getByTestId } = render(
+    const { container, getByTestId } = render(
       <ToggleSwitch
         label="Test"
         defaultChecked={defaultChecked}
@@ -39,5 +41,6 @@ describe('ToggleSwitch', () => {
     expect(toggleSwitch).toHaveClass('bg-blue-600');
     fireEvent.click(toggleSwitch);
     expect(toggleSwitch).toHaveClass('bg-gray-200');
+    expect(container).toMatchSnapshot();
   });
 });

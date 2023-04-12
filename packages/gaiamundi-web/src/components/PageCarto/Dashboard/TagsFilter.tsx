@@ -61,6 +61,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
               type="button"
               color="transparent"
               className="text-base"
+              data-testid="clear-tags-filter"
               onClick={reset}
             >
               Effacer tout
@@ -68,7 +69,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
           </div>
         )}
 
-        <div className="">
+        <div data-testid="selected-tags-filter">
           {selectedTags.map((tag) => {
             return (
               <Badge

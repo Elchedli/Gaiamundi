@@ -34,7 +34,10 @@ export const parseCsvFile = (filePath: string) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return Papa.parse<Record<string, CsvCellValue>>(fileContent, {
       header: true,
-      transformHeader: (headerName: string) => headerName.toLowerCase(),
+      transformHeader: (headerName: string) => {
+        // Remove metadata (source & validity) & remove extra spaces
+        return headerName.replace(/\[[^\]]*\]/i, "").trim();
+      },
     });
   }
   return Promise.reject(new Error(`Unable to read file : ${filePath}`));
@@ -47,7 +50,10 @@ export const indexDataByGeoCode = (
   return data.reduce((acc, curr) => {
     const geoCode = curr[geoCodeColumn] as string;
     if (geoCode) {
-      acc[geoCode] = curr;
+      acc[geoCode] = {
+        ...curr,
+        [geoCodeColumn]: undefined,
+      };
     }
     return acc;
   }, {} as GeoIndexedData);
@@ -71,6 +77,7 @@ export const mergeDataByGeocode = (dataCollection: GeoIndexedData[]) => {
       acc[geoCode] = {
         ...(geoCode in acc ? acc[geoCode] : {}),
         ...row,
+        __geoCode__: geoCode,
       };
       return acc;
     }, dataDict);

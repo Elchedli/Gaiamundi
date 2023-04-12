@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockDataFragments } from 'utils/mocks/data';
 import DatasetColumnPicker from '../DatasetColumnPicker';
@@ -74,16 +74,17 @@ describe('DatasetColumnPicker', () => {
 
     expect(columnCheckbox).not.toBeNull();
 
-    fireEvent.click(columnCheckbox as Element);
-
-    await waitFor(() => {
-      const columnRadio = dataGridRow.querySelector('input[type=radio]');
-
-      expect(columnRadio).not.toBeNull();
-
-      fireEvent.click(columnRadio as Element);
-
-      expect(onChange).toHaveBeenCalledWith([mockColumns[0]]);
+    await act(() => {
+      fireEvent.click(columnCheckbox as Element);
     });
+
+    const columnRadio = dataGridRow.querySelector('input[type=radio]');
+    expect(columnRadio).not.toBeNull();
+
+    await act(() => {
+      fireEvent.click(columnRadio as Element);
+    });
+
+    expect(onChange).toHaveBeenCalledWith([mockColumns[0]]);
   });
 });

@@ -44,6 +44,7 @@ export default factories.createCoreController(
           return parseDataByFragment(fragment);
         })
       );
+
       const geoIndexedData = mergeDataByGeocode(geoIndexedDataCollection);
       ctx.body = Object.values(geoIndexedData);
     },

@@ -79,7 +79,12 @@ export const validateCsv = async (file: File) => {
   }
 };
 
-export const parseCsvColumns = (columnNames: string[]): Column[] => {
+export const parseCsvColumns = (
+  columnNames: string[],
+  data: {
+    [key: string]: number | string;
+  }[]
+): Column[] => {
   return columnNames.reduce((acc, curr, idx) => {
     let metadata: { [key: string]: string } = {};
     let name = curr;
@@ -95,6 +100,7 @@ export const parseCsvColumns = (columnNames: string[]): Column[] => {
     }
     acc.push({
       name: name.trim(),
+      sample: data ? Number(data[0][name]) : 0,
       source: 's' in metadata ? metadata['s'] : '',
       validity: 'v' in metadata ? metadata['v'] : '',
       isGeoCode: idx === 0,

@@ -4,6 +4,7 @@ import { PageCarto } from './page-carto';
 export type IndicatorVariable = {
   columnName: string;
   alias: string;
+  sample: number;
 };
 
 export interface IndicatorBase {

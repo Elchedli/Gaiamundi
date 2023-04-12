@@ -44,6 +44,10 @@ export const PageCartoDataPanel: FC = () => {
                 name: 'Colonne',
               },
               {
+                key: 'sample',
+                name: 'Échantillon',
+              },
+              {
                 key: 'source',
                 name: 'Source',
               },

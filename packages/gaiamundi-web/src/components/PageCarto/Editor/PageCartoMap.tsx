@@ -1,10 +1,10 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { CameraIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 import 'eazychart-css';
 import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
 import { FC, useCallback, useMemo, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import rewind from '@turf/rewind';
 import { Alert } from 'components/Alert/Alert';
@@ -13,20 +13,37 @@ import { Button } from 'components/Button/Button';
 import ButtonGroup from 'components/Button/ButtonGroup';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { usePageCarto } from 'hooks/usePageCarto';
+import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
+import { uploadCover } from 'services/page-carto';
+import { rasterizeSvg } from 'utils/thumbnail-generator';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
-  const { map } = usePageCarto();
+  const { addToast } = useToast();
+  const { map, pageCartoId } = usePageCarto();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
     queryFn: async () => getGeoJson(geoJson as ApiData<UploadedFile>),
     // The query will not execute until the userId exists
     enabled: !!geoJson,
+  });
+
+  const { mutateAsync: uploadPageCartoCover } = useMutation({
+    mutationFn: async ({ thumbnail }: { thumbnail: File }) => {
+      return await uploadCover(thumbnail, pageCartoId);
+    },
+    onSuccess: (data: UploadedFile) => {
+      addToast({
+        title: `Aperçu généré`,
+        description: `Fichier ${data.name} téléchargé avec succès`,
+        type: 'success',
+      });
+    },
   });
 
   const geoCode = useMemo(() => {
@@ -46,6 +63,8 @@ export const PageCartoMap: FC = () => {
           minZoom: 0.25,
           maxZoom: 4,
           smoothScroll: true,
+          bounds: true,
+          boundsPadding: 0.4,
         });
       }
     }
@@ -69,11 +88,21 @@ export const PageCartoMap: FC = () => {
     }
   };
 
+  const generateThumbnail = async () => {
+    if (elementRef.current) {
+      // This function is the one the svg and make it into an image.
+      const thumbnail = await rasterizeSvg(elementRef.current);
+      // The new image is sent to the api and change it for the specific pageCartos
+      uploadPageCartoCover({ thumbnail });
+    }
+  };
+
   const geoJsonData = useMemo(() => {
     return data
       ? {
           ...data,
           features: data.features.map((feature: Feature) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return rewind(feature as any, { reverse: true });
           }),
         }
@@ -102,6 +131,7 @@ export const PageCartoMap: FC = () => {
       <ButtonGroup pill={true} className="m-4 absolute z-50">
         <Button icon={PlusIcon} onClick={zoomIn} />
         <Button icon={MinusIcon} onClick={zoomOut} />
+        <Button icon={CameraIcon} onClick={generateThumbnail} />
       </ButtonGroup>
       <div
         className="w-full h-full overflow-hidden"
