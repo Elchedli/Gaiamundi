@@ -1,9 +1,12 @@
+import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { ApiData, ApiError } from 'interfaces/api';
+import { useToast } from 'hooks/useToast';
+import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
 import { useMemo, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
 interface TagsSelectorProps {
@@ -14,6 +17,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const { addToast } = useToast();
 
   const {
     data: response,
@@ -26,17 +30,36 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
     queryFn: async () => await getAllTags(),
   });
 
-  // useMutation() => POST / PUT
-  // Use the heroicons package
+  const createTagMutation = useMutation<ApiDocument<Tag>, ApiError, Tag>({
+    mutationFn: async (newTag: Tag): Promise<ApiDocument<Tag>> => {
+      return await createTag(newTag);
+    },
+    onSuccess: ({ data }: ApiDocument<Tag>) => {
+      addToast({
+        title: 'Nouveau Tag créé',
+        description: 'Votre Tag a été ajouté avec succès',
+        type: 'success',
+      });
+      handleTagSelect(data);
+      setInputValue('');
+      onChange([...selectedTagIds, data.id]);
+      refetch();
+    },
+  });
 
   const tags = useMemo(() => response?.data || [], [response]);
   const searchTags = useMemo(
     () =>
       tags.filter((tag) => {
         const keywords = inputValue.toLowerCase();
-        return tag.name.toLowerCase().includes(keywords) && tag.id;
+        return (
+          tag.name.toLowerCase().includes(keywords) &&
+          tag.id &&
+          !selectedTagIds.includes(tag.id)
+        );
       }),
-    [tags, inputValue]
+
+    [tags, inputValue, selectedTagIds]
   );
   const selectedTags = useMemo(
     () =>
@@ -53,6 +76,14 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   if (isError) {
     return (
       <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
+    );
+  }
+
+  if (!response || response.data.length === 0) {
+    return (
+      <Alert type="info" className="grid h-fit justify-center items-center">
+        <div data-testid="empty-message">Aucun tag n&apos;a été trouvé !</div>
+      </Alert>
     );
   }
 
@@ -82,11 +113,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   const handleSubmit = () => {
     const inputValue = inputRef.current?.value ?? '';
     const newTag: Tag = { name: inputValue, type: 'Géographique' };
-    createTag(newTag);
-    handleTagSelect(newTag);
-    setInputValue('');
-    onChange([...selectedTagIds, newTag]);
-    refetch();
+    createTagMutation.mutateAsync(newTag);
   };
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -108,15 +135,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
               className="pl-1 py-1"
               onClick={() => handleTagDeselect(tag)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="18"
-                height="12"
-              >
-                <path d="M18.293 5.293a1 1 0 0 0-1.414 0L12 10.586 7.707 6.293a1 1 0 0 0-1.414 1.414L10.586 12l-4.293 4.293a1 1 0 1 0 1.414 1.414L12 13.414l4.293 4.293a1 1 0 0 0 1.414-1.414L13.414 12l4.879-4.879a1 1 0 0 0 0-1.414z" />
-              </svg>
+              <XMarkIcon className="h-4 w-4" />
             </button>
           </span>
         ))}
@@ -141,15 +160,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
               onClick={() => handleTagSelect(tag)}
             >
               {tag.name}&nbsp;
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="18"
-                height="12"
-              >
-                <path d="M12 5v7h7v2h-7v7h-2v-7H5v-2h5V5h2z" />
-              </svg>
+              <PlusIcon className="h-5 w-5" />
             </button>
           ))}
       </div>

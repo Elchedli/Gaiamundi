@@ -3,14 +3,8 @@ import { DataFragment } from './data-fragment';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
 import { Indicator } from './indicator';
+import { Tag } from './tag';
 import { User } from './user';
-
-export interface Tag {
-  id: number;
-  name: string;
-  type: string;
-  count?: number;
-}
 
 export interface PageCartoBase {
   name: string;
