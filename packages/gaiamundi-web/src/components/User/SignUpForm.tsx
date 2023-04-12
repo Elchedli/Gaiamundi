@@ -36,25 +36,9 @@ const SignUpForm = ({ email }: Props) => {
   const { authenticate } = useAuth();
 
   const [isChecked, setIsChecked] = useState(false);
-  const validateForm = () => {
-    const formData = watch();
-
-    return (
-      !errors.username &&
-      !errors.email &&
-      !errors.password &&
-      !errors.password2 &&
-      formData.username &&
-      formData.email &&
-      formData.password &&
-      formData.password2
-    );
-  };
 
   const handleCheckboxChange = () => {
-    if (validateForm()) {
-      setIsChecked(!isChecked);
-    }
+    setIsChecked(!isChecked);
   };
 
   const { mutateAsync, isError, error, isLoading } = useMutation<
@@ -201,10 +185,9 @@ const SignUpForm = ({ email }: Props) => {
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
-            disabled={!validateForm()}
           />
           <span className="ml-2">
-            <Link target="_blank" to="/termsofuse">
+            <Link to="/termsofuse">
               J&apos;accepte les Conditions d&apos;utilisations.
             </Link>
           </span>

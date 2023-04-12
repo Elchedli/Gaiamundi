@@ -45,23 +45,6 @@ describe('SignUpForm', () => {
     });
   });
 
-  it('should toggle the checkbox when clicked and form is valid', () => {
-    const { getByTestId } = render(<SignUpForm />);
-    userEvent.type(getByTestId('name-input'), 'Jean Dupond');
-    userEvent.type(getByTestId('email-input'), 'JeanDupond@example.com');
-    userEvent.type(getByTestId('password-input'), 'password123');
-    userEvent.type(getByTestId('confirm-password-input'), 'password123');
-
-    const checkbox = getByTestId('checkbox');
-    expect(checkbox).not.toBeChecked();
-
-    fireEvent.click(checkbox);
-    expect(checkbox).toBeChecked();
-
-    fireEvent.click(checkbox);
-    expect(checkbox).not.toBeChecked();
-  });
-
   it('should not submit form if checkbox is not checked', async () => {
     const { getByTestId } = render(<SignUpForm />);
     userEvent.type(getByTestId('name-input'), 'Jean Dupond');
