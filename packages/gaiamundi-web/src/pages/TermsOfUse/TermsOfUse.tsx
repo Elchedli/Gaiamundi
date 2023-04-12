@@ -10,7 +10,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         Introduction
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Les présentes conditions générales d&apos;utilisation (dites « CGU »)
         ont pour objet l&apos;encadrement juridique des modalités de mise à
         disposition du site et des services par Gaiamundi et de définir les
@@ -27,10 +27,10 @@ export const TermsOfUse = () => {
         proposés par le site. https://gaiamundi.org se réserve le droit de
         modifier unilatéralement et à tout moment le contenu des présentes CGU.
       </p>
-      <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mt-6 mb-2 mt-6">
+      <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mt-6 mb-2">
         Article 1 : Mentions légales
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         L&apos;édition du site https://gaiamundi.org est assurée par la Société
         _______________ Gaiamundi au capital de _______________ euros,
         immatriculée au RCS de _______________ sous le numéro _______________,
@@ -41,10 +41,10 @@ export const TermsOfUse = () => {
         social est situé au _______________, avec le numéro de téléphone :
         _______________.
       </p>
-      <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mt-6  mb-2 mt-6">
+      <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900  mb-2 mt-6">
         ARTICLE 2 : Accès au site
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Le site https://gaiamundi.org permet à l&apos;Utilisateur un accès
         gratuit aux services suivants : Le site internet propose les services
         suivants : _______________ Le site est accessible gratuitement en tout
@@ -74,7 +74,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 3 : Collecte des données
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Le site est exempté de déclaration à la Commission Nationale
         Informatique et Libertés (CNIL) dans la mesure où il ne collecte aucune
         donnée concernant les Utilisateurs.
@@ -82,7 +82,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 4 : Propriété intellectuelle
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Les marques, logos, signes ainsi que tous les contenus du site (textes,
         images, son…) font l&apos;objet d&apos;une protection par le Code de la
         propriété intellectuelle et plus particulièrement par le droit
@@ -106,7 +106,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 5 : Responsabilité
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Les sources des informations diffusées sur le site https://gaiamundi.org
         sont réputées fiables mais le site ne garantit pas qu&apos;il soit
         exempt de défauts, d&apos;erreurs ou d&apos;omissions. Les informations
@@ -130,7 +130,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 6 : Liens hypertextes
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Des liens hypertextes peuvent être présents sur le site.
         L&apos;Utilisateur est informé qu&apos;en cliquant sur ces liens, il
         sortira du site https://gaiamundi.org. Ce dernier n&apos;a pas de
@@ -140,7 +140,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 7 : Cookies
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         L&apos;Utilisateur est informé que lors de ses visites sur le site, un
         cookie peut s&apos;installer automatiquement sur son logiciel de
         navigation. Les cookies sont de petits fichiers stockés temporairement
@@ -160,7 +160,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 8 : Publication par l’Utilisateur
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         Le site permet aux membres de publier les contenus suivants : PageCarto.
         Dans ses publications, le membre s&apos;engage à respecter les règles de
         la Netiquette (règles de bonne conduite de l&apos;internet) et les
@@ -187,7 +187,7 @@ export const TermsOfUse = () => {
       <h3 className="text-1xl font-extrabold 	text-transform: uppercase text-gray-900 mb-2 mt-6">
         ARTICLE 9 : Droit applicable et juridiction compétente
       </h3>
-      <p className="text-justify text-left">
+      <p className="text-justify ">
         La législation française s&apos;applique au présent contrat. En cas
         d&apos;absence de résolution amiable d&apos;un litige né entre les
         parties, les tribunaux français seront seuls compétents pour en
@@ -195,7 +195,7 @@ export const TermsOfUse = () => {
         présentes CGU, vous pouvez joindre l&apos;éditeur aux coordonnées
         inscrites à l’ARTICLE 1.
       </p>
-      <p className="text-1xl  text-gray-900 mb-2 mt-6">
+      <p className="text-1xl  text-gray-700 mb-2 mt-6">
         CGU réalisées sur http://legalplace.fr/
       </p>
     </div>

@@ -41,6 +41,10 @@ const SignUpForm = ({ email }: Props) => {
     setIsChecked(!isChecked);
   };
 
+  const openTermsInNewTab = () => {
+    window.open('/terms-of-use', '_blank');
+  };
+
   const { mutateAsync, isError, error, isLoading } = useMutation<
     UserAuthResponse,
     ApiError,
@@ -187,7 +191,7 @@ const SignUpForm = ({ email }: Props) => {
             onChange={handleCheckboxChange}
           />
           <span className="ml-2">
-            <Link to="/termsofuse">
+            <Link onClick={openTermsInNewTab} to={'/terms-of-use'}>
               J&apos;accepte les Conditions d&apos;utilisations.
             </Link>
           </span>

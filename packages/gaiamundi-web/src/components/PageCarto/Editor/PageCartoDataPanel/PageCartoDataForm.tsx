@@ -75,7 +75,6 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
     setValue('fragmentName', '');
     setColumns([]);
   };
-
   const handleFileParse = (columns: Column[]) => {
     setColumns(columns);
   };
