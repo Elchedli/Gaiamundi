@@ -73,6 +73,7 @@ export const NewPageCartoForm = () => {
         name: formData.name,
         map: response.data.id,
         html: '',
+        tags: formData.tags,
       });
     },
   });
