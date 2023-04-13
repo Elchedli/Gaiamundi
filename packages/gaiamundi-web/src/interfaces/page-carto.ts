@@ -14,7 +14,7 @@ export interface Tag {
 
 export interface PageCartoBase {
   name: string;
-  html: string;
+  html?: string;
 }
 
 export interface PageCartoStub extends PageCartoBase {

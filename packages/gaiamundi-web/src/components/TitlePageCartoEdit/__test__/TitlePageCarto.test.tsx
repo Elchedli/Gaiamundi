@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { usePageCarto } from 'hooks/usePageCarto';
-import { updatedTitle } from 'services/page-carto';
+import { updatePageCarto } from 'services/page-carto'; // Change the import here
 import { TitlePageCartoEdit } from '../TitlePageCartoEdit';
 
 afterEach(cleanup);
@@ -9,7 +9,7 @@ afterEach(cleanup);
 jest.mock('hooks/usePageCarto');
 
 jest.mock('services/page-carto', () => ({
-  updatedTitle: jest.fn(),
+  updatePageCarto: jest.fn(), // Change the mocked function here
 }));
 
 describe('TitlePageCartoEdit', () => {
@@ -25,7 +25,8 @@ describe('TitlePageCartoEdit', () => {
       },
     });
 
-    (updatedTitle as jest.Mock).mockResolvedValue({
+    (updatePageCarto as jest.Mock).mockResolvedValue({
+      // Change the mocked function here
       data: {
         id: 1,
         name: 'Titre modifié',
@@ -38,7 +39,7 @@ describe('TitlePageCartoEdit', () => {
     expect(getByText(mockPageCartoData.name)).toBeInTheDocument();
   });
 
-  it('updates the title when edited and calls updatedTitle with the correct parameters', async () => {
+  it('updates the title when edited and calls updatePageCarto with the correct parameters', async () => {
     const { getByText } = render(<TitlePageCartoEdit />);
     const titleElement = getByText(mockPageCartoData.name);
 
@@ -50,7 +51,9 @@ describe('TitlePageCartoEdit', () => {
 
     await waitFor(() => {
       expect(getByText(newTitle)).toBeInTheDocument();
-      expect(updatedTitle).toHaveBeenCalledWith(mockPageCartoData.id, newTitle);
+      expect(updatePageCarto).toHaveBeenCalledWith(mockPageCartoData.id, {
+        name: newTitle,
+      }); // Change the function call here
     });
   });
 
@@ -60,9 +63,10 @@ describe('TitlePageCartoEdit', () => {
 
     fireEvent.blur(titleElement);
     await waitFor(() => {
-      expect(updatedTitle).toHaveBeenCalledWith(
+      expect(updatePageCarto).toHaveBeenCalledWith(
+        // Change the function call here
         mockPageCartoData.id,
-        mockPageCartoData.name
+        { name: mockPageCartoData.name }
       );
     });
   });

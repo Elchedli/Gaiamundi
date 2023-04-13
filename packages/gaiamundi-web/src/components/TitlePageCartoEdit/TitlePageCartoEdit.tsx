@@ -1,8 +1,8 @@
-import EditIcon from 'components/Icons/EditTitle';
+import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useRef, useState } from 'react';
+import { updatePageCarto } from 'services/page-carto';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import { updatedTitle } from 'services/page-carto';
 
 export const TitlePageCartoEdit = () => {
   const { data: pageCarto } = usePageCarto();
@@ -15,10 +15,11 @@ export const TitlePageCartoEdit = () => {
     setPageTitle(newTitle);
     pageTitleRef.current = newTitle;
   };
+
   const handleBlur = () => {
     const pageId = pageCarto?.data.id;
     if (pageId) {
-      updatedTitle(pageId, pageTitleRef.current);
+      updatePageCarto(pageId, { name: pageTitleRef.current });
     }
   };
 
@@ -32,7 +33,8 @@ export const TitlePageCartoEdit = () => {
         onBlur={handleBlur}
         tagName="h1"
       />
-      <EditIcon className="ml-2" />
+
+      <PencilSquareIcon className="ml-2 h-4 w-4" />
     </div>
   );
 };
