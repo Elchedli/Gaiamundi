@@ -22,9 +22,3 @@
 .toolbar .toolbar-item:nth-child(2) {
   display: none;
 }
-.ml-65 {
-  margin-left: 17rem; /* 272px */
-}
-.td {
-  border: 2px solid black;
-}
