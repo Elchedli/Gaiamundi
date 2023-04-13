@@ -8,9 +8,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Label } from 'components/Inputs/Label';
 import { TextInput } from 'components/Inputs/TextInput';
 import { useAuth } from 'hooks/useAuth';
+import { useModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
 import { UserAuthResponse, UserSignUpFields } from 'interfaces/user';
+import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 import { signUp } from 'services/user';
 import { EMAIL_REGEX } from 'utils/utils';
 
@@ -21,10 +23,11 @@ interface Props {
 const SignUpForm = ({ email }: Props) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { showModal } = useModal();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm<UserSignUpFields & { password2: string }>({
     defaultValues: {
@@ -39,10 +42,6 @@ const SignUpForm = ({ email }: Props) => {
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
-  };
-
-  const openTermsInNewTab = () => {
-    window.open('/terms-of-use', '_blank');
   };
 
   const { mutateAsync, isError, error, isLoading } = useMutation<
@@ -191,8 +190,18 @@ const SignUpForm = ({ email }: Props) => {
             onChange={handleCheckboxChange}
           />
           <span className="ml-2">
-            <Link onClick={openTermsInNewTab} to={'/terms-of-use'}>
-              J&apos;accepte les Conditions d&apos;utilisations.
+            J&apos;accepte les{' '}
+            <Link
+              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              to={'#'}
+              onClick={() =>
+                showModal({
+                  title: `Conditions d'utilisation`,
+                  Component: TermsOfUse,
+                })
+              }
+            >
+              Conditions d&apos;utilisations.
             </Link>
           </span>
         </label>
@@ -202,7 +211,7 @@ const SignUpForm = ({ email }: Props) => {
           <Button
             data-testid="submit-button"
             type="submit"
-            disabled={!isChecked}
+            disabled={!isChecked || !isValid}
             isLoading={isLoading}
           >
             Créer un compte
