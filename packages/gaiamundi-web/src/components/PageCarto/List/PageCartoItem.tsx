@@ -36,7 +36,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
           <h2>{name}</h2>
           <div className="text-gray-500">
             <div className="text-sm my-1">
-              <div className="my-1 font-bold">Carte : {map.name}</div>
+              <div className="my-1 font-bold">Carte : {map.perimetre}</div>
               <p>{html && excerptHtml(html)}</p>
               <div className="text-xs mt-2">Créer par : {owner.username}</div>
             </div>

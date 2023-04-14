@@ -89,7 +89,7 @@ export const mockCover: ApiData<UploadedFile> = {
 
 export const mockGeoMap: ApiData<GeoMap> = {
   id: 1,
-  name: 'Test Map',
+  perimetre: 'Test Map',
   yearValidity: 2022,
   source: 'Test Source',
   license: 'Test License',
@@ -250,7 +250,7 @@ export const mockPageCartoData: ApiData<PageCarto> = {
 
 export const mockGeoMapData: ApiData<GeoMap> = {
   id: 1,
-  name: 'Test Map',
+  perimetre: 'Test Map',
   yearValidity: 2022,
   source: 'Test Source',
   license: 'Test License',

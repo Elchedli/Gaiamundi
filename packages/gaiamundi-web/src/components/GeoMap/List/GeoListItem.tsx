@@ -4,7 +4,7 @@ import { getGeoMapThumbnailUrlById } from 'services/geo-map';
 
 export const GeoListItem = ({
   yearValidity,
-  name,
+  perimetre,
   source,
   license,
   geoJSON,
@@ -18,7 +18,7 @@ export const GeoListItem = ({
         />
       </div>
       <div className="p-3">
-        <h2>{name}</h2>
+        <h2>{perimetre}</h2>
         <div className="text-gray-500">
           <div className="text-sm my-1">
             <div className="my-1 font-bold">Source : {source}</div>

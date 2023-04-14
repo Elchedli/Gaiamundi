@@ -87,17 +87,17 @@ export const MapForm: FC = () => {
       <div className="col-span-1">
         <div className="px-5">
           <div>
-            <Label htmlFor="Nom">Nom</Label>
+            <Label htmlFor="Perimetre">Perimètre</Label>
             <TextInput
-              id="geoMap.name"
+              id="geoMap.perimetre"
               className="w-full"
-              {...register('geoMap.name', {
+              {...register('geoMap.perimetre', {
                 required: 'Veuillez saisir le nom du carte',
               })}
             />
-            {errors.geoMap?.name && (
+            {errors.geoMap?.perimetre && (
               <div className="mt-2 text-xs text-red-600">
-                {getFieldState('geoMap.name')?.error?.message}
+                {getFieldState('geoMap.perimetre')?.error?.message}
               </div>
             )}
           </div>

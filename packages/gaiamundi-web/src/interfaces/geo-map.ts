@@ -9,7 +9,7 @@ export interface GeoProperty {
 }
 
 export interface GeoMapBase {
-  name: string;
+  perimetre: string;
   yearValidity: number;
   source: string;
   license: string;

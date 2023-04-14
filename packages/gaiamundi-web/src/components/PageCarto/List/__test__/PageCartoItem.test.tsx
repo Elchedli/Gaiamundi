@@ -14,7 +14,7 @@ describe('PageCartoItem', () => {
     expect(getByText(mockPageCartoData.name)).toBeInTheDocument();
 
     expect(
-      getByText((content) => content.endsWith(mockPageCartoData.map.name))
+      getByText((content) => content.endsWith(mockPageCartoData.map.perimetre))
     ).toBeInTheDocument();
     expect(
       getByText((content) => content.endsWith(mockPageCartoData.owner.username))
