@@ -87,17 +87,17 @@ export const MapForm: FC = () => {
       <div className="col-span-1">
         <div className="px-5">
           <div>
-            <Label htmlFor="Perimetre">Perimètre</Label>
+            <Label htmlFor="Name">Perimètre</Label>
             <TextInput
-              id="geoMap.perimetre"
+              id="geoMap.name"
               className="w-full"
-              {...register('geoMap.perimetre', {
-                required: 'Veuillez saisir le nom du carte',
+              {...register('geoMap.name', {
+                required: 'Veuillez saisir le périmètre du carte',
               })}
             />
-            {errors.geoMap?.perimetre && (
+            {errors.geoMap?.name && (
               <div className="mt-2 text-xs text-red-600">
-                {getFieldState('geoMap.perimetre')?.error?.message}
+                {getFieldState('geoMap.name')?.error?.message}
               </div>
             )}
           </div>
@@ -113,6 +113,21 @@ export const MapForm: FC = () => {
             {errors.geoMap?.yearValidity && (
               <div className="mt-2 text-xs text-red-600">
                 {getFieldState('geoMap.yearValidity')?.error?.message}
+              </div>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="Mesh">Maille Géographique</Label>
+            <TextInput
+              id="geoMap.mesh"
+              className="w-full"
+              {...register('geoMap.mesh', {
+                required: 'Veuillez saisir la maille géographique',
+              })}
+            />
+            {errors.geoMap?.source && (
+              <div className="mt-2 text-xs text-red-600">
+                {getFieldState('geoMap.source')?.error?.message}
               </div>
             )}
           </div>

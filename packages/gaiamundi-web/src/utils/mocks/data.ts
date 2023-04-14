@@ -89,8 +89,9 @@ export const mockCover: ApiData<UploadedFile> = {
 
 export const mockGeoMap: ApiData<GeoMap> = {
   id: 1,
-  perimetre: 'Test Map',
+  name: 'Test Map',
   yearValidity: 2022,
+  mesh: 'Test Maille',
   source: 'Test Source',
   license: 'Test License',
   properties: [
@@ -250,8 +251,9 @@ export const mockPageCartoData: ApiData<PageCarto> = {
 
 export const mockGeoMapData: ApiData<GeoMap> = {
   id: 1,
-  perimetre: 'Test Map',
+  name: 'Test Map',
   yearValidity: 2022,
+  mesh: 'Test Maille',
   source: 'Test Source',
   license: 'Test License',
   properties: [],

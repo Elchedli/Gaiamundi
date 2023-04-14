@@ -33,7 +33,7 @@ describe('GeoMapList', () => {
   it('renders list of GeoListItem components', async () => {
     const { container } = render(<GeoMapList />);
     const geoListItemElement = screen.getByText(
-      mockGeoMapApiCollection.data[0].id
+      mockGeoMapApiCollection.data[0].name
     );
     expect(geoListItemElement).toBeInTheDocument();
     const mapTabs = screen.getByTestId('map-choice').childNodes;

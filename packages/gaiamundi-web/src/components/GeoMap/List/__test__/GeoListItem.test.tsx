@@ -6,7 +6,7 @@ import { mockGeoMapData } from 'utils/mocks/data';
 describe('GeoListItem', () => {
   it('should render the perimeter of the GeoMap', () => {
     const { getByText } = render(<GeoListItem {...mockGeoMapData} />);
-    expect(getByText(mockGeoMapData.perimetre)).toBeInTheDocument();
+    expect(getByText(mockGeoMapData.name)).toBeInTheDocument();
   });
 
   it('should render the source of the GeoMap', () => {
