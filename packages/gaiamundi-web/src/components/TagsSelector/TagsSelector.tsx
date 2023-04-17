@@ -1,11 +1,13 @@
-import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
+import { Badge } from 'components/Badge/Badge';
+import { AutoCompleteInput } from 'components/Inputs/AutoCompleteInput';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
@@ -15,8 +17,6 @@ interface TagsSelectorProps {
 
 export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
-  const inputRef = useRef<HTMLInputElement>(null);
   const { addToast } = useToast();
 
   const {
@@ -34,37 +34,23 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
     mutationFn: async (newTag: Tag): Promise<ApiDocument<Tag>> => {
       return await createTag(newTag);
     },
-    onSuccess: ({ data }: ApiDocument<Tag>) => {
+    onSuccess: async ({ data }: ApiDocument<Tag>) => {
       addToast({
         title: 'Nouveau Tag créé',
         description: 'Votre Tag a été ajouté avec succès',
         type: 'success',
       });
+      await refetch();
       handleTagSelect(data);
-      setInputValue('');
       onChange([...selectedTagIds, data.id]);
-      refetch();
     },
   });
 
   const tags = useMemo(() => response?.data || [], [response]);
-  const searchTags = useMemo(
-    () =>
-      tags.filter((tag) => {
-        const keywords = inputValue.toLowerCase();
-        return (
-          tag.name.toLowerCase().includes(keywords) &&
-          tag.id &&
-          !selectedTagIds.includes(tag.id)
-        );
-      }),
-
-    [tags, inputValue, selectedTagIds]
-  );
   const selectedTags = useMemo(
     () =>
-      tags.filter((tag) => {
-        return selectedTagIds.includes(tag.id);
+      selectedTagIds.map((id) => {
+        return tags.find((tag) => id === tag.id) as ApiData<Tag>;
       }),
     [tags, selectedTagIds]
   );
@@ -87,10 +73,6 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
     );
   }
 
-  const handleTagSearch = (inputValue: string) => {
-    setInputValue(inputValue);
-  };
-
   const handleTagSelect = (tag: ApiData<Tag>) => {
     const isSelected = selectedTagIds.includes(tag.id);
     if (!isSelected) {
@@ -98,71 +80,38 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
       setSelectedTagIds(selectedIds);
       onChange(selectedIds);
     }
-    setInputValue('');
-    if (inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
-    }
   };
 
   const handleTagDeselect = (tag: ApiData<Tag>) => {
     setSelectedTagIds(selectedTagIds.filter((id) => id !== tag.id));
   };
 
-  const handleSubmit = () => {
-    const inputValue = inputRef.current?.value ?? '';
-    const newTag: Tag = { name: inputValue, type: 'Géographique' };
+  const handleSubmit = (name: string) => {
+    const newTag: Tag = { name, type: 'Géographique' };
     createTagMutation.mutateAsync(newTag);
   };
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.keyCode === 13) {
-      handleSubmit();
-    }
-  }
-
   return (
-    <div className="w-2/5">
+    <div className="w-3/4">
       <div className="flex flex-wrap" data-testid="selected-tags">
         {selectedTags.map((tag) => (
-          <span
-            key={tag.id}
-            className="bg-blue-600 text-white selected-tag px-1 py-1 rounded-md mr-2 my-2 overflow-hidden whitespace-nowrap break-words"
-          >
+          <Badge key={tag.id} className="my-1">
             {tag.name}
-            <button
-              className="pl-1 py-1"
+            <XMarkIcon
               onClick={() => handleTagDeselect(tag)}
-            >
-              <XMarkIcon className="h-4 w-4" />
-            </button>
-          </span>
+              className="cursor-pointer ml-2 h-4 w-4 inline-block"
+            />
+          </Badge>
         ))}
-        <input
-          ref={inputRef}
-          className="px-2 py-1 my-1 border-2 rounded-md"
-          type="text"
-          placeholder="Search tags"
-          onChange={(e) => handleTagSearch(e.target.value)}
-          value={inputValue}
-          onKeyDown={handleKeyDown}
-          data-testid="tags-input"
+        <AutoCompleteInput<ApiData<Tag>>
+          options={tags.filter(({ id }) => !selectedTagIds.includes(id))}
+          labelField={'name'}
+          onSelect={handleTagSelect}
+          onCreate={handleSubmit}
+          enableComboBox={false}
+          placeholder={'Ajouter des tags ....'}
+          emptyMessage={'Aucun tag trouvé! Tapez "Entrée" pour ajouter.'}
         />
-      </div>
-      <div className="flex flex-wrap" data-testid="tags-filter">
-        {inputValue != null &&
-          inputValue !== '' &&
-          searchTags.slice(0, 10).map((tag) => (
-            <button
-              key={tag.id}
-              className="bg-slate-300 selected-tag px-1 py-1 rounded-md mr-2 my-2 flex items-center"
-              onClick={() => handleTagSelect(tag)}
-            >
-              {tag.name}&nbsp;
-              <PlusIcon className="h-5 w-5" />
-            </button>
-          ))}
       </div>
     </div>
   );
