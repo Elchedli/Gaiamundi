@@ -1,6 +1,6 @@
 import { CameraIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 import 'eazychart-css';
-import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
+import { BubbleMapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
 import { FC, useCallback, useMemo, useRef } from 'react';
@@ -139,13 +139,22 @@ export const PageCartoMap: FC = () => {
         data-testid={'map-chart'}
       >
         <ResponsiveChartContainer>
-          <MapChart
+          <BubbleMapChart
             map={{
               geoDomainKey: geoCode,
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
               fill: 'white',
+            }}
+            bubble={{
+              domainKey: 'rValue',
+              minRadius: 1,
+              maxRadius: 30,
+              opacity: 0.5,
+              stroke: 'black',
+              strokeWidth: 1,
+              colors: ['green', 'yellowgreen', 'yellow'],
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             colors={['white', 'pink', 'red']}
@@ -154,6 +163,7 @@ export const PageCartoMap: FC = () => {
               return {
                 [geoCode]: feature.properties?.[geoCode],
                 value: idx,
+                rValue: idx * 2,
               };
             })}
           />
