@@ -40,3 +40,14 @@ export const getPageCartoById = async (id: number) => {
 export const uploadCsv = async (file: File) => {
   return await strapi.uploadFile(file, 'api::page-carto.page-carto');
 };
+
+export const uploadCover = async (file: File, refId: number) => {
+  return await strapi.uploadFile(
+    file,
+    'api::page-carto.page-carto',
+    `${refId}_thumbnail.png`,
+    // Id of pageCartos.
+    refId,
+    'cover'
+  );
+};

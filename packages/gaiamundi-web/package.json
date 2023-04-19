@@ -74,7 +74,7 @@
     "axios": "^1.2.0",
     "classnames": "^2.3.2",
     "eazychart-css": "^0.2.1-alpha.0",
-    "eazychart-react": "0.3.0-alpha.0",
+    "eazychart-react": "^0.4.0-alpha.0",
     "equation-resolver": "^1.0.0",
     "excerpt-html": "^1.2.2",
     "panzoom": "^9.4.3",
