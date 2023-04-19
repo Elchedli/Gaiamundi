@@ -3,9 +3,8 @@ import CloseCross from 'components/Icons/CloseCross';
 import { Label } from 'components/Inputs/Label';
 import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
-import { GroupedTags, Tag } from 'interfaces/tag';
+import { Tag } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';
-import { groupByApiData as groupApiDataBy } from 'utils/strapiUtils';
 
 interface TagsFilterProp {
   onChange: (selectedTagIds: number[]) => void;
@@ -17,11 +16,11 @@ export const TagsFilter: FC<TagsFilterProp> = ({
   tags: response,
 }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const groupedTags: GroupedTags = useMemo(() => {
-    return groupApiDataBy(
-      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
-      (tag: ApiData<Tag>) => tag.type
-    );
+  const groupedTags = useMemo(() => {
+    return {
+      allTags:
+        response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
+    };
   }, [selectedTagIds, response]);
 
   const selectedTags = useMemo(() => {
@@ -87,7 +86,7 @@ export const TagsFilter: FC<TagsFilterProp> = ({
 
       {Object.entries(groupedTags).map(([group, tags]) => (
         <div key={group}>
-          {tags.length > 0 && <Label className="text-xl">{group}</Label>}
+          {tags.length > 0}
           <div className="my-3">
             {tags.map((tag: ApiData<Tag>) => {
               return (

@@ -115,7 +115,6 @@ export const mockGeoMap: ApiData<GeoMap> = {
 export const mockTags: ApiData<Tag>[] = [
   {
     id: 1,
-    type: 'Géographique',
     name: 'Tag A',
     count: 5,
     created_at: '2022-02-07T00:00:00.000Z',
@@ -123,7 +122,6 @@ export const mockTags: ApiData<Tag>[] = [
   },
   {
     id: 2,
-    type: 'Géographique',
     name: 'Tag B',
     count: 3,
     created_at: '2022-02-07T00:00:00.000Z',
@@ -131,7 +129,6 @@ export const mockTags: ApiData<Tag>[] = [
   },
   {
     id: 3,
-    type: 'Thématique',
     name: 'Tag C',
     count: 2,
     created_at: '2022-02-07T00:00:00.000Z',

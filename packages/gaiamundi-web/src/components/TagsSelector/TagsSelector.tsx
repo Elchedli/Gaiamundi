@@ -112,7 +112,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
 
   const handleSubmit = () => {
     const inputValue = inputRef.current?.value ?? '';
-    const newTag: Tag = { name: inputValue, type: 'Géographique' };
+    const newTag: Tag = { name: inputValue };
     createTagMutation.mutateAsync(newTag);
   };
 
