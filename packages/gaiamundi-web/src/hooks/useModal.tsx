@@ -99,8 +99,11 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                     {title}
                   </Dialog.Title>
                 )}
-
-                {isVisible && <Component {...props} />}
+                {Component && (
+                  <div className="w-full h-full overflow-y-auto p-2 max-h-[80vh]">
+                    <Component {...props} />
+                  </div>
+                )}
               </Dialog.Panel>
             </div>
           </div>

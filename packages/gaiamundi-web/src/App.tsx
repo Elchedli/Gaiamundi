@@ -15,6 +15,7 @@ import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
 import { PageCartoEditPage } from 'pages/PageCartoPage/PageCartoPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
+import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 
 import { ProtectedRoute } from 'components/PrivateRoute/PrivateRoute';
 import 'react-data-grid/lib/styles.css';
@@ -39,14 +40,8 @@ export default function App() {
                 <Route path="account" element={<AccountPage />} />
                 <Route path="account/edit" element={<AccountEditPage />} />
                 <Route path="signup" element={<SignUpPage />} />
-                <Route
-                  path="dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <DashboardPage />
-                    </ProtectedRoute>
-                  }
-                />
+                <Route path="terms-of-use" element={<TermsOfUse />} />
+                <Route path="dashboard" element={<DashboardPage />} />
                 <Route
                   path="forgot-password"
                   element={<ForgotPasswordPage />}
