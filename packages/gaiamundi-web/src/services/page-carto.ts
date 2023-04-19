@@ -41,7 +41,10 @@ export const uploadCsv = async (file: File) => {
   return await strapi.uploadFile(file, 'api::page-carto.page-carto');
 };
 
-export const updatePageCarto = async (id: number, data: PageCartoBase) => {
+export const updatePageCarto = async (
+  id: number,
+  data: Partial<PageCartoBase>
+) => {
   return await strapi.update(ContentType.PAGE_CARTOS, id, { data });
 };
 export const uploadCover = async (file: File, refId: number) => {

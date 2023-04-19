@@ -10,7 +10,7 @@ export const PageCartoEditPage: React.FC = () => {
     <div className="h-full w-full">
       <PageCartoProvider id={id}>
         <div className="p-1">
-          <div id="TitlePageCarto" className=" p-1 border-b flex flex-wrap">
+          <div className=" p-1 border-b flex flex-wrap">
             <TitlePageCartoEdit />
           </div>
         </div>
