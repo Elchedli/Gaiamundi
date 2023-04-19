@@ -35,13 +35,13 @@ describe('TitlePageCartoEdit', () => {
 
   it('renders the initial title', () => {
     const { getByTestId } = render(<TitlePageCartoEdit />);
-    expect(getByTestId('editable-title').innerText).toEqual(
+    expect(getByTestId('content-editable').innerText).toEqual(
       mockPageCartoData.name
     );
   });
   it('updates the title when edited and calls updatePageCarto with the correct parameters', async () => {
     const { getByTestId } = render(<TitlePageCartoEdit />);
-    const inputElement = getByTestId('editable-title');
+    const inputElement = getByTestId('content-editable');
 
     const newTitle = 'Titre modifié';
 
@@ -50,7 +50,7 @@ describe('TitlePageCartoEdit', () => {
     fireEvent.blur(inputElement);
 
     await waitFor(() => {
-      expect(getByTestId('editable-title').innerText).toEqual(newTitle);
+      expect(getByTestId('content-editable').innerText).toEqual(newTitle);
       expect(updatePageCarto).toHaveBeenCalledWith(mockPageCartoData.id, {
         name: newTitle,
       });
@@ -59,7 +59,7 @@ describe('TitlePageCartoEdit', () => {
 
   it('calls handleBlur when the input element loses focus', async () => {
     const { getByTestId } = render(<TitlePageCartoEdit />);
-    const inputElement = getByTestId('editable-title');
+    const inputElement = getByTestId('content-editable');
 
     const differentTitle = 'Titre différent';
 

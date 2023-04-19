@@ -1,49 +1,49 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { EditableTitle } from '../../ContentEditable/ContentEditable';
+import { ContentEditable } from '../../ContentEditable/ContentEditable';
 
-describe('EditableTitle', () => {
-  const initialTitle = 'Titre initial';
-  const updatedTitle = 'Titre modifié';
+describe('ContentEditable', () => {
+  const initialValue = 'Value initial';
+  const updatedValue = 'Value modifié';
 
   it('renders the initial title', () => {
-    const initialTitle = '';
+    const initialValue = '';
     const handleChange = jest.fn();
     const handleBlur = jest.fn();
     const { getByTestId } = render(
-      <EditableTitle
-        value={initialTitle}
+      <ContentEditable
+        value={initialValue}
         onInput={handleChange}
         onBlur={handleBlur}
         className=""
       />
     );
-    const titleElement = getByTestId('editable-title');
-    expect(titleElement.textContent).toBe(initialTitle);
+    const valueElement = getByTestId('content-editable');
+    expect(valueElement.textContent).toBe(initialValue);
   });
 
   it('updates the title when edited and calls onInput with the correct event', async () => {
     const handleInput = jest.fn();
     const handleBlur = jest.fn();
     const { getByTestId } = render(
-      <EditableTitle
-        value={initialTitle}
+      <ContentEditable
+        value={initialValue}
         className="test-class"
         onInput={handleInput}
         onBlur={handleBlur}
       />
     );
 
-    const titleElement = getByTestId('editable-title');
-    fireEvent.focus(titleElement);
-    fireEvent.input(titleElement, { target: { innerText: updatedTitle } });
-    fireEvent.blur(titleElement);
+    const valueElement = getByTestId('content-editable');
+    fireEvent.focus(valueElement);
+    fireEvent.input(valueElement, { target: { innerText: updatedValue } });
+    fireEvent.blur(valueElement);
 
     await waitFor(() => {
-      expect(titleElement.innerText).toBe(updatedTitle);
+      expect(valueElement.innerText).toBe(updatedValue);
       expect(handleInput).toHaveBeenCalledWith(
         expect.objectContaining({
           target: expect.objectContaining({
-            innerText: updatedTitle,
+            innerText: updatedValue,
           }),
         })
       );
@@ -54,17 +54,17 @@ describe('EditableTitle', () => {
     const handleInput = jest.fn();
     const handleBlur = jest.fn();
     const { getByTestId } = render(
-      <EditableTitle
-        value={initialTitle}
+      <ContentEditable
+        value={initialValue}
         className="test-class"
         onInput={handleInput}
         onBlur={handleBlur}
       />
     );
 
-    const titleElement = getByTestId('editable-title');
-    fireEvent.focus(titleElement);
-    fireEvent.blur(titleElement);
+    const valueElement = getByTestId('content-editable');
+    fireEvent.focus(valueElement);
+    fireEvent.blur(valueElement);
     expect(handleBlur).toHaveBeenCalled();
   });
 });

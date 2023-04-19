@@ -2,7 +2,7 @@ import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useRef, useState } from 'react';
 import { updatePageCarto } from 'services/page-carto';
-import { EditableTitle } from '../ContentEditable/ContentEditable';
+import { ContentEditable } from '../ContentEditable/ContentEditable';
 
 export const TitlePageCartoEdit = () => {
   const { data: pageCarto } = usePageCarto();
@@ -24,7 +24,7 @@ export const TitlePageCartoEdit = () => {
 
   return (
     <div className="flex items-center bg-gray-100 border-2 rounded-lg border-black p-1">
-      <EditableTitle
+      <ContentEditable
         value={pageTitle}
         onInput={handleChange}
         onBlur={handleBlur}
