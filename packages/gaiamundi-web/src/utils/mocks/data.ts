@@ -253,7 +253,13 @@ export const mockGeoMapData: ApiData<GeoMap> = {
   yearValidity: 2022,
   source: 'Test Source',
   license: 'Test License',
-  properties: [],
+  properties: [
+    {
+      name: 'nom',
+      sample: 'Taponas',
+      isGeoCode: true,
+    },
+  ],
   owner: mockUser,
   geoJSON: {
     id: 1,

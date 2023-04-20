@@ -78,7 +78,6 @@ describe('PageCartoDataForm', () => {
     await act(async () => {
       fireEvent.click(columnCheckbox);
     });
-
     expect(columnCheckbox.checked).toBeTruthy();
 
     const columnRadio = dataGridRow.querySelector(
