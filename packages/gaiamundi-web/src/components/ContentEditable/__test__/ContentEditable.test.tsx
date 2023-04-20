@@ -1,5 +1,5 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import { ContentEditable } from '../../ContentEditable/ContentEditable';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { ContentEditable } from '../ContentEditable';
 
 describe('ContentEditable', () => {
   const initialValue = 'Value initial';
@@ -12,6 +12,7 @@ describe('ContentEditable', () => {
     const { getByTestId } = render(
       <ContentEditable
         value={initialValue}
+        isLoading={false}
         onInput={handleChange}
         onBlur={handleBlur}
         className=""
@@ -27,6 +28,7 @@ describe('ContentEditable', () => {
     const { getByTestId } = render(
       <ContentEditable
         value={initialValue}
+        isLoading={false}
         className="test-class"
         onInput={handleInput}
         onBlur={handleBlur}
@@ -56,6 +58,7 @@ describe('ContentEditable', () => {
     const { getByTestId } = render(
       <ContentEditable
         value={initialValue}
+        isLoading={false}
         className="test-class"
         onInput={handleInput}
         onBlur={handleBlur}

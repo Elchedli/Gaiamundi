@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { usePageCarto } from 'hooks/usePageCarto';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { updatePageCarto } from 'services/page-carto';
 import { TitlePageCartoEdit } from '../TitlePageCartoEdit';
 
@@ -34,13 +35,23 @@ describe('TitlePageCartoEdit', () => {
   });
 
   it('renders the initial title', () => {
-    const { getByTestId } = render(<TitlePageCartoEdit />);
+    const queryClient = new QueryClient();
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <TitlePageCartoEdit />
+      </QueryClientProvider>
+    );
     expect(getByTestId('content-editable').innerText).toEqual(
       mockPageCartoData.name
     );
   });
   it('updates the title when edited and calls updatePageCarto with the correct parameters', async () => {
-    const { getByTestId } = render(<TitlePageCartoEdit />);
+    const queryClient = new QueryClient();
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <TitlePageCartoEdit />
+      </QueryClientProvider>
+    );
     const inputElement = getByTestId('content-editable');
 
     const newTitle = 'Titre modifié';
@@ -58,7 +69,12 @@ describe('TitlePageCartoEdit', () => {
   });
 
   it('calls handleBlur when the input element loses focus', async () => {
-    const { getByTestId } = render(<TitlePageCartoEdit />);
+    const queryClient = new QueryClient();
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <TitlePageCartoEdit />
+      </QueryClientProvider>
+    );
     const inputElement = getByTestId('content-editable');
 
     const differentTitle = 'Titre différent';

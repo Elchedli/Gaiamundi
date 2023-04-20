@@ -75,7 +75,9 @@ describe('PageCartoDataForm', () => {
       'input[type=checkbox]'
     ) as HTMLInputElement;
 
-    fireEvent.click(columnCheckbox);
+    await act(async () => {
+      fireEvent.click(columnCheckbox);
+    });
 
     expect(columnCheckbox.checked).toBeTruthy();
 
