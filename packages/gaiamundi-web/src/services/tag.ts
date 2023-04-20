@@ -4,7 +4,7 @@ import { ContentType, QueryParams, strapi } from './strapi';
 export const getAllTags = async () => {
   return await strapi.get<Tag>(ContentType.TAGS, {
     populate: '*',
-    sort: ['type:asc', 'createdAt:asc'],
+    sort: ['createdAt:asc'],
     pagination: {
       limit: -1,
     },
