@@ -68,6 +68,7 @@
     "web-vitals": "^2.1.4"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.23.1",
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
     "@turf/rewind": "^6.5.0",
