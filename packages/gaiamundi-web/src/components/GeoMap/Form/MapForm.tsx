@@ -87,12 +87,12 @@ export const MapForm: FC = () => {
       <div className="col-span-1">
         <div className="px-5">
           <div>
-            <Label htmlFor="Nom">Nom</Label>
+            <Label htmlFor="Name">Perimètre</Label>
             <TextInput
               id="geoMap.name"
               className="w-full"
               {...register('geoMap.name', {
-                required: 'Veuillez saisir le nom du carte',
+                required: 'Veuillez saisir le périmètre du carte',
               })}
             />
             {errors.geoMap?.name && (
@@ -113,6 +113,21 @@ export const MapForm: FC = () => {
             {errors.geoMap?.yearValidity && (
               <div className="mt-2 text-xs text-red-600">
                 {getFieldState('geoMap.yearValidity')?.error?.message}
+              </div>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="Mesh">Maille Géographique</Label>
+            <TextInput
+              id="geoMap.mesh"
+              className="w-full"
+              {...register('geoMap.mesh', {
+                required: 'Veuillez saisir la maille géographique',
+              })}
+            />
+            {errors.geoMap?.mesh && (
+              <div className="mt-2 text-xs text-red-600">
+                {getFieldState('geoMap.mesh')?.error?.message}
               </div>
             )}
           </div>

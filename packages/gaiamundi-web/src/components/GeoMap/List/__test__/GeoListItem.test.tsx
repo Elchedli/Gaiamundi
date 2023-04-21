@@ -4,7 +4,7 @@ import config from 'config';
 import { mockGeoMapData } from 'utils/mocks/data';
 
 describe('GeoListItem', () => {
-  it('should render the name of the GeoMap', () => {
+  it('should render the perimeter of the GeoMap', () => {
     const { getByText } = render(<GeoListItem {...mockGeoMapData} />);
     expect(getByText(mockGeoMapData.name)).toBeInTheDocument();
   });
