@@ -125,9 +125,9 @@ export const MapForm: FC = () => {
                 required: 'Veuillez saisir la maille géographique',
               })}
             />
-            {errors.geoMap?.source && (
+            {errors.geoMap?.mesh && (
               <div className="mt-2 text-xs text-red-600">
-                {getFieldState('geoMap.source')?.error?.message}
+                {getFieldState('geoMap.mesh')?.error?.message}
               </div>
             )}
           </div>
