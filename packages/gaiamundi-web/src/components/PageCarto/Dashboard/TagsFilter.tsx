@@ -1,7 +1,7 @@
+import { Badge } from 'components/Badge/Badge';
 import { Button } from 'components/Button/Button';
 import CloseCross from 'components/Icons/CloseCross';
 import { Label } from 'components/Inputs/Label';
-import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';

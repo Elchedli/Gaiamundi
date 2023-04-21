@@ -12,6 +12,7 @@ import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import ButtonGroup from 'components/Button/ButtonGroup';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { TitlePageCartoEdit } from 'components/TitlePageCartoEdit/TitlePageCartoEdit';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
@@ -128,11 +129,14 @@ export const PageCartoMap: FC = () => {
 
   return (
     <div className="w-full h-full relative">
-      <ButtonGroup pill={true} className="m-4 absolute z-50">
-        <Button icon={PlusIcon} onClick={zoomIn} />
-        <Button icon={MinusIcon} onClick={zoomOut} />
-        <Button icon={CameraIcon} onClick={generateThumbnail} />
-      </ButtonGroup>
+      <div className="w-full p-2 absolute z-50 flex bg-white bg-opacity-50">
+        <TitlePageCartoEdit />
+        <ButtonGroup pill={true} className="mt-2">
+          <Button icon={PlusIcon} onClick={zoomIn} />
+          <Button icon={MinusIcon} onClick={zoomOut} />
+          <Button icon={CameraIcon} onClick={generateThumbnail} />
+        </ButtonGroup>
+      </div>
       <div
         className="w-full h-full overflow-hidden"
         ref={panZoomCallback}
