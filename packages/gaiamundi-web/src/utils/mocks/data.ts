@@ -4,7 +4,8 @@ import { Dataset } from 'interfaces/dataset';
 import { UploadedFile } from 'interfaces/file';
 import { GeoMap } from 'interfaces/geo-map';
 import { Indicator } from 'interfaces/indicator';
-import { PageCarto, Tag } from 'interfaces/page-carto';
+import { PageCarto } from 'interfaces/page-carto';
+import { Tag } from 'interfaces/tag';
 import { User } from 'interfaces/user';
 import mockMapJson from './map.json';
 

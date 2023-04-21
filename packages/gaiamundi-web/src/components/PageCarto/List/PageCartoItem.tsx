@@ -1,7 +1,7 @@
 import excerptHtml from 'excerpt-html';
 import { Link } from 'react-router-dom';
 
-import { Badge } from 'components/Tags/Badge';
+import { Badge } from 'components/Badge/Badge';
 import config from 'config';
 import { ApiData } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';

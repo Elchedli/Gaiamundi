@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { Badge } from 'components/Tags/Badge';
+import { Badge } from 'components/Badge/Badge';
 describe('Badge', () => {
   it('if we dont have href, we dont have tag link', () => {
     const { container } = render(<Badge />);

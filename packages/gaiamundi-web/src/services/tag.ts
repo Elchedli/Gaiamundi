@@ -1,4 +1,4 @@
-import { Tag } from 'interfaces/page-carto';
+import { Tag } from 'interfaces/tag';
 import { ContentType, QueryParams, strapi } from './strapi';
 
 export const getAllTags = async () => {
@@ -33,4 +33,8 @@ export const getAllTagsByOwner = async (ownerId: number) => {
       limit: -1,
     },
   });
+};
+
+export const createTag = async (data: Tag) => {
+  return await strapi.create<Tag>(ContentType.TAGS, data);
 };

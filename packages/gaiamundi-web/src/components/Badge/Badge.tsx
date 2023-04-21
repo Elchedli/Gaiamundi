@@ -20,7 +20,7 @@ export const Badge: FC<BadgeProps> = ({
     <span
       {...props}
       className={classNames(
-        `bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2`,
+        `bg-gray-200 text-gray-700 rounded-full px-3 py-2 text-sm font-semibold mr-2 mb-2`,
         className
       )}
     >
