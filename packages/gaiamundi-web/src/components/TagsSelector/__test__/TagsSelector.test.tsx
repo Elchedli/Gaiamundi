@@ -66,13 +66,18 @@ describe('TagsSelector', () => {
       error: null,
       isLoading: false,
     }));
-    const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
-    const input = getByTestId('tags-input');
-    fireEvent.change(input, { target: { value: 'a' } });
-    const TagsFilter = getByTestId('tags-filter');
-    expect(TagsFilter).toBeInTheDocument();
+    const { getByTestId, getByText } = render(
+      <TagsSelector onChange={jest.fn()} />
+    );
+    const AutoCompleteInput = getByTestId('input');
+    fireEvent.change(AutoCompleteInput, { target: { value: 'a' } });
+    const TagA = getByText('Tag A');
+    const TagB = getByText('Tag B');
+    expect(TagA).toBeInTheDocument();
+    expect(TagB).toBeInTheDocument();
   });
-  it('should selected the tag onclick', () => {
+
+  it('should select the tag onclick', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [firstTag] },
       isError: false,
@@ -82,9 +87,9 @@ describe('TagsSelector', () => {
     const { getByTestId, getByRole } = render(
       <TagsSelector onChange={jest.fn()} />
     );
-    const input = getByTestId('tags-input');
-    fireEvent.change(input, { target: { value: 'a' } });
-    fireEvent.click(getByRole('button'));
+    const AutoCompleteInput = getByTestId('input');
+    fireEvent.change(AutoCompleteInput, { target: { value: 'a' } });
+    fireEvent.click(getByRole('option'));
     const selectedTags = getByTestId('selected-tags');
     expect(selectedTags).toBeInTheDocument();
   });

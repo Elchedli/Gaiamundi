@@ -59,6 +59,7 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
+              data-testid="input"
             />
             {enableComboBox && (
               <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -87,7 +88,7 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
                     key={option.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                        active ? 'bg-blue-600 text-white' : 'text-gray-900'
                       }`
                     }
                     value={option}

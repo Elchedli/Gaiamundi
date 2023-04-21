@@ -93,9 +93,9 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
 
   return (
     <div className="w-3/4">
-      <div className="flex flex-wrap" data-testid="selected-tags">
+      <div className="flex flex-wrap">
         {selectedTags.map((tag) => (
-          <Badge key={tag.id} className="my-1">
+          <Badge key={tag.id} className="my-1" data-testid="selected-tags">
             {tag.name}
             <XMarkIcon
               onClick={() => handleTagDeselect(tag)}
@@ -111,6 +111,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
           enableComboBox={false}
           placeholder={'Ajouter des tags ....'}
           emptyMessage={'Aucun tag trouvé! Tapez "Entrée" pour ajouter.'}
+          data-testid="tags-input"
         />
       </div>
     </div>
