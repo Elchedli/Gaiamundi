@@ -16,11 +16,10 @@ export const TagsFilter: FC<TagsFilterProp> = ({
   tags: response,
 }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const groupedTags = useMemo(() => {
-    return {
-      allTags:
-        response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
-    };
+  const tags = useMemo(() => {
+    return (
+      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || []
+    );
   }, [selectedTagIds, response]);
 
   const selectedTags = useMemo(() => {
@@ -84,27 +83,25 @@ export const TagsFilter: FC<TagsFilterProp> = ({
         </div>
       </div>
 
-      {Object.entries(groupedTags).map(([group, tags]) => (
-        <div key={group}>
-          <div className="my-3">
-            {tags.map((tag: ApiData<Tag>) => {
-              return (
-                <Badge
-                  href="#"
-                  key={tag.id}
-                  className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
-                  onClick={() => handleAddTag(tag.id)}
-                >
-                  {tag.name}
-                  <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
-                    {tag.count}
-                  </span>
-                </Badge>
-              );
-            })}
-          </div>
+      <div>
+        <div className="my-3">
+          {tags.map((tag: ApiData<Tag>) => {
+            return (
+              <Badge
+                href="#"
+                key={tag.id}
+                className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
+                onClick={() => handleAddTag(tag.id)}
+              >
+                {tag.name}
+                <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
+                  {tag.count}
+                </span>
+              </Badge>
+            );
+          })}
         </div>
-      ))}
+      </div>
     </div>
   );
 };
