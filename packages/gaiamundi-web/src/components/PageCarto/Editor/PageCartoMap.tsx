@@ -77,8 +77,9 @@ export const PageCartoMap: FC = () => {
         );
       });
       return {
-        geocode: mergedColumn.__geoCode__,
-        formula: solveEquation(realDataFormula),
+        [geoCode]: mergedColumn.__geoCode__,
+        [chosenIndicator.type == 'basic' ? 'value' : 'rValue']:
+          solveEquation(realDataFormula),
       };
     });
   };
@@ -197,16 +198,12 @@ export const PageCartoMap: FC = () => {
               colors: ['green', 'yellowgreen', 'yellow'],
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
-            // colors={['white', 'pink', 'red']}
             colors={chosenPalette}
-            //violet, vert, bleu ciel, jaune, rouge
-            //rouge,jaune,bleu ciel, vert,violet
             geoJson={geoJsonData}
             data={mapIndicatorValues.map(
               (IndicatorValue: indicatorValueProps) => {
                 return {
-                  [geoCode]: IndicatorValue.geocode,
-                  value: IndicatorValue.formula,
+                  ...IndicatorValue,
                 };
               }
             )}
