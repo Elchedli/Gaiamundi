@@ -38,6 +38,34 @@ export const PageCartoUserList = ({
           },
           $or: [
             {
+              map: {
+                name:
+                  searchKeywords != ''
+                    ? {
+                        $contains: searchKeywords,
+                      }
+                    : {},
+              },
+            },
+            {
+              map: {
+                yearValidity:
+                  searchKeywords != ''
+                    ? {
+                        $contains: searchKeywords,
+                      }
+                    : {},
+              },
+            },
+            {
+              map:
+                searchKeywords != ''
+                  ? {
+                      $contains: searchKeywords,
+                    }
+                  : {},
+            },
+            {
               name:
                 searchKeywords != ''
                   ? {
@@ -91,7 +119,6 @@ export const PageCartoUserList = ({
       />
     );
   }
-
   return (
     <div>
       {!response || response.data.length === 0 ? (
