@@ -1,6 +1,19 @@
+import { useEffect, useRef } from 'react';
+
 export const TermsOfUse = () => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, []);
+
   return (
-    <div className="mt-12">
+    <div className="mt-12" ref={contentRef}>
       <h2 className="text-3xl font-extrabold text-center text-transform: uppercase text-gray-900 mb-20">
         Conditions générales d&apos;utilisation
       </h2>

@@ -1,14 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import React, {
-  createContext,
   FC,
   Fragment,
   ReactNode,
   Reducer,
+  createContext,
   useContext,
   useReducer,
+  useRef,
 } from 'react';
+import { debounce } from 'utils/debounce';
 
 type ModalState = {
   title: string | null;
@@ -59,8 +61,21 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { title, Component, props } = state;
   const isVisible = !!Component;
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: 0,
+        left: 0,
+      });
+    }
+  };
+  const debouncedScrollToTop = debounce(scrollToTop, 10);
+
   const showModal = (modal: ModalState) => {
     dispatch({ type: 'openModal', ...modal });
+    debouncedScrollToTop();
   };
 
   const hideModal = () => {
@@ -100,7 +115,10 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                   </Dialog.Title>
                 )}
                 {Component && (
-                  <div className="w-full h-full overflow-y-auto p-2 max-h-[80vh]">
+                  <div
+                    ref={scrollContainerRef}
+                    className="w-full h-full overflow-y-auto p-2 max-h-[80vh]"
+                  >
                     <Component {...props} />
                   </div>
                 )}
