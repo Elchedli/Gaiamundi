@@ -6,13 +6,13 @@ export const useRequireAuth = (redirectUrl = '/login') => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  // If auth.user is false that means we're not
+  // If auth.isAuthenticated is false that means we're not
   // logged in and should redirect.
   useEffect(() => {
     if (!auth.isAuthenticated) {
       navigate(redirectUrl);
     }
-  }, [auth.user, redirectUrl, navigate]);
+  }, [auth.isAuthenticated, redirectUrl, navigate]);
 
   return auth;
 };
