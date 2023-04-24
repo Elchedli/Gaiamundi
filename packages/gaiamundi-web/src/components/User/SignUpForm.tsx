@@ -66,13 +66,6 @@ const SignUpForm = ({ email }: Props) => {
   const onSubmit = (data: UserSignUpFields): void => {
     mutateAsync(data);
   };
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-testid="sign-up-form">
@@ -202,7 +195,6 @@ const SignUpForm = ({ email }: Props) => {
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
               to={'#'}
               onClick={() => {
-                scrollToTop();
                 showModal({
                   title: `Conditions d'utilisation`,
                   Component: TermsOfUse,
