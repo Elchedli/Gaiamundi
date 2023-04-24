@@ -17,14 +17,6 @@
       "required": true,
       "unique": true
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "Géographique",
-        "Thématique"
-      ],
-      "required": true
-    },
     "page_cartos": {
       "type": "relation",
       "relation": "manyToMany",

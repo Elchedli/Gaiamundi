@@ -1,7 +1,7 @@
 import excerptHtml from 'excerpt-html';
 import { Link } from 'react-router-dom';
 
-import { Badge } from 'components/Tags/Badge';
+import { Badge } from 'components/Badge/Badge';
 import config from 'config';
 import { ApiData } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
@@ -29,7 +29,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8">
           <img
             src={getThumbnailUrl(cover)}
-            className="h-48 w-full object-cover object-center group-hover:opacity-75"
+            className="h-48 w-full object-cover group-hover:opacity-75"
           />
         </div>
         <div className="p-3">

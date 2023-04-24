@@ -1,12 +1,10 @@
+import { Badge } from 'components/Badge/Badge';
 import { Button } from 'components/Button/Button';
 import CloseCross from 'components/Icons/CloseCross';
 import { Label } from 'components/Inputs/Label';
-import { Badge } from 'components/Tags/Badge';
 import { ApiData } from 'interfaces/api';
-import { Tag } from 'interfaces/page-carto';
-import { GroupedTags } from 'interfaces/tag';
+import { Tag } from 'interfaces/tag';
 import { FC, useMemo, useState } from 'react';
-import { groupByApiData as groupApiDataBy } from 'utils/strapiUtils';
 
 interface TagsFilterProp {
   onChange: (selectedTagIds: number[]) => void;
@@ -18,10 +16,9 @@ export const TagsFilter: FC<TagsFilterProp> = ({
   tags: response,
 }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const groupedTags: GroupedTags = useMemo(() => {
-    return groupApiDataBy(
-      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || [],
-      (tag: ApiData<Tag>) => tag.type
+  const tags = useMemo(() => {
+    return (
+      response?.filter((tag) => selectedTagIds.indexOf(tag.id) === -1) || []
     );
   }, [selectedTagIds, response]);
 
@@ -86,28 +83,25 @@ export const TagsFilter: FC<TagsFilterProp> = ({
         </div>
       </div>
 
-      {Object.entries(groupedTags).map(([group, tags]) => (
-        <div key={group}>
-          {tags.length > 0 && <Label className="text-xl">{group}</Label>}
-          <div className="my-3">
-            {tags.map((tag: ApiData<Tag>) => {
-              return (
-                <Badge
-                  href="#"
-                  key={tag.id}
-                  className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
-                  onClick={() => handleAddTag(tag.id)}
-                >
-                  {tag.name}
-                  <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
-                    {tag.count}
-                  </span>
-                </Badge>
-              );
-            })}
-          </div>
+      <div>
+        <div className="my-3">
+          {tags.map((tag: ApiData<Tag>) => {
+            return (
+              <Badge
+                href="#"
+                key={tag.id}
+                className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 inline-flex text-sm font-semibold mr-2 mb-2 lg:block w-max "
+                onClick={() => handleAddTag(tag.id)}
+              >
+                {tag.name}
+                <span className="inline-block ml-2 bg-white w-6 border rounded-full text-black text-center">
+                  {tag.count}
+                </span>
+              </Badge>
+            );
+          })}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

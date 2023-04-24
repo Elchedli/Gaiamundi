@@ -11,6 +11,7 @@ export interface GeoProperty {
 export interface GeoMapBase {
   name: string;
   yearValidity: number;
+  mesh: string;
   source: string;
   license: string;
   properties: GeoProperty[];

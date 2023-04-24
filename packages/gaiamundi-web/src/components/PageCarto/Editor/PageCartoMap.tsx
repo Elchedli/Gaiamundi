@@ -1,10 +1,10 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { CameraIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 import 'eazychart-css';
-import { MapChart, ResponsiveChartContainer } from 'eazychart-react';
+import { BubbleMapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
 import { FC, useCallback, useMemo, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import rewind from '@turf/rewind';
 import { Alert } from 'components/Alert/Alert';
@@ -12,14 +12,18 @@ import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import ButtonGroup from 'components/Button/ButtonGroup';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
+import { TitlePageCartoEdit } from 'components/TitlePageCartoEdit/TitlePageCartoEdit';
 import { usePageCarto } from 'hooks/usePageCarto';
+import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { Indicator, indicatorValueProps } from 'interfaces/indicator';
 
 import { useIndicator } from 'hooks/useIndicator';
 import { getConvertedCsv, getGeoJson } from 'services/geo-map';
+import { uploadCover } from 'services/page-carto';
 import { solveEquation } from 'utils/equation';
+import { rasterizeSvg } from 'utils/thumbnail-generator';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
@@ -27,6 +31,7 @@ export const PageCartoMap: FC = () => {
   // chosenIndicator is PageCarto useState and the rest is a result of usequery search in api
   const { map, pageCartoId, indicators } = usePageCarto();
   const { chosenIndicator, chosenPalette } = useIndicator();
+  const { addToast } = useToast();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -39,6 +44,19 @@ export const PageCartoMap: FC = () => {
   const { data: mergedColumnDatas } = useQuery({
     queryKey: ['merged-columns', map?.properties],
     queryFn: async () => getConvertedCsv(pageCartoId),
+  });
+
+  const { mutateAsync: uploadPageCartoCover } = useMutation({
+    mutationFn: async ({ thumbnail }: { thumbnail: File }) => {
+      return await uploadCover(thumbnail, pageCartoId);
+    },
+    onSuccess: (data: UploadedFile) => {
+      addToast({
+        title: `Aperçu généré`,
+        description: `Fichier ${data.name} téléchargé avec succès`,
+        type: 'success',
+      });
+    },
   });
 
   const geoCode = useMemo(() => {
@@ -107,11 +125,21 @@ export const PageCartoMap: FC = () => {
     }
   };
 
+  const generateThumbnail = async () => {
+    if (elementRef.current) {
+      // This function is the one the svg and make it into an image.
+      const thumbnail = await rasterizeSvg(elementRef.current);
+      // The new image is sent to the api and change it for the specific pageCartos
+      uploadPageCartoCover({ thumbnail });
+    }
+  };
+
   const geoJsonData = useMemo(() => {
     return data
       ? {
           ...data,
           features: data.features.map((feature: Feature) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return rewind(feature as any, { reverse: true });
           }),
         }
@@ -137,23 +165,36 @@ export const PageCartoMap: FC = () => {
 
   return (
     <div className="w-full h-full relative">
-      <ButtonGroup pill={true} className="m-4 absolute z-50">
-        <Button icon={PlusIcon} onClick={zoomIn} />
-        <Button icon={MinusIcon} onClick={zoomOut} />
-      </ButtonGroup>
+      <div className="w-full p-2 absolute z-50 flex bg-white bg-opacity-50">
+        <TitlePageCartoEdit />
+        <ButtonGroup pill={true} className="mt-2">
+          <Button icon={PlusIcon} onClick={zoomIn} />
+          <Button icon={MinusIcon} onClick={zoomOut} />
+          <Button icon={CameraIcon} onClick={generateThumbnail} />
+        </ButtonGroup>
+      </div>
       <div
         className="w-full h-full overflow-hidden"
         ref={panZoomCallback}
         data-testid={'map-chart'}
       >
         <ResponsiveChartContainer>
-          <MapChart
+          <BubbleMapChart
             map={{
               geoDomainKey: geoCode,
               valueDomainKey: 'value',
               projectionType: 'geoMercator',
               stroke: 'black',
               fill: 'white',
+            }}
+            bubble={{
+              domainKey: 'rValue',
+              minRadius: 1,
+              maxRadius: 30,
+              opacity: 0.5,
+              stroke: 'black',
+              strokeWidth: 1,
+              colors: ['green', 'yellowgreen', 'yellow'],
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
             // colors={['white', 'pink', 'red']}

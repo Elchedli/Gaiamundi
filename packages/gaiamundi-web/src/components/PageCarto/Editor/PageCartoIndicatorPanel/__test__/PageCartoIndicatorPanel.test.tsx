@@ -1,4 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
+import { IndicatorProvider } from 'hooks/useIndicator';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockPageCartoData } from 'utils/mocks/data';
@@ -29,7 +30,9 @@ describe('Indicator panel tests', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoIndicatorPanel />
+          <IndicatorProvider>
+            <PageCartoIndicatorPanel />
+          </IndicatorProvider>
         </PageCartoProvider>
       </QueryClientProvider>
     );
@@ -43,7 +46,9 @@ describe('Indicator panel tests', () => {
     const { getByTestId, getByRole, queryByText } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoIndicatorPanel />
+          <IndicatorProvider>
+            <PageCartoIndicatorPanel />
+          </IndicatorProvider>
         </PageCartoProvider>
       </QueryClientProvider>
     );

@@ -1,9 +1,11 @@
 import { render } from '@testing-library/react';
+import { useIndicator } from 'hooks/useIndicator';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { PageCartoEditor } from '../PageCartoEditor';
 
 jest.mock('hooks/usePageCarto');
+jest.mock('hooks/useIndicator');
 jest.mock('@excalidraw/excalidraw', () => ({
   // mock implementation of excalidraw
 }));
@@ -25,6 +27,12 @@ describe('pageCartoEditor', () => {
       isError: false,
       error: undefined,
       data: undefined,
+    });
+    (useIndicator as jest.Mock).mockReturnValue({
+      chosenIndicator: 4,
+      changeIndicator: jest.fn(),
+      chosenPalette: ['violet', 'green', 'sky blue', 'yellow', 'red'],
+      changePalette: jest.fn(),
     });
     const queryClient = new QueryClient();
     const { getByTestId } = render(

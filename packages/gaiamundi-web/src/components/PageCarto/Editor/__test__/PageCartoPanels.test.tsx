@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
+import { IndicatorProvider } from 'hooks/useIndicator';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockPageCartoData } from 'utils/mocks/data';
@@ -36,7 +37,9 @@ describe('PageCartoPanels', () => {
     const { getAllByRole, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoPanels />
+          <IndicatorProvider>
+            <PageCartoPanels />
+          </IndicatorProvider>
         </PageCartoProvider>
       </QueryClientProvider>
     );

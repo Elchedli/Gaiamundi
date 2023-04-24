@@ -71,13 +71,14 @@ describe('PageCartoDataForm', () => {
       "div[role='grid']:nth-child(2) > div"
     )[1];
 
-    await waitFor(() => {
-      const columnCheckbox = dataGridRow.querySelector(
-        'input[type=checkbox]'
-      ) as HTMLInputElement;
+    const columnCheckbox = dataGridRow.querySelector(
+      'input[type=checkbox]'
+    ) as HTMLInputElement;
+
+    await act(async () => {
       fireEvent.click(columnCheckbox);
-      expect(columnCheckbox.checked).toBeTruthy();
     });
+    expect(columnCheckbox.checked).toBeTruthy();
 
     const columnRadio = dataGridRow.querySelector(
       'input[type=radio]'

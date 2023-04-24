@@ -1,21 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
+import { IndicatorProvider } from 'hooks/useIndicator';
 import { PageCartoProvider } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { mockMapPath, mockPageCartoData } from 'utils/mocks/data';
+import { MockedResizeObserver } from 'utils/mocks/resize-observer';
 import { PageCartoMap } from '../PageCartoMap';
-
-// ResizeObserver is not defined used by eazychart
-class ResizeObserver {
-  observe() {
-    /* noop */
-  }
-  unobserve() {
-    /* noop */
-  }
-  disconnect() {
-    /* noop */
-  }
-}
 
 // Mock useAuth hook to return a fake user object
 jest.mock('hooks/useAuth', () => {
@@ -50,7 +39,7 @@ jest.mock('services/geo-map', () => {
 
 // Unable to find the geo domain key in the feature properties
 describe('PageCartoMap', () => {
-  window.ResizeObserver = ResizeObserver;
+  window.ResizeObserver = MockedResizeObserver;
 
   afterAll(() => {
     jest.clearAllMocks();
@@ -61,7 +50,9 @@ describe('PageCartoMap', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoMap />
+          <IndicatorProvider>
+            <PageCartoMap />
+          </IndicatorProvider>
         </PageCartoProvider>
       </QueryClientProvider>
     );
@@ -75,7 +66,9 @@ describe('PageCartoMap', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoMap />
+          <IndicatorProvider>
+            <PageCartoMap />
+          </IndicatorProvider>
         </PageCartoProvider>
       </QueryClientProvider>
     );

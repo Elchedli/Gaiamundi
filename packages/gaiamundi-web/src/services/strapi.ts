@@ -296,10 +296,22 @@ class Strapi {
   /**
    * Uploads a file.
    */
-  uploadFile(file: File, ref: string) {
+  uploadFile(
+    file: File,
+    ref: string,
+    filename?: string,
+    refId?: number,
+    field?: string
+  ) {
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', file, filename);
     formData.append('ref', ref);
+    if (refId) {
+      formData.append('refId', refId.toString());
+    }
+    if (field) {
+      formData.append('field', field);
+    }
     return this.request
       .post<FormData, UploadedFile[]>('/api/upload', formData)
       .then(([uploadedfile]) => {
