@@ -24,8 +24,10 @@ export interface chosenPaletteProps {
 }
 
 const paletteColors: chosenPaletteProps = {
-  rouge: ['violet', 'green', 'sky blue', 'yellow', 'red'],
-  marron: ['red', 'yellow', 'sky blue', 'green', 'violet'],
+  red: ['violet', 'green', 'blue', 'yellow', 'red'],
+  brown: ['red', 'yellow', 'blue', 'green', 'violet'],
+  chinese: [],
+  noChinese: [],
 };
 
 export const IndicatorProvider = ({

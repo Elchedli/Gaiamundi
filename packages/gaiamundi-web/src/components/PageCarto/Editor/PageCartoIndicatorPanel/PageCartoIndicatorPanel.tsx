@@ -17,10 +17,10 @@ export const PageCartoIndicatorPanel: FC = () => {
   const { pageCartoId, columns, indicators: dataGridRows } = usePageCarto();
   const { changeIndicator, changePalette } = useIndicator();
   const options = [
-    { label: 'Rouge', value: 'rouge' },
-    { label: 'Marron', value: 'marron' },
-    { label: 'Chinois', value: 'chinois' },
-    { label: 'Non chinois (palette)', value: 'nonchinois' },
+    { label: 'Rouge', value: 'red' },
+    { label: 'Marron', value: 'brown' },
+    { label: 'Chinois', value: 'chinese' },
+    { label: 'Non chinois (palette)', value: 'noChinese' },
   ];
 
   const changeIndicatorMap = (indicatorName: string, type: string) =>
