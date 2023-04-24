@@ -20,6 +20,7 @@ export enum ContentType {
   EQUATION = 'equations',
   USERS = 'users',
   TAGS = 'tags',
+  CHARTS = 'charts',
 }
 
 type FilterOperator =
