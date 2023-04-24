@@ -15,13 +15,14 @@ IndicatorContext.displayName = 'IndicatorContext';
 export interface IndicatorProviderProps {
   children: React.ReactNode;
 }
-export interface chosenIndicatorProps {
+export type chosenIndicatorProps = {
   indicatorName: string;
   type: string;
-}
-export interface chosenPaletteProps {
+} | null;
+
+export type chosenPaletteProps = {
   [key: string]: Array<string>;
-}
+};
 
 const paletteColors: chosenPaletteProps = {
   red: ['violet', 'green', 'blue', 'yellow', 'red'],
@@ -39,7 +40,7 @@ export const IndicatorProvider = ({
   });
 
   const [chosenPalette, setchosenPalette] = useState<Array<string>>(
-    paletteColors.rouge
+    paletteColors.red
   );
 
   const changeIndicator = (value: chosenIndicatorProps) => {

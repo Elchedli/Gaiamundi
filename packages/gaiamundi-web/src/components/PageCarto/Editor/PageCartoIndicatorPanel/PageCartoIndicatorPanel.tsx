@@ -5,12 +5,19 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Radio } from 'components/Inputs/Radio';
 import { ToggleSwitch } from 'components/Inputs/ToggleSwitch';
 import config from 'config';
-import { useIndicator } from 'hooks/useIndicator';
+import { chosenIndicatorProps, useIndicator } from 'hooks/useIndicator';
 import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { FC } from 'react';
 import DataGrid from 'react-data-grid';
 import { PageCartoIndicatorForm } from './PageCartoIndicatorForm';
+
+type settingsProps = {
+  indicator: chosenIndicatorProps;
+  color: string;
+  quantile: number;
+  diameter: boolean;
+};
 
 export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
@@ -22,9 +29,17 @@ export const PageCartoIndicatorPanel: FC = () => {
     { label: 'Chinois', value: 'chinese' },
     { label: 'Non chinois (palette)', value: 'noChinese' },
   ];
+  const settingsChanges: settingsProps = {
+    indicator: null,
+    color: 'red',
+    quantile: 1,
+    diameter: true,
+  };
 
-  const changeIndicatorMap = (indicatorName: string, type: string) =>
-    changeIndicator({ indicatorName, type });
+  const changeMapSettings = () => {
+    changeIndicator(settingsChanges.indicator);
+    changePalette(settingsChanges.color);
+  };
 
   return (
     <div>
@@ -58,7 +73,12 @@ export const PageCartoIndicatorPanel: FC = () => {
                 formatter: ({ row }) => (
                   <Radio
                     name="indicator"
-                    onChange={() => changeIndicatorMap(row.name, 'basic')}
+                    onChange={() =>
+                      (settingsChanges.indicator = {
+                        indicatorName: row.name,
+                        type: 'basic',
+                      })
+                    }
                   />
                 ),
               },
@@ -68,7 +88,12 @@ export const PageCartoIndicatorPanel: FC = () => {
                 formatter: ({ row }) => (
                   <Radio
                     name="indicator"
-                    onChange={() => changeIndicatorMap(row.name, 'round')}
+                    onChange={() =>
+                      (settingsChanges.indicator = {
+                        indicatorName: row.name,
+                        type: 'round',
+                      })
+                    }
                   />
                 ),
               },
@@ -122,13 +147,13 @@ export const PageCartoIndicatorPanel: FC = () => {
           <span>Couleurs : </span>
           <ListBoxInput
             className="mb-2 w-1/2 inline-block"
-            defaultValue={'rouge'}
+            defaultValue={'red'}
             options={options}
-            onChange={(value: string) => changePalette(value)}
+            onChange={(value: string) => (settingsChanges.color = value)}
           />
         </div>
         <div className="w-fit mx-auto">
-          <Button className="">Afficher</Button>
+          <Button onClick={changeMapSettings}>Afficher</Button>
         </div>
       </div>
     </div>

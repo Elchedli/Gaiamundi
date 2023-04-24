@@ -78,7 +78,7 @@ export const PageCartoMap: FC = () => {
       });
       return {
         [geoCode]: mergedColumn.__geoCode__,
-        [chosenIndicator.type == 'basic' ? 'value' : 'rValue']:
+        [chosenIndicator?.type == 'basic' ? 'value' : 'rValue']:
           solveEquation(realDataFormula),
       };
     });
@@ -86,7 +86,8 @@ export const PageCartoMap: FC = () => {
 
   const mapIndicatorValues = useMemo(() => {
     const indicator = indicators?.find(
-      (indicator: Indicator) => indicator.name === chosenIndicator.indicatorName
+      (indicator: Indicator) =>
+        indicator.name === chosenIndicator?.indicatorName
     );
     return indicator != undefined ? realIndicatorData(indicator) : [];
   }, [mergedColumnDatas, chosenIndicator]);
