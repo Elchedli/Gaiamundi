@@ -36,35 +36,36 @@ export const PageCartoUserList = ({
               $eq: user?.id,
             },
           },
+
           $or: [
             {
               map: {
-                name:
-                  searchKeywords != ''
-                    ? {
-                        $contains: searchKeywords,
-                      }
-                    : {},
-              },
-            },
-            {
-              map: {
-                yearValidity:
-                  searchKeywords != ''
-                    ? {
-                        $contains: searchKeywords,
-                      }
-                    : {},
-              },
-            },
-            {
-              map: {
-                mesh:
-                  searchKeywords != ''
-                    ? {
-                        $contains: searchKeywords,
-                      }
-                    : {},
+                $or: [
+                  {
+                    name:
+                      searchKeywords != ''
+                        ? {
+                            $contains: searchKeywords,
+                          }
+                        : {},
+                  },
+                  {
+                    yearValidity:
+                      searchKeywords != ''
+                        ? {
+                            $contains: searchKeywords,
+                          }
+                        : {},
+                  },
+                  {
+                    mesh:
+                      searchKeywords != ''
+                        ? {
+                            $contains: searchKeywords,
+                          }
+                        : {},
+                  },
+                ],
               },
             },
             {
@@ -106,7 +107,7 @@ export const PageCartoUserList = ({
       });
     },
   });
-
+  console.log(response);
   if (isLoading) {
     return (
       <LoadingMessage data-testid="page-carto-user-list-loading-message" />
