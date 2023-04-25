@@ -4801,10 +4801,10 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
-eazychart-core@^0.4.0-alpha.0:
-  version "0.4.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/eazychart-core/-/eazychart-core-0.4.0-alpha.0.tgz#a5b9d630e936c1a44d2d6801cf5b57b86a75b280"
-  integrity sha512-V7CuQ2WkhJiF1FGryexgLQC8iqgy8DrYYprq7rTVL4fVv13i1J3jUu6zW1u7JmM63yitNFckQ9LjZX6zk1KyMw==
+eazychart-core@^0.4.2-alpha.0:
+  version "0.4.2-alpha.0"
+  resolved "https://registry.yarnpkg.com/eazychart-core/-/eazychart-core-0.4.2-alpha.0.tgz#c4ddc0a83264a10eaf0e233aa0c4d266db9802f1"
+  integrity sha512-cQPO3si6O+bf6O6SKJ58CZGL6k9fVjgLsgJCoPo2CTmRBS/tvfwdhYkumGqt+MkCswcrNetq75SwAWcLWlQZEA==
   dependencies:
     d3-ease "^3.0.1"
     d3-geo "^3.0.1"
@@ -4817,12 +4817,12 @@ eazychart-css@^0.2.1-alpha.0:
   resolved "https://registry.yarnpkg.com/eazychart-css/-/eazychart-css-0.2.1-alpha.0.tgz#42b5db0f6df04794846e93d0719122f62665a570"
   integrity sha512-S0TDMQXk3/PRf/PrwnwKd/vDsRl8vP+nzGUEbVa01ShQSF/g7N788QvZvQW4n40bJ1jLka5pPIIoaBgw5RWAFQ==
 
-eazychart-react@^0.4.0-alpha.0:
-  version "0.4.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/eazychart-react/-/eazychart-react-0.4.0-alpha.0.tgz#48557b071f4fbef822cbe23f88ca7c5f2b6bf76b"
-  integrity sha512-sSz9KVHSygPocmf0MEBZk5zJNuixN60whn7+rZK37NttoST7VRTi6ptvU+U2KvT55FpVaJ7gZ/vVoa8QKD/iTg==
+eazychart-react@^0.4.2-alpha.0:
+  version "0.4.2-alpha.0"
+  resolved "https://registry.yarnpkg.com/eazychart-react/-/eazychart-react-0.4.2-alpha.0.tgz#41d340f0a9838a249312b0b2fea058d6a8c7033f"
+  integrity sha512-BYhedhlCEtPgV1YgxKLameKyWL3lqTCdqp9Ry3qg7V8vMa6tYStOKwQxZLMkgfGeVyfcK4H25FFsvVRnO6LywQ==
   dependencies:
-    eazychart-core "^0.4.0-alpha.0"
+    eazychart-core "^0.4.2-alpha.0"
 
 ee-first@1.1.1:
   version "1.1.1"

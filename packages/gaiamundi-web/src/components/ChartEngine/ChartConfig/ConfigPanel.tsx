@@ -102,15 +102,18 @@ export const ConfigPanel = () => {
           <Accordion.Panel key={item}>
             <Accordion.Title>
               <h3 className="text-md font-medium text-gray-900 title-font">
-                {
-                  CHART_CONFIG_FORMS[item as keyof typeof CHART_CONFIG_FORMS]
-                    .icon
-                }{' '}
+                {item in CHART_CONFIG_FORMS
+                  ? CHART_CONFIG_FORMS[item as keyof typeof CHART_CONFIG_FORMS]
+                      .icon
+                  : 'Missing Icon'}{' '}
                 {item}
               </h3>
             </Accordion.Title>
             <Accordion.Content>
-              {CHART_CONFIG_FORMS[item as keyof typeof CHART_CONFIG_FORMS].form}
+              {item in CHART_CONFIG_FORMS
+                ? CHART_CONFIG_FORMS[item as keyof typeof CHART_CONFIG_FORMS]
+                    .form
+                : 'Missing form'}
             </Accordion.Content>
           </Accordion.Panel>
         ))}
