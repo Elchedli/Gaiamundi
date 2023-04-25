@@ -58,12 +58,14 @@ export const PageCartoUserList = ({
               },
             },
             {
-              map:
-                searchKeywords != ''
-                  ? {
-                      $contains: searchKeywords,
-                    }
-                  : {},
+              map: {
+                mesh:
+                  searchKeywords != ''
+                    ? {
+                        $contains: searchKeywords,
+                      }
+                    : {},
+              },
             },
             {
               name:
