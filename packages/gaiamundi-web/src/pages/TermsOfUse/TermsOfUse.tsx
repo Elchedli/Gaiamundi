@@ -195,15 +195,6 @@ export const TermsOfUse = () => {
         présentes CGU, vous pouvez joindre l&apos;éditeur aux coordonnées
         inscrites à l’ARTICLE 1.
       </p>
-      <p className="text-1xl  text-gray-700 mb-2 mt-6">
-        CGU réalisées sur&nbsp;
-        <span
-          className="font-bold hover:text-gray-400 cursor-pointer"
-          onClick={() => window.open('http://legalplace.fr/')}
-        >
-          LegalPlace
-        </span>
-      </p>
     </div>
   );
 };
