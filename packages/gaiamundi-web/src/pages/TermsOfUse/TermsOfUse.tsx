@@ -197,12 +197,12 @@ export const TermsOfUse = () => {
       </p>
       <p className="text-1xl  text-gray-700 mb-2 mt-6">
         CGU réalisées sur&nbsp;
-        <a
-          className="font-bold hover:no-underline hover:text-gray-400"
-          href="http://legalplace.fr/"
+        <span
+          className="font-bold hover:text-gray-400 cursor-pointer"
+          onClick={() => window.open('http://legalplace.fr/')}
         >
           LegalPlace
-        </a>
+        </span>
       </p>
     </div>
   );
