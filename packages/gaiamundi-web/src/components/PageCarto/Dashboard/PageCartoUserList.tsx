@@ -21,6 +21,13 @@ export const PageCartoUserList = ({
   const [page, setPage] = useState(1);
   const { user } = useAuth();
 
+  const searchKeywordsCondition =
+    searchKeywords != ''
+      ? {
+          $contains: searchKeywords,
+        }
+      : {};
+
   const {
     data: response,
     isError,
@@ -42,47 +49,22 @@ export const PageCartoUserList = ({
               map: {
                 $or: [
                   {
-                    name:
-                      searchKeywords != ''
-                        ? {
-                            $contains: searchKeywords,
-                          }
-                        : {},
+                    name: searchKeywordsCondition,
                   },
                   {
-                    yearValidity:
-                      searchKeywords != ''
-                        ? {
-                            $contains: searchKeywords,
-                          }
-                        : {},
+                    yearValidity: searchKeywordsCondition,
                   },
                   {
-                    mesh:
-                      searchKeywords != ''
-                        ? {
-                            $contains: searchKeywords,
-                          }
-                        : {},
+                    mesh: searchKeywordsCondition,
                   },
                 ],
               },
             },
             {
-              name:
-                searchKeywords != ''
-                  ? {
-                      $contains: searchKeywords,
-                    }
-                  : {},
+              name: searchKeywordsCondition,
             },
             {
-              html:
-                searchKeywords != ''
-                  ? {
-                      $contains: searchKeywords,
-                    }
-                  : {},
+              html: searchKeywordsCondition,
             },
           ],
           $and: [
@@ -107,7 +89,7 @@ export const PageCartoUserList = ({
       });
     },
   });
-  console.log(response);
+
   if (isLoading) {
     return (
       <LoadingMessage data-testid="page-carto-user-list-loading-message" />
