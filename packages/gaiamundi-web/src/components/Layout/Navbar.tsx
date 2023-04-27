@@ -15,12 +15,12 @@ const NavbarMenuItem: React.FC<{
   const location = useLocation();
   const isCurrentPage = location.pathname === href;
   const lightClasses = {
-    active: `text-gray-900 bg-gray-200 focus:text-gray-600`,
-    inactive: `text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none`,
+    active: `text-blue-900 bg-blue-200 focus:text-blue-600`,
+    inactive: `text-blue-600 hover:text-blue-900 hover:bg-blue-100 focus:outline-none`,
   };
   const darkClasses = {
     active: `text-white bg-royal-blue-800 focus:text-white`,
-    inactive: `text-gray-100 hover:text-white hover:bg-royal-blue-800 focus:outline-none`,
+    inactive: `text-blue-100 hover:text-white hover:bg-royal-blue-800 focus:outline-none`,
   };
   const classes = isInverted ? darkClasses : lightClasses;
   return (
