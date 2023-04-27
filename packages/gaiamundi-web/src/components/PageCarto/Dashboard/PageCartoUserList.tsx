@@ -21,12 +21,7 @@ export const PageCartoUserList = ({
   const [page, setPage] = useState(1);
   const { user } = useAuth();
 
-  const searchKeywordsCondition =
-    searchKeywords != ''
-      ? {
-          $contains: searchKeywords,
-        }
-      : {};
+  const searchKeywordsCondition = { $contains: searchKeywords };
 
   const {
     data: response,
