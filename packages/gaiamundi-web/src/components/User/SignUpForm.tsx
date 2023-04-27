@@ -194,12 +194,12 @@ const SignUpForm = ({ email }: Props) => {
             <Link
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
               to={'#'}
-              onClick={() =>
+              onClick={() => {
                 showModal({
                   title: `Conditions d'utilisation`,
                   Component: TermsOfUse,
-                })
-              }
+                });
+              }}
             >
               Conditions d&apos;utilisations.
             </Link>
