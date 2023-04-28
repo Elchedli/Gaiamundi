@@ -19,6 +19,12 @@ export const PageCartoUserList = ({
 }) => {
   const paginationLimit = 9;
   const [page, setPage] = useState(1);
+  const [firstFetch, setFirstFetch] = useState(false);
+  const firstFetchTrue = () => {
+    if (!firstFetch) {
+      setFirstFetch(true);
+    }
+  };
   const { user } = useAuth();
 
   const searchKeywordsCondition = { $contains: searchKeywords };
@@ -30,6 +36,7 @@ export const PageCartoUserList = ({
     isLoading,
   } = useQuery({
     queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
+    enabled: searchKeywords !== '' || !firstFetch || selectedTags.length != 0,
     queryFn: () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
         filters: {
@@ -90,7 +97,6 @@ export const PageCartoUserList = ({
       <LoadingMessage data-testid="page-carto-user-list-loading-message" />
     );
   }
-
   if (isError) {
     return (
       <ApiErrorAlert
@@ -99,6 +105,7 @@ export const PageCartoUserList = ({
       />
     );
   }
+  firstFetchTrue;
   return (
     <div>
       {!response || response.data.length === 0 ? (
