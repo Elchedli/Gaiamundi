@@ -1,9 +1,9 @@
 import {
+  CogIcon as AdjustmentsIcon,
+  InformationCircleIcon as AnnotationIcon,
   ChartPieIcon,
   ClockIcon,
-  CogIcon as AdjustmentsIcon,
   EyeIcon,
-  InformationCircleIcon as AnnotationIcon,
   PlusIcon,
   PresentationChartLineIcon,
   TableCellsIcon as TableIcon,
@@ -101,13 +101,13 @@ export const ConfigPanel = () => {
         {CHART_CONFIG_PANEL[chartConfig.type].map((item) => (
           <Accordion.Panel key={item}>
             <Accordion.Title>
-              <h3 className="text-md font-medium text-gray-900 title-font">
+              <div className="text-md font-medium text-gray-900 title-font">
                 {item in CHART_CONFIG_FORMS
                   ? CHART_CONFIG_FORMS[item as keyof typeof CHART_CONFIG_FORMS]
                       .icon
                   : 'Missing Icon'}{' '}
                 {item}
-              </h3>
+              </div>
             </Accordion.Title>
             <Accordion.Content>
               {item in CHART_CONFIG_FORMS

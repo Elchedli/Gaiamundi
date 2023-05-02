@@ -42,11 +42,12 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
     xAxis: {
       domainKey: 'name',
       position: Position.BOTTOM,
+      nice: 0,
     },
     yAxis: {
       domainKey: 'value',
       position: Position.LEFT,
-      nice: 5,
+      nice: 2,
     },
     grid: {
       directions: [Direction.HORIZONTAL, Direction.VERTICAL],

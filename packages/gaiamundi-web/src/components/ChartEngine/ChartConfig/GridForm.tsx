@@ -12,7 +12,7 @@ export const GridForm = () => {
         <div>
           <ToggleSwitch
             label={'Show Horizontal Lines'}
-            defaultChecked={grid.directions.includes(Direction.HORIZONTAL)}
+            defaultChecked={grid.directions?.includes(Direction.HORIZONTAL)}
             onChange={(isEnabled) =>
               updateGridDirection(Direction.HORIZONTAL, isEnabled)
             }
@@ -21,7 +21,7 @@ export const GridForm = () => {
         <div>
           <ToggleSwitch
             label={'Show Vertical Lines'}
-            defaultChecked={grid.directions.includes(Direction.VERTICAL)}
+            defaultChecked={grid.directions?.includes(Direction.VERTICAL)}
             onChange={(isEnabled) =>
               updateGridDirection(Direction.VERTICAL, isEnabled)
             }

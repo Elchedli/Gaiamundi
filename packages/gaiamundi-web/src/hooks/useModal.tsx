@@ -1,11 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import React, {
-  createContext,
   FC,
   Fragment,
   ReactNode,
   Reducer,
+  createContext,
   useContext,
   useReducer,
 } from 'react';
@@ -93,7 +93,7 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 {title && (
                   <Dialog.Title
                     className={
-                      'text-xl font-semibold font-medium text-gray-900 title-font mb-3'
+                      'text-xl font-medium text-gray-900 title-font mb-3'
                     }
                   >
                     {title}

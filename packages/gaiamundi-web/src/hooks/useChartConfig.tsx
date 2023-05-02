@@ -4,15 +4,15 @@ import { ColumnChart } from 'eazychart-react';
 import { ApiData } from 'interfaces/api';
 import {
   AllChartConfigProps as AllChartProps,
-  Chart,
   CHART_TYPES,
+  Chart,
   RawDatum,
   RawDatumType,
 } from 'interfaces/chart';
 import React, {
-  createContext,
   FC,
   ReactNode,
+  createContext,
   useContext,
   useEffect,
   useMemo,
@@ -23,29 +23,30 @@ import { getChartById } from 'services/chart';
 import { getDataTypeMap, guessDomainKey } from 'utils/chart';
 import { DEFAULT_DIMENSIONS, INITIAL_CHART_CONFIG } from 'utils/constants';
 
-type ChartConfigContext = {
+type ChartConfigContextType = {
   chart: ApiData<Chart>;
   ChartComponent: React.FC<AllChartProps>;
   updateChartProps: (_props: Partial<AllChartProps>) => void;
-  updateChart: (config: Chart) => void;
+  updateChart: (config: Partial<Chart>) => void;
   rawData: RawDatum[];
   dataKeys: Record<string, RawDatumType>;
   dimensions: Dimensions;
   setDimensions: (_dimensions: Dimensions) => void;
 };
 
-const initialContext: ChartConfigContext = {
+const initialContext: ChartConfigContextType = {
   chart: INITIAL_CHART_CONFIG,
   ChartComponent: ColumnChart,
   updateChartProps: (_props: Partial<AllChartProps>) => undefined,
-  updateChart: (_config: Chart) => undefined,
+  updateChart: (_config: Partial<Chart>) => undefined,
   rawData: [],
   dataKeys: {},
   dimensions: DEFAULT_DIMENSIONS,
   setDimensions: (_dimensions: Dimensions) => undefined,
 };
 
-const ChartConfigContext = createContext<ChartConfigContext>(initialContext);
+const ChartConfigContext =
+  createContext<ChartConfigContextType>(initialContext);
 
 type ChartConfigProviderProps = {
   chartId: number;
@@ -69,10 +70,10 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
     queryFn: async () => await getChartById(chartId),
     enabled: !!chartId,
   });
-  const chart = response?.data || INITIAL_CHART_CONFIG;
 
+  const chart = response?.data || INITIAL_CHART_CONFIG;
   const setChart = (newChart: ApiData<Chart> | undefined) => {
-    queryClient.setQueryData(['chart', chartId], newChart);
+    queryClient.setQueryData(['chart', chartId], { data: newChart });
   };
 
   const updateChartProps = (props: Partial<AllChartProps>) => {
@@ -116,6 +117,18 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
           },
         });
         break;
+      case 'lineColumn':
+        updateChartProps({
+          xAxis: {
+            ...chart.props.xAxis,
+            domainKey: guessDomainKey(rawData, 'string', 0),
+          },
+          yAxis: {
+            ...chart.props.yAxis,
+            domainKey: guessDomainKey(rawData, 'number', 1),
+          },
+        });
+        break;
       case 'bar':
         updateChartProps({
           xAxis: {
@@ -134,6 +147,18 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         });
         break;
       case 'line':
+        updateChartProps({
+          xAxis: {
+            ...chart.props.xAxis,
+            domainKey: guessDomainKey(rawData, 'number', 0),
+          },
+          yAxis: {
+            ...chart.props.yAxis,
+            domainKey: guessDomainKey(rawData, 'number', 1),
+          },
+        });
+        break;
+      case 'area':
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
@@ -169,6 +194,7 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
           },
         });
         break;
+
       default:
         break;
     }
