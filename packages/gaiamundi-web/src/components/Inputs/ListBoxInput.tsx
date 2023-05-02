@@ -13,7 +13,7 @@ type ListBoxInputProps<T> = {
   onChange: (value: T) => void;
 };
 
-export const ListBoxInput = <T extends string | number>({
+export const ListBoxInput = <T extends string | number | symbol>({
   className,
   defaultValue,
   options,
