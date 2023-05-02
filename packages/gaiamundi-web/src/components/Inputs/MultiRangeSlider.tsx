@@ -68,7 +68,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
   }, [maxVal, getPercent]);
 
   return (
-    <div className="mb-4 py-4">
+    <div className="mb-4 py-4" data-testid="multi-range-slider">
       <input
         type="range"
         min={min}
@@ -79,6 +79,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
         className={classnames('thumb z-30', {
           'z-50': minVal > max - 100,
         })}
+        data-testid="min-value-slider"
       />
       <input
         type="range"
@@ -88,6 +89,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
         ref={maxValRef}
         onChange={onSettingMaxValue}
         className="thumb z-40"
+        data-testid="max-value-slider"
       />
 
       <div className="relative">

@@ -67,6 +67,7 @@ export const Slider: React.FC<SliderProps> = ({
               'h-3': size === 'lg',
             }
           )}
+          data-testid="slider"
         />
         <ul className="flex justify-between w-full">
           <li className="flex justify-center relative">
@@ -84,6 +85,7 @@ export const Slider: React.FC<SliderProps> = ({
           value={value.toString()}
           onChange={handleTextInput}
           onBlur={updateSliderValue}
+          data-testid="slider-text-input"
         />
       </div>
     </div>

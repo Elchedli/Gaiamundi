@@ -80,7 +80,7 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         >
           {/* The backdrop, rendered as a fixed sibling to the panel container */}
           <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0">
             <div className="flex min-h-full items-center justify-center p-4">
               <Dialog.Panel className="relative p-5 mx-auto w-3/4	rounded bg-white">
                 <div className="absolute top-0 right-0 cursor-pointer">
@@ -93,14 +93,14 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 {title && (
                   <Dialog.Title
                     className={
-                      'text-xl font-medium text-gray-900 title-font mb-3'
+                      'text-xl font-semibold text-gray-900 title-font mb-3'
                     }
                   >
                     {title}
                   </Dialog.Title>
                 )}
                 {Component && (
-                  <div className="w-full h-full overflow-y-auto p-2 max-h-[80vh]">
+                  <div className="w-full h-full overflow-y-auto scroll-smooth p-2 max-h-[80vh]">
                     <Component {...props} />
                   </div>
                 )}

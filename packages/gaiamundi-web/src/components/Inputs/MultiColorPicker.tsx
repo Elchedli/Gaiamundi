@@ -43,7 +43,11 @@ export const MultiColorPicker: React.FC<MultiColorPickerProps> = ({
     <div className="grid grid-cols-7 gap-2">
       {colors.map((color, idx) => {
         return (
-          <div className="relative" key={idx}>
+          <div
+            className="relative"
+            key={idx}
+            data-testid={`color-picker${idx}`}
+          >
             <ColorPicker
               showLabel={false}
               defaultColor={color}
@@ -69,6 +73,7 @@ export const MultiColorPicker: React.FC<MultiColorPickerProps> = ({
           color="light"
           icon={PlusIcon}
           onClick={addColor}
+          data-testid="add-color-picker-button"
         />
       </div>
     </div>

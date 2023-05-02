@@ -34,6 +34,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           className="rounded-lg shadow-sm w-[42px] h-[42px] border border-gray-200 cursor-pointer"
           style={{ backgroundColor: color }}
           onClick={toggleVisiblity}
+          data-testid="color-picker-square"
         >
           &nbsp;
         </div>
@@ -41,7 +42,11 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       </div>
 
       {isVisible && (
-        <div className="absolute z-50 top-3 left-3 shadow-md" ref={ref}>
+        <div
+          className="absolute z-50 top-3 left-3 shadow-md"
+          ref={ref}
+          data-testid="color-picker"
+        >
           <RgbaStringColorPicker color={color} onChange={handleChange} />
         </div>
       )}
