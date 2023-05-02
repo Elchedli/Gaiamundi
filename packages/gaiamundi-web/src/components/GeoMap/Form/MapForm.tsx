@@ -28,13 +28,6 @@ export const MapForm: FC = () => {
   return (
     <div className="grid grid-cols-2">
       <div className="col-span-1">
-        <div className="border-2 text-xs italic text-red-500 p-3">
-          <p>
-            * Il est possible de renseigner la source et la validité des données
-            pour chaque cellule de chaque colonne du fichier CSV en utilisant la
-            syntaxe suivante : COLONNE X [source=valeur&valid=valeur]
-          </p>
-        </div>
         <div className="px-5">
           <Label>1. Uploader un fichier GeoJSON :</Label>
           <Controller

@@ -89,6 +89,13 @@ export const PageCartoDataForm: FC<PageCartoDataFormProps> = ({
         {isError && <ApiErrorAlert error={error as ApiError} />}
         <div className="flex flex-row">
           <div className="flex flex-col w-1/2 p-2">
+            <div className="border-2 text-xs italic text-red-500 p-3">
+              <p>
+                * Il est possible de renseigner la source et la validité des
+                données pour chaque cellule de chaque colonne du fichier CSV en
+                utilisant la syntaxe suivante : COLONNE X [s=valeur&v=valeur]
+              </p>
+            </div>
             <div className="mt-3">
               <Label htmlFor="name">
                 1. Uploader des données à partir d&apos;un fichier CSV
