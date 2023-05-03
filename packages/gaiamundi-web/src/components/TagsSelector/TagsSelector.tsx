@@ -7,7 +7,7 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
@@ -18,6 +18,7 @@ interface TagsSelectorProps {
 export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const { addToast } = useToast();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     data: response,
@@ -80,6 +81,9 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
       setSelectedTagIds(selectedIds);
       onChange(selectedIds);
     }
+    if (inputRef && inputRef.current) {
+      inputRef.current?.focus();
+    }
   };
 
   const handleTagDeselect = (tag: ApiData<Tag>) => {
@@ -112,6 +116,7 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
           placeholder={'Ajouter des tags ....'}
           emptyMessage={'Aucun tag trouvé! Tapez "Entrée" pour ajouter.'}
           data-testid="tags-input"
+          inputReference={inputRef}
         />
       </div>
     </div>
