@@ -33,6 +33,7 @@ export const getPageCartoById = async (id: number) => {
         },
       },
       indicators: true,
+      charts: true,
     },
   });
 };

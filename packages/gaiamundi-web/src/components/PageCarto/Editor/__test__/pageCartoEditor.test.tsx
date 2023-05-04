@@ -25,6 +25,7 @@ describe('pageCartoEditor', () => {
       isError: false,
       error: undefined,
       data: undefined,
+      charts: [],
     });
     const queryClient = new QueryClient();
     const { getByTestId } = render(

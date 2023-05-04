@@ -240,6 +240,7 @@ export const mockPageCartoData: ApiData<PageCarto> = {
   map: mockGeoMap,
   cover: mockCover,
   indicators: indicatorsMockData,
+  charts: [],
   html: '<p>Test HTML</p>',
   data_fragments: mockDataFragments,
   created_at: '2022-02-07T00:00:00.000Z',
