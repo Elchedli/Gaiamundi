@@ -47,7 +47,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
           />
           {canEdit === true ? (
             <Link to={`/page-carto/${id}/edit`}>
-              <PencilSquareIcon className="cursor-pointer h-8 w-8 opacity-1 text-center absolute top-1 right-1 bg-transparent hover:text-blue-600" />
+              <PencilSquareIcon className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-1 bg-transparent hover:text-blue-600" />
             </Link>
           ) : (
             ''
