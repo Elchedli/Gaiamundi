@@ -25,6 +25,8 @@ import {
   ScatterChart,
   ScatterChartProps,
 } from 'eazychart-react';
+import { ApiData } from './api';
+import { PageCarto } from './page-carto';
 
 type ChartConfigProps<T> = Omit<
   T,
@@ -63,6 +65,7 @@ export type Chart = {
   name: string;
   type: ChartType;
   props: AllChartConfigProps;
+  page_carto: ApiData<PageCarto>;
 };
 
 export const CHART_TYPES: ChartTypes = {

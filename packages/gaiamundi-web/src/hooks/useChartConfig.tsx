@@ -32,6 +32,7 @@ type ChartConfigContextType = {
   dataKeys: Record<string, RawDatumType>;
   dimensions: Dimensions;
   setDimensions: (_dimensions: Dimensions) => void;
+  pageCartoId?: number;
 };
 
 const initialContext: ChartConfigContextType = {
@@ -52,12 +53,14 @@ type ChartConfigProviderProps = {
   chartId: number;
   rawData: RawDatum[];
   children: ReactNode;
+  pageCartoId?: number;
 };
 
 export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   chartId,
   rawData,
   children,
+  pageCartoId,
 }) => {
   const [dimensions, setDimensions] = useState<Dimensions>(DEFAULT_DIMENSIONS);
   const queryClient = useQueryClient();
@@ -73,7 +76,9 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
 
   const chart = response?.data || INITIAL_CHART_CONFIG;
   const setChart = (newChart: ApiData<Chart> | undefined) => {
-    queryClient.setQueryData(['chart', chartId], { data: newChart });
+    queryClient.setQueryData(['chart', chartId], {
+      data: { ...newChart, page_carto: pageCartoId },
+    });
   };
 
   const updateChartProps = (props: Partial<AllChartProps>) => {
@@ -205,10 +210,9 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
     return <LoadingMessage />;
   }
 
-  if (error) {
-    return <>{error}</>;
+  if (error && (error as Error).message != 'Not Found') {
+    return <>Error loading chart</>;
   }
-
   return (
     <ChartConfigContext.Provider
       value={{
@@ -220,6 +224,7 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         rawData,
         dimensions,
         setDimensions,
+        pageCartoId,
       }}
     >
       {children}

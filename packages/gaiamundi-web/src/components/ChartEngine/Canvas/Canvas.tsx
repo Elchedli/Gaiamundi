@@ -9,7 +9,7 @@ import { ChartActionButtons } from './ChartActionButtons';
 import { ChartTypeSelector } from './ChartTypeSelector';
 import { Legend } from './Legend';
 
-export const Canvas = () => {
+export const Canvas = ({ updateMode }: { updateMode: boolean }) => {
   const { chart, updateChart, ChartComponent, rawData, setDimensions } =
     useChart();
 
@@ -40,7 +40,7 @@ export const Canvas = () => {
               isLoading={false}
             />
           </div>
-          <ChartActionButtons />
+          <ChartActionButtons updateMode={updateMode} />
         </div>
         <hr className="border-1 border-gray-100 mt-4" />
       </div>

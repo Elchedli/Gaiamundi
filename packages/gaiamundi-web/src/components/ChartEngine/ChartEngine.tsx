@@ -7,17 +7,27 @@ import { ConfigPanel } from './ChartConfig/ConfigPanel';
 
 type ChartEngineProps = {
   chartId: number;
+  pageCartoId?: number;
+  updateMode: boolean;
 };
 
-export const ChartEngine: FC<ChartEngineProps> = ({ chartId }) => {
+export const ChartEngine: FC<ChartEngineProps> = ({
+  chartId,
+  pageCartoId,
+  updateMode,
+}) => {
   return (
-    <ChartConfigProvider chartId={chartId} rawData={DEFAULT_CHART_DATA}>
+    <ChartConfigProvider
+      chartId={chartId}
+      rawData={DEFAULT_CHART_DATA}
+      pageCartoId={pageCartoId}
+    >
       <div className="flex flex-row">
         <div className="w-1/4">
           <ConfigPanel />
         </div>
         <div className="w-3/4">
-          <Canvas />
+          <Canvas updateMode={updateMode} />
         </div>
       </div>
     </ChartConfigProvider>

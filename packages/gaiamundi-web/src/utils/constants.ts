@@ -1,6 +1,7 @@
 import { Dimensions, Direction, Position } from 'eazychart-core';
 import { ApiData } from 'interfaces/api';
 import { Chart, RawDatum } from 'interfaces/chart';
+import { PageCarto } from 'interfaces/page-carto';
 
 export const DEFAULT_DIMENSIONS: Dimensions = {
   width: 256,
@@ -24,6 +25,7 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
   id: 0,
   name: 'Untitled Chart',
   type: 'column',
+  page_carto: 5 as unknown as ApiData<PageCarto>,
   props: {
     colors: ['#26547c', '#ef476f', '#ffd166', '#06d6a0', '#06d6d1'],
     domainKey: 'value',
@@ -33,10 +35,10 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
       delay: 0,
     },
     padding: {
-      left: 150,
-      bottom: 100,
-      right: 150,
-      top: 100,
+      left: 80,
+      bottom: 80,
+      right: 50,
+      top: 50,
     },
     isRTL: false,
     xAxis: {
