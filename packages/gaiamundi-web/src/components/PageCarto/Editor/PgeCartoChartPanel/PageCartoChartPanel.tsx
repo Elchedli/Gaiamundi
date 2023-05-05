@@ -20,15 +20,19 @@ export const PageCartoChartPanel: FC = () => {
   const { addToast } = useToast();
   const queryClient = useQueryClient();
   const [selectedChartId, setSelectedChartId] = useState(0);
+
   const chartOptions = useMemo(() => {
-    if (charts.length > 0) {
+    if (charts.length > 0 && selectedChartId == 0) {
       setSelectedChartId(charts[0].id);
     }
+
     return charts.map(({ id, name }) => ({
       value: id,
       label: name,
     })) as Array<{ value: number; label: string }>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charts]);
+
   const { mutateAsync: discardChart, isLoading } = useMutation({
     mutationFn: async () => {
       return await deleteChart(selectedChartId);
@@ -39,6 +43,7 @@ export const PageCartoChartPanel: FC = () => {
         type: 'success',
         description: `Le graphique a été supprimé avec succès`,
       });
+      setSelectedChartId(0);
       queryClient.invalidateQueries({
         queryKey: ['page-carto', pageCartoId],
       });
