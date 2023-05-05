@@ -2,9 +2,19 @@ import { render } from '@testing-library/react';
 import PageCartoItem from 'components/PageCarto/List/PageCartoItem';
 
 import config from 'config';
+import { useAuth } from 'hooks/useAuth';
 import { MemoryRouter as Router } from 'react-router-dom';
-import { mockPageCartoData } from 'utils/mocks/data';
+import { mockPageCartoData, mockUser } from 'utils/mocks/data';
+
+jest.mock('hooks/useAuth');
+
 describe('PageCartoItem', () => {
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      isAuthenticated: true,
+      user: mockUser,
+    }));
+  });
   it('renders PageCartoItem', () => {
     const { getByText, getByRole } = render(
       <Router>
