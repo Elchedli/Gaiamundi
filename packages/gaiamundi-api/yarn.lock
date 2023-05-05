@@ -9464,6 +9464,11 @@ std-env@^3.0.1:
   resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.3.1.tgz#93a81835815e618c8aa75e7c8a4dc04f7c314e29"
   integrity sha512-3H20QlwQsSm2OvAxWIYhs+j01MzzqwMwGiiO1NQaJYZgJZFPuAbf95/DiKRBSTYIJ2FeGUc+B/6mPGcWP9dO3Q==
 
+strapi-plugin-server-route-permission@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-server-route-permission/-/strapi-plugin-server-route-permission-2.0.2.tgz#9e5a961d00bbb5c69d9b5c29466e1a0706d1488b"
+  integrity sha512-rz08/1jN/WLJrKMxs07kCeJ+8RswE81NVRD+H82ezdxrs4EY3rcwwbgLW4advQrM87dDfjIbgfinxama1gjLSw==
+
 strapi-plugin-transformer@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/strapi-plugin-transformer/-/strapi-plugin-transformer-3.0.1.tgz#9f847c91efac6dff6610d5a54e2d878bed2b9c74"

@@ -2,6 +2,24 @@
  * dataset router
  */
 
-import { factories } from '@strapi/strapi';
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-export default factories.createCoreRouter('api::dataset.dataset');
+export default createCoreRouter("api::dataset.dataset", {
+  config: {
+    create: {
+      roles: ["authenticated"],
+    },
+    update: {
+      roles: ["authenticated"],
+    },
+    delete: {
+      roles: ["authenticated"],
+    },
+    find: {
+      roles: ["authenticated"],
+    },
+    findOne: {
+      roles: ["authenticated"],
+    },
+  },
+});

@@ -4,6 +4,9 @@ module.exports = {
       method: "GET",
       path: "/page-cartos/:id/data",
       handler: "page-carto.get",
+      config: {
+        roles: ["authenticated"],
+      },
     },
   ],
 };
