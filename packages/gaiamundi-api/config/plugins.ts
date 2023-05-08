@@ -18,16 +18,6 @@ module.exports = ({ env }) => ({
       },
     },
   },
-  // routes: [
-  //   {
-  //     method: "POST",
-  //     path: "/email",
-  //     handler: "email.send",
-  //     config: {
-  //       roles: ["authenticated"],
-  //     },
-  //   },
-  // ],
   // enable ck editor in admin
   ckeditor: true,
   // strip attributes and data from responses
