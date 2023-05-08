@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "7224dc5e-45ac-43a6-9eef-5165094e2a1a",
+		"name": "X - Gaiamundi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentification",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"noure\",\n    \"password\": \"strapiPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/auth/local",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"auth",
+								"local"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Noura\",\n   \"password\": \"strapiPassword\",\n    \"email\": \"testeseet@gmail.com\",\n    \"username\": \"noure\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/auth/local/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"auth",
+								"local",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"shidonosan@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/auth/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/auth/local/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"auth",
+								"local",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Map",
+			"item": [
+				{
+					"name": "add-map",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"name\": \"{{$randomFirstName}}\",\n        \"html\": \"{{$randomLastName}}\",\n        \"map\": [8],\n        \"owner\": [2],\n        \"tags\": [63,68]\n    }\n}"
+						},
+						"url": {
+							"raw": "X - GaiamundiMapadd-mapSavehttp://localhost:1337/api/geo-mapsSendParamsAuthorizationHeaders(8)BodyPre-request ScriptTestsSettingsCookiesQuery ParamsKeyValueDescription Bulk EditKeyValueDescriptionHeadersHide auto-generated headersKeyValueDescription Bulk EditPresetsPostman-Token<calculated when request is sent>Go to settingsContent-Typetext/plainGo to bodyContent-Length<calculated when request is sent>Go to bodyHost<calculated when request is sent>User-AgentPostmanRuntime/7.32.2Accept*/*Accept-Encodinggzip, deflate, brConnectionkeep-aliveKeyValueDescriptionnoneform-datax-www-form-urlencodedrawbinaryGraphQLTextThis request does not have a bodyKeyValueDescription Bulk EditKeyValueDescriptionKeyValueDescription Bulk EditKeyValueDescription123456789{····\"data\":·{········\"name\":·\"{{$randomFirstName}}\",········\"html\":·\"{{$randomLastName}}\",········\"map\":·[8],········\"owner\":·[2],········\"tags\":·[63,68]····}}Select FileQUERY1 GRAPHQL VARIABLES1 ResponseClick Send to get a responseRUN ORDERDeselect AllSelect AllResetGETget-page-cartoPOSTadd-page-cartosGETUserPageCartosGETcsvParsingIterationsDelaymsDataSelect FileSave responsesKeep variable valuesRun collection without using stored cookiesSave cookies after collection runRun X - Gaiamundi",
+							"protocol": "X - GaiamundiMapadd-mapSavehttp",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-mapsSendParamsAuthorizationHeaders(8)BodyPre-request ScriptTestsSettingsCookiesQuery ParamsKeyValueDescription Bulk EditKeyValueDescriptionHeadersHide auto-generated headersKeyValueDescription Bulk EditPresetsPostman-Token<calculated when request is sent>Go to settingsContent-Typetext",
+								"plainGo to bodyContent-Length<calculated when request is sent>Go to bodyHost<calculated when request is sent>User-AgentPostmanRuntime",
+								"7.32.2Accept*",
+								"*Accept-Encodinggzip, deflate, brConnectionkeep-aliveKeyValueDescriptionnoneform-datax-www-form-urlencodedrawbinaryGraphQLTextThis request does not have a bodyKeyValueDescription Bulk EditKeyValueDescriptionKeyValueDescription Bulk EditKeyValueDescription123456789{····\"data\":·{········\"name\":·\"{{$randomFirstName}}\",········\"html\":·\"{{$randomLastName}}\",········\"map\":·[8],········\"owner\":·[2],········\"tags\":·[63,68]····}}Select FileQUERY1 GRAPHQL VARIABLES1 ResponseClick Send to get a responseRUN ORDERDeselect AllSelect AllResetGETget-page-cartoPOSTadd-page-cartosGETUserPageCartosGETcsvParsingIterationsDelaymsDataSelect FileSave responsesKeep variable valuesRun collection without using stored cookiesSave cookies after collection runRun X - Gaiamundi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/home/lapin/Downloads/custom.geo.json"
+								},
+								{
+									"key": "ref",
+									"value": "api::map.map",
+									"type": "text"
+								},
+								{
+									"key": "refId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "field",
+									"value": "geoJSON",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllGeoMaps",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"name\": \"{{$randomFirstName}}\",\n        \"html\": \"{{$randomLastName}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/geo-maps",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-maps"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GeoMapsImageFetch",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/geo-maps/image/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-maps",
+								"image",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Map",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/geo-maps/1?populate=*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-maps",
+								"1"
+							],
+							"query": [
+								{
+									"key": "populate",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllGeoMapsFiltered",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"name\": \"{{$randomFirstName}}\",\n        \"html\": \"{{$randomLastName}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/geo-maps",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-maps"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GeoMapsThumbnail",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/geo-maps/thumbnail/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"geo-maps",
+								"thumbnail",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PageCartos",
+			"item": [
+				{
+					"name": "add-page-cartos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"name\": \"{{$randomFirstName}}\",\n        \"html\": \"{{$randomLastName}}\",\n        \"map\": [8],\n        \"owner\": [2],\n        \"tags\": [63,68]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/page-cartos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"page-cartos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-page-carto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/page-cartos/?populate=*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"page-cartos",
+								""
+							],
+							"query": [
+								{
+									"key": "populate",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserPageCartos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjcwNDIxNzg5LCJleHAiOjE2NzMwMTM3ODl9.haeeQQRxjLnogLoveivY0VEs4gD_xbItOUTqXXEH24E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/page-cartos?filters[name][$eq]=&populate=*&sort=createdAt:desc&pagination[page]=1&pagination[pageSize]=9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"page-cartos"
+							],
+							"query": [
+								{
+									"key": "filters[name][$eq]",
+									"value": ""
+								},
+								{
+									"key": "populate",
+									"value": "*"
+								},
+								{
+									"key": "sort",
+									"value": "createdAt:desc"
+								},
+								{
+									"key": "pagination[page]",
+									"value": "1"
+								},
+								{
+									"key": "pagination[pageSize]",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "csvParsing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:1337/api/page-cartos/510/data",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"page-cartos",
+								"510",
+								"data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "CreateTag",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"name\": \"{{$randomFirstName}}\",\n        \"type\": \"Thématique\",\n        \"page_cartos\": [286]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1337/api/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTagsAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/tags?populate=*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"tags"
+							],
+							"query": [
+								{
+									"key": "populate",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TagCounter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/tag/counter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"tag",
+								"counter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TagCounterApi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1337/api/tag/count&populate=*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"api",
+								"tag",
+								"count&populate=*"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
