@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  api:
+    image: api-container
+    container_name: api-service
+    command: yarn start:api
+    ports:
+      - "1337:1337"
+    networks:
+      - app-network
+  react-app:
+    image: api-container
+    container_name: web-service
+    command: yarn start:web
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
