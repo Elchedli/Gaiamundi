@@ -1,0 +1,9 @@
+version: "1"
+services:
+  api:
+    build: ./packages/gaiamundi-api
+    container_name: api_c
+    ports:
+      - "3001"
+    volumes:
+      - ./api
