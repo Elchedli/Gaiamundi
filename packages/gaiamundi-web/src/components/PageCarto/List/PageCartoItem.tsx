@@ -70,7 +70,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
     );
 
     if (confirmed) {
-      await mutateAsync(id);
+      mutateAsync(id);
     }
   };
 
@@ -85,12 +85,12 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
           {canEditOrDelete === true ? (
             <>
               <Link to={`/page-carto/${id}/edit`}>
-                <PencilSquareIcon className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-1 bg-transparent hover:text-blue-600" />
+                <PencilSquareIcon className="cursor-pointer shadow-md shadow-gray-800 p-1 text-blue-600 opacity-75 h-7 w-7 bg-white rounded-md text-center absolute bottom-2 right-2 hover:scale-125 transition-transform duration-200" />
               </Link>
               <Link to={'#'}>
                 <TrashIcon
                   onClick={() => handleDeleteConfirmation(id)}
-                  className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-10 bg-transparent hover:text-blue-600"
+                  className="cursor-pointer p-1 shadow-md shadow-gray-800 text-blue-600 h-7 w-7 opacity-75 bg-white rounded-md text-center absolute bottom-2 right-12 hover:scale-125 transition-transform duration-200"
                 />
               </Link>
             </>
