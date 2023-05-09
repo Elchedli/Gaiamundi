@@ -19,7 +19,7 @@ export const AccordionTitle: FC<AccordionTitleProps> = ({
     setOpen,
   } = useAccordionContext();
 
-  const onClick = () => typeof setOpen !== 'undefined' && setOpen();
+  const onClick = () => typeof setOpen !== 'undefined' && setOpen(!isOpen);
 
   return (
     <>

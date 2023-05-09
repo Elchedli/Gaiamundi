@@ -30,18 +30,19 @@ const AccordionComponent: FC<AccordionProps> = ({
   flush = false,
   ...props
 }): JSX.Element => {
-  const [isOpen, setOpen] = useState(0);
+  const [isOpen, setOpen] = useState(false);
+
   const panels = useMemo(
     () =>
       Children.map(
         children,
-        (child: ReactElement<any, string | JSXElementConstructor<any>>, i) =>
+        (child: ReactElement<any, string | JSXElementConstructor<any>>) =>
           cloneElement(child, {
             alwaysOpen,
             arrowIcon,
             flush,
-            isOpen: isOpen === i,
-            setOpen: () => setOpen(i),
+            isOpen: isOpen === true,
+            setOpen: () => setOpen(!isOpen),
           })
       ),
     [alwaysOpen, arrowIcon, children, flush, isOpen]
