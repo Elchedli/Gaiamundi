@@ -2,19 +2,27 @@ import { fireEvent, render } from '@testing-library/react';
 import { useAuth } from 'hooks/useAuth';
 import { ApiCollection } from 'interfaces/api';
 import { PageCarto } from 'interfaces/page-carto';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { mockPageCartoData, mockUser } from 'utils/mocks/data';
 import { PageCartoUserList } from '../PageCartoUserList';
 
 jest.mock('hooks/useAuth');
-jest.mock('react-query');
+jest.mock('react-query', () => ({
+  useMutation: jest.fn(),
+  useQuery: jest.fn(),
+}));
 
 describe('PageCartoUserList', () => {
   beforeEach(() => {
     (useAuth as jest.Mock).mockImplementation(() => ({
       isAuthenticated: true,
       user: mockUser,
+    }));
+    (useMutation as jest.Mock).mockImplementation(() => ({
+      isError: false,
+      error: null,
+      isLoading: false,
     }));
   });
 

@@ -1,14 +1,18 @@
-import excerptHtml from 'excerpt-html';
-import { Link } from 'react-router-dom';
-
-import { PencilSquareIcon } from '@heroicons/react/24/solid';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Badge } from 'components/Badge/Badge';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import config from 'config';
+import excerptHtml from 'excerpt-html';
 import { useAuth } from 'hooks/useAuth';
-import { ApiData } from 'interfaces/api';
+import { useToast } from 'hooks/useToast';
+import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { PageCarto } from 'interfaces/page-carto';
 import { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
+import { Link } from 'react-router-dom';
+import { deletePageCarto } from 'services/page-carto';
 
 const getThumbnailUrl = (cover: ApiData<UploadedFile>) => {
   const imgUrl = cover?.formats['thumbnail'].url;
@@ -26,16 +30,49 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   cover,
   html,
 }) => {
-  const [canEdit, setCanEdit] = useState(false);
+  const [canEditOrDelete, setCanEditOrDelete] = useState(false);
   const { user } = useAuth();
+  const { addToast } = useToast();
 
   useEffect(() => {
     if (owner.id === user?.id) {
-      setCanEdit(true);
+      setCanEditOrDelete(true);
     } else {
-      setCanEdit(false);
+      setCanEditOrDelete(false);
     }
   }, [owner.id, user]);
+
+  const { mutateAsync, isLoading, isError, error } = useMutation({
+    mutationFn: async (id: number) => {
+      return await deletePageCarto(id);
+    },
+    onSuccess: (response) => {
+      addToast({
+        title: 'PageCarto ' + name + ' supprimée',
+        description: 'PageCarto ' + response.data.id + ' supprimée avec succès',
+        type: 'success',
+      });
+    },
+  });
+  if (isLoading) {
+    return <LoadingMessage data-testid="filter-bar-loading-message" />;
+  }
+
+  if (isError) {
+    return (
+      <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
+    );
+  }
+
+  const handleDeleteConfirmation = async (id: number) => {
+    const confirmed = window.confirm(
+      'Êtes-vous sûr de vouloir supprimer cette pageCarto ?'
+    );
+
+    if (confirmed) {
+      await mutateAsync(id);
+    }
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
@@ -45,10 +82,18 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
             src={getThumbnailUrl(cover)}
             className="h-48 w-full object-cover group-hover:opacity-75"
           />
-          {canEdit === true ? (
-            <Link to={`/page-carto/${id}/edit`}>
-              <PencilSquareIcon className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-1 bg-transparent hover:text-blue-600" />
-            </Link>
+          {canEditOrDelete === true ? (
+            <>
+              <Link to={`/page-carto/${id}/edit`}>
+                <PencilSquareIcon className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-1 bg-transparent hover:text-blue-600" />
+              </Link>
+              <Link to={'#'}>
+                <TrashIcon
+                  onClick={() => handleDeleteConfirmation(id)}
+                  className="cursor-pointer h-8 w-8 opacity-1 text-center absolute bottom-1 right-10 bg-transparent hover:text-blue-600"
+                />
+              </Link>
+            </>
           ) : (
             ''
           )}
