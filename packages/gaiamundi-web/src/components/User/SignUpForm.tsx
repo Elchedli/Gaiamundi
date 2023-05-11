@@ -150,13 +150,12 @@ const SignUpForm = ({ email }: Props) => {
               required: 'Veuillez saisir votre mot de passe',
               minLength: {
                 value: 6,
-                message:
-                  'Le mot de passe doit contenir au moins 6 charactères.',
+                message: 'Le mot de passe doit contenir au moins 6 charactères',
               },
               pattern: {
                 value: PASSWORD_REGEX,
                 message:
-                  'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.',
+                  'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial',
               },
             })}
           />
@@ -181,10 +180,10 @@ const SignUpForm = ({ email }: Props) => {
             className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password2', {
-              required: 'Veuillez confirmer votre mot de passe.',
+              required: 'Veuillez confirmer votre mot de passe',
               validate: (val: string) => {
                 if (watch('password') != val) {
-                  return 'Les mots de passes ne correspondent pas.';
+                  return 'Les mots de passes ne correspondent pas';
                 }
               },
             })}
