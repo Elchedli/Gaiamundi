@@ -8,4 +8,4 @@ COPY ./ ./monorepo
 
 WORKDIR /monorepo
 
-RUN yarn install && yarn setup
+RUN yarn add lerna && yarn setup
