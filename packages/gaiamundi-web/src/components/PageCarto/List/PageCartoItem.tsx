@@ -1,10 +1,13 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Badge } from 'components/Badge/Badge';
+import { Button } from 'components/Button/Button';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import config from 'config';
 import excerptHtml from 'excerpt-html';
 import { useAuth } from 'hooks/useAuth';
+import { useModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
@@ -30,6 +33,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   cover,
   html,
 }) => {
+  const { showModal, hideModal } = useModal();
   const [canEditOrDelete, setCanEditOrDelete] = useState(false);
   const { user } = useAuth();
   const { addToast } = useToast();
@@ -46,16 +50,16 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
     mutationFn: async (id: number) => {
       return await deletePageCarto(id);
     },
-    onSuccess: (response) => {
+    onSuccess: () => {
       addToast({
         title: 'PageCarto ' + name + ' supprimée',
-        description: 'PageCarto ' + response.data.id + ' supprimée avec succès',
+        description: 'PageCarto supprimée avec succès',
         type: 'success',
       });
     },
   });
   if (isLoading) {
-    return <LoadingMessage data-testid="filter-bar-loading-message" />;
+    return <LoadingMessage data-testid="loading-message" />;
   }
 
   if (isError) {
@@ -65,13 +69,47 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   }
 
   const handleDeleteConfirmation = async (id: number) => {
-    const confirmed = window.confirm(
-      'Êtes-vous sûr de vouloir supprimer cette pageCarto ?'
-    );
-
-    if (confirmed) {
-      mutateAsync(id);
-    }
+    showModal({
+      title: 'Suppression',
+      Component: () => (
+        <Alert
+          data-testid="delete-modal"
+          type="warning"
+          onDismiss={() => {
+            hideModal();
+          }}
+          additionalContent={
+            <div className="text-center">
+              <div className="mb-6">
+                Êtes-vous sûr de vouloir supprimer cette PageCarto ?
+              </div>
+              <div className="mb-2">
+                <Button
+                  data-testid="confirmDelete"
+                  color="red"
+                  className="mr-2 top-0"
+                  onClick={() => {
+                    mutateAsync(id);
+                    hideModal();
+                  }}
+                >
+                  Supprimer
+                </Button>
+                <Button
+                  className="top-0"
+                  type="button"
+                  onClick={() => {
+                    hideModal();
+                  }}
+                >
+                  Annuler
+                </Button>
+              </div>
+            </div>
+          }
+        ></Alert>
+      ),
+    });
   };
 
   return (
@@ -85,12 +123,16 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
           {canEditOrDelete === true ? (
             <>
               <Link to={`/page-carto/${id}/edit`}>
-                <PencilSquareIcon className="cursor-pointer shadow-md shadow-gray-800 p-1 text-blue-600 opacity-75 h-7 w-7 bg-white rounded-md text-center absolute bottom-2 right-2 hover:scale-125 transition-transform duration-200" />
+                <PencilSquareIcon
+                  className="cursor-pointer shadow-md shadow-gray-800 p-1 text-blue-600 opacity-75 h-7 w-7 bg-white rounded-md text-center absolute bottom-2 right-2 hover:scale-125 transition-transform duration-200"
+                  data-testid="editIcon"
+                />
               </Link>
               <Link to={'#'}>
                 <TrashIcon
                   onClick={() => handleDeleteConfirmation(id)}
                   className="cursor-pointer p-1 shadow-md shadow-gray-800 text-blue-600 h-7 w-7 opacity-75 bg-white rounded-md text-center absolute bottom-2 right-12 hover:scale-125 transition-transform duration-200"
+                  data-testid="deleteIcon"
                 />
               </Link>
             </>
