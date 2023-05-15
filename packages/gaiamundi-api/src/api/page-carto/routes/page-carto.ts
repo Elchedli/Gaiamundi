@@ -16,7 +16,7 @@ export default createCoreRouter("api::page-carto.page-carto", {
       roles: ["authenticated"],
     },
     find: {
-      roles: ["authenticated"],
+      roles: ["authenticated", "public"],
     },
     findOne: {
       roles: ["authenticated"],
