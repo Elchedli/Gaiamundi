@@ -16,6 +16,9 @@ export interface User extends UserSignUpFields {
   blocked: boolean;
   created_at: string;
   updated_at: string;
+  profileImage?: {
+    url: string;
+  };
 }
 
 export type UserAuthResponse = {
