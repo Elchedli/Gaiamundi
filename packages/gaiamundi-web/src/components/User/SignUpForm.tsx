@@ -86,7 +86,7 @@ const SignUpForm = ({ email }: Props) => {
             required: 'Veuillez saisir votre nom',
             minLength: {
               value: 3,
-              message: 'Le nom doit avoir au moins 3 charactères',
+              message: 'Le nom doit avoir au moins 3 caractères',
             },
           })}
         />
@@ -99,7 +99,7 @@ const SignUpForm = ({ email }: Props) => {
           htmlFor="email"
           className="text-sm font-medium leading-5 text-gray-700"
         >
-          Addresse E-mail
+          Adresse E-mail
         </Label>
         <div className="mt-1 rounded-md">
           <TextInput
@@ -141,7 +141,7 @@ const SignUpForm = ({ email }: Props) => {
               required: 'Veuillez saisir votre mot de passe',
               minLength: {
                 value: 6,
-                message: 'Le mot de passe doit avoir au moins 6 charactères',
+                message: 'Le mot de passe doit avoir au moins 6 caractères',
               },
             })}
           />

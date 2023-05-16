@@ -12,7 +12,7 @@ const ProfilePhotoUpload: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file && file.size > 1 * 1024 * 1024) {
-      setErrorMessage('La taille du fichier ne doit pas dépasser 1MB');
+      setErrorMessage('La taille du fichier ne doit pas dépasser 1 Mo');
     } else if (file && !file.type.startsWith('image/')) {
       setErrorMessage('Le fichier doit être une image');
     } else {
@@ -37,29 +37,31 @@ const ProfilePhotoUpload: React.FC = () => {
     formData.append('files', selectedFile);
 
     try {
-      const uploadResponse = await fetch('http://localhost:1337/upload', {
+      const uploadResponse = await fetch('http://localhost:1337/api/upload', {
         method: 'POST',
         body: formData,
       });
 
       const uploadData = await uploadResponse.json();
 
-      const userId = user?.id;
       const userToken = localStorage.getItem('token');
 
-      const userResponse = await fetch(
-        `http://localhost:1337/users/${userId}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            profileImage: uploadData[0].id,
-          }),
-        }
-      );
+      if (!uploadData || !uploadData[0]) {
+        throw new Error(
+          "Les données de l'upload ne sont pas conformes aux attentes"
+        );
+      }
+
+      const userResponse = await fetch('http://localhost:1337/api/auth/local', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          profileImage: uploadData[0].id,
+        }),
+      });
 
       await userResponse.json();
       addToast({
@@ -83,7 +85,7 @@ const ProfilePhotoUpload: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-start">
       {user?.profileImage && (
         <img
           src={`http://localhost:1337${user.profileImage.url}`}
@@ -91,15 +93,17 @@ const ProfilePhotoUpload: React.FC = () => {
           className="w-24 h-24 rounded-full mb-4"
         />
       )}
-      <input type="file" onChange={handleInputChange} className="mb-4" />
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      <button
-        onClick={handleUpload}
-        disabled={uploading}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-      >
-        {uploading ? 'Chargement...' : 'Upload'}
-      </button>
+      <div className="flex flex-col items-start">
+        <input type="file" onChange={handleInputChange} className="mb-4" />
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        <button
+          onClick={handleUpload}
+          disabled={uploading}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+        >
+          {uploading ? 'Chargement...' : 'Upload'}
+        </button>
+      </div>
     </div>
   );
 };
