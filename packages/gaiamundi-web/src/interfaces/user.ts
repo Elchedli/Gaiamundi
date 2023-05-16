@@ -8,7 +8,7 @@ export interface UserCredentials {
 export interface UserSignUpFields extends UserCredentials {
   username: string;
 }
-export interface UserSignUpFormFields extends User {
+export interface UserSignUpFormFields extends UserSignUpFields {
   password2: string;
 }
 

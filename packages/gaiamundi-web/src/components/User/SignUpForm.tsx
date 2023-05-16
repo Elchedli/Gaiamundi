@@ -36,12 +36,6 @@ const SignUpForm = ({ email }: Props) => {
   } = useForm<UserSignUpFormFields>({
     mode: 'all',
     defaultValues: {
-      id: 0,
-      provider: 'local',
-      confirmed: false,
-      blocked: false,
-      created_at: '',
-      updated_at: '',
       username: '',
       email,
       password: '',
