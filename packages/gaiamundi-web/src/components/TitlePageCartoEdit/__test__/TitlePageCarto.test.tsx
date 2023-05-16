@@ -38,7 +38,7 @@ describe('TitlePageCartoEdit', () => {
     const queryClient = new QueryClient();
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
-        <TitlePageCartoEdit />
+        <TitlePageCartoEdit canEdit={true} />
       </QueryClientProvider>
     );
     expect(getByTestId('content-editable').innerText).toEqual(
@@ -49,7 +49,7 @@ describe('TitlePageCartoEdit', () => {
     const queryClient = new QueryClient();
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
-        <TitlePageCartoEdit />
+        <TitlePageCartoEdit canEdit={true} />
       </QueryClientProvider>
     );
     const inputElement = getByTestId('content-editable');
@@ -72,7 +72,7 @@ describe('TitlePageCartoEdit', () => {
     const queryClient = new QueryClient();
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
-        <TitlePageCartoEdit />
+        <TitlePageCartoEdit canEdit={true} />
       </QueryClientProvider>
     );
     const inputElement = getByTestId('content-editable');

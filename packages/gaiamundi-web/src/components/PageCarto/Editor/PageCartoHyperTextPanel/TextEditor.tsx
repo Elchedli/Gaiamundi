@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   BoldButton,
   Divider,
@@ -11,24 +10,33 @@ import {
   UnderlineButton,
 } from 'verbum';
 
-const TextEditor: FC = () => {
+interface TextEditorProps {
+  canEdit: boolean;
+}
+
+const TextEditor: React.FC<TextEditorProps> = ({ canEdit }) => {
   return (
     <EditorComposer>
       <Editor
         hashtagsEnabled={true}
         locale="fr"
-        placeholder="Commencez à écrire du texte ici!"
+        placeholder={canEdit === true ? 'Commencez à écrire du texte ici!' : ''}
         actionsEnabled={false}
         emojisEnabled={true}
+        isEditable={canEdit}
       >
-        <ToolbarPlugin defaultFontSize="15px">
-          <BoldButton />
-          <ItalicButton />
-          <UnderlineButton />
-          <InsertLinkButton />
-          <InsertDropdown enablePoll={true} />
-          <Divider />
-        </ToolbarPlugin>
+        {canEdit === true ? (
+          <ToolbarPlugin defaultFontSize="15px">
+            <BoldButton />
+            <ItalicButton />
+            <UnderlineButton />
+            <InsertLinkButton />
+            <InsertDropdown enablePoll={true} />
+            <Divider />
+          </ToolbarPlugin>
+        ) : (
+          ''
+        )}
       </Editor>
     </EditorComposer>
   );

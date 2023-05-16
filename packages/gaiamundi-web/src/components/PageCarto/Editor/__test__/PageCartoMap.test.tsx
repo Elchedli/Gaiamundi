@@ -49,7 +49,7 @@ describe('PageCartoMap', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoMap />
+          <PageCartoMap canEdit={true} />
         </PageCartoProvider>
       </QueryClientProvider>
     );
@@ -63,7 +63,7 @@ describe('PageCartoMap', () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoMap />
+          <PageCartoMap canEdit={true} />
         </PageCartoProvider>
       </QueryClientProvider>
     );

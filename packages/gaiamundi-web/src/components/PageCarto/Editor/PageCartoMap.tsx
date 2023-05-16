@@ -3,7 +3,7 @@ import 'eazychart-css';
 import { BubbleMapChart, ResponsiveChartContainer } from 'eazychart-react';
 import { Feature } from 'interfaces/geojson';
 import panzoom, { PanZoom } from 'panzoom';
-import { FC, useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
 import rewind from '@turf/rewind';
@@ -21,7 +21,11 @@ import { getGeoJson } from 'services/geo-map';
 import { uploadCover } from 'services/page-carto';
 import { rasterizeSvg } from 'utils/thumbnail-generator';
 
-export const PageCartoMap: FC = () => {
+interface PageCartoMapProps {
+  canEdit: boolean;
+}
+
+export const PageCartoMap: React.FC<PageCartoMapProps> = ({ canEdit }) => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   const { addToast } = useToast();
@@ -130,12 +134,21 @@ export const PageCartoMap: FC = () => {
   return (
     <div className="w-full h-full relative">
       <div className="w-full p-2 absolute z-50 flex bg-white bg-opacity-50">
-        <TitlePageCartoEdit />
-        <ButtonGroup pill={true} className="mt-2">
-          <Button icon={PlusIcon} onClick={zoomIn} />
-          <Button icon={MinusIcon} onClick={zoomOut} />
-          <Button icon={CameraIcon} onClick={generateThumbnail} />
-        </ButtonGroup>
+        <TitlePageCartoEdit canEdit={canEdit} />
+
+        {canEdit === true ? (
+          <ButtonGroup pill={true} className="mt-2">
+            <Button icon={PlusIcon} onClick={zoomIn} />
+            <Button icon={MinusIcon} onClick={zoomOut} />
+            <Button icon={CameraIcon} onClick={generateThumbnail} />
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup pill={true} className="mt-2">
+            <Button icon={PlusIcon} onClick={zoomIn} />
+            <Button className="hidden" />
+            <Button icon={MinusIcon} onClick={zoomOut} />
+          </ButtonGroup>
+        )}
       </div>
       <div
         className="w-full h-full overflow-hidden"

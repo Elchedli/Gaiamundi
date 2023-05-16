@@ -9,6 +9,7 @@ interface ContentEditableProps {
   className: string;
   onInput: (event: React.FormEvent<HTMLHeadingElement>) => void;
   onBlur: () => void;
+  canEdit?: boolean;
 }
 
 export const ContentEditable: React.FC<ContentEditableProps> = ({
@@ -17,6 +18,7 @@ export const ContentEditable: React.FC<ContentEditableProps> = ({
   isLoading,
   onInput,
   onBlur,
+  canEdit,
 }) => {
   const valueRef = useRef<HTMLHeadingElement>(null);
 
@@ -33,7 +35,7 @@ export const ContentEditable: React.FC<ContentEditableProps> = ({
         className={
           'bg-white border border-slate-100 hover:border-slate-400 px-2'
         }
-        contentEditable={true}
+        contentEditable={canEdit}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             event.preventDefault();

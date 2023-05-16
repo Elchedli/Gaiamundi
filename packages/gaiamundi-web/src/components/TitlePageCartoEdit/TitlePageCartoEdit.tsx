@@ -4,7 +4,13 @@ import { useMutation } from 'react-query';
 import { updatePageCarto } from 'services/page-carto';
 import { ContentEditable } from '../ContentEditable/ContentEditable';
 
-export const TitlePageCartoEdit = () => {
+interface TitlePageCartoEditProps {
+  canEdit: boolean;
+}
+
+export const TitlePageCartoEdit: React.FC<TitlePageCartoEditProps> = ({
+  canEdit,
+}) => {
   const { data: pageCarto } = usePageCarto();
   const [pageTitle, setPageTitle] = useState(pageCarto?.data.name || '');
   const pageId = pageCarto?.data.id || 0;
@@ -31,6 +37,7 @@ export const TitlePageCartoEdit = () => {
       onInput={handleChange}
       onBlur={handleBlur}
       className="w-full flex-grow text-slate-950 text-xl px-2 focus:outline-none"
+      canEdit={canEdit}
     />
   );
 };

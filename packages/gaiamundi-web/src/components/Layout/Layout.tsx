@@ -1,14 +1,16 @@
 import { Outlet, matchPath, useLocation } from 'react-router-dom';
 
-import Navbar from './Navbar';
-import Footer from './Footer';
 import classNames from 'classnames';
 import { ModalProvider } from 'hooks/useModal';
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 export const Layout: React.FC = () => {
   const location = useLocation();
 
-  const isFullScreen = !!matchPath('/page-carto/:id/edit', location.pathname);
+  const isFullScreen =
+    !!matchPath('/page-carto/:id/edit', location.pathname) ||
+    !!matchPath('/page-carto/:id/', location.pathname);
   return (
     <div className="min-h-screen">
       <ModalProvider>
