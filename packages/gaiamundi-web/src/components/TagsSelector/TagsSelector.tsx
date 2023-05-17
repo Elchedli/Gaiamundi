@@ -6,7 +6,7 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
