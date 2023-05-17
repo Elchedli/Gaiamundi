@@ -11,10 +11,14 @@ import { useAuth } from 'hooks/useAuth';
 import { useModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
 import { ApiError } from 'interfaces/api';
-import { UserAuthResponse, UserSignUpFields } from 'interfaces/user';
+import {
+  UserAuthResponse,
+  UserSignUpFields,
+  UserSignUpFormFields,
+} from 'interfaces/user';
 import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 import { signUp } from 'services/user';
-import { EMAIL_REGEX } from 'utils/utils';
+import { EMAIL_REGEX, PASSWORD_REGEX } from 'utils/utils';
 
 interface Props {
   email?: string;
@@ -29,7 +33,8 @@ const SignUpForm = ({ email }: Props) => {
     handleSubmit,
     formState: { errors, isValid },
     watch,
-  } = useForm<UserSignUpFields & { password2: string }>({
+  } = useForm<UserSignUpFormFields>({
+    mode: 'all',
     defaultValues: {
       username: '',
       email,
@@ -83,7 +88,7 @@ const SignUpForm = ({ email }: Props) => {
           className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           type="text"
           {...register('username', {
-            required: 'Veuillez saisir votre nom',
+            required: 'Veuillez saisir votre nom.',
             minLength: {
               value: 3,
               message: 'Le nom doit avoir au moins 3 caractères',
@@ -94,6 +99,7 @@ const SignUpForm = ({ email }: Props) => {
           <p className="mt-2 text-xs text-red-600">{errors.username.message}</p>
         )}
       </div>
+
       <div className="mt-4">
         <Label
           htmlFor="email"
@@ -105,25 +111,22 @@ const SignUpForm = ({ email }: Props) => {
           <TextInput
             data-testid="email-input"
             id="email"
-            className={`appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 shadow-sm ${
-              !!email && 'cursor-not-allowed'
-            }`}
+            className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
             type="email"
             {...register('email', {
               required: 'Veuillez saisir votre email',
               pattern: {
                 value: EMAIL_REGEX,
-                message: 'Not a valid email',
+                message: 'Email invalide.',
               },
             })}
           />
           {errors.email && (
-            <div className="mt-2 text-xs text-red-600">
-              {errors.email.message}
-            </div>
+            <p className="mt-2 text-xs text-red-600">{errors.email.message}</p>
           )}
         </div>
       </div>
+
       <div className="mt-4">
         <Label
           htmlFor="password"
@@ -146,9 +149,9 @@ const SignUpForm = ({ email }: Props) => {
             })}
           />
           {errors.password && (
-            <div className="mt-2 text-xs text-red-600">
+            <p className="mt-2 text-xs text-red-600">
               {errors.password.message}
-            </div>
+            </p>
           )}
         </div>
       </div>
@@ -166,18 +169,18 @@ const SignUpForm = ({ email }: Props) => {
             className="w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             type="password"
             {...register('password2', {
-              required: 'Veuillez saisir la confirmation du mot de passe',
+              required: 'Veuillez confirmer votre mot de passe.',
               validate: (val: string) => {
                 if (watch('password') != val) {
-                  return 'La confirmation du mot de passe est incorrecte.';
+                  return 'Les mots de passes ne correspondent pas.';
                 }
               },
             })}
           />
           {errors.password2 && (
-            <div className="mt-2 text-xs text-red-600">
+            <p className="mt-2 text-xs text-red-600">
               {errors.password2.message}
-            </div>
+            </p>
           )}
         </div>
       </div>
