@@ -1,7 +1,7 @@
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { ApiData } from 'interfaces/api';
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 type AutoCompleteInputProps<T> = {
   className?: string;
@@ -13,7 +13,6 @@ type AutoCompleteInputProps<T> = {
   emptyMessage?: string;
   onSelect: (value: T) => void;
   onCreate: (value: string) => void;
-  inputReference?: React.MutableRefObject<HTMLInputElement | null>;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -27,7 +26,6 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
   emptyMessage = 'Nothing found!',
   onSelect,
   onCreate,
-  inputReference,
 }: AutoCompleteInputProps<T>) => {
   const [query, setQuery] = useState('');
 
@@ -54,15 +52,6 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
     }
   }
 
-  const handleInputRef = useCallback(
-    (inputElement: HTMLInputElement | null) => {
-      if (inputElement && inputReference) {
-        inputReference.current = inputElement;
-      }
-    },
-    [inputReference]
-  );
-
   return (
     <div className={className}>
       <Combobox value={selectedOption} onChange={onSelect}>
@@ -75,7 +64,6 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               data-testid="input"
-              ref={handleInputRef}
             />
 
             {enableComboBox && (
