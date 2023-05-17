@@ -1,3 +1,4 @@
+import axios from 'axios'; // Import axios
 import { useAuth } from 'hooks/useAuth';
 import { useToast } from 'hooks/useToast';
 import React, { useState } from 'react';
@@ -37,12 +38,12 @@ const ProfilePhotoUpload: React.FC = () => {
     formData.append('files', selectedFile);
 
     try {
-      const uploadResponse = await fetch('http://localhost:1337/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      const uploadResponse = await axios.post(
+        'http://localhost:1337/api/upload',
+        formData
+      );
 
-      const uploadData = await uploadResponse.json();
+      const uploadData = uploadResponse.data;
 
       const userToken = localStorage.getItem('token');
 
@@ -52,18 +53,22 @@ const ProfilePhotoUpload: React.FC = () => {
         );
       }
 
-      const userResponse = await fetch('http://localhost:1337/api/auth/local', {
-        method: 'POST',
+      const userResponse = await axios.post('http://localhost:1337/api/users', {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+        data: {
           profileImage: uploadData[0].id,
-        }),
+        },
       });
 
-      await userResponse.json();
+      if (userResponse.status !== 200) {
+        throw new Error(
+          "Une erreur s'est produite lors de la mise à jour du profil."
+        );
+      }
+
       addToast({
         title: 'Upload réussi',
         description: '',
