@@ -24,7 +24,7 @@ const Footer = (): JSX.Element => {
               <div className="px-5 py-2" key={title}>
                 <Link
                   to={href}
-                  className="text-base leading-6 text-blue-600 hover:text-gray-800"
+                  className="text-base leading-6 text-gray-600 hover:text-gray-800"
                 >
                   {title}
                 </Link>
