@@ -48,7 +48,7 @@ describe('TagsSelector', () => {
     const errorMessage = getByTestId('error-message');
     expect(errorMessage).toBeInTheDocument();
   });
-  it('should handle empty data', () => {
+  it('should return the input if empty data', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({
       data: { data: [] },
       isError: false,
@@ -56,8 +56,8 @@ describe('TagsSelector', () => {
       isLoading: false,
     }));
     const { getByTestId } = render(<TagsSelector onChange={jest.fn()} />);
-    const emptyMessage = getByTestId('empty-message');
-    expect(emptyMessage).toBeInTheDocument();
+    const tagsInput = getByTestId('input');
+    expect(tagsInput).toBeInTheDocument();
   });
   it('should return the tags from API and show the tags filter div', () => {
     (useQuery as jest.Mock).mockImplementation(() => ({

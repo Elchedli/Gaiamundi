@@ -1,5 +1,4 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Badge } from 'components/Badge/Badge';
 import { AutoCompleteInput } from 'components/Inputs/AutoCompleteInput';
@@ -65,14 +64,6 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
     );
   }
 
-  if (!response || response.data.length === 0) {
-    return (
-      <Alert type="info" className="grid h-fit justify-center items-center">
-        <div data-testid="empty-message">Aucun tag n&apos;a été trouvé !</div>
-      </Alert>
-    );
-  }
-
   const handleTagSelect = (tag: ApiData<Tag>) => {
     const isSelected = selectedTagIds.includes(tag.id);
     if (!isSelected) {
@@ -111,7 +102,6 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
           enableComboBox={false}
           placeholder={'Ajouter des tags ....'}
           emptyMessage={'Aucun tag trouvé! Tapez "Entrée" pour ajouter.'}
-          data-testid="tags-input"
         />
       </div>
     </div>
