@@ -1,7 +1,7 @@
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { ApiData } from 'interfaces/api';
-import { Fragment, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 
 type AutoCompleteInputProps<T> = {
   className?: string;
@@ -28,6 +28,14 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
   onCreate,
 }: AutoCompleteInputProps<T>) => {
   const [query, setQuery] = useState('');
+  const ref = useRef<HTMLInputElement | null>(null);
+  const handleSelect = (tag: ApiData<T>) => {
+    // Keep focus
+    if (ref.current) {
+      ref.current?.focus();
+    }
+    onSelect(tag);
+  };
 
   const filteredOptions =
     query === ''
@@ -54,7 +62,7 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
 
   return (
     <div className={className}>
-      <Combobox value={selectedOption} onChange={onSelect}>
+      <Combobox value={selectedOption} onChange={handleSelect}>
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
@@ -64,6 +72,7 @@ export const AutoCompleteInput = <T extends ApiData<Object>>({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               data-testid="input"
+              ref={ref}
             />
 
             {enableComboBox && (
