@@ -9,7 +9,6 @@ import { PageCarto } from 'interfaces/page-carto';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { ContentType, QueryParams, strapi } from 'services/strapi';
-
 export const PageCartoUserList = ({
   searchKeywords,
   selectedTags,
@@ -26,8 +25,49 @@ export const PageCartoUserList = ({
     }
   };
   const { user } = useAuth();
-
   const searchKeywordsCondition = { $contains: searchKeywords };
+  const filters: any = {
+    owner: {
+      id: {
+        $eq: user?.id,
+      },
+    },
+  };
+  if (searchKeywords) {
+    filters['$or'] = [
+      {
+        map: {
+          $or: [
+            {
+              name: searchKeywordsCondition,
+            },
+            {
+              yearValidity: searchKeywordsCondition,
+            },
+            {
+              mesh: searchKeywordsCondition,
+            },
+          ],
+        },
+      },
+      {
+        name: searchKeywordsCondition,
+      },
+      {
+        html: searchKeywordsCondition,
+      },
+    ];
+  }
+  if (selectedTags.length > 0) {
+    filters.tags = {
+      id:
+        selectedTags.length != 0
+          ? {
+              $in: selectedTags,
+            }
+          : {},
+    };
+  }
 
   const {
     data: response,
@@ -36,52 +76,9 @@ export const PageCartoUserList = ({
     isLoading,
   } = useQuery({
     queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
-    enabled: searchKeywords !== '' || !firstFetch || selectedTags.length != 0,
-    queryFn: () => {
+    queryFn: async () => {
       return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
-        filters: {
-          owner: {
-            id: {
-              $eq: user?.id,
-            },
-          },
-
-          $or: [
-            {
-              map: {
-                $or: [
-                  {
-                    name: searchKeywordsCondition,
-                  },
-                  {
-                    yearValidity: searchKeywordsCondition,
-                  },
-                  {
-                    mesh: searchKeywordsCondition,
-                  },
-                ],
-              },
-            },
-            {
-              name: searchKeywordsCondition,
-            },
-            {
-              html: searchKeywordsCondition,
-            },
-          ],
-          $and: [
-            {
-              tags: {
-                id:
-                  selectedTags.length != 0
-                    ? {
-                        $in: selectedTags,
-                      }
-                    : {},
-              },
-            },
-          ],
-        } as QueryParams['filters'],
+        filters: filters as QueryParams['filters'],
         populate: '*',
         sort: 'createdAt:desc',
         pagination: {
