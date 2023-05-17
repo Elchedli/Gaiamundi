@@ -48,9 +48,9 @@ export const ContentEditable: React.FC<ContentEditableProps> = ({
       />
       {isLoading ? (
         <LoadingSpinner className="ml-2 h-6 w-6 text-slate-400" />
-      ) : (
+      ) : canEdit === true ? (
         <PencilSquareIcon className="ml-2 h-6 w-6 text-slate-400" />
-      )}
+      ) : null}
     </div>
   );
 };
