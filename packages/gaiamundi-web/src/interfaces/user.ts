@@ -8,7 +8,6 @@ export interface UserCredentials {
 export interface UserSignUpFields extends UserCredentials {
   username: string;
 }
-
 export interface User extends UserSignUpFields {
   id: number;
   provider: 'local';
@@ -16,9 +15,7 @@ export interface User extends UserSignUpFields {
   blocked: boolean;
   created_at: string;
   updated_at: string;
-  profileImage?: {
-    url: string;
-  };
+  profileImage?: string;
 }
 
 export type UserAuthResponse = {

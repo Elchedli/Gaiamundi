@@ -1,11 +1,30 @@
-import { UserSignUpFields } from 'interfaces/user';
+import { User, UserSignUpFields } from 'interfaces/user';
 import { strapi } from './strapi';
 
 export const updateCurrentUser = async (
   userId: number,
-  data: UserSignUpFields
+  data: Pick<User, 'username' | 'email' | 'password' | 'profileImage'>
 ) => {
   return await strapi.updateCurrentUser(userId, data);
+};
+
+export const uploadUserProfileImage = async (
+  userId: number,
+  file: File,
+  ref: string,
+  filename?: string,
+  refId?: number,
+  field?: string
+) => {
+  const uploadedFile = await strapi.uploadFile(
+    file,
+    ref,
+    filename,
+    refId,
+    field
+  );
+
+  return uploadedFile.url;
 };
 
 export const sendForgotPasswordEmail = async (email: string) => {

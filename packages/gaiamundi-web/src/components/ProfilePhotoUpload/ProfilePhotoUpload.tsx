@@ -1,14 +1,22 @@
-import axios from 'axios'; // Import axios
 import { useAuth } from 'hooks/useAuth';
 import { useToast } from 'hooks/useToast';
-import React, { useState } from 'react';
+import { User } from 'interfaces/user';
+import React, { useEffect, useState } from 'react';
+import { strapi } from 'services/strapi';
 
 const ProfilePhotoUpload: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { user, refetchUser } = useAuth();
+  const { user: authUser, refetchUser } = useAuth();
   const { addToast } = useToast();
+  const [user, setUser] = useState<User | undefined>(undefined);
+
+  useEffect(() => {
+    if (authUser) {
+      setUser(authUser);
+    }
+  }, [authUser]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -34,47 +42,29 @@ const ProfilePhotoUpload: React.FC = () => {
 
     setUploading(true);
 
-    const formData = new FormData();
-    formData.append('files', selectedFile);
-
     try {
-      const uploadResponse = await axios.post(
-        'http://localhost:1337/api/upload',
-        formData
-      );
+      const uploadedFile = await strapi.uploadFile(selectedFile, 'users');
 
-      const uploadData = uploadResponse.data;
-
-      const userToken = localStorage.getItem('token');
-
-      if (!uploadData || !uploadData[0]) {
+      if (!uploadedFile) {
         throw new Error(
           "Les données de l'upload ne sont pas conformes aux attentes"
         );
       }
 
-      const userResponse = await axios.post('http://localhost:1337/api/users', {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          'Content-Type': 'application/json',
-        },
-        data: {
-          profileImage: uploadData[0].id,
-        },
-      });
+      if (user) {
+        const updatedUser = Object.assign({}, user, {
+          profileImage: uploadedFile.url,
+        });
 
-      if (userResponse.status !== 200) {
-        throw new Error(
-          "Une erreur s'est produite lors de la mise à jour du profil."
-        );
+        await strapi.updateCurrentUser(user.id, updatedUser);
+
+        addToast({
+          title: 'Upload réussi',
+          description: '',
+          type: 'success',
+        });
+        await refetchUser();
       }
-
-      addToast({
-        title: 'Upload réussi',
-        description: '',
-        type: 'success',
-      });
-      await refetchUser();
     } catch (error) {
       setErrorMessage("Une erreur s'est produite lors de l'upload.");
       addToast({
@@ -89,15 +79,20 @@ const ProfilePhotoUpload: React.FC = () => {
     }
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-start">
-      {user?.profileImage && (
+      {user.profileImage && (
         <img
-          src={`http://localhost:1337${user.profileImage.url}`}
+          src={user.profileImage}
           alt="profile"
           className="w-24 h-24 rounded-full mb-4"
         />
       )}
+
       <div className="flex flex-col items-start">
         <input type="file" onChange={handleInputChange} className="mb-4" />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}

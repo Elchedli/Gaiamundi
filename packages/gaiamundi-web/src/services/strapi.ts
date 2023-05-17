@@ -119,13 +119,13 @@ class Strapi {
    */
   updateCurrentUser(
     userId: number,
-    data: Pick<User, 'username' | 'email' | 'password'>
+    data: Pick<User, 'username' | 'email' | 'password' | 'profileImage'>
   ) {
     return this.request
-      .put<Pick<User, 'username' | 'email' | 'password'>, User>(
-        `/api/users/${userId}`,
-        data
-      )
+      .put<
+        Pick<User, 'username' | 'email' | 'password' | 'profileImage'>,
+        User
+      >(`/api/users/${userId}`, data)
       .catch(({ error }: ApiErrorResponse) => {
         throw error;
       });
