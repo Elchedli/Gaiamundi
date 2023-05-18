@@ -58,96 +58,103 @@ export const PageCartoChartPanel: FC = () => {
   });
 
   return (
-    <>
-      {charts.length > 0 ? (
-        <div className="h-full">
-          <div className="flex">
-            <div className="w-6/12">
-              <ListBoxInput<number>
-                defaultValue={selectedChartId}
-                options={chartOptions}
-                onChange={(chartId: number) => {
-                  setSelectedChartId(chartId);
-                }}
-              />
+    <div className="w-full h-full p-2">
+      <div className="rounded-lg border border-blue-700 h-5/6 overflow-y-auto p-2">
+        {charts.length > 0 ? (
+          <div className="h-full">
+            <div className="flex">
+              <p className="text-slate-950 text-xl px-3">Graphiques</p>
+
+              <div className="w-6/12">
+                <ListBoxInput<number>
+                  defaultValue={selectedChartId}
+                  options={chartOptions}
+                  onChange={(chartId: number) => {
+                    setSelectedChartId(chartId);
+                  }}
+                />
+              </div>
+              <div className="w-6/12 text-center">
+                <Button
+                  icon={PlusIcon}
+                  data-testid="create-chart2"
+                  onClick={() =>
+                    showModal({
+                      title: 'Nouveau graphique',
+                      Component: ChartEngine,
+                      props: {
+                        chartId: 0,
+                        pageCartoId,
+                        onSubmit: hideModal,
+                        updateMode: false,
+                      },
+                    })
+                  }
+                  className="mx-1"
+                />
+                <Button
+                  icon={PencilIcon}
+                  data-testid="edit-chart"
+                  onClick={() =>
+                    showModal({
+                      title: 'Nouveau graphique',
+                      Component: ChartEngine,
+                      props: {
+                        chartId: selectedChartId,
+                        pageCartoId,
+                        onSubmit: hideModal,
+                        updateMode: true,
+                      },
+                    })
+                  }
+                  className="mx-1"
+                />
+                <Button
+                  icon={TrashIcon}
+                  data-testid="discard-chart"
+                  onClick={() => discardChart()}
+                  disabled={isLoading}
+                  className="mx-1"
+                />
+              </div>
             </div>
-            <div className="w-6/12 text-center">
+            <ChartConfigProvider
+              chartId={selectedChartId}
+              rawData={DEFAULT_CHART_DATA}
+              pageCartoId={pageCartoId}
+            >
+              <Chart />
+            </ChartConfigProvider>
+          </div>
+        ) : (
+          <>
+            <p className="text-slate-950 text-xl px-2 ">Graphiques</p>
+            <div
+              className="flex justify-center h-5/6"
+              style={{
+                backgroundImage: `url(${config.PUBLIC_URL}/icons/chart-fr.svg)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'bottom',
+              }}
+            >
               <Button
                 icon={PlusIcon}
-                data-testid="create-chart2"
+                data-testid="create-chart"
                 onClick={() =>
                   showModal({
                     title: 'Nouveau graphique',
                     Component: ChartEngine,
-                    props: {
-                      chartId: 0,
-                      pageCartoId,
-                      onSubmit: hideModal,
-                      updateMode: false,
-                    },
+                    props: { pageCartoId, onSubmit: hideModal },
                   })
                 }
-                className="mx-1"
-              />
-              <Button
-                icon={PencilIcon}
-                data-testid="edit-chart"
-                onClick={() =>
-                  showModal({
-                    title: 'Nouveau graphique',
-                    Component: ChartEngine,
-                    props: {
-                      chartId: selectedChartId,
-                      pageCartoId,
-                      onSubmit: hideModal,
-                      updateMode: true,
-                    },
-                  })
-                }
-                className="mx-1"
-              />
-              <Button
-                icon={TrashIcon}
-                data-testid="discard-chart"
-                onClick={() => discardChart()}
-                disabled={isLoading}
-                className="mx-1"
-              />
+                className="m-auto"
+              >
+                Nouveau graphique
+              </Button>
             </div>
-          </div>
-          <ChartConfigProvider
-            chartId={selectedChartId}
-            rawData={DEFAULT_CHART_DATA}
-            pageCartoId={pageCartoId}
-          >
-            <Chart />
-          </ChartConfigProvider>
-        </div>
-      ) : (
-        <div
-          className="flex justify-center h-full"
-          style={{
-            backgroundImage: `url(${config.PUBLIC_URL}/icons/chart-fr.svg)`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-          }}
-        >
-          <Button
-            icon={PlusIcon}
-            data-testid="create-chart"
-            onClick={() =>
-              showModal({
-                title: 'Nouveau graphique',
-                Component: ChartEngine,
-                props: { pageCartoId, onSubmit: hideModal },
-              })
-            }
-            className="m-auto"
-          >
-            Nouveau graphique
-          </Button>
-        </div>
-      )}
-    </>
+          </>
+        )}
+      </div>
+    </div>
   );
 };

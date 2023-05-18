@@ -35,10 +35,10 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
       delay: 0,
     },
     padding: {
-      left: 80,
-      bottom: 80,
-      right: 50,
-      top: 50,
+      left: 70,
+      bottom: 40,
+      right: 40,
+      top: 40,
     },
     isRTL: false,
     xAxis: {
