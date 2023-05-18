@@ -11,6 +11,7 @@ jest.mock('hooks/useAuth');
 jest.mock('react-query', () => ({
   useMutation: jest.fn(),
   useQuery: jest.fn(),
+  useQueryClient: jest.fn(),
 }));
 
 describe('PageCartoUserList', () => {

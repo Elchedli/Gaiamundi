@@ -11,6 +11,7 @@ import { PageCartoList } from '../PageCartoList';
 jest.mock('react-query', () => ({
   useMutation: jest.fn(),
   useQuery: jest.fn(),
+  useQueryClient: jest.fn(),
 }));
 jest.mock('hooks/useAuth');
 

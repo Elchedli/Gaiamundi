@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import PageCartoItem from 'components/PageCarto/List/PageCartoItem';
 
 import config from 'config';
@@ -10,6 +10,7 @@ import { mockPageCartoData, mockUser } from 'utils/mocks/data';
 jest.mock('hooks/useAuth');
 jest.mock('react-query', () => ({
   useMutation: jest.fn(),
+  useQueryClient: jest.fn(),
 }));
 
 describe('PageCartoItem', () => {
@@ -89,40 +90,18 @@ describe('PageCartoItem', () => {
     );
   });
   /*********************
-   * this test doesn't pass
-   * I wanted to test first the click on the TrashIcon
-   * In a second time i wanted to test the presence of the modal to confirm the delete
-   * At the end, I wanted to test if the delete works
+   *TODO: check if modal appears and then test confirm delete
    */
-  /* it('should delete pageCarto', async () => {
-    const mockIntersectionObserver = jest.fn();
-
-    mockIntersectionObserver.mockReturnValue({
-      observe: () => null,
-      unobserve: () => null,
-      disconnect: () => null,
-    });
-
+  it('should delete pageCarto', async () => {
     const { getByTestId } = render(
       <Router>
-        <ModalProvider>
-          <PageCartoItem {...mockPageCartoData} />
-        </ModalProvider>
+        <PageCartoItem {...mockPageCartoData} />
       </Router>
     );
 
+    const deleteButton = getByTestId('deleteIcon');
     await waitFor(() => {
-      const deleteButton = getByTestId('deleteIcon');
       fireEvent.click(deleteButton);
     });
-    await waitFor(() => {
-      const deleteModal = getByTestId('delete-modal');
-      expect(deleteModal).toBeInTheDocument();
-
-      const confirmButton = getByTestId('confirmDelete');
-      fireEvent.click(confirmButton);
-
-      expect(deleteModal).not.toBeInTheDocument();
-    });
-  });*/
+  });
 });

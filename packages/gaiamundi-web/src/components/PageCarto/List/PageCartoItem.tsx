@@ -13,7 +13,7 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { PageCarto } from 'interfaces/page-carto';
 import { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Link } from 'react-router-dom';
 import { deletePageCarto } from 'services/page-carto';
 
@@ -37,6 +37,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   const [canEditOrDelete, setCanEditOrDelete] = useState(false);
   const { user } = useAuth();
   const { addToast } = useToast();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (owner.id === user?.id) {
@@ -46,7 +47,12 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
     }
   }, [owner.id, user]);
 
-  const { mutateAsync, isLoading, isError, error } = useMutation({
+  const {
+    mutateAsync: deletePageCartoItem,
+    isLoading,
+    isError,
+    error,
+  } = useMutation({
     mutationFn: async (id: number) => {
       return await deletePageCarto(id);
     },
@@ -56,6 +62,10 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
         description: 'PageCarto supprimée avec succès',
         type: 'success',
       });
+      queryClient.invalidateQueries({
+        queryKey: ['latest-page-carto'],
+      });
+      queryClient.invalidateQueries({ queryKey: ['page-carto-user'] });
     },
   });
   if (isLoading) {
@@ -73,41 +83,40 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
       title: 'Suppression',
       Component: () => (
         <Alert
-          data-testid="delete-modal"
           type="warning"
           onDismiss={() => {
             hideModal();
           }}
-          additionalContent={
-            <div className="text-center">
-              <div className="mb-6">
-                Êtes-vous sûr de vouloir supprimer cette PageCarto ?
-              </div>
-              <div className="mb-2">
-                <Button
-                  data-testid="confirmDelete"
-                  color="red"
-                  className="mr-2 top-0"
-                  onClick={() => {
-                    mutateAsync(id);
-                    hideModal();
-                  }}
-                >
-                  Supprimer
-                </Button>
-                <Button
-                  className="top-0"
-                  type="button"
-                  onClick={() => {
-                    hideModal();
-                  }}
-                >
-                  Annuler
-                </Button>
-              </div>
+          className="text-center"
+        >
+          <div className="text-center" data-testid="delete-modal">
+            <div className="mb-6">
+              Êtes-vous sûr de vouloir supprimer cette PageCarto ?
             </div>
-          }
-        ></Alert>
+            <div className="mb-2" data-testid="delete-modal">
+              <Button
+                data-testid="confirmDelete"
+                color="red"
+                className="mr-2 top-0"
+                onClick={() => {
+                  deletePageCartoItem(id);
+                  hideModal();
+                }}
+              >
+                Supprimer
+              </Button>
+              <Button
+                className="top-0"
+                type="button"
+                onClick={() => {
+                  hideModal();
+                }}
+              >
+                Annuler
+              </Button>
+            </div>
+          </div>
+        </Alert>
       ),
     });
   };
