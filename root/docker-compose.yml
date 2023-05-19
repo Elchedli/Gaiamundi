@@ -7,7 +7,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
     ports:
-      - "80:3000"
+      - "80:80"
     networks:
       - strapi
 
@@ -28,11 +28,11 @@ services:
       APP_KEYS: ${APP_KEYS}
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ../gaiamundi-api/config:/opt/app/config
-      - ../gaiamundi-api/package.json:/opt/package.json
-      - ../gaiamundi-api/yarn.lock:/opt/yarn.lock
-      - ../gaiamundi-api/.env:/opt/app/.env
-      - ../gaiamundi-api/public/uploads:/opt/app/public/uploads
+      - ../packages/gaiamundi-api/config:/opt/app/config
+      - ../packages/gaiamundi-api/package.json:/opt/package.json
+      - ../packages/gaiamundi-api/yarn.lock:/opt/yarn.lock
+      - ../packages/gaiamundi-api/.env:/opt/app/.env
+      - ../packages/gaiamundi-api/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
