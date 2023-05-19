@@ -57,3 +57,6 @@ export const uploadCover = async (file: File, refId: number) => {
     'cover'
   );
 };
+export const deletePageCarto = async (id: number) => {
+  return await strapi.delete(ContentType.PAGE_CARTOS, id);
+};
