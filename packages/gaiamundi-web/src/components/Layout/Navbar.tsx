@@ -19,8 +19,8 @@ const NavbarMenuItem: React.FC<{
     inactive: `text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none`,
   };
   const darkClasses = {
-    active: `text-white bg-royal-blue-800 focus:text-white`,
-    inactive: `text-gray-100 hover:text-white hover:bg-royal-blue-800 focus:outline-none`,
+    active: `text-white bg-royal-gray-800 focus:text-white`,
+    inactive: `text-gray-100 hover:text-white hover:bg-royal-gray-800 focus:outline-none`,
   };
   const classes = isInverted ? darkClasses : lightClasses;
   return (
