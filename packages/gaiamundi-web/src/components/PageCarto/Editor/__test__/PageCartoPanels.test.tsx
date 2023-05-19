@@ -36,7 +36,7 @@ describe('PageCartoPanels', () => {
     const { getAllByRole, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <PageCartoProvider id={mockPageCartoData.id}>
-          <PageCartoPanels canEdit={true} />
+          <PageCartoPanels />
         </PageCartoProvider>
       </QueryClientProvider>
     );

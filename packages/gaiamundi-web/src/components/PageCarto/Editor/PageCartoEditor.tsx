@@ -9,7 +9,7 @@ export const PageCartoEditor: FC = () => {
         <PageCartoMap canEdit={true} />
       </div>
       <div className="col-span">
-        <PageCartoPanels canEdit={true} />
+        <PageCartoPanels />
       </div>
     </div>
   );
