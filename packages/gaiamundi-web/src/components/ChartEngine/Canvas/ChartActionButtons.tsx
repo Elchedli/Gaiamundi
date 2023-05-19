@@ -1,6 +1,5 @@
 import { CheckCircleIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { Button } from 'components/Button/Button';
-import ButtonGroup from 'components/Button/ButtonGroup';
 import { useChart } from 'hooks/useChartConfig';
 import { useModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
@@ -66,27 +65,25 @@ export const ChartActionButtons = ({ updateMode }: { updateMode: boolean }) => {
 
   return (
     <div className="relative">
-      <ButtonGroup>
-        {updateMode ? (
-          <Button
-            isLoading={isLoading}
-            icon={CheckCircleIcon}
-            onClick={() => saveChart()}
-            disabled={isLoading}
-          >
-            Sauvegarder
-          </Button>
-        ) : (
-          <Button
-            isLoading={loading}
-            icon={PlusIcon}
-            onClick={() => addChart()}
-            disabled={loading}
-          >
-            Ajouter
-          </Button>
-        )}
-      </ButtonGroup>
+      {updateMode ? (
+        <Button
+          isLoading={isLoading}
+          icon={CheckCircleIcon}
+          onClick={() => saveChart()}
+          disabled={isLoading}
+        >
+          Sauvegarder
+        </Button>
+      ) : (
+        <Button
+          isLoading={loading}
+          icon={PlusIcon}
+          onClick={() => addChart()}
+          disabled={loading}
+        >
+          Ajouter
+        </Button>
+      )}
     </div>
   );
 };

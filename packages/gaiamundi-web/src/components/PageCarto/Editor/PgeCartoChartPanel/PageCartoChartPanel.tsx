@@ -1,26 +1,32 @@
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { Alert } from 'components/Alert/Alert';
 import { Button } from 'components/Button/Button';
+import ButtonGroup from 'components/Button/ButtonGroup';
 import { Chart } from 'components/ChartEngine/Chart/Chart';
 import { ChartEngine } from 'components/ChartEngine/ChartEngine';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import config from 'config';
-import { ChartConfigProvider } from 'hooks/useChartConfig';
+import { useChart } from 'hooks/useChartConfig';
 import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
-import { FC, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteChart } from 'services/chart';
-import { DEFAULT_CHART_DATA } from 'utils/constants';
 
-export const PageCartoChartPanel: FC = () => {
+export const PageCartoChartPanel = ({
+  setSelectedChartId,
+}: {
+  setSelectedChartId: (id: number) => void;
+}) => {
   const { showModal, hideModal } = useModal();
+
   const { pageCartoId } = usePageCarto();
   const { charts } = usePageCarto();
   const { addToast } = useToast();
   const queryClient = useQueryClient();
-  const [selectedChartId, setSelectedChartId] = useState(0);
-
+  const { chart } = useChart();
+  const selectedChartId = chart.id;
   const chartOptions = useMemo(() => {
     if (charts.length > 0 && selectedChartId == 0) {
       setSelectedChartId(charts[0].id);
@@ -59,11 +65,11 @@ export const PageCartoChartPanel: FC = () => {
 
   return (
     <div className="w-full h-full p-2">
-      <div className="rounded-lg border border-blue-700 h-5/6 overflow-y-auto p-2">
+      <div className="rounded-lg border border-blue-700 h-5/6 overflow-y-auto p-1">
         {charts.length > 0 ? (
           <div className="h-full">
             <div className="flex">
-              <p className="text-slate-950 text-xl px-3">Graphiques</p>
+              <p className="text-slate-950 text-xl px-3 py-1">Graphiques</p>
 
               <div className="w-6/12">
                 <ListBoxInput<number>
@@ -75,66 +81,93 @@ export const PageCartoChartPanel: FC = () => {
                 />
               </div>
               <div className="w-6/12 text-center">
-                <Button
-                  icon={PlusIcon}
-                  data-testid="create-chart2"
-                  onClick={() =>
-                    showModal({
-                      title: 'Nouveau graphique',
-                      Component: ChartEngine,
-                      props: {
-                        chartId: 0,
-                        pageCartoId,
-                        onSubmit: hideModal,
-                        updateMode: false,
-                      },
-                    })
-                  }
-                  className="mx-1"
-                />
-                <Button
-                  icon={PencilIcon}
-                  data-testid="edit-chart"
-                  onClick={() =>
-                    showModal({
-                      title: 'Nouveau graphique',
-                      Component: ChartEngine,
-                      props: {
-                        chartId: selectedChartId,
-                        pageCartoId,
-                        onSubmit: hideModal,
-                        updateMode: true,
-                      },
-                    })
-                  }
-                  className="mx-1"
-                />
-                <Button
-                  icon={TrashIcon}
-                  data-testid="discard-chart"
-                  onClick={() => discardChart()}
-                  disabled={isLoading}
-                  className="mx-1"
-                />
+                <ButtonGroup>
+                  <Button
+                    icon={PlusIcon}
+                    data-testid="create-chart2"
+                    onClick={() =>
+                      showModal({
+                        title: 'Nouveau graphique',
+                        Component: ChartEngine,
+                        props: {
+                          chartId: 0,
+                          pageCartoId,
+                          onSubmit: hideModal,
+                          updateMode: false,
+                        },
+                      })
+                    }
+                  />
+                  <Button
+                    icon={PencilIcon}
+                    data-testid="edit-chart"
+                    onClick={() =>
+                      showModal({
+                        title: 'Modifier graphique',
+                        Component: ChartEngine,
+                        props: {
+                          chartId: selectedChartId,
+                          pageCartoId,
+                          onSubmit: hideModal,
+                          updateMode: true,
+                          invalidate: 'chart',
+                        },
+                      })
+                    }
+                  />
+                  <Button
+                    icon={TrashIcon}
+                    data-testid="discard-chart"
+                    onClick={() =>
+                      showModal({
+                        title: 'Supprimer graphique',
+                        Component: () => (
+                          <Alert type="warning" onDismiss={hideModal}>
+                            <div data-testid="delete-chart-modal">
+                              <div className="mb-6">
+                                Êtes-vous sûr de vouloir supprimer cette
+                                graphique ?
+                              </div>
+                              <div className="mb-2">
+                                <Button
+                                  data-testid="confirmDelete"
+                                  color="red"
+                                  className="mr-2"
+                                  onClick={() => {
+                                    discardChart();
+                                    hideModal();
+                                  }}
+                                >
+                                  Supprimer
+                                </Button>
+                                <Button type="button" onClick={hideModal}>
+                                  Annuler
+                                </Button>
+                              </div>
+                            </div>
+                          </Alert>
+                        ),
+                        props: {
+                          onSubmit: hideModal,
+                        },
+                      })
+                    }
+                    disabled={isLoading}
+                  />
+                </ButtonGroup>
               </div>
             </div>
-            <ChartConfigProvider
-              chartId={selectedChartId}
-              rawData={DEFAULT_CHART_DATA}
-              pageCartoId={pageCartoId}
-            >
-              <Chart />
-            </ChartConfigProvider>
+            <Chart />
           </div>
         ) : (
           <>
-            <p className="text-slate-950 text-xl px-2 ">Graphiques</p>
+            <p className="text-slate-950 text-xl px-5 ">Graphiques</p>
             <div
               className="flex justify-center h-5/6"
               style={{
                 backgroundImage: `url(${config.PUBLIC_URL}/icons/chart-fr.svg)`,
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'bottom',
+                backgroundPosition: 'center',
               }}
             >
               <Button

@@ -9,6 +9,7 @@ import React, {
   useContext,
   useReducer,
 } from 'react';
+import { useQueryClient } from 'react-query';
 
 type ModalState = {
   title: string | null;
@@ -54,6 +55,7 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     Component: null,
     props: {},
   };
+  const queryClient = useQueryClient();
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const { title, Component, props } = state;
@@ -75,7 +77,13 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
           as="div"
           className="relative z-50"
           open={isVisible}
-          onClose={hideModal}
+          onClose={() => {
+            hideModal();
+            props.invalidate &&
+              queryClient.invalidateQueries({
+                queryKey: [props.invalidate],
+              });
+          }}
           static={true}
         >
           {/* The backdrop, rendered as a fixed sibling to the panel container */}
@@ -85,7 +93,13 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
               <Dialog.Panel className="relative p-5 mx-auto w-3/4	rounded bg-white">
                 <div className="absolute top-0 right-0 cursor-pointer">
                   <XCircleIcon
-                    onClick={hideModal}
+                    onClick={() => {
+                      props.invalidate &&
+                        queryClient.invalidateQueries({
+                          queryKey: [props.invalidate],
+                        });
+                      hideModal();
+                    }}
                     data-testid="hideModal-button"
                     className="m-2 h-8 w-8 text-blue-800"
                   />

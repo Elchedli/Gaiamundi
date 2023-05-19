@@ -23,10 +23,10 @@ export const ChartEngine: FC<ChartEngineProps> = ({
       pageCartoId={pageCartoId}
     >
       <div className="flex flex-row">
-        <div className="w-1/4">
+        <div className="w-2/6">
           <ConfigPanel />
         </div>
-        <div className="w-3/4">
+        <div className="w-4/6">
           <Canvas updateMode={updateMode} />
         </div>
       </div>
