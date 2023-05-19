@@ -6,27 +6,22 @@ import { Chart } from 'components/ChartEngine/Chart/Chart';
 import { ChartEngine } from 'components/ChartEngine/ChartEngine';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import config from 'config';
-import { useChart } from 'hooks/useChartConfig';
+import { ChartConfigProvider } from 'hooks/useChartConfig';
 import { useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteChart } from 'services/chart';
+import { DEFAULT_CHART_DATA } from 'utils/constants';
 
-export const PageCartoChartPanel = ({
-  setSelectedChartId,
-}: {
-  setSelectedChartId: (id: number) => void;
-}) => {
+export const PageCartoChartPanel = () => {
   const { showModal, hideModal } = useModal();
+  const [selectedChartId, setSelectedChartId] = useState(0);
 
-  const { pageCartoId } = usePageCarto();
-  const { charts } = usePageCarto();
+  const { pageCartoId, charts } = usePageCarto();
   const { addToast } = useToast();
   const queryClient = useQueryClient();
-  const { chart } = useChart();
-  const selectedChartId = chart.id;
   const chartOptions = useMemo(() => {
     if (charts.length > 0 && selectedChartId == 0) {
       setSelectedChartId(charts[0].id);
@@ -157,7 +152,13 @@ export const PageCartoChartPanel = ({
                 </ButtonGroup>
               </div>
             </div>
-            <Chart />
+            <ChartConfigProvider
+              chartId={selectedChartId}
+              rawData={DEFAULT_CHART_DATA}
+              pageCartoId={pageCartoId}
+            >
+              <Chart />
+            </ChartConfigProvider>
           </div>
         ) : (
           <>
