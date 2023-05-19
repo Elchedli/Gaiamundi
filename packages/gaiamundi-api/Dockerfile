@@ -13,4 +13,4 @@ RUN yarn build
 EXPOSE 1337
 CMD ["yarn", "develop"]
 
-# docker build -t image-gaiamundi-api .
+# docker build --build-arg NODE_ENV=production -t image-gaiamundi-api -f Dockerfile .
