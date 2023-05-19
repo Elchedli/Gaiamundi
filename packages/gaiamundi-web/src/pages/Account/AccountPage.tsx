@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
-import { useRequireAuth } from 'hooks/useRequireAuth';
 import { Button } from 'components/Button/Button';
 import { Header } from 'components/Layout/Header';
+import ProfilePhotoUpload from 'components/ProfilePhotoUpload/ProfilePhotoUpload';
+import { useRequireAuth } from 'hooks/useRequireAuth';
+import { Link } from 'react-router-dom';
 
 export const AccountPage: React.FC = () => {
   const { user } = useRequireAuth();
@@ -37,6 +38,14 @@ export const AccountPage: React.FC = () => {
                 </dt>
                 <dd className="text-sm leading-5 text-gray-900 col-span-2">
                   {user.confirmed ? 'Oui' : 'Non'}
+                </dd>
+              </div>
+              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-gray-200 pt-5">
+                <dt className="text-sm font-medium leading-5 text-gray-600">
+                  Photo de profil
+                </dt>
+                <dd className="text-sm leading-5 text-gray-900 col-span-2">
+                  <ProfilePhotoUpload />
                 </dd>
               </div>
             </dl>

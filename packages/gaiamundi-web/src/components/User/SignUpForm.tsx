@@ -18,7 +18,7 @@ import {
 } from 'interfaces/user';
 import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 import { signUp } from 'services/user';
-import { EMAIL_REGEX, PASSWORD_REGEX } from 'utils/utils';
+import { EMAIL_REGEX } from 'utils/utils';
 
 interface Props {
   email?: string;
@@ -91,7 +91,7 @@ const SignUpForm = ({ email }: Props) => {
             required: 'Veuillez saisir votre nom.',
             minLength: {
               value: 3,
-              message: 'Le nom doit avoir au moins 3 caractères.',
+              message: 'Le nom doit avoir au moins 3 caractères',
             },
           })}
         />
@@ -144,12 +144,7 @@ const SignUpForm = ({ email }: Props) => {
               required: 'Veuillez saisir votre mot de passe',
               minLength: {
                 value: 6,
-                message: 'Le mot de passe doit contenir au moins 6 caractères.',
-              },
-              pattern: {
-                value: PASSWORD_REGEX,
-                message:
-                  'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.',
+                message: 'Le mot de passe doit avoir au moins 6 caractères',
               },
             })}
           />

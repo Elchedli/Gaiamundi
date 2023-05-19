@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import { useOnClickOutside } from 'hooks/useClickOutside';
 import { useToast } from 'hooks/useToast';
-import { AccountAvatar } from './AccountAvatar';
+import AccountAvatar from './AccountAvatar';
 
 type AccountDropdownItemProps = {
   href?: string;

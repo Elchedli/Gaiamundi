@@ -1,4 +1,5 @@
 import { ApiResponse } from './api';
+import { UploadedFile } from './file';
 
 export interface UserCredentials {
   email: string;
@@ -8,6 +9,7 @@ export interface UserCredentials {
 export interface UserSignUpFields extends UserCredentials {
   username: string;
 }
+
 export interface UserSignUpFormFields extends UserSignUpFields {
   password2: string;
 }
@@ -19,8 +21,8 @@ export interface User extends UserSignUpFields {
   blocked: boolean;
   created_at: string;
   updated_at: string;
+  Avatar?: UploadedFile;
 }
-
 export type UserAuthResponse = {
   jwt: string;
   user: User;

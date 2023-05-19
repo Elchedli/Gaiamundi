@@ -1,16 +1,18 @@
-import Avatar from 'components/Icons/Avatar';
+import { useAuth } from 'hooks/useAuth';
+import Avatar from 'react-avatar';
 
 type AccountAvatarProps = {
   size?: 'md' | 'lg';
   onClick?: () => void;
 };
 
-export const AccountAvatar: React.FC<AccountAvatarProps> = ({
+const AccountAvatar: React.FC<AccountAvatarProps> = ({
   size = 'md',
   onClick,
 }) => {
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const avatarSize = size === 'md' ? 8 : 12;
+
   return (
     <button
       onClick={onClick}
@@ -19,16 +21,18 @@ export const AccountAvatar: React.FC<AccountAvatarProps> = ({
       <span
         className={`inline-block w-${avatarSize} h-${avatarSize} overflow-hidden bg-gray-200 rounded-full`}
       >
-        {/* {user?.avatarUrl ? (
+        {user?.Avatar ? (
           <img
             className="object-cover w-full h-full rounded"
-            src={user.avatarUrl}
-            alt={user.name}
+            src={user.Avatar?.url}
+            alt={user.username}
           />
-        ) : ( */}
-        <Avatar className={`w-${avatarSize} h-${avatarSize}`} />
-        {/* )} */}
+        ) : (
+          <Avatar name={user?.username || 'User'} round={true} />
+        )}
       </span>
     </button>
   );
 };
+
+export default AccountAvatar;
