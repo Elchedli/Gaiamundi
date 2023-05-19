@@ -33,7 +33,11 @@ export const PageCartoChartPanel = () => {
     })) as Array<{ value: number; label: string }>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charts]);
-
+  const onClose = () => {
+    queryClient.invalidateQueries({
+      queryKey: ['chart'],
+    });
+  };
   const { mutateAsync: discardChart, isLoading } = useMutation({
     mutationFn: async () => {
       return await deleteChart(selectedChartId);
@@ -105,7 +109,7 @@ export const PageCartoChartPanel = () => {
                           pageCartoId,
                           onSubmit: hideModal,
                           updateMode: true,
-                          invalidate: 'chart',
+                          onClose: onClose,
                         },
                       })
                     }
