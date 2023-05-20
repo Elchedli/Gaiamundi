@@ -1,11 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
+import { Alert } from 'components/Alert/Alert';
+import { Button } from 'components/Button/Button';
 import React, {
+  createContext,
   FC,
   Fragment,
   ReactNode,
   Reducer,
-  createContext,
   useContext,
   useReducer,
 } from 'react';
@@ -116,4 +118,45 @@ const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
 const useModal = () => useContext(ModalContext);
 
-export { ModalConsumer, ModalProvider, useModal };
+const useConfirmModal = (
+  title: string,
+  message: string,
+  onConfirm: () => void
+) => {
+  const { showModal, hideModal, isVisible } = useModal();
+  const showConfirmModal = () =>
+    showModal({
+      title: title,
+      Component: () => (
+        <Alert type="warning" onDismiss={hideModal}>
+          <div data-testid="delete-chart-modal">
+            <div className="mb-6">{message}</div>
+            <div className="mb-2">
+              <Button
+                data-testid="confirm-button"
+                color="red"
+                className="mr-2"
+                onClick={() => {
+                  onConfirm();
+                  hideModal();
+                }}
+              >
+                Confirmer
+              </Button>
+              <Button type="button" onClick={hideModal}>
+                Annuler
+              </Button>
+            </div>
+          </div>
+        </Alert>
+      ),
+    });
+
+  return {
+    showConfirmModal,
+    hideModal,
+    isVisible,
+  };
+};
+
+export { ModalConsumer, ModalProvider, useModal, useConfirmModal };

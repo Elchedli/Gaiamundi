@@ -49,8 +49,8 @@ export type ChartType =
 
 export type ChartTypes = {
   [key in ChartType]: {
-    Icon: React.FC;
-    ChartComponent: React.FC;
+    Icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+    ChartComponent: React.FC<AllChartConfigProps>;
   };
 };
 

@@ -1,16 +1,16 @@
 import {
-  CogIcon as AdjustmentsIcon,
-  InformationCircleIcon as AnnotationIcon,
   ChartPieIcon,
   ClockIcon,
+  CogIcon as AdjustmentsIcon,
   EyeIcon,
+  InformationCircleIcon as AnnotationIcon,
   PlusIcon,
   PresentationChartLineIcon,
   TableCellsIcon as TableIcon,
 } from '@heroicons/react/24/solid';
 import { Accordion } from 'components/Accordion';
 import Well from 'components/Layout/Well';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 import { AnimationForm } from './AnimationForm';
 import { AppearanceForm } from './AppearanceForm';
 import { AreaForm } from './AreaForm';
@@ -75,26 +75,18 @@ const CHART_CONFIG_FORMS = {
 };
 
 const CHART_CONFIG_PANEL = {
-  pie: ['Appearance', 'Pie', 'Animation', 'Legend', 'Tooltip'],
-  column: ['Appearance', 'Axis', 'Animation', 'Grid', 'Legend', 'Tooltip'],
-  bar: ['Appearance', 'Axis', 'Animation', 'Grid', 'Legend', 'Tooltip'],
-  line: ['Appearance', 'Line', 'Axis', 'Animation', 'Grid', 'Tooltip'],
-  scatter: ['Appearance', 'Axis', 'Animation', 'Grid', 'Tooltip'],
-  bubble: ['Appearance', 'Axis', 'Bubble', 'Animation', 'Grid', 'Tooltip'],
-  area: ['Appearance', 'Axis', 'Area', 'Animation', 'Grid', 'Tooltip'],
-  lineColumn: [
-    'Appearance',
-    'Axis',
-    'Line',
-    'Animation',
-    'Grid',
-    'Legend',
-    'Tooltip',
-  ],
+  pie: ['Appearance', 'Pie', 'Animation'],
+  column: ['Appearance', 'Axis', 'Animation', 'Grid'],
+  bar: ['Appearance', 'Axis', 'Animation', 'Grid'],
+  line: ['Appearance', 'Line', 'Axis', 'Animation', 'Grid'],
+  scatter: ['Appearance', 'Axis', 'Animation', 'Grid'],
+  bubble: ['Appearance', 'Axis', 'Bubble', 'Animation', 'Grid'],
+  area: ['Appearance', 'Axis', 'Area', 'Animation', 'Grid'],
+  lineColumn: ['Appearance', 'Axis', 'Line', 'Animation', 'Grid'],
 };
 
 export const ConfigPanel = () => {
-  const { chart: chartConfig } = useChart();
+  const { chart: chartConfig } = useChartConfig();
   return (
     <Well title={'Settings'} Icon={AdjustmentsIcon}>
       <Accordion>

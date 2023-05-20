@@ -3,7 +3,7 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import MultiRangeSlider from 'components/Inputs/MultiRangeSlider';
 import { ToggleSwitch } from 'components/Inputs/Toggle';
 import { useAllowedDataKeys } from 'hooks/useAllowedDataKeys';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 
 export const BubbleForm = () => {
   const {
@@ -11,7 +11,7 @@ export const BubbleForm = () => {
       props: { swapAxis, bubble },
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
   const { domainKeyOptions } = useAllowedDataKeys();
   return (
     <div>

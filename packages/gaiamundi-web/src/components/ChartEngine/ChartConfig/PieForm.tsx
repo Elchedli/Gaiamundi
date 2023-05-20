@@ -2,7 +2,7 @@ import { ColorPicker } from 'components/Inputs/ColorPicker';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Slider } from 'components/Inputs/Slider';
 import { useAllowedDataKeys } from 'hooks/useAllowedDataKeys';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 
 /**
  * @To-Do:
@@ -23,7 +23,7 @@ export const PieForm = () => {
     },
     dimensions,
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
   const { domainKeyOptions } = useAllowedDataKeys();
   const outerRadius = Math.min(dimensions.width, dimensions.height) / 2;
 

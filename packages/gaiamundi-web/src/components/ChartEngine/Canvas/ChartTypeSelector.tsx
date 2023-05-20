@@ -1,5 +1,7 @@
 import { Card } from 'components/Card/Card';
-import { CHART_TYPES, ChartType } from 'interfaces/chart';
+import { Tooltip } from 'components/Floating/Tooltip';
+import { ChartType, CHART_TYPES } from 'interfaces/chart';
+
 import * as React from 'react';
 
 type ChartTypeSelectorProps = {
@@ -13,18 +15,18 @@ export const ChartTypeSelector: React.FC<ChartTypeSelectorProps> = ({
     onSelect(chartType);
   };
   return (
-    <div className="grid grid-cols-8 gap-2">
+    <div className="grid grid-cols-8 gap-2 my-2">
       {Object.entries(CHART_TYPES).map(([type, { Icon }]) => {
         return (
-          <Card onClick={() => handleClick(type as ChartType)} key={type}>
-            <div className="h-full">
-              <div className="align-middle h-4/6">
-                <Icon />
-              </div>
-              <h3 className="font-bold text-center overflow-clip h-2/6">
-                {type}
-              </h3>
-            </div>
+          <Card
+            className="p-2 cursor-pointer items-center"
+            onClick={() => handleClick(type as ChartType)}
+            title={type}
+            key={type}
+          >
+            <Tooltip content={type}>
+              <Icon width={48} height={48} />
+            </Tooltip>
           </Card>
         );
       })}

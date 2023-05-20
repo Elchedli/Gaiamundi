@@ -3,7 +3,7 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Slider } from 'components/Inputs/Slider';
 import { ToggleSwitch } from 'components/Inputs/Toggle';
 import { LineCurve } from 'eazychart-core';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 
 const curve: { [key in LineCurve]: string } = {
   curveLinear: 'Linear',
@@ -24,7 +24,7 @@ export const AreaForm = () => {
       props: { swapAxis, marker, area },
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
 
   const curveOptions = Object.entries(curve).map(([value, label]) => ({
     value,

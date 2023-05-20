@@ -1,3 +1,4 @@
+import { RawDatum } from 'interfaces/chart';
 import { Column } from 'interfaces/column';
 import { DataFragmentStub } from 'interfaces/data-fragment';
 import { DatasetStub } from 'interfaces/dataset';
@@ -24,4 +25,8 @@ export const addDataToPageCarto = async (
 
 export const uploadCsv = async (file: File) => {
   return await strapi.uploadFile(file, 'api::dataset.dataset');
+};
+
+export const getPageCartoData = async (id: number) => {
+  return await strapi.read<RawDatum[]>(`page-cartos/${id}/data`);
 };

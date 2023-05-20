@@ -1,27 +1,27 @@
-import React from 'react';
-
+import { Alert } from 'components/Alert/Alert';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ResponsiveChartContainer } from 'eazychart-react';
-import { useChart } from 'hooks/useChartConfig';
-import { Legend } from '../Canvas/Legend';
+import { useChart } from 'hooks/useChart';
+import { useDataset } from 'hooks/useDataset';
+import { FC } from 'react';
 
-export const Chart = () => {
-  const { chart, ChartComponent, rawData, setDimensions } = useChart();
+export const Chart: FC<{ chartId: number }> = ({ chartId }) => {
+  const { data, isLoading, error, ChartComponent } = useChart(chartId);
+  const { rawData } = useDataset();
 
-  const isLegendEnabled = React.useMemo(
-    () => ['scatter', 'line', 'bubble', 'area'].indexOf(chart.type) === -1,
-    [chart.type]
-  );
+  if (error) {
+    return <Alert>Impossible de charger le graphique</Alert>;
+  }
+  const chart = data?.data;
+
+  if (isLoading || !chart) {
+    return <LoadingMessage />;
+  }
 
   return (
-    <div className="relative h-5/6 w-full">
-      <ResponsiveChartContainer onResize={setDimensions}>
-        <ChartComponent
-          data={rawData}
-          scopedSlots={{
-            LegendComponent: isLegendEnabled && Legend,
-          }}
-          {...chart.props}
-        />
+    <div className="relative h-5/6 w-full p-2">
+      <ResponsiveChartContainer>
+        <ChartComponent data={rawData} {...chart.props} />
       </ResponsiveChartContainer>
     </div>
   );

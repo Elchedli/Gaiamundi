@@ -2,7 +2,7 @@ import { ColorPicker } from 'components/Inputs/ColorPicker';
 import { MultiColorPicker } from 'components/Inputs/MultiColorPicker';
 import { PaddingControls } from 'components/Inputs/PaddingControls';
 import { ToggleSwitch } from 'components/Inputs/Toggle';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 
 export const AppearanceForm = () => {
   const {
@@ -11,7 +11,7 @@ export const AppearanceForm = () => {
       props: { color, colors, padding, isRTL },
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
 
   return (
     <div>

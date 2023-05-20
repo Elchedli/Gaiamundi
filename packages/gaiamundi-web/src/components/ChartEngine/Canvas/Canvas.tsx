@@ -1,22 +1,16 @@
-import React from 'react';
-
 import { ContentEditable } from 'components/ContentEditable/ContentEditable';
 import Well from 'components/Layout/Well';
 import { ResponsiveChartContainer } from 'eazychart-react';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
+import { useDataset } from 'hooks/useDataset';
 import { ChartType } from 'interfaces/chart';
 import { ChartActionButtons } from './ChartActionButtons';
 import { ChartTypeSelector } from './ChartTypeSelector';
-import { Legend } from './Legend';
 
-export const Canvas = ({ updateMode }: { updateMode: boolean }) => {
-  const { chart, updateChart, ChartComponent, rawData, setDimensions } =
-    useChart();
-
-  const isLegendEnabled = React.useMemo(
-    () => ['scatter', 'line', 'bubble', 'area'].indexOf(chart.type) === -1,
-    [chart.type]
-  );
+export const Canvas = () => {
+  const { chart, updateChart, ChartComponent, setDimensions } =
+    useChartConfig();
+  const { rawData } = useDataset();
 
   const switchChartType = (type: ChartType) => {
     updateChart({ type });
@@ -40,20 +34,14 @@ export const Canvas = ({ updateMode }: { updateMode: boolean }) => {
               isLoading={false}
             />
           </div>
-          <ChartActionButtons updateMode={updateMode} />
+          <ChartActionButtons />
         </div>
         <hr className="border-1 border-gray-100 mt-4" />
       </div>
-      <div className="mt-10 relative">
+      <div className="relative">
         <ChartTypeSelector onSelect={switchChartType} />
         <ResponsiveChartContainer onResize={setDimensions}>
-          <ChartComponent
-            data={rawData}
-            scopedSlots={{
-              LegendComponent: isLegendEnabled && Legend,
-            }}
-            {...chart.props}
-          />
+          <ChartComponent data={rawData} {...chart.props} />
         </ResponsiveChartContainer>
       </div>
     </Well>

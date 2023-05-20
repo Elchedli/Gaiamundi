@@ -1,35 +1,28 @@
+import { Alert } from 'components/Alert/Alert';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { Dimensions, Direction } from 'eazychart-core';
 import { ColumnChart } from 'eazychart-react';
 import { ApiData } from 'interfaces/api';
-import {
-  AllChartConfigProps as AllChartProps,
-  CHART_TYPES,
-  Chart,
-  RawDatum,
-  RawDatumType,
-} from 'interfaces/chart';
+import { AllChartConfigProps as AllChartProps, Chart } from 'interfaces/chart';
 import React, {
+  createContext,
   FC,
   ReactNode,
-  createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
-import { getChartById } from 'services/chart';
-import { getDataTypeMap, guessDomainKey } from 'utils/chart';
+import { useQueryClient } from 'react-query';
+import { guessDomainKey } from 'utils/chart';
 import { DEFAULT_DIMENSIONS, INITIAL_CHART_CONFIG } from 'utils/constants';
+import { useChart } from './useChart';
+import { useDataset } from './useDataset';
 
 type ChartConfigContextType = {
   chart: ApiData<Chart>;
   ChartComponent: React.FC<AllChartProps>;
   updateChartProps: (_props: Partial<AllChartProps>) => void;
   updateChart: (config: Partial<Chart>) => void;
-  rawData: RawDatum[];
-  dataKeys: Record<string, RawDatumType>;
   dimensions: Dimensions;
   setDimensions: (_dimensions: Dimensions) => void;
   pageCartoId?: number;
@@ -40,8 +33,6 @@ const initialContext: ChartConfigContextType = {
   ChartComponent: ColumnChart,
   updateChartProps: (_props: Partial<AllChartProps>) => undefined,
   updateChart: (_config: Partial<Chart>) => undefined,
-  rawData: [],
-  dataKeys: {},
   dimensions: DEFAULT_DIMENSIONS,
   setDimensions: (_dimensions: Dimensions) => undefined,
 };
@@ -51,28 +42,25 @@ const ChartConfigContext =
 
 type ChartConfigProviderProps = {
   chartId: number;
-  rawData: RawDatum[];
   children: ReactNode;
   pageCartoId?: number;
 };
 
 export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   chartId,
-  rawData,
   children,
   pageCartoId,
 }) => {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { dataKeys, rawData } = useDataset();
   const [dimensions, setDimensions] = useState<Dimensions>(DEFAULT_DIMENSIONS);
   const queryClient = useQueryClient();
   const {
     data: response,
     error,
     isLoading,
-  } = useQuery({
-    queryKey: ['chart', chartId],
-    queryFn: async () => await getChartById(chartId),
-    enabled: !!chartId,
-  });
+    ChartComponent,
+  } = useChart(chartId);
 
   const chart = response?.data || INITIAL_CHART_CONFIG;
   const setChart = (newChart: ApiData<Chart> | undefined) => {
@@ -94,19 +82,6 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   const updateChart = (updates: Partial<Chart>) => {
     setChart({ ...chart, ...updates });
   };
-
-  const ChartComponent = useMemo(() => {
-    return chart?.type
-      ? CHART_TYPES[chart.type].ChartComponent
-      : CHART_TYPES.column.ChartComponent;
-  }, [chart]);
-
-  const dataKeys = useMemo(() => {
-    if (rawData.length > 0) {
-      return getDataTypeMap(rawData[0]);
-    }
-    return {};
-  }, [rawData]);
 
   useEffect(() => {
     switch (chart.type) {
@@ -203,16 +178,18 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
       default:
         break;
     }
+    setIsInitialized(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chart.type, dataKeys]);
 
-  if (isLoading) {
+  if (isLoading || !isInitialized) {
     return <LoadingMessage />;
   }
 
-  if (error && (error as Error).message != 'Not Found') {
-    return <>Error loading chart</>;
+  if (error) {
+    return <Alert>Impossible de charger le graphique</Alert>;
   }
+
   return (
     <ChartConfigContext.Provider
       value={{
@@ -220,8 +197,6 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps,
         updateChart,
         ChartComponent,
-        dataKeys,
-        rawData,
         dimensions,
         setDimensions,
         pageCartoId,
@@ -232,12 +207,12 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   );
 };
 
-export const useChart = () => {
+export const useChartConfig = () => {
   return useContext(ChartConfigContext);
 };
 
 export const useChartGridConfig = () => {
-  const { chart, updateChartProps } = useChart();
+  const { chart, updateChartProps } = useChartConfig();
 
   const updateGridDirection = (direction: Direction, isEnabled: boolean) => {
     let gridDirections = [...chart.props.grid.directions] as Direction[];

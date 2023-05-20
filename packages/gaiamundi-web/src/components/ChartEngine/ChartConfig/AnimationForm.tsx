@@ -2,7 +2,7 @@ import { Label } from 'components/Inputs/Label';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { TextInput } from 'components/Inputs/TextInput';
 import { AnimationEasing } from 'eazychart-core';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 
 const easings: { [key in AnimationEasing]: string } = {
   easeLinear: 'Linear',
@@ -50,7 +50,7 @@ export const AnimationForm = () => {
       props: { animationOptions },
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
 
   const easingOptions = Object.entries(easings).map(([value, label]) => ({
     value,

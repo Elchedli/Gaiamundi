@@ -1,28 +1,28 @@
-import { CheckCircleIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { Button } from 'components/Button/Button';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 import { useModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
 import { useMutation, useQueryClient } from 'react-query';
 import { createChart, updateChart } from 'services/chart';
 
-export const ChartActionButtons = ({ updateMode }: { updateMode: boolean }) => {
+export const ChartActionButtons = () => {
   const queryClient = useQueryClient();
   const { hideModal } = useModal();
-  const { chart, pageCartoId } = useChart();
+  const { chart, pageCartoId } = useChartConfig();
   const { addToast } = useToast();
 
-  const { mutateAsync: saveChart, isLoading } = useMutation({
+  const { mutateAsync: submitChart, isLoading } = useMutation({
     mutationFn: async () => {
-      const { id, ...updates } = chart;
-      return await updateChart(id, updates);
+      const { id, ...rest } = chart;
+      return id ? await updateChart(id, rest) : await createChart(rest);
     },
     onSuccess: () => {
       hideModal();
       addToast({
-        title: `Mise à jour`,
+        title: `Graphique`,
         type: 'success',
-        description: `Le graphique a été mis à jour avec succès`,
+        description: `Le graphique a été sauvegardé avec succès`,
       });
       queryClient.invalidateQueries({
         queryKey: ['page-carto', pageCartoId],
@@ -37,53 +37,17 @@ export const ChartActionButtons = ({ updateMode }: { updateMode: boolean }) => {
     },
   });
 
-  const { mutateAsync: addChart, isLoading: loading } = useMutation({
-    mutationFn: async () => {
-      const { id, ...updates } = chart;
-
-      return await createChart(updates);
-    },
-    onSuccess: () => {
-      hideModal();
-      addToast({
-        title: `Creation`,
-        type: 'success',
-        description: `Le graphique a été créé avec succès`,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['page-carto', pageCartoId],
-      });
-    },
-    onError: (error) => {
-      addToast({
-        title: 'Echec lors de la creation du graphique',
-        type: 'error',
-        description: JSON.stringify(error),
-      });
-    },
-  });
-
   return (
     <div className="relative">
-      {updateMode ? (
-        <Button
-          isLoading={isLoading}
-          icon={CheckCircleIcon}
-          onClick={() => saveChart()}
-          disabled={isLoading}
-        >
-          Sauvegarder
-        </Button>
-      ) : (
-        <Button
-          isLoading={loading}
-          icon={PlusIcon}
-          onClick={() => addChart()}
-          disabled={loading}
-        >
-          Ajouter
-        </Button>
-      )}
+      <Button
+        isLoading={isLoading}
+        icon={CheckCircleIcon}
+        onClick={() => submitChart()}
+        disabled={isLoading}
+        size="sm"
+      >
+        Valider
+      </Button>
     </div>
   );
 };

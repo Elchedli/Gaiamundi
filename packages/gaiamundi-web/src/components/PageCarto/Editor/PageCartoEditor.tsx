@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { PageCartoChartPanel } from './PageCartoChartPanel/PageCartoChartPanel';
 import { PageCartoMap } from './PageCartoMap';
 import { PageCartoPanels } from './PageCartoPanels';
-import { PageCartoChartPanel } from './PgeCartoChartPanel/PageCartoChartPanel';
 
 export const PageCartoEditor: FC = () => {
   return (

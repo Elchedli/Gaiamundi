@@ -319,6 +319,23 @@ class Strapi {
         return uploadedfile;
       });
   }
+
+  /**
+   * Custom route
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  read<R>(route: string, params?: any) {
+    return this.request
+      .get<QueryParams, R>(
+        `/api/${route}`,
+        params && {
+          params,
+        }
+      )
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
+      });
+  }
 }
 
 export const strapi = new Strapi(config.API_URL);

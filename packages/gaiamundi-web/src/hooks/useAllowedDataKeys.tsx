@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { ChartType, RawDatumType } from '../interfaces/chart';
-import { useChart } from './useChartConfig';
+import { useChartConfig } from './useChartConfig';
+import { useDataset } from './useDataset';
 
 export const ALLOWED_DOMAIN_TYPES_BY_CHART: {
   [key in ChartType]: Array<RawDatumType>;
@@ -16,8 +17,10 @@ export const ALLOWED_DOMAIN_TYPES_BY_CHART: {
 };
 
 export const useAllowedDataKeys = () => {
-  const { dataKeys, chart: chartConfig } = useChart();
+  const { chart: chartConfig } = useChartConfig();
+  const { dataKeys } = useDataset();
   const allowedTypes = ALLOWED_DOMAIN_TYPES_BY_CHART[chartConfig.type];
+
   const domainKeyOptions = useMemo(
     () =>
       Object.entries(dataKeys)

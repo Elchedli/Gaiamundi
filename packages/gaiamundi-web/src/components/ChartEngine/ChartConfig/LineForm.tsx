@@ -3,7 +3,7 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Slider } from 'components/Inputs/Slider';
 import { ToggleSwitch } from 'components/Inputs/Toggle';
 import { LineCurve } from 'eazychart-core';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 import { ChartType } from 'interfaces/chart';
 
 const curve: { [key in LineCurve]: string } = {
@@ -26,7 +26,7 @@ export const LineForm = () => {
       type,
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
 
   const isSwappableChart = (type: ChartType) => {
     return type !== 'lineColumn' && type !== 'pie';

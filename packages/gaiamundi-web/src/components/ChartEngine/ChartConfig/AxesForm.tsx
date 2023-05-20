@@ -4,7 +4,7 @@ import { Label } from 'components/Inputs/Label';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import { Radio, RadioProps } from 'components/Inputs/Radio';
 import { useAllowedDataKeys } from 'hooks/useAllowedDataKeys';
-import { useChart } from 'hooks/useChartConfig';
+import { useChartConfig } from 'hooks/useChartConfig';
 import * as React from 'react';
 import { ChangeEventHandler, useState } from 'react';
 
@@ -130,7 +130,7 @@ export const AxesForm = () => {
       type,
     },
     updateChartProps,
-  } = useChart();
+  } = useChartConfig();
 
   return (
     <form>
