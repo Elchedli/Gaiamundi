@@ -34,6 +34,7 @@ export const parseCsvFile = (filePath: string) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return Papa.parse<Record<string, CsvCellValue>>(fileContent, {
       header: true,
+      dynamicTyping: true,
       transformHeader: (headerName: string) => {
         // Remove metadata (source & validity) & remove extra spaces
         return headerName.replace(/\[[^\]]*\]/i, "").trim();

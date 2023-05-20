@@ -22,3 +22,11 @@
 .toolbar .toolbar-item:nth-child(2) {
   display: none;
 }
+
+.ez-svg {
+  overflow: visible;
+}
+
+.ez-axis-tick-text {
+  font-size: 0.65rem;
+}
