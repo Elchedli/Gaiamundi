@@ -1,13 +1,11 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Badge } from 'components/Badge/Badge';
-import { Button } from 'components/Button/Button';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import config from 'config';
 import excerptHtml from 'excerpt-html';
 import { useAuth } from 'hooks/useAuth';
-import { useModal } from 'hooks/useModal';
+import { useConfirmModal } from 'hooks/useModal';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
@@ -33,7 +31,6 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
   cover,
   html,
 }) => {
-  const { showModal, hideModal } = useModal();
   const [canEditOrDelete, setCanEditOrDelete] = useState(false);
   const { user } = useAuth();
   const { addToast } = useToast();
@@ -58,7 +55,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
     },
     onSuccess: () => {
       addToast({
-        title: 'PageCarto ' + name + ' supprimée',
+        title: `PageCarto ${name} supprimée`,
         description: 'PageCarto supprimée avec succès',
         type: 'success',
       });
@@ -68,6 +65,13 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
       queryClient.invalidateQueries({ queryKey: ['page-carto-user'] });
     },
   });
+
+  const { showConfirmModal } = useConfirmModal(
+    'Confirmation',
+    'Êtes-vous sûr de vouloir supprimer cette PageCarto ?',
+    async () => await deletePageCartoItem(id)
+  );
+
   if (isLoading) {
     return <LoadingMessage data-testid="loading-message" />;
   }
@@ -77,49 +81,6 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
       <ApiErrorAlert error={error as ApiError} data-testid="error-message" />
     );
   }
-
-  const handleDeleteConfirmation = async (id: number) => {
-    showModal({
-      title: 'Suppression',
-      Component: () => (
-        <Alert
-          type="warning"
-          onDismiss={() => {
-            hideModal();
-          }}
-          className="text-center"
-        >
-          <div className="text-center" data-testid="delete-modal">
-            <div className="mb-6">
-              Êtes-vous sûr de vouloir supprimer cette PageCarto ?
-            </div>
-            <div className="mb-2" data-testid="delete-modal">
-              <Button
-                data-testid="confirmDelete"
-                color="red"
-                className="mr-2 top-0"
-                onClick={() => {
-                  deletePageCartoItem(id);
-                  hideModal();
-                }}
-              >
-                Supprimer
-              </Button>
-              <Button
-                className="top-0"
-                type="button"
-                onClick={() => {
-                  hideModal();
-                }}
-              >
-                Annuler
-              </Button>
-            </div>
-          </div>
-        </Alert>
-      ),
-    });
-  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
@@ -139,7 +100,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
               </Link>
               <Link to={'#'}>
                 <TrashIcon
-                  onClick={() => handleDeleteConfirmation(id)}
+                  onClick={showConfirmModal}
                   className="cursor-pointer p-1 shadow-md shadow-gray-800 text-blue-600 h-7 w-7 opacity-75 bg-white rounded-md text-center absolute bottom-2 right-12 hover:scale-125 transition-transform duration-200"
                   data-testid="deleteIcon"
                 />
