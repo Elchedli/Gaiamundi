@@ -16,7 +16,7 @@ import { useQueryClient } from 'react-query';
 import { guessDomainKey } from 'utils/chart';
 import { DEFAULT_DIMENSIONS, INITIAL_CHART_CONFIG } from 'utils/constants';
 import { useChart } from './useChart';
-import { useDataset } from './useDataset';
+import { useData } from './useData';
 
 type ChartConfigContextType = {
   chart: ApiData<Chart>;
@@ -52,7 +52,7 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   pageCartoId,
 }) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const { dataKeys, rawData } = useDataset();
+  const { dataKeys, rawData } = useData();
   const [dimensions, setDimensions] = useState<Dimensions>(DEFAULT_DIMENSIONS);
   const queryClient = useQueryClient();
   const {

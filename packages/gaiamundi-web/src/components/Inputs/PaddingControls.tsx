@@ -32,7 +32,7 @@ export const PaddingControls: React.FC<PaddingControlsProps> = ({
     <div>
       <div className="flex flex-col items-center">
         <label htmlFor="padding-top">Top</label>
-        <div className="w-6/12 ">
+        <div className="w-1/2">
           <TextInput
             addon={'px'}
             id="padding-top"
@@ -73,7 +73,7 @@ export const PaddingControls: React.FC<PaddingControlsProps> = ({
       </div>
       <div className="flex flex-col items-center mt-3">
         <label htmlFor="padding-bottom">Bottom</label>
-        <div className="w-6/12">
+        <div className="w-1/2">
           <TextInput
             addon={'px'}
             id="padding-bottom"

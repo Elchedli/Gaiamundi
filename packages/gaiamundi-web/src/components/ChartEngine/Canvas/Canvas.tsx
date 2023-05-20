@@ -2,7 +2,7 @@ import { ContentEditable } from 'components/ContentEditable/ContentEditable';
 import Well from 'components/Layout/Well';
 import { ResponsiveChartContainer } from 'eazychart-react';
 import { useChartConfig } from 'hooks/useChartConfig';
-import { useDataset } from 'hooks/useDataset';
+import { useData } from 'hooks/useData';
 import { ChartType } from 'interfaces/chart';
 import { ChartActionButtons } from './ChartActionButtons';
 import { ChartTypeSelector } from './ChartTypeSelector';
@@ -10,7 +10,7 @@ import { ChartTypeSelector } from './ChartTypeSelector';
 export const Canvas = () => {
   const { chart, updateChart, ChartComponent, setDimensions } =
     useChartConfig();
-  const { rawData } = useDataset();
+  const { rawData } = useData();
 
   const switchChartType = (type: ChartType) => {
     updateChart({ type });
@@ -41,7 +41,13 @@ export const Canvas = () => {
       <div className="relative">
         <ChartTypeSelector onSelect={switchChartType} />
         <ResponsiveChartContainer onResize={setDimensions}>
-          <ChartComponent data={rawData} {...chart.props} />
+          <ChartComponent
+            data={rawData}
+            {...chart.props}
+            scopedSlots={{
+              LegendComponent: () => null,
+            }}
+          />
         </ResponsiveChartContainer>
       </div>
     </Well>

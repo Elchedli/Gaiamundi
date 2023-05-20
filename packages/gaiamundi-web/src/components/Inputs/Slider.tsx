@@ -69,7 +69,7 @@ export const Slider: React.FC<SliderProps> = ({
           )}
           data-testid="slider"
         />
-        <ul className="flex justify-between w-full">
+        <ul className="flex justify-between w-full text-xs">
           <li className="flex justify-center relative">
             {`${minValue.toFixed(0)}${unit}`}
           </li>

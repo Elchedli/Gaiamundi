@@ -32,7 +32,11 @@ export const getPageCartoById = async (id: number) => {
           columns: true,
         },
       },
-      indicators: true,
+      indicators: {
+        populate: {
+          variables: true,
+        },
+      },
       charts: true,
     },
   });

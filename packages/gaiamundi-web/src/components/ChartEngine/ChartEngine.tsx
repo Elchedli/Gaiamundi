@@ -1,7 +1,8 @@
 import { FC } from 'react';
 
 import { ChartConfigProvider } from 'hooks/useChartConfig';
-import { DatasetProvider } from 'hooks/useDataset';
+import { DataProvider } from 'hooks/useData';
+import { PageCartoProvider } from 'hooks/usePageCarto';
 import { Canvas } from './Canvas/Canvas';
 import { ConfigPanel } from './ChartConfig/ConfigPanel';
 
@@ -12,17 +13,19 @@ type ChartEngineProps = {
 
 export const ChartEngine: FC<ChartEngineProps> = ({ chartId, pageCartoId }) => {
   return (
-    <DatasetProvider pageCartoId={pageCartoId}>
-      <ChartConfigProvider chartId={chartId} pageCartoId={pageCartoId}>
-        <div className="flex flex-row">
-          <div className="w-2/6">
-            <ConfigPanel />
+    <PageCartoProvider id={pageCartoId}>
+      <DataProvider pageCartoId={pageCartoId}>
+        <ChartConfigProvider chartId={chartId} pageCartoId={pageCartoId}>
+          <div className="flex flex-row">
+            <div className="w-2/6">
+              <ConfigPanel />
+            </div>
+            <div className="w-4/6">
+              <Canvas />
+            </div>
           </div>
-          <div className="w-4/6">
-            <Canvas />
-          </div>
-        </div>
-      </ChartConfigProvider>
-    </DatasetProvider>
+        </ChartConfigProvider>
+      </DataProvider>
+    </PageCartoProvider>
   );
 };
