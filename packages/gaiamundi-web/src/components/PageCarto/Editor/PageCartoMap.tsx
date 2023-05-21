@@ -22,6 +22,7 @@ import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
 import { uploadCover } from 'services/page-carto';
 import { rasterizeSvg } from 'utils/thumbnail-generator';
+import { PageCartoLegend } from './PageCartoLegend';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
@@ -188,6 +189,9 @@ export const PageCartoMap: FC = () => {
             data={rawData}
           />
         </ResponsiveChartContainer>
+      </div>
+      <div className="absolute z-50 bottom-0 left-0 translate-y-[-50%]">
+        <PageCartoLegend />
       </div>
     </div>
   );
