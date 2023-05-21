@@ -5,6 +5,8 @@ import { createContext, FC, ReactNode, useContext, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getPageCartoData } from 'services/dataset';
 import { getDataTypeMap } from 'utils/chart';
+import { calculateIndicator } from 'utils/equation';
+import { usePageCarto } from './usePageCarto';
 
 type DatasetContextType = {
   rawData: RawDatum[];
@@ -18,17 +20,18 @@ const initialContext: DatasetContextType = {
 
 const DatasetContext = createContext<DatasetContextType>(initialContext);
 
-type DatasetProviderProps = {
+type DataProviderProps = {
   pageCartoId: number;
   children: ReactNode;
 };
 
-export const DatasetProvider: FC<DatasetProviderProps> = ({
+export const DataProvider: FC<DataProviderProps> = ({
   pageCartoId,
   children,
 }) => {
+  const { indicators } = usePageCarto();
   const {
-    data: rawData,
+    data: sourceData,
     error,
     isLoading,
   } = useQuery({
@@ -36,6 +39,24 @@ export const DatasetProvider: FC<DatasetProviderProps> = ({
     queryFn: async () => await getPageCartoData(pageCartoId),
     enabled: !!pageCartoId,
   });
+
+  const rawData = useMemo(
+    () =>
+      sourceData?.map((datum) => {
+        // Calculate indicators
+        const computedDatum = indicators.reduce((acc, indicator) => {
+          acc[indicator.name] = calculateIndicator(indicator, datum);
+          return acc;
+        }, {} as RawDatum);
+        return {
+          // Original data
+          ...datum,
+          // Computed data (calculated indicators)
+          ...computedDatum,
+        };
+      }),
+    [sourceData, indicators]
+  );
 
   const dataKeys = useMemo(() => {
     if (rawData && rawData.length > 0) {
@@ -52,6 +73,8 @@ export const DatasetProvider: FC<DatasetProviderProps> = ({
     return <Alert>Erreur lors du chargement des données</Alert>;
   }
 
+  console.info('>>>>> Raw Data :', rawData);
+
   return (
     <DatasetContext.Provider
       value={{
@@ -64,6 +87,6 @@ export const DatasetProvider: FC<DatasetProviderProps> = ({
   );
 };
 
-export const useDataset = () => {
+export const useData = () => {
   return useContext(DatasetContext);
 };

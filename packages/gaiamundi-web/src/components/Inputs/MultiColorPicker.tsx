@@ -40,7 +40,7 @@ export const MultiColorPicker: React.FC<MultiColorPickerProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-7 gap-2">
+    <div className="flex gap-2 mt-2">
       {colors.map((color, idx) => {
         return (
           <div

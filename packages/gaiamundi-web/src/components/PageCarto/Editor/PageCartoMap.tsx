@@ -13,19 +13,24 @@ import { Button } from 'components/Button/Button';
 import ButtonGroup from 'components/Button/ButtonGroup';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { TitlePageCartoEdit } from 'components/TitlePageCartoEdit/TitlePageCartoEdit';
+import { useData } from 'hooks/useData';
 import { usePageCarto } from 'hooks/usePageCarto';
+import { useSnapshot } from 'hooks/useSnapshot';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
 import { uploadCover } from 'services/page-carto';
 import { rasterizeSvg } from 'utils/thumbnail-generator';
+import { PageCartoLegend } from './PageCartoLegend';
 
 export const PageCartoMap: FC = () => {
   const elementRef = useRef<SVGSVGElement | null>(null);
   const panzoomRef = useRef<PanZoom | null>(null);
   const { addToast } = useToast();
   const { map, pageCartoId } = usePageCarto();
+  const { rawData } = useData();
+  const snapshot = useSnapshot();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
     queryKey: ['geoJSON', geoJson?.id],
@@ -46,13 +51,6 @@ export const PageCartoMap: FC = () => {
       });
     },
   });
-
-  const geoCode = useMemo(() => {
-    const geoCodeProperty = map?.properties.find((property) => {
-      return property.isGeoCode === true;
-    });
-    return geoCodeProperty ? geoCodeProperty.name : 'admin';
-  }, [map]);
 
   // Set up panzoom on mount, and dispose on unmount
   const panZoomCallback = useCallback((element: HTMLDivElement | null) => {
@@ -98,17 +96,38 @@ export const PageCartoMap: FC = () => {
     }
   };
 
+  const geoCodeProperty = useMemo(
+    () =>
+      map?.properties.find((property) => {
+        return property.isGeoCode;
+      }),
+    [map?.properties]
+  );
+
   const geoJsonData = useMemo(() => {
     return data
       ? {
           ...data,
           features: data.features.map((feature: Feature) => {
+            // Set __geoCode__ in GeoJSON
+            if (feature.properties && geoCodeProperty) {
+              feature.properties.__geoCode__ =
+                feature.properties[geoCodeProperty.name];
+            } else {
+              // eslint-disable-next-line no-console
+              console.warn(
+                'Unable to find geocode property, either GeoJSON is inconsistent or something went wrong...',
+                feature,
+                geoCodeProperty
+              );
+            }
+            // Rewind feature path (right hand rule compatibility)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return rewind(feature as any, { reverse: true });
           }),
         }
       : {};
-  }, [data]);
+  }, [data, geoCodeProperty]);
 
   if (isLoading || isIdle) {
     return (
@@ -145,33 +164,34 @@ export const PageCartoMap: FC = () => {
         <ResponsiveChartContainer>
           <BubbleMapChart
             map={{
-              geoDomainKey: geoCode,
-              valueDomainKey: 'value',
-              projectionType: 'geoMercator',
+              geoDomainKey: '__geoCode__',
+              valueDomainKey: snapshot.mapDomainKey || '__none__',
+              projectionType: snapshot.projection,
               stroke: 'black',
               fill: 'white',
             }}
             bubble={{
-              domainKey: 'rValue',
-              minRadius: 1,
-              maxRadius: 30,
-              opacity: 0.5,
+              domainKey: snapshot.bubbleDomainKey || '__none__',
+              minRadius: snapshot.bubbleDomainKey
+                ? snapshot.bubble.minRadius
+                : 0,
+              maxRadius: snapshot.bubbleDomainKey
+                ? snapshot.bubble.maxRadius
+                : 0,
+              opacity: snapshot.bubble.opacity,
               stroke: 'black',
               strokeWidth: 1,
-              colors: ['green', 'yellowgreen', 'yellow'],
+              colors: snapshot.bubble.colors,
             }}
             padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
-            colors={['white', 'pink', 'red']}
+            colors={snapshot.colors}
             geoJson={geoJsonData}
-            data={data.features.map((feature: Feature, idx: number) => {
-              return {
-                [geoCode]: feature.properties?.[geoCode],
-                value: idx,
-                rValue: idx * 2,
-              };
-            })}
+            data={rawData}
           />
         </ResponsiveChartContainer>
+      </div>
+      <div className="absolute z-50 bottom-0 left-0 translate-y-[-50%]">
+        <PageCartoLegend />
       </div>
     </div>
   );
