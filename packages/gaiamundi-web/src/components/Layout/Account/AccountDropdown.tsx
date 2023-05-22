@@ -58,7 +58,7 @@ export const AccountDropdown: React.FC = () => {
 
   return (
     <div className="flex items-center ml-4 md:ml-6">
-      <div className="relative ml-3" ref={dropdownNode}>
+      <div className="absolute ml-3" ref={dropdownNode}>
         <AccountAvatar onClick={() => setDropdownOpen(!dropdownOpen)} />
         <Transition
           show={dropdownOpen}

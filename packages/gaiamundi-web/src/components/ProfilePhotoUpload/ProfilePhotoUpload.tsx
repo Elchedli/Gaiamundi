@@ -18,7 +18,7 @@ const ProfilePhotoUpload: React.FC = () => {
     if (authUser) {
       setUser(authUser);
     }
-  }, [authUser]);
+  }, [authUser]); // cette partie semble inutile
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -42,10 +42,18 @@ const ProfilePhotoUpload: React.FC = () => {
       return;
     }
 
-    setUploading(true);
+    if (!authUser) {
+      addToast({
+        title: 'Authentification requise.',
+        description: '',
+        type: 'error',
+      });
+      return;
+    }
 
+    setUploading(true);
     try {
-      const uploadedFile = await uploadAvatar(selectedFile, authUser!.id);
+      const uploadedFile = await uploadAvatar(selectedFile, authUser?.id);
       if (!uploadedFile) {
         throw new Error(
           "Les données de l'upload ne sont pas conformes aux attentes"
@@ -100,7 +108,7 @@ const ProfilePhotoUpload: React.FC = () => {
         <button
           onClick={handleUpload}
           disabled={uploading}
-          className="px-
+          className="px-8
  py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
         >
           {uploading ? 'Chargement...' : 'Upload'}

@@ -50,7 +50,7 @@ export const signUp = async (newUser: UserSignUpFields) => {
 export const uploadAvatar = async (file: File, refId: number) => {
   return await strapi.uploadFile(
     file,
-    'api::user.user',
+    'plugin::users-permissions.user',
     `${refId}_thumbnail.png`,
     refId,
     'Avatar'

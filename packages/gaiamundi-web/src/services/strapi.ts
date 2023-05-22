@@ -318,6 +318,19 @@ class Strapi {
         return uploadedfile;
       });
   }
+  /**
+   * Uploads avatar for a user.
+   */
+  uploadAvatar(userId: number, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.request
+      .post(`/api/users/${userId}/avatar`, formData)
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
+      });
+  }
 }
 
 export const strapi = new Strapi(config.API_URL);
