@@ -1,4 +1,5 @@
 import { ApiData } from './api';
+import { Chart } from './chart';
 import { DataFragment } from './data-fragment';
 import { UploadedFile } from './file';
 import { GeoMap, GeoMapStub } from './geo-map';
@@ -27,6 +28,7 @@ export interface PageCarto extends PageCartoBase {
   tags: ApiData<Tag>[];
   data_fragments: ApiData<DataFragment>[];
   indicators: ApiData<Indicator>[];
+  charts?: ApiData<Chart>[];
 }
 
 export type PageCartoForm = {

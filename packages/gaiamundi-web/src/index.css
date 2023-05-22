@@ -22,3 +22,22 @@
 .toolbar .toolbar-item:nth-child(2) {
   display: none;
 }
+
+.ez-svg {
+  overflow: visible;
+}
+
+.ez-axis-tick-text {
+  font-size: 0.65rem;
+}
+
+.ez-tooltip {
+  font-size: 0.75rem;
+}
+
+.ez-tooltip-attribute--name {
+  max-width: 256px;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}

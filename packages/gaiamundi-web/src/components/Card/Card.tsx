@@ -24,6 +24,7 @@ export interface CardProps extends PropsWithChildren<ComponentProps<'div'>> {
   imgAlt?: string;
   imgSrc?: string;
   selected?: boolean;
+  title?: string;
 }
 
 export const Card: FC<CardProps> = ({
@@ -34,6 +35,7 @@ export const Card: FC<CardProps> = ({
   imgAlt,
   imgSrc,
   selected,
+  title,
   ...props
 }) => {
   const Component = typeof href === 'undefined' ? 'div' : 'a';
@@ -67,8 +69,9 @@ export const Card: FC<CardProps> = ({
 
   return (
     <Component
-      data-testid="flowbite-card"
+      data-testid="card"
       href={href}
+      title={title}
       className={classNames(
         theme.root.horizontal[horizontal ? 'on' : 'off'],
         href && theme.root.href,

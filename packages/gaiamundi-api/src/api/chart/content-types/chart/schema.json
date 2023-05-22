@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "charts",
+  "info": {
+    "singularName": "chart",
+    "pluralName": "charts",
+    "displayName": "Chart",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "column",
+        "bar",
+        "pie",
+        "line",
+        "scatter",
+        "bubble",
+        "area",
+        "lineColumn"
+      ],
+      "default": "column",
+      "required": true
+    },
+    "props": {
+      "type": "json",
+      "required": true
+    },
+    "page_carto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page-carto.page-carto",
+      "inversedBy": "charts"
+    }
+  }
+}

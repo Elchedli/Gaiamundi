@@ -12,6 +12,7 @@ export const PageCartoIndicatorPanel: FC = () => {
   const { showModal, hideModal } = useModal();
   const { pageCartoId, columns } = usePageCarto();
   const { indicators: dataGridRows } = usePageCarto();
+
   return (
     <div>
       <div className="mt-5 text-right">
@@ -37,6 +38,7 @@ export const PageCartoIndicatorPanel: FC = () => {
           <DataGrid
             enableVirtualization={config.ENVIRONMENT !== 'test'}
             className="border"
+            style={{ height: 'auto' }}
             columns={[
               {
                 key: 'id',

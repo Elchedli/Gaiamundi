@@ -1,15 +1,32 @@
 import { render } from '@testing-library/react';
+import { useAuth } from 'hooks/useAuth';
 import { ApiCollection } from 'interfaces/api';
 import { PageCarto } from 'interfaces/page-carto';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { MemoryRouter as Router } from 'react-router-dom';
-import { mockPageCartoData } from 'utils/mocks/data';
+import { mockPageCartoData, mockUser } from 'utils/mocks/data';
 import { PageCartoList } from '../PageCartoList';
 
 // Mock the useQuery hook from react-query
-jest.mock('react-query');
+jest.mock('react-query', () => ({
+  useMutation: jest.fn(),
+  useQuery: jest.fn(),
+  useQueryClient: jest.fn(),
+}));
+jest.mock('hooks/useAuth');
 
 describe('PageCartoList', () => {
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      isAuthenticated: true,
+      user: mockUser,
+    }));
+    (useMutation as jest.Mock).mockImplementation(() => ({
+      isError: false,
+      error: null,
+      isLoading: false,
+    }));
+  });
   test('Renders loading message when data is loading', () => {
     // Mock the useQuery hook
     (useQuery as jest.Mock).mockReturnValue({ isLoading: true });
@@ -83,7 +100,6 @@ describe('PageCartoList', () => {
         },
       },
     };
-
     (useQuery as jest.Mock).mockReturnValue({
       data: pageCartos,
     });

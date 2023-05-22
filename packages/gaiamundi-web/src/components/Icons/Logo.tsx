@@ -27,7 +27,7 @@ const Logo = ({
         style={{
           fontSize: '26.6667px',
           whiteSpace: 'pre',
-          fill: '#000000',
+          fill: '#1C4ED9',
         }}
       >
         <tspan x="35.375" y="24.773467" id="tspan499">
@@ -39,6 +39,9 @@ const Logo = ({
       <g
         id="Layer_1"
         transform="matrix(2.9937644,0,0,2.9937644,-0.70475605,2.323416)"
+        style={{
+          fill: '#1C4ED9',
+        }}
       >
         <g id="g410">
           <path

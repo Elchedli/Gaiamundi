@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from 'react';
 interface ContentEditableProps {
   value: string;
   isLoading: boolean;
-  className: string;
+  className?: string;
   onInput: (event: React.FormEvent<HTMLHeadingElement>) => void;
   onBlur: () => void;
   canEdit?: boolean;

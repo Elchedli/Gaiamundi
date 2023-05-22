@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { PageCartoChartPanel } from './PageCartoChartPanel/PageCartoChartPanel';
 import { PageCartoMap } from './PageCartoMap';
 import { PageCartoPanels } from './PageCartoPanels';
 
@@ -8,8 +9,11 @@ export const PageCartoEditor: FC = () => {
       <div className="col-span-2">
         <PageCartoMap canEdit={true} />
       </div>
-      <div className="col-span">
+      <div className="col-span rowspan-1">
         <PageCartoPanels />
+      </div>
+      <div className="col-span rowspan-1 h-full">
+        <PageCartoChartPanel />
       </div>
     </div>
   );

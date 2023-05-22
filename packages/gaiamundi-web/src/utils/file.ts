@@ -72,7 +72,7 @@ export const validateCsv = async (file: File) => {
   }
   try {
     const content = await readFile(file);
-    const csvData = Papa.parse(content, { header: true });
+    const csvData = Papa.parse(content, { header: true, skipEmptyLines: true }); // Added the "skipEmptyLines" option set to "true" to ignore any empty lines at the end of the CSV file.
     return csvData;
   } catch (e) {
     throw new Error(`Impossible de valider le format CSV du fichier.`);
@@ -98,9 +98,10 @@ export const parseCsvColumns = (
         return params;
       }, metadata);
     }
+    const originalName = columnNames[idx]; // I added an 'originalName' variable to preserve the original column name, including the metadata
     acc.push({
       name: name.trim(),
-      sample: data ? Number(data[0][name]) : 0,
+      sample: data ? Number(data[0][originalName]) : 0,
       source: 's' in metadata ? metadata['s'] : '',
       validity: 'v' in metadata ? metadata['v'] : '',
       isGeoCode: idx === 0,

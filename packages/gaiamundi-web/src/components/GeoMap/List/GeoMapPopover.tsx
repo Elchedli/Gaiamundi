@@ -1,9 +1,11 @@
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Tooltip } from 'components/Floating/Tooltip';
 import { GeoProperty } from 'interfaces/geo-map';
+
 interface GeoPropertyProps {
   properties: GeoProperty[];
 }
+
 export const GeoMapPopover: React.FC<GeoPropertyProps> = ({ properties }) => {
   return (
     <div

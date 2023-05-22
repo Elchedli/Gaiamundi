@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { PageCartoDataPanel } from './PageCartoDataPanel/PageCartoDataPanel';
 import TextEditor from './PageCartoHyperTextPanel/TextEditor';
 import { PageCartoIndicatorPanel } from './PageCartoIndicatorPanel/PageCartoIndicatorPanel';
+import { PageCartoMapPanel } from './PageCartoMapPanel/PageCartoMapPanel';
 
 export const PageCartoPanels: React.FC = () => {
   const tabs = [
@@ -20,6 +21,11 @@ export const PageCartoPanels: React.FC = () => {
       id: 3,
       title: 'Indicateurs',
       content: <PageCartoIndicatorPanel />,
+    },
+    {
+      id: 4,
+      title: 'Carte',
+      content: <PageCartoMapPanel />,
     },
   ];
 
@@ -44,13 +50,9 @@ export const PageCartoPanels: React.FC = () => {
             </Tab>
           ))}
         </Tab.List>
-        <Tab.Panels className="h-full rounded-b-lg border border-blue-700">
+        <Tab.Panels className="rounded-b-lg border border-blue-700 h-5/6 overflow-y-auto">
           {tabs.map((tab) => (
-            <Tab.Panel
-              key={tab.id}
-              className="px-2 pb-5 overflow-y-scroll"
-              style={{ maxHeight: 'calc(100vh - 64px * 2)' }}
-            >
+            <Tab.Panel key={tab.id} className="px-2 pb-5">
               {tab.content}
             </Tab.Panel>
           ))}
