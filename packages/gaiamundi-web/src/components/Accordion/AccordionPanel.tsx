@@ -5,8 +5,9 @@ import { AccordionPanelContext } from './AccordionPanelContext';
 
 export interface AccordionPanelProps extends PropsWithChildren<AccordionProps> {
   isOpen?: boolean;
-  setOpen?: (arg: boolean) => void;
+  setOpen?: () => void;
 }
+
 export const AccordionPanel: FC<AccordionPanelProps> = ({
   children,
   ...props
@@ -18,7 +19,7 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
     ? {
         ...props,
         isOpen,
-        setOpen: () => setOpen(isOpen),
+        setOpen: () => setOpen(!isOpen),
       }
     : props;
 
