@@ -32,7 +32,12 @@ export const getPageCartoById = async (id: number) => {
           columns: true,
         },
       },
-      indicators: true,
+      indicators: {
+        populate: {
+          variables: true,
+        },
+      },
+      charts: true,
     },
   });
 };
@@ -56,4 +61,7 @@ export const uploadCover = async (file: File, refId: number) => {
     refId,
     'cover'
   );
+};
+export const deletePageCarto = async (id: number) => {
+  return await strapi.delete(ContentType.PAGE_CARTOS, id);
 };

@@ -42,4 +42,4 @@ describe('Components / Card', () => {
   });
 });
 
-const card = () => screen.getByTestId('flowbite-card');
+const card = () => screen.getByTestId('card');
