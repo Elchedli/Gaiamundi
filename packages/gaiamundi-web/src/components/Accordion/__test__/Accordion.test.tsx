@@ -7,9 +7,9 @@ describe('Accordion ', () => {
       <Accordion>
         <Accordion.Panel key={1}>
           <Accordion.Title>
-            <div className="text-md font-medium text-gray-900 title-font">
+            <h3 className="text-md font-medium text-gray-900 title-font">
               {1}
-            </div>
+            </h3>
           </Accordion.Title>
           <Accordion.Content>
             <div data-testid="accordion" />
