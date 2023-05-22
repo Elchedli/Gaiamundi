@@ -12,7 +12,8 @@ const ProfilePhotoUpload: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { user: authUser, refetchUser } = useAuth();
   const { addToast } = useToast();
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User | undefined>(authUser);
+  const [imageURL, setImageURL] = useState<string>('');
 
   useEffect(() => {
     if (authUser) {
@@ -54,11 +55,15 @@ const ProfilePhotoUpload: React.FC = () => {
     setUploading(true);
     try {
       const uploadedFile = await uploadAvatar(selectedFile, authUser?.id);
+      // eslint-disable-next-line no-console
+      console.log(uploadedFile);
       if (!uploadedFile) {
         throw new Error(
           "Les données de l'upload ne sont pas conformes aux attentes"
         );
       }
+
+      setImageURL(uploadedFile.url);
 
       if (user) {
         const updatedUser = Object.assign({}, user, {
@@ -66,11 +71,14 @@ const ProfilePhotoUpload: React.FC = () => {
         });
         await strapi.updateCurrentUser(user.id, updatedUser);
 
+        setUser(updatedUser);
+
         addToast({
           title: 'Upload réussi',
           description: '',
           type: 'success',
         });
+
         await refetchUser();
       }
     } catch (error) {
@@ -92,8 +100,8 @@ const ProfilePhotoUpload: React.FC = () => {
   }
   return (
     <div className="flex flex-col items-start">
-      {user.Avatar ? (
-        <img src={user.Avatar.url} alt="profile" className="w-24 h-24 mb-3" />
+      {imageURL ? (
+        <img src={imageURL} alt="profile" className="w-24 h-24 mb-3" />
       ) : (
         <Avatar name={user.username} size="50" round={false} className="mb-3" />
       )}
@@ -105,8 +113,7 @@ const ProfilePhotoUpload: React.FC = () => {
         <button
           onClick={handleUpload}
           disabled={uploading}
-          className="px-8
-   py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+          className="px-8 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
         >
           {uploading ? 'Chargement...' : 'Upload'}
         </button>
