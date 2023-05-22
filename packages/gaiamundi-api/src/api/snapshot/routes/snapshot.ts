@@ -2,6 +2,23 @@
  * snapshot router
  */
 
-import { factories } from '@strapi/strapi';
-
-export default factories.createCoreRouter('api::snapshot.snapshot');
+const { createCoreRouter } = require("@strapi/strapi").factories;
+export default createCoreRouter("api::snapshot.snapshot", {
+  config: {
+    create: {
+      roles: ["authenticated"],
+    },
+    update: {
+      roles: ["authenticated"],
+    },
+    delete: {
+      roles: ["authenticated"],
+    },
+    find: {
+      roles: ["authenticated"],
+    },
+    findOne: {
+      roles: ["authenticated"],
+    },
+  },
+});
