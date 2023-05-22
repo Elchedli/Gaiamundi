@@ -6,16 +6,22 @@ import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { useToast } from 'hooks/useToast';
 import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
 import { Tag } from 'interfaces/tag';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { createTag, getAllTags } from 'services/tag';
 
 interface TagsSelectorProps {
   onChange: (tags: number[]) => void;
+  selectedTagsIdsExisting?: number[];
 }
 
-export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
-  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
+export const TagsSelector: React.FC<TagsSelectorProps> = ({
+  onChange,
+  selectedTagsIdsExisting,
+}) => {
+  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([
+    ...(selectedTagsIdsExisting || []),
+  ]);
   const { addToast } = useToast();
 
   const {
@@ -46,13 +52,11 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({ onChange }) => {
   });
 
   const tags = useMemo(() => response?.data || [], [response]);
-  const selectedTags = useMemo(
-    () =>
-      selectedTagIds.map((id) => {
-        return tags.find((tag) => id === tag.id) as ApiData<Tag>;
-      }),
-    [tags, selectedTagIds]
-  );
+  const selectedTags = useMemo(() => {
+    return selectedTagIds.map((id) => {
+      return tags.find((tag) => id === tag.id) as ApiData<Tag>;
+    });
+  }, [tags, selectedTagIds]);
 
   if (isLoading) {
     return <LoadingMessage data-testid="tags-loading-message" />;
