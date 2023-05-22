@@ -28,11 +28,11 @@ services:
       APP_KEYS: ${APP_KEYS}
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ./packages/gaiamundi-api/config:/opt/app/config
-      - ./packages/gaiamundi-api/package.json:/opt/package.json
-      - ./packages/gaiamundi-api/yarn.lock:/opt/yarn.lock
-      - ./packages/gaiamundi-api/.env:/opt/app/.env
-      - ./packages/gaiamundi-api/public/uploads:/opt/app/public/uploads
+      - ../packages/gaiamundi-api/config:/opt/app/config
+      - ../packages/gaiamundi-api/package.json:/opt/package.json
+      - ../packages/gaiamundi-api/yarn.lock:/opt/yarn.lock
+      - ../packages/gaiamundi-api/.env:/opt/app/.env
+      - ../packages/gaiamundi-api/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
