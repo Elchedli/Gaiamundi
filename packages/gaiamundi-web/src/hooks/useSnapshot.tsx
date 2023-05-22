@@ -96,8 +96,6 @@ export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
     [indicators, bubble.indicatorId]
   );
 
-  console.info('>>>> Domain Keys', mapDomainKey, bubbleDomainKey);
-
   return (
     <SnapshotContext.Provider
       value={{

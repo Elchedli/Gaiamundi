@@ -206,3 +206,15 @@ export type GeoProjectionType = keyof Pick<
   | 'geoTransverseMercator'
   | 'geoNaturalEarth1'
 >;
+
+export type GeoFeature = Feature<Geometry, GeoJsonProperties>;
+
+export interface ShapeAttributes {
+  id: string;
+  color?: string;
+}
+
+export type GeoFeatureDatum = ShapeAttributes & {
+  feature: GeoFeature;
+  centroid: Point;
+};

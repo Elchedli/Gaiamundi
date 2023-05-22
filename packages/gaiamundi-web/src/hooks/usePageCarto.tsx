@@ -92,7 +92,14 @@ export const PageCartoProvider = ({
 
   return (
     <PageCartoContext.Provider
-      value={{ pageCartoId: id, map, columns, indicators, charts, ...query }}
+      value={{
+        pageCartoId: id,
+        map,
+        columns,
+        indicators,
+        charts,
+        ...query,
+      }}
     >
       {children}
     </PageCartoContext.Provider>

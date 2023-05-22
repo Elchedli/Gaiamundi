@@ -21,6 +21,7 @@ import { ApiData, ApiError } from 'interfaces/api';
 import { UploadedFile } from 'interfaces/file';
 import { getGeoJson } from 'services/geo-map';
 import { uploadCover } from 'services/page-carto';
+import { GEO_CODE, NO_DOMAINKEY } from 'utils/constants';
 import { rasterizeSvg } from 'utils/thumbnail-generator';
 import { PageCartoLegend } from './PageCartoLegend';
 
@@ -29,7 +30,7 @@ export const PageCartoMap: FC = () => {
   const panzoomRef = useRef<PanZoom | null>(null);
   const { addToast } = useToast();
   const { map, pageCartoId } = usePageCarto();
-  const { rawData } = useData();
+  const { indicatorData, selectGeoCode: selectGeoFeature } = useData();
   const snapshot = useSnapshot();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
@@ -109,9 +110,9 @@ export const PageCartoMap: FC = () => {
       ? {
           ...data,
           features: data.features.map((feature: Feature) => {
-            // Set __geoCode__ in GeoJSON
+            // Set GEO_CODE in GeoJSON
             if (feature.properties && geoCodeProperty) {
-              feature.properties.__geoCode__ =
+              feature.properties[GEO_CODE] =
                 feature.properties[geoCodeProperty.name];
             } else {
               // eslint-disable-next-line no-console
@@ -160,18 +161,19 @@ export const PageCartoMap: FC = () => {
         className="w-full h-full overflow-hidden"
         ref={panZoomCallback}
         data-testid={'map-chart'}
+        onClick={(e) => selectGeoFeature(null, e)}
       >
         <ResponsiveChartContainer>
           <BubbleMapChart
             map={{
-              geoDomainKey: '__geoCode__',
-              valueDomainKey: snapshot.mapDomainKey || '__none__',
+              geoDomainKey: GEO_CODE,
+              valueDomainKey: snapshot.mapDomainKey || NO_DOMAINKEY,
               projectionType: snapshot.projection,
               stroke: 'black',
               fill: 'white',
             }}
             bubble={{
-              domainKey: snapshot.bubbleDomainKey || '__none__',
+              domainKey: snapshot.bubbleDomainKey || NO_DOMAINKEY,
               minRadius: snapshot.bubbleDomainKey
                 ? snapshot.bubble.minRadius
                 : 0,
@@ -183,10 +185,11 @@ export const PageCartoMap: FC = () => {
               strokeWidth: 1,
               colors: snapshot.bubble.colors,
             }}
-            padding={{ top: 0, right: 50, bottom: 150, left: 50 }}
+            padding={{ top: 0, right: 50, bottom: 100, left: 50 }}
             colors={snapshot.colors}
             geoJson={geoJsonData}
-            data={rawData}
+            data={indicatorData}
+            onShapeClick={selectGeoFeature}
           />
         </ResponsiveChartContainer>
       </div>

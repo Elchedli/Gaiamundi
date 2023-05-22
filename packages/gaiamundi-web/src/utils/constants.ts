@@ -24,6 +24,7 @@ export const DEFAULT_CHART_DATA: RawDatum[] = [
 export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
   id: 0,
   name: 'Untitled Chart',
+  is_global: true,
   type: 'column',
   page_carto: 5 as unknown as ApiData<PageCarto>,
   props: {
@@ -76,3 +77,7 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };
+
+export const GEO_CODE = '__geoCode__';
+
+export const NO_DOMAINKEY = '__none__';

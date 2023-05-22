@@ -38,6 +38,11 @@
 .ez-tooltip-attribute--name {
   max-width: 256px;
   text-overflow: ellipsis;
-  display: inline-block;
   overflow: hidden;
+}
+
+.selected-geo-feature {
+  filter: drop-shadow(4px 4px 5px black);
+  stroke-width: 2px;
+  stroke: black;
 }
