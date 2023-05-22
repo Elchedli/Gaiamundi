@@ -1,5 +1,5 @@
 import { PageCarto, PageCartoBase, PageCartoStub } from 'interfaces/page-carto';
-import { ContentType, strapi } from './strapi';
+import { ContentType, QueryParams, strapi } from './strapi';
 
 export const createPageCarto = async (data: PageCartoStub) => {
   return await strapi.create<PageCartoStub>(ContentType.PAGE_CARTOS, data);
@@ -38,6 +38,21 @@ export const getPageCartoById = async (id: number) => {
         },
       },
       charts: true,
+    },
+  });
+};
+
+export const getPageCartoByTagsAndSearch = async (
+  page: number,
+  filters: any
+) => {
+  return await strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
+    filters: filters as QueryParams['filters'],
+    populate: '*',
+    sort: 'createdAt:desc',
+    pagination: {
+      page,
+      pageSize: 9,
     },
   });
 };

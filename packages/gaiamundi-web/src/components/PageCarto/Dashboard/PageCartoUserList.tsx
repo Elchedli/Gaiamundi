@@ -5,10 +5,9 @@ import PageCartoItem from 'components/PageCarto/List/PageCartoItem';
 import { Pagination } from 'components/Pagination/Pagination';
 import { useAuth } from 'hooks/useAuth';
 import { ApiError } from 'interfaces/api';
-import { PageCarto } from 'interfaces/page-carto';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { ContentType, QueryParams, strapi } from 'services/strapi';
+import { getPageCartoByTagsAndSearch } from 'services/page-carto';
 export const PageCartoUserList = ({
   searchKeywords,
   selectedTags,
@@ -16,14 +15,7 @@ export const PageCartoUserList = ({
   searchKeywords: string;
   selectedTags: number[];
 }) => {
-  const paginationLimit = 9;
   const [page, setPage] = useState(1);
-  const [firstFetch, setFirstFetch] = useState(false);
-  const firstFetchTrue = () => {
-    if (!firstFetch) {
-      setFirstFetch(true);
-    }
-  };
   const { user } = useAuth();
   const searchKeywordsCondition = { $contains: searchKeywords };
   const filters: any = {
@@ -68,7 +60,6 @@ export const PageCartoUserList = ({
           : {},
     };
   }
-
   const {
     data: response,
     isError,
@@ -76,19 +67,8 @@ export const PageCartoUserList = ({
     isLoading,
   } = useQuery({
     queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
-    queryFn: async () => {
-      return strapi.get<PageCarto>(ContentType.PAGE_CARTOS, {
-        filters: filters as QueryParams['filters'],
-        populate: '*',
-        sort: 'createdAt:desc',
-        pagination: {
-          page,
-          pageSize: paginationLimit,
-        },
-      });
-    },
+    queryFn: async () => getPageCartoByTagsAndSearch(page, filters),
   });
-
   if (isLoading) {
     return (
       <LoadingMessage data-testid="page-carto-user-list-loading-message" />
@@ -102,7 +82,6 @@ export const PageCartoUserList = ({
       />
     );
   }
-  firstFetchTrue;
   return (
     <div>
       {!response || response.data.length === 0 ? (
@@ -116,7 +95,7 @@ export const PageCartoUserList = ({
         </Alert>
       ) : (
         <>
-          <div className={`grid grid-cols-3 gap-y-10 gap-x-6`}>
+          <div className="grid grid-cols-3 gap-y-10 gap-x-6">
             {response.data.map((page) => {
               return <PageCartoItem key={page.id} {...page} />;
             })}
@@ -125,7 +104,7 @@ export const PageCartoUserList = ({
             <Pagination
               page={page}
               onPaginate={(p: number) => setPage(p)}
-              totalPages={response.meta.pagination.pageCount || 0}
+              totalPages={response?.meta.pagination.pageCount || 0}
             />
           </div>
         </>
