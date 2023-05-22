@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "snapshots",
+  "info": {
+    "singularName": "snapshot",
+    "pluralName": "snapshots",
+    "displayName": "Snapshot",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "indicatorId": {
+      "type": "biginteger"
+    },
+    "projection": {
+      "type": "string",
+      "required": true
+    },
+    "colors": {
+      "type": "json",
+      "required": true
+    },
+    "bubble": {
+      "type": "json",
+      "required": true
+    },
+    "page_carto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page-carto.page-carto",
+      "inversedBy": "snapshots"
+    },
+    "geoCode": {
+      "type": "string"
+    }
+  }
+}
