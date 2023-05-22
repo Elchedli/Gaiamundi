@@ -9,7 +9,7 @@ interface WellProps {
 const Well = ({ title, Icon, children }: WellProps): JSX.Element => {
   return (
     <div
-      className="relative rounded-md border border-gray-200 bg-white shadow-md p-5 m-2"
+      className="relative rounded-md border border-gray-200 bg-white shadow-md p-5"
       data-testid="well-component"
     >
       {title && (

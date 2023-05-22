@@ -63,6 +63,7 @@ export type AllChartConfigProps = ChartConfigProps<BarChartProps> &
 
 export type Chart = {
   name: string;
+  is_global: boolean;
   type: ChartType;
   props: AllChartConfigProps;
   page_carto: ApiData<PageCarto>;

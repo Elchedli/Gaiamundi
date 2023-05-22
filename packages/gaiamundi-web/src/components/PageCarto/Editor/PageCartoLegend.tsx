@@ -1,10 +1,8 @@
-import 'eazychart-css';
-import { FC, useMemo } from 'react';
-
 import Well from 'components/Layout/Well';
 import { useData } from 'hooks/useData';
 import { useSnapshot } from 'hooks/useSnapshot';
 import { RawDatum } from 'interfaces/chart';
+import { FC, useMemo } from 'react';
 import { getQuantileRanges } from 'utils/quantile';
 
 const LegendColor: FC<{ color: string }> = ({ color }) => {
@@ -19,10 +17,10 @@ const LegendColor: FC<{ color: string }> = ({ color }) => {
 };
 
 export const MapLegend: FC<{
-  rawData: RawDatum[];
+  data: RawDatum[];
   domainKey?: string;
   colors: string[];
-}> = ({ rawData, domainKey, colors }) => {
+}> = ({ data: rawData, domainKey, colors }) => {
   const quantiles = useMemo(
     () =>
       domainKey ? getQuantileRanges(rawData, domainKey, colors.length + 1) : [],
@@ -50,18 +48,18 @@ export const MapLegend: FC<{
 };
 
 export const PageCartoLegend: FC = () => {
-  const { rawData } = useData();
+  const { indicatorData } = useData();
   const snapshot = useSnapshot();
 
   return (
-    <div className="flex">
+    <div className="flex gap-2">
       <MapLegend
-        rawData={rawData}
+        data={indicatorData}
         domainKey={snapshot.mapDomainKey}
         colors={snapshot.colors}
       />
       <MapLegend
-        rawData={rawData}
+        data={indicatorData}
         domainKey={snapshot.bubbleDomainKey}
         colors={snapshot.bubble.colors}
       />

@@ -9,12 +9,20 @@ import { ConfigPanel } from './ChartConfig/ConfigPanel';
 type ChartEngineProps = {
   chartId: number;
   pageCartoId: number;
+  selectedGeoCode: string | null;
 };
 
-export const ChartEngine: FC<ChartEngineProps> = ({ chartId, pageCartoId }) => {
+export const ChartEngine: FC<ChartEngineProps> = ({
+  chartId,
+  pageCartoId,
+  selectedGeoCode,
+}) => {
   return (
     <PageCartoProvider id={pageCartoId}>
-      <DataProvider pageCartoId={pageCartoId}>
+      <DataProvider
+        pageCartoId={pageCartoId}
+        geoCodeSelection={selectedGeoCode}
+      >
         <ChartConfigProvider chartId={chartId} pageCartoId={pageCartoId}>
           <div className="flex flex-row">
             <div className="w-2/6">
