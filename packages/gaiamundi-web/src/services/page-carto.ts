@@ -38,6 +38,7 @@ export const getPageCartoById = async (id: number) => {
         },
       },
       charts: true,
+
       tags: true,
     },
   });
