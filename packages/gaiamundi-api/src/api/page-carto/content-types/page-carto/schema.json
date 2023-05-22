@@ -61,6 +61,12 @@
       "relation": "oneToMany",
       "target": "api::chart.chart",
       "mappedBy": "page_carto"
+    },
+    "snapshots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::snapshot.snapshot",
+      "mappedBy": "page_carto"
     }
   }
 }
