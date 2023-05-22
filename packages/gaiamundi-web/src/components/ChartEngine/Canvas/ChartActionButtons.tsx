@@ -25,7 +25,7 @@ export const ChartActionButtons = () => {
         description: `Le graphique a été sauvegardé avec succès`,
       });
       queryClient.invalidateQueries({
-        queryKey: ['page-carto', pageCartoId],
+        queryKey: ['page-carto-charts', pageCartoId],
       });
     },
     onError: (error) => {
