@@ -18,7 +18,7 @@ const ProfilePhotoUpload: React.FC = () => {
     if (authUser) {
       setUser(authUser);
     }
-  }, [authUser]); // cette partie semble inutile
+  }, [authUser]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -62,10 +62,8 @@ const ProfilePhotoUpload: React.FC = () => {
 
       if (user) {
         const updatedUser = Object.assign({}, user, {
-          profileImage: uploadedFile.url,
+          Avatar: uploadedFile,
         });
-        // eslint-disable-next-line no-console
-        console.log(updatedUser);
         await strapi.updateCurrentUser(user.id, updatedUser);
 
         addToast({
@@ -92,11 +90,10 @@ const ProfilePhotoUpload: React.FC = () => {
   if (!user) {
     return null;
   }
-
   return (
     <div className="flex flex-col items-start">
       {user.Avatar ? (
-        <img src={user.Avatar?.url} alt="profile" className="w-24 h-24 mb-3" />
+        <img src={user.Avatar.url} alt="profile" className="w-24 h-24 mb-3" />
       ) : (
         <Avatar name={user.username} size="50" round={false} className="mb-3" />
       )}
@@ -109,7 +106,7 @@ const ProfilePhotoUpload: React.FC = () => {
           onClick={handleUpload}
           disabled={uploading}
           className="px-8
- py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+   py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
         >
           {uploading ? 'Chargement...' : 'Upload'}
         </button>
