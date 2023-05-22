@@ -18,48 +18,6 @@ export const PageCartoUserList = ({
   const [page, setPage] = useState(1);
   const { user } = useAuth();
   const searchKeywordsCondition = { $contains: searchKeywords };
-  const filters: any = {
-    owner: {
-      id: {
-        $eq: user?.id,
-      },
-    },
-  };
-  if (searchKeywords) {
-    filters['$or'] = [
-      {
-        map: {
-          $or: [
-            {
-              name: searchKeywordsCondition,
-            },
-            {
-              yearValidity: searchKeywordsCondition,
-            },
-            {
-              mesh: searchKeywordsCondition,
-            },
-          ],
-        },
-      },
-      {
-        name: searchKeywordsCondition,
-      },
-      {
-        html: searchKeywordsCondition,
-      },
-    ];
-  }
-  if (selectedTags.length > 0) {
-    filters.tags = {
-      id:
-        selectedTags.length != 0
-          ? {
-              $in: selectedTags,
-            }
-          : {},
-    };
-  }
   const {
     data: response,
     isError,
@@ -67,7 +25,14 @@ export const PageCartoUserList = ({
     isLoading,
   } = useQuery({
     queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
-    queryFn: async () => getPageCartoByTagsAndSearch(page, filters),
+    queryFn: async () =>
+      getPageCartoByTagsAndSearch(
+        page,
+        searchKeywords,
+        selectedTags,
+        searchKeywordsCondition,
+        user
+      ),
   });
   if (isLoading) {
     return (
