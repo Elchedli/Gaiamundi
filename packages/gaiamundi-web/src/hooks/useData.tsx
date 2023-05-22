@@ -147,8 +147,6 @@ export const DataProvider: FC<DataProviderProps> = ({
     return <Alert>Erreur lors du chargement des données</Alert>;
   }
 
-  console.log('______', selectedData, rawData);
-
   return (
     <DatasetContext.Provider
       value={{
