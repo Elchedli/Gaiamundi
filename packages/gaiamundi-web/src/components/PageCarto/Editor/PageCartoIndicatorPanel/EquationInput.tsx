@@ -4,7 +4,13 @@ import { TextInput } from 'components/Inputs/TextInput';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { defaultFunctions, defaultVariables } from 'equation-resolver';
 import { IndicatorVariable } from 'interfaces/indicator';
-import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
+import React, {
+  ChangeEventHandler,
+  FC,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { EquationContext, EquationOptions } from 'react-equation';
 import { useQuery } from 'react-query';
 import { getEquations } from 'services/equation';
@@ -35,12 +41,16 @@ const VariableList: FC<{ variables: IndicatorVariable[] }> = ({
 type EquationInputProps = {
   variables: IndicatorVariable[];
   onChange: ChangeEventHandler<HTMLInputElement>;
+  value?: string;
 };
 
 const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
-  ({ variables, onChange }, ref) => {
-    const [formula, setFormula] = useState('A-1');
+  ({ variables, onChange, value }, ref) => {
+    const [formula, setFormula] = useState(value || 'A-1');
     const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+      setFormula(value || 'A-1');
+    }, [value]);
     const { data: response, isLoading } = useQuery({
       queryKey: ['equations'],
       queryFn: async () => {
@@ -83,7 +93,6 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
       };
       return acc;
     }, defaultVariables);
-
     return (
       <div ref={ref}>
         <VariableList variables={variables} />
@@ -99,7 +108,7 @@ const EquationInput = React.forwardRef<HTMLDivElement, EquationInputProps>(
           id="equation"
           className="w-full"
           onChange={handleEquationUpdate}
-          defaultValue={formula}
+          value={formula}
         />
         <EquationOptions
           variables={equationVariables}

@@ -12,6 +12,7 @@ import { getCharRange } from 'utils/utils';
 type DatasetVariablePickerProps = {
   columns: DatasetColumn[];
   onChange: (variables: IndicatorVariable[]) => void;
+  value?: IndicatorVariable[];
 };
 
 const ALPHABET_RANGE = getCharRange('A', 'Z');
@@ -19,12 +20,14 @@ const ALPHABET_RANGE = getCharRange('A', 'Z');
 const DatasetVariablePicker = React.forwardRef<
   HTMLDivElement,
   DatasetVariablePickerProps
->(({ columns, onChange }, ref) => {
+>(({ columns, onChange, value }, ref) => {
   const [selectedColumns, setSelectedColumns] = useState<ReadonlySet<string>>(
-    () => new Set<string>()
+    () => {
+      const columnNames = value ? value.map((column) => column.columnName) : [];
+      return new Set<string>(columnNames);
+    }
   );
   const [searchKeywords, setSearchKeywords] = useState<string>('');
-
   const filteredRows = useMemo(() => {
     return searchKeywords
       ? columns.filter((row) => {
@@ -48,6 +51,7 @@ const DatasetVariablePicker = React.forwardRef<
     });
     onChange(selected);
   }, [columns, onChange, selectedColumns]);
+
   const dataGridColumns: DataGridColumn<Column>[] = [
     SelectColumn,
     {
