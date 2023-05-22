@@ -21,6 +21,7 @@ export enum ContentType {
   USERS = 'users',
   TAGS = 'tags',
   CHARTS = 'charts',
+  SNAPSHOTS = 'snapshots',
 }
 
 type FilterOperator =
