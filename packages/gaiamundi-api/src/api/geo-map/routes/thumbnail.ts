@@ -4,6 +4,9 @@ module.exports = {
       method: "GET",
       path: "/geo-maps/thumbnail/:id",
       handler: "geo-map.thumbnail",
+      config: {
+        roles: ["public"],
+      },
     },
   ],
 };

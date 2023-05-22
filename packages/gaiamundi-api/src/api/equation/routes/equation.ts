@@ -2,6 +2,24 @@
  * equation router
  */
 
-import { factories } from '@strapi/strapi';
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-export default factories.createCoreRouter('api::equation.equation');
+export default createCoreRouter("api::equation.equation", {
+  config: {
+    create: {
+      roles: ["authenticated"],
+    },
+    update: {
+      roles: ["authenticated"],
+    },
+    delete: {
+      roles: ["authenticated"],
+    },
+    find: {
+      roles: ["authenticated"],
+    },
+    findOne: {
+      roles: ["authenticated"],
+    },
+  },
+});

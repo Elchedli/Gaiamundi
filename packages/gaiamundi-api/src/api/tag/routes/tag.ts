@@ -2,6 +2,24 @@
  * tag router
  */
 
-import { factories } from "@strapi/strapi";
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-export default factories.createCoreRouter("api::tag.tag");
+export default createCoreRouter("api::tag.tag", {
+  config: {
+    create: {
+      roles: ["authenticated"],
+    },
+    update: {
+      roles: ["authenticated"],
+    },
+    delete: {
+      roles: ["authenticated"],
+    },
+    find: {
+      roles: ["authenticated"],
+    },
+    findOne: {
+      roles: ["authenticated"],
+    },
+  },
+});
