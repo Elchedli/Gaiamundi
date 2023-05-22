@@ -44,7 +44,7 @@ describe('PageCartoPanels', () => {
     await waitFor(() => {
       const tabs = getAllByRole('tab');
 
-      expect(tabs).toHaveLength(3);
+      expect(tabs).toHaveLength(4);
 
       fireEvent.click(tabs[1]);
 

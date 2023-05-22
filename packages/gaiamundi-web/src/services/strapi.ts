@@ -20,6 +20,8 @@ export enum ContentType {
   EQUATION = 'equations',
   USERS = 'users',
   TAGS = 'tags',
+  CHARTS = 'charts',
+  SNAPSHOTS = 'snapshots',
 }
 
 type FilterOperator =
@@ -316,6 +318,23 @@ class Strapi {
       .post<FormData, UploadedFile[]>('/api/upload', formData)
       .then(([uploadedfile]) => {
         return uploadedfile;
+      });
+  }
+
+  /**
+   * Custom route
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  read<R>(route: string, params?: any) {
+    return this.request
+      .get<QueryParams, R>(
+        `/api/${route}`,
+        params && {
+          params,
+        }
+      )
+      .catch(({ error }: ApiErrorResponse) => {
+        throw error;
       });
   }
 }

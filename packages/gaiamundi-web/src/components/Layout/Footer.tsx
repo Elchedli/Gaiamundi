@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import Facebook from 'components/Icons/Facebook';
+import Github from 'components/Icons/Github';
 import Instagram from 'components/Icons/Instagram';
 import Twitter from 'components/Icons/Twitter';
-import Github from 'components/Icons/Github';
 
 const anonymousMenuItems = [
   { title: 'Accueil', href: '/#' },

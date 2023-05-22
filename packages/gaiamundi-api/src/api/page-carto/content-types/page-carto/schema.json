@@ -55,6 +55,18 @@
       "relation": "oneToMany",
       "target": "api::indicator.indicator",
       "mappedBy": "page_carto"
+    },
+    "charts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::chart.chart",
+      "mappedBy": "page_carto"
+    },
+    "snapshots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::snapshot.snapshot",
+      "mappedBy": "page_carto"
     }
   }
 }

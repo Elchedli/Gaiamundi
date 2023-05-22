@@ -10,6 +10,7 @@ import {
   ToolbarPlugin,
   UnderlineButton,
 } from 'verbum';
+import SnapshotButton from './SnapshotButton';
 
 const TextEditor: FC = () => {
   return (
@@ -28,6 +29,7 @@ const TextEditor: FC = () => {
           <InsertLinkButton />
           <InsertDropdown enablePoll={true} />
           <Divider />
+          <SnapshotButton />
         </ToolbarPlugin>
       </Editor>
     </EditorComposer>

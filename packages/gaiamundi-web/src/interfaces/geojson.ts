@@ -10,6 +10,7 @@
 
 // Note: as of the RFC 7946 version of GeoJSON, Coordinate Reference Systems
 // are no longer supported. (See https://tools.ietf.org/html/rfc7946#appendix-B)}
+import * as d3Geo from 'd3-geo';
 
 /**
  * The valid values for the "type" property of GeoJSON geometry objects.
@@ -187,3 +188,33 @@ export interface FeatureCollection<
   type: 'FeatureCollection';
   features: Array<Feature<G, P>>;
 }
+
+export type GeoProjectionType = keyof Pick<
+  typeof d3Geo,
+  | 'geoAzimuthalEqualArea'
+  | 'geoAzimuthalEquidistant'
+  | 'geoGnomonic'
+  | 'geoOrthographic'
+  | 'geoStereographic'
+  | 'geoEqualEarth'
+  | 'geoAlbers'
+  | 'geoConicConformal'
+  | 'geoConicEqualArea'
+  | 'geoConicEquidistant'
+  | 'geoEquirectangular'
+  | 'geoMercator'
+  | 'geoTransverseMercator'
+  | 'geoNaturalEarth1'
+>;
+
+export type GeoFeature = Feature<Geometry, GeoJsonProperties>;
+
+export interface ShapeAttributes {
+  id: string;
+  color?: string;
+}
+
+export type GeoFeatureDatum = ShapeAttributes & {
+  feature: GeoFeature;
+  centroid: Point;
+};
