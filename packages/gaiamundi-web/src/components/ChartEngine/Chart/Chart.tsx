@@ -7,7 +7,7 @@ import { FC } from 'react';
 
 export const Chart: FC<{ chartId: number }> = ({ chartId }) => {
   const { data, isLoading, error, ChartComponent } = useChart(chartId);
-  const { rawData } = useData();
+  const { selectedData: chartData } = useData();
 
   if (error) {
     return <Alert>Impossible de charger le graphique</Alert>;
@@ -19,10 +19,10 @@ export const Chart: FC<{ chartId: number }> = ({ chartId }) => {
   }
 
   return (
-    <div className="relative h-5/6 w-full p-2">
+    <div className="relative h-[300px] overflow-hidden">
       <ResponsiveChartContainer>
         <ChartComponent
-          data={rawData}
+          data={chartData}
           {...chart.props}
           scopedSlots={{
             LegendComponent: () => null,

@@ -1,37 +1,67 @@
 import { Alert } from 'components/Alert/Alert';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { RawDatum, RawDatumType } from 'interfaces/chart';
-import { createContext, FC, ReactNode, useContext, useMemo } from 'react';
+import { GeoFeatureDatum } from 'interfaces/geojson';
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useQuery } from 'react-query';
 import { getPageCartoData } from 'services/dataset';
 import { getDataTypeMap } from 'utils/chart';
+import { GEO_CODE } from 'utils/constants';
 import { calculateIndicator } from 'utils/equation';
 import { usePageCarto } from './usePageCarto';
 
 type DatasetContextType = {
   rawData: RawDatum[];
+  indicatorData: RawDatum[];
+  selectedData: RawDatum[];
   dataKeys: Record<string, RawDatumType>;
+  selectedGeoCode: string | null;
+  selectGeoCode: (
+    shapeDatum: GeoFeatureDatum | null,
+    e: React.MouseEvent
+  ) => void;
 };
 
 const initialContext: DatasetContextType = {
   rawData: [],
+  indicatorData: [],
+  selectedData: [],
   dataKeys: {},
+  selectedGeoCode: null,
+  selectGeoCode: () => {
+    /** noop **/
+  },
 };
 
 const DatasetContext = createContext<DatasetContextType>(initialContext);
 
 type DataProviderProps = {
   pageCartoId: number;
+  geoCodeSelection: string | null;
   children: ReactNode;
 };
 
 export const DataProvider: FC<DataProviderProps> = ({
   pageCartoId,
+  geoCodeSelection,
   children,
 }) => {
+  const [selectedGeoCode, setSelectedGeoCode] = useState<string | null>(
+    geoCodeSelection
+  );
+  const selectedGeoFeatureRef = useRef<SVGElement | null>(null);
   const { indicators } = usePageCarto();
   const {
-    data: sourceData,
+    data: rawData,
     error,
     isLoading,
   } = useQuery({
@@ -40,30 +70,74 @@ export const DataProvider: FC<DataProviderProps> = ({
     enabled: !!pageCartoId,
   });
 
-  const rawData = useMemo(
+  const indicatorData = useMemo(
     () =>
-      sourceData?.map((datum) => {
+      rawData?.map((datum) => {
         // Calculate indicators
-        const computedDatum = indicators.reduce((acc, indicator) => {
-          acc[indicator.name] = calculateIndicator(indicator, datum);
-          return acc;
-        }, {} as RawDatum);
-        return {
-          // Original data
-          ...datum,
-          // Computed data (calculated indicators)
-          ...computedDatum,
-        };
+        return indicators.reduce(
+          (acc, indicator) => {
+            acc[indicator.name] = calculateIndicator(indicator, datum);
+            return acc;
+          },
+          { [GEO_CODE]: datum[GEO_CODE] } as RawDatum
+        );
       }),
-    [sourceData, indicators]
+    [rawData, indicators]
   );
 
+  const selectGeoCode = (
+    shapeDatum: GeoFeatureDatum | null,
+    e: React.MouseEvent
+  ) => {
+    e.stopPropagation();
+    // unselect current geo feature (if any)
+    if (selectedGeoFeatureRef.current) {
+      selectedGeoFeatureRef.current.classList.remove('selected-geo-feature');
+    }
+    // Select geo feature
+    selectedGeoFeatureRef.current = e.target as SVGElement;
+    if (selectedGeoFeatureRef.current.tagName === 'path') {
+      selectedGeoFeatureRef.current.classList.add('selected-geo-feature');
+    }
+    const properties = shapeDatum?.feature.properties;
+    const geoCode =
+      properties && GEO_CODE in properties ? properties[GEO_CODE] : null;
+    setSelectedGeoCode(geoCode);
+  };
+
+  const selectedData = useMemo(() => {
+    // No geo feature selected
+    if (!selectedGeoCode) {
+      return undefined;
+    }
+
+    const datum = rawData?.find((d) => d[GEO_CODE] === selectedGeoCode);
+    // Transpose datum values to be able to plot a chart
+    if (datum) {
+      return Object.entries(datum)
+        .filter(([key]) => key !== GEO_CODE)
+        .map(([key, value]) => {
+          return { key, value };
+        });
+    }
+
+    return undefined;
+  }, [selectedGeoCode, rawData]);
+
   const dataKeys = useMemo(() => {
-    if (rawData && rawData.length > 0) {
-      return getDataTypeMap(rawData[0]);
+    const data = selectedGeoCode ? selectedData : rawData;
+    if (data && data.length > 0) {
+      return getDataTypeMap(data[0]);
     }
     return {};
-  }, [rawData]);
+  }, [selectedGeoCode, rawData, selectedData]);
+
+  useEffect(() => {
+    if (geoCodeSelection !== selectedGeoCode) {
+      setSelectedGeoCode(geoCodeSelection);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geoCodeSelection]);
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -73,13 +147,15 @@ export const DataProvider: FC<DataProviderProps> = ({
     return <Alert>Erreur lors du chargement des données</Alert>;
   }
 
-  console.info('>>>>> Raw Data :', rawData);
-
   return (
     <DatasetContext.Provider
       value={{
         rawData: rawData || [],
+        indicatorData: indicatorData || [],
+        selectedData: selectedData || [],
         dataKeys,
+        selectedGeoCode,
+        selectGeoCode,
       }}
     >
       {children}

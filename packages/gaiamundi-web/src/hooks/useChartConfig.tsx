@@ -52,7 +52,7 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
   pageCartoId,
 }) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const { dataKeys, rawData } = useData();
+  const { dataKeys, selectedData: chartData } = useData();
   const [dimensions, setDimensions] = useState<Dimensions>(DEFAULT_DIMENSIONS);
   const queryClient = useQueryClient();
   const {
@@ -62,7 +62,9 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
     ChartComponent,
   } = useChart(chartId);
 
+  // Global chart uses the raw data, while non global appears when a geo feature is selected
   const chart = response?.data || INITIAL_CHART_CONFIG;
+
   const setChart = (newChart: ApiData<Chart> | undefined) => {
     queryClient.setQueryData(['chart', chartId], {
       data: { ...newChart, page_carto: pageCartoId },
@@ -89,11 +91,11 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'string', 0),
+            domainKey: guessDomainKey(chartData, 'string', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;
@@ -101,11 +103,11 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'string', 0),
+            domainKey: guessDomainKey(chartData, 'string', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;
@@ -113,28 +115,28 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'number', 0),
+            domainKey: guessDomainKey(chartData, 'number', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'string', 1),
+            domainKey: guessDomainKey(chartData, 'string', 1),
           },
         });
         break;
       case 'pie':
         updateChartProps({
-          domainKey: guessDomainKey(rawData, 'number', 0),
+          domainKey: guessDomainKey(chartData, 'number', 0),
         });
         break;
       case 'line':
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'number', 0),
+            domainKey: guessDomainKey(chartData, 'number', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;
@@ -142,11 +144,11 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'number', 0),
+            domainKey: guessDomainKey(chartData, 'number', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;
@@ -154,11 +156,11 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'number', 0),
+            domainKey: guessDomainKey(chartData, 'number', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;
@@ -166,11 +168,11 @@ export const ChartConfigProvider: FC<ChartConfigProviderProps> = ({
         updateChartProps({
           xAxis: {
             ...chart.props.xAxis,
-            domainKey: guessDomainKey(rawData, 'number', 0),
+            domainKey: guessDomainKey(chartData, 'number', 0),
           },
           yAxis: {
             ...chart.props.yAxis,
-            domainKey: guessDomainKey(rawData, 'number', 1),
+            domainKey: guessDomainKey(chartData, 'number', 1),
           },
         });
         break;

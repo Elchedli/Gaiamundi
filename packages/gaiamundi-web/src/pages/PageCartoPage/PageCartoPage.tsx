@@ -10,7 +10,7 @@ export const PageCartoEditPage: React.FC = () => {
   return (
     <div className="h-full w-full scroll-auto">
       <PageCartoProvider id={id}>
-        <DataProvider pageCartoId={id}>
+        <DataProvider pageCartoId={id} geoCodeSelection={null}>
           <SnapshotProvider>
             <PageCartoEditor />
           </SnapshotProvider>

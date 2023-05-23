@@ -1,25 +1,20 @@
-import { DatasetColumn } from 'interfaces/column';
-import { useMemo } from 'react';
-import { useQuery, UseQueryResult } from 'react-query';
-import { getPageCartoById } from 'services/page-carto';
-
-import React from 'react';
-
 import { Alert } from 'components/Alert/Alert';
 import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import { ApiData, ApiDocument, ApiError } from 'interfaces/api';
-import { Chart } from 'interfaces/chart';
+import { DatasetColumn } from 'interfaces/column';
 import { GeoMap } from 'interfaces/geo-map';
 import { Indicator } from 'interfaces/indicator';
 import { PageCarto } from 'interfaces/page-carto';
+import React, { useMemo } from 'react';
+import { useQuery, UseQueryResult } from 'react-query';
+import { getPageCartoById } from 'services/page-carto';
 
 type PageCartoContextValue = UseQueryResult<ApiDocument<PageCarto>, unknown> & {
   pageCartoId: number;
   map?: GeoMap;
   columns: DatasetColumn[];
   indicators: ApiData<Indicator>[];
-  charts: ApiData<Chart>[];
 };
 
 const PageCartoContext = React.createContext<PageCartoContextValue | null>(
@@ -73,11 +68,6 @@ export const PageCartoProvider = ({
     [pageCarto]
   );
 
-  const charts = useMemo(
-    () => pageCarto?.data?.charts || [],
-    [pageCarto?.data?.charts]
-  );
-
   if (query.isLoading) {
     return <LoadingMessage />;
   }
@@ -92,7 +82,13 @@ export const PageCartoProvider = ({
 
   return (
     <PageCartoContext.Provider
-      value={{ pageCartoId: id, map, columns, indicators, charts, ...query }}
+      value={{
+        pageCartoId: id,
+        map,
+        columns,
+        indicators,
+        ...query,
+      }}
     >
       {children}
     </PageCartoContext.Provider>

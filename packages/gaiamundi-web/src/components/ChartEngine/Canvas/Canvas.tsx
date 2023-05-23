@@ -10,7 +10,7 @@ import { ChartTypeSelector } from './ChartTypeSelector';
 export const Canvas = () => {
   const { chart, updateChart, ChartComponent, setDimensions } =
     useChartConfig();
-  const { rawData } = useData();
+  const { selectedData: chartData } = useData();
 
   const switchChartType = (type: ChartType) => {
     updateChart({ type });
@@ -38,11 +38,11 @@ export const Canvas = () => {
         </div>
         <hr className="border-1 border-gray-100 mt-4" />
       </div>
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <ChartTypeSelector onSelect={switchChartType} />
         <ResponsiveChartContainer onResize={setDimensions}>
           <ChartComponent
-            data={rawData}
+            data={chartData}
             {...chart.props}
             scopedSlots={{
               LegendComponent: () => null,

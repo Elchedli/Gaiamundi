@@ -6,7 +6,7 @@ const PAGECARTO_THUMBNAIL_SIZE = 512;
 const createImageCanvas = (image: HTMLImageElement, ratio: number) => {
   const canvas = document.createElement('canvas');
   canvas.width = PAGECARTO_THUMBNAIL_SIZE;
-  canvas.height = PAGECARTO_THUMBNAIL_SIZE * ratio;
+  canvas.height = PAGECARTO_THUMBNAIL_SIZE / ratio;
   const context = canvas.getContext('2d');
   context?.drawImage(image, 0, 0, canvas.width, canvas.height);
   return canvas;
@@ -27,9 +27,13 @@ export const rasterizeSvg = async (svgElement: SVGSVGElement) => {
   svgClone.setAttribute('height', bbox.height.toString());
   // This line resets the size and place to the default placement
   svgClone.style.transform = 'none';
+  svgClone.setAttribute(
+    'viewBox',
+    `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`
+  );
   const img = new Image();
   // This conversion makes svg to an image using data base64 link
-  const svg = new XMLSerializer().serializeToString(svgElement);
+  const svg = new XMLSerializer().serializeToString(svgClone);
   const dataUrl = 'data:image/svg+xml;base64,' + window.btoa(svg);
   img.src = dataUrl;
   return await new Promise<File>((resolve) => {

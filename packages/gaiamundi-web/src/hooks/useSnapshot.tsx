@@ -1,4 +1,6 @@
+import { ApiDocument } from 'interfaces/api';
 import { GeoProjectionType } from 'interfaces/geojson';
+import { SnapshotStub } from 'interfaces/snapshot';
 import {
   createContext,
   FC,
@@ -7,7 +9,11 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { useMutation } from 'react-query';
+import { createSnapshot } from '../services/snapshot';
+import { useData } from './useData';
 import { usePageCarto } from './usePageCarto';
+import { useToast } from './useToast';
 
 type SnapshotBubbleConfig = {
   indicatorId: number;
@@ -31,6 +37,7 @@ type SnapshotContextType = {
   ) => void;
   mapDomainKey: string | undefined;
   bubbleDomainKey: string | undefined;
+  addSnapshot: () => Promise<ApiDocument<SnapshotStub>>;
 };
 
 const initialContext: SnapshotContextType = {
@@ -61,6 +68,9 @@ const initialContext: SnapshotContextType = {
   },
   mapDomainKey: undefined,
   bubbleDomainKey: undefined,
+  addSnapshot: () => {
+    return Promise.reject();
+  },
 };
 
 const SnapshotContext = createContext<SnapshotContextType>(initialContext);
@@ -70,11 +80,44 @@ type SnapshotProviderProps = {
 };
 
 export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
-  const { indicators } = usePageCarto();
+  const { indicators, pageCartoId } = usePageCarto();
+  const { selectedGeoCode } = useData();
   const [indicatorId, updateIndicatorId] = useState(initialContext.indicatorId);
   const [projection, updateProjection] = useState(initialContext.projection);
   const [colors, updateColors] = useState(initialContext.colors);
   const [bubble, setBubble] = useState(initialContext.bubble);
+  const { addToast } = useToast();
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async () => {
+      return await createSnapshot({
+        indicatorId,
+        projection,
+        colors,
+        bubble,
+        page_carto: pageCartoId,
+        geoCode: selectedGeoCode || '',
+      });
+    },
+    onSuccess: () => {
+      addToast({
+        title: `Snapshot`,
+        type: 'success',
+        description: `Le snapshot a été crée avec succès`,
+      });
+    },
+    onError: (error) => {
+      addToast({
+        title: 'Echec lors de la sauvegarde du snapshot',
+        type: 'error',
+        description: JSON.stringify(error),
+      });
+    },
+  });
+
+  const addSnapshot = async () => {
+    return await mutateAsync();
+  };
 
   const updateBubbleConfig = (
     key: keyof SnapshotBubbleConfig,
@@ -96,8 +139,6 @@ export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
     [indicators, bubble.indicatorId]
   );
 
-  console.info('>>>> Domain Keys', mapDomainKey, bubbleDomainKey);
-
   return (
     <SnapshotContext.Provider
       value={{
@@ -111,6 +152,7 @@ export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
         updateBubbleConfig,
         mapDomainKey,
         bubbleDomainKey,
+        addSnapshot,
       }}
     >
       {children}
