@@ -20,11 +20,11 @@ export const MapLegend: FC<{
   data: RawDatum[];
   domainKey?: string;
   colors: string[];
-}> = ({ data: rawData, domainKey, colors }) => {
+}> = ({ data, domainKey, colors }) => {
   const quantiles = useMemo(
     () =>
-      domainKey ? getQuantileRanges(rawData, domainKey, colors.length + 1) : [],
-    [rawData, domainKey, colors]
+      domainKey ? getQuantileRanges(data, domainKey, colors.length + 1) : [],
+    [data, domainKey, colors]
   );
 
   if (quantiles.length === 0) {
