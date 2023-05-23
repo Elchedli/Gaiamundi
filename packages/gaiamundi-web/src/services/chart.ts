@@ -1,5 +1,5 @@
 import { Chart } from 'interfaces/chart';
-import { ContentType, strapi } from './strapi';
+import { ContentType, QueryParams, strapi } from './strapi';
 
 export const createChart = async (data: Chart) => {
   return await strapi.create<Chart>(ContentType.CHARTS, data);
@@ -9,14 +9,11 @@ export const getChartById = async (id: number) => {
   return await strapi.getById<Chart>(ContentType.CHARTS, id);
 };
 
-export const getChartByCartoPage = async (pageCartoId: number) => {
+export const getChartsByCartoPage = async (pageCartoId: number) => {
   return await strapi.get<Chart>(ContentType.CHARTS, {
     filters: {
-      page_carto: { $eq: pageCartoId },
-    },
-    populate: {
-      page_carto: true,
-    },
+      page_carto: { id: { $eq: pageCartoId } },
+    } as QueryParams['filters'],
   });
 };
 

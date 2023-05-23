@@ -153,7 +153,7 @@ export const PageCartoIndicatorForm: FC<PageCartoIndicatorFormProps> = ({
               )}
             </div>
             <div className="mt-3">
-              <Label htmlFor="origin">Validity</Label>
+              <Label htmlFor="origin">Validité</Label>
               <TextInput
                 data-testid="validity-input"
                 id="validity"

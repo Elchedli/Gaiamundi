@@ -5,20 +5,30 @@ import { Chart } from 'components/ChartEngine/Chart/Chart';
 import { ChartEngine } from 'components/ChartEngine/ChartEngine';
 import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import Well from 'components/Layout/Well';
+import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import config from 'config';
 import { useData } from 'hooks/useData';
 import { useConfirmModal, useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useToast } from 'hooks/useToast';
 import { useMemo, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { deleteChart } from 'services/chart';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { deleteChart, getChartsByCartoPage } from 'services/chart';
 
 export const PageCartoChartPanel = () => {
   const { showModal, hideModal } = useModal();
   const { selectedGeoCode } = useData();
-
-  const { pageCartoId, charts } = usePageCarto();
+  const { pageCartoId } = usePageCarto();
+  const { data: response, isLoading: isFetching } = useQuery({
+    queryKey: ['page-carto-charts', pageCartoId],
+    queryFn: async () => {
+      return await getChartsByCartoPage(pageCartoId);
+    },
+    onSuccess({ data }) {
+      setSelectedChartId(data.length ? data[data.length - 1].id : 0);
+    },
+  });
+  const charts = useMemo(() => response?.data || [], [response]);
   const [selectedChartId, setSelectedChartId] = useState(
     charts.length ? charts[0].id : 0
   );
@@ -33,13 +43,7 @@ export const PageCartoChartPanel = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charts]);
 
-  const onClose = () => {
-    queryClient.invalidateQueries({
-      queryKey: ['chart'],
-    });
-  };
-
-  const { mutateAsync: discardChart, isLoading } = useMutation({
+  const { mutateAsync: discardChart, isLoading: isDeleting } = useMutation({
     mutationFn: async () => {
       return await deleteChart(selectedChartId);
     },
@@ -49,9 +53,8 @@ export const PageCartoChartPanel = () => {
         type: 'success',
         description: `Le graphique a été supprimé avec succès`,
       });
-      setSelectedChartId(0);
       queryClient.invalidateQueries({
-        queryKey: ['page-carto', pageCartoId],
+        queryKey: ['page-carto-charts', pageCartoId],
       });
     },
     onError: (error) => {
@@ -68,6 +71,10 @@ export const PageCartoChartPanel = () => {
     'Êtes-vous sûr de vouloir supprimer cette graphique?',
     discardChart
   );
+
+  if (isFetching || isDeleting) {
+    return <LoadingMessage />;
+  }
 
   return (
     <div className="w-full h-full">
@@ -110,7 +117,6 @@ export const PageCartoChartPanel = () => {
                       chartId: selectedChartId,
                       pageCartoId,
                       onSubmit: hideModal,
-                      onClose: onClose,
                       selectedGeoCode,
                     },
                   })
@@ -121,7 +127,6 @@ export const PageCartoChartPanel = () => {
                 icon={TrashIcon}
                 data-testid="discard-chart"
                 onClick={showConfirmModal}
-                disabled={isLoading}
                 size={'sm'}
               />
             </ButtonGroup>
