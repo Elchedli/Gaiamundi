@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { deletePageCarto } from 'services/page-carto';
 
 const getThumbnailUrl = (cover: ApiData<UploadedFile>) => {
-  const imgUrl = cover?.formats['thumbnail'].url;
+  const imgUrl = cover?.formats['small'].url;
   return imgUrl
     ? `${config.API_URL}${imgUrl}`
     : `${config.PUBLIC_URL}/imageplaceholder.png`;
@@ -88,7 +88,7 @@ const PageCartoItem: React.FC<ApiData<PageCarto>> = ({
         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-400 xl:aspect-w-7 xl:aspect-h-8 relative">
           <img
             src={getThumbnailUrl(cover)}
-            className="h-48 w-full object-cover group-hover:opacity-75"
+            className="h-48 w-full object-contain group-hover:opacity-75"
           />
           {canEditOrDelete === true ? (
             <>

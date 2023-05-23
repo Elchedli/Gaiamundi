@@ -75,6 +75,13 @@ export const mockCover: ApiData<UploadedFile> = {
   size: 1234,
   url: '/api/v1/geo-maps/id/thumbnailImage',
   formats: {
+    small: {
+      extension: 'ext',
+      url: '/api/v1/geo-maps/id/thumbnailImage?720',
+      size: 360,
+      hash: 'hash720',
+      mime: 'mimeExample',
+    },
     thumbnail: {
       extension: 'ext',
       url: '/api/v1/geo-maps/id/thumbnailImage?720',
