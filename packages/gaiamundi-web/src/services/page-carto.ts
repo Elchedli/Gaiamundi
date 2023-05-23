@@ -1,4 +1,4 @@
-import { PageCarto, PageCartoBase, PageCartoStub } from 'interfaces/page-carto';
+import { PageCarto, PageCartoStub } from 'interfaces/page-carto';
 import { User } from 'interfaces/user';
 import { ContentType, QueryParams, strapi } from './strapi';
 
@@ -111,7 +111,7 @@ export const getPageCartoByTagsAndSearch = async (
 
 export const updatePageCarto = async (
   id: number,
-  data: Partial<PageCartoBase>
+  data: Partial<PageCartoStub>
 ) => {
   return await strapi.update(ContentType.PAGE_CARTOS, id, { data });
 };

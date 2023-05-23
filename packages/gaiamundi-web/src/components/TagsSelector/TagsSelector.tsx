@@ -78,7 +78,11 @@ export const TagsSelector: React.FC<TagsSelectorProps> = ({
   };
 
   const handleTagDeselect = (tag: ApiData<Tag>) => {
-    setSelectedTagIds(selectedTagIds.filter((id) => id !== tag.id));
+    const updatedTags = selectedTags.filter(
+      (selectedTag) => selectedTag.id !== tag.id
+    );
+    setSelectedTagIds(updatedTags.map((tag) => tag.id));
+    onChange(updatedTags.map((tag) => tag.id));
   };
 
   const handleSubmit = (name: string) => {
