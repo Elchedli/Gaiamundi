@@ -12,14 +12,14 @@ const AutoSavePlugin = () => {
   const { data } = usePageCarto();
   const isInitialized = useRef(false);
 
-  const updateHtmlPageCarto = useMutation({
+  const { mutate: updatePageCartoHtml } = useMutation({
     mutationFn: async (html: string) => {
       await updatePageCarto(data?.data.id || 0, { html: html });
     },
   });
 
-  const debounceUpdate = useCallback(debounce(updateHtmlPageCarto.mutate), [
-    updateHtmlPageCarto,
+  const debounceUpdate = useCallback(debounce(updatePageCartoHtml), [
+    updatePageCartoHtml,
   ]);
 
   useEffect(() => {
