@@ -27,9 +27,6 @@
       "target": "api::geo-map.geo-map",
       "inversedBy": "page_cartos"
     },
-    "html": {
-      "type": "richtext"
-    },
     "tags": {
       "type": "relation",
       "relation": "manyToMany",
@@ -67,6 +64,9 @@
       "relation": "oneToMany",
       "target": "api::snapshot.snapshot",
       "mappedBy": "page_carto"
+    },
+    "html": {
+      "type": "richtext"
     }
   }
 }

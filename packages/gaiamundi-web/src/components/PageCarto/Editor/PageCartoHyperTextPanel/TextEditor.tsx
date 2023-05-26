@@ -9,6 +9,7 @@ import {
   ToolbarPlugin,
   UnderlineButton,
 } from 'verbum';
+import AutoSavePlugin from './AutoSavePlugin';
 import SnapshotButton from './SnapshotButton';
 
 const TextEditor: React.FC = () => {
@@ -21,6 +22,7 @@ const TextEditor: React.FC = () => {
         actionsEnabled={false}
         emojisEnabled={true}
       >
+        <AutoSavePlugin></AutoSavePlugin>
         <ToolbarPlugin defaultFontSize="15px">
           <BoldButton />
           <ItalicButton />
