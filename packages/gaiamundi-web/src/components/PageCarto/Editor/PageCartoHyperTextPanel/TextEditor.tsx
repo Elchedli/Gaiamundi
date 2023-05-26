@@ -12,7 +12,11 @@ import {
 import AutoSavePlugin from './AutoSavePlugin';
 import SnapshotButton from './SnapshotButton';
 
-const TextEditor: React.FC = () => {
+interface textEditorProps {
+  canEdit: boolean;
+}
+
+const TextEditor: React.FC<textEditorProps> = ({ canEdit }) => {
   return (
     <EditorComposer>
       <Editor
@@ -21,17 +25,22 @@ const TextEditor: React.FC = () => {
         placeholder="Commencez à écrire du texte ici!"
         actionsEnabled={false}
         emojisEnabled={true}
+        isEditable={canEdit}
       >
         <AutoSavePlugin></AutoSavePlugin>
-        <ToolbarPlugin defaultFontSize="15px">
-          <BoldButton />
-          <ItalicButton />
-          <UnderlineButton />
-          <InsertLinkButton />
-          <InsertDropdown enablePoll={true} />
-          <Divider />
-          <SnapshotButton />
-        </ToolbarPlugin>
+        {canEdit ? (
+          <ToolbarPlugin defaultFontSize="15px">
+            <BoldButton />
+            <ItalicButton />
+            <UnderlineButton />
+            <InsertLinkButton />
+            <InsertDropdown enablePoll={true} />
+            <Divider />
+            <SnapshotButton />
+          </ToolbarPlugin>
+        ) : (
+          ''
+        )}
       </Editor>
     </EditorComposer>
   );

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { PageCartoChartPanel } from '../Editor/PageCartoChartPanel/PageCartoChartPanel';
 import { PageCartoMap } from '../Editor/PageCartoMap';
-import { PageCartoContent } from './PageCartoContent';
+import { PageCartoPanels } from '../Editor/PageCartoPanels';
 
 export const PageCartoReadOnly: FC = () => {
   return (
@@ -10,7 +10,7 @@ export const PageCartoReadOnly: FC = () => {
         <PageCartoMap canEdit={false} />
       </div>
       <div className="col-span row-span-1 p-2">
-        <PageCartoContent />
+        <PageCartoPanels canEdit={false} />
       </div>
       <div className="col-span row-span-1 p-2">
         <PageCartoChartPanel />
