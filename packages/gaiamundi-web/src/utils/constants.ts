@@ -45,7 +45,7 @@ export const INITIAL_CHART_CONFIG: ApiData<Chart> = {
     xAxis: {
       domainKey: 'name',
       position: Position.BOTTOM,
-      nice: 0,
+      nice: 2,
     },
     yAxis: {
       domainKey: 'value',

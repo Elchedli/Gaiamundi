@@ -12,12 +12,13 @@ import ForgotPasswordPage from 'pages/ForgotPasswordPage/ForgotPasswordPage';
 import { HomePage } from 'pages/HomePage/HomePage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { NewPageCartoPage } from 'pages/NewPageCartoPage/NewPageCartoPage';
-import { PageCartoEditPage } from 'pages/PageCartoPage/PageCartoPage';
+import { PageCartoEditPage } from 'pages/PageCartoEditPage/PageCartoEditPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
 import { SignUpPage } from 'pages/SignUpPage/SignUpPage';
 import { TermsOfUse } from 'pages/TermsOfUse/TermsOfUse';
 
 import { ProtectedRoute } from 'components/PrivateRoute/PrivateRoute';
+import { PageCartoViewPage } from 'pages/PageCartoViewPage/PageCartoViewPage';
 import 'react-data-grid/lib/styles.css';
 
 // Create a client
@@ -56,6 +57,22 @@ export default function App() {
                   element={
                     <ProtectedRoute>
                       <PageCartoEditPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="page-carto/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PageCartoViewPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="page-carto/:id/:snapshot"
+                  element={
+                    <ProtectedRoute>
+                      <PageCartoViewPage />
                     </ProtectedRoute>
                   }
                 />

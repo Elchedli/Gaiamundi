@@ -12,7 +12,7 @@ import { ApiErrorAlert } from 'components/Alert/ApiErrorMessage';
 import { Button } from 'components/Button/Button';
 import ButtonGroup from 'components/Button/ButtonGroup';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
-import { TitlePageCartoEdit } from 'components/TitlePageCartoEdit/TitlePageCartoEdit';
+import { useCanEdit } from 'hooks/useCanEdit';
 import { useData } from 'hooks/useData';
 import { usePageCarto } from 'hooks/usePageCarto';
 import { useSnapshot } from 'hooks/useSnapshot';
@@ -31,6 +31,7 @@ export const PageCartoMap: FC = () => {
   const { addToast } = useToast();
   const { map, pageCartoId } = usePageCarto();
   const { indicatorData, selectGeoCode: selectGeoFeature } = useData();
+  const canEdit = useCanEdit();
   const snapshot = useSnapshot();
   const geoJson = map?.geoJSON;
   const { data, isError, isLoading, isIdle, error } = useQuery({
@@ -149,14 +150,15 @@ export const PageCartoMap: FC = () => {
 
   return (
     <div className="w-full h-full relative">
-      <div className="w-full p-2 absolute z-50 flex bg-white bg-opacity-50">
-        <TitlePageCartoEdit />
-        <ButtonGroup pill={true} className="mt-2">
-          <Button icon={PlusIcon} onClick={zoomIn} />
-          <Button icon={MinusIcon} onClick={zoomOut} />
+      <ButtonGroup pill={true} className="mt-2 absolute z-50 top-0 right-0">
+        <Button icon={PlusIcon} onClick={zoomIn} />
+        {canEdit ? (
           <Button icon={CameraIcon} onClick={generateThumbnail} />
-        </ButtonGroup>
-      </div>
+        ) : (
+          <></>
+        )}
+        <Button icon={MinusIcon} onClick={zoomOut} />
+      </ButtonGroup>
       <div
         className="w-full h-full overflow-hidden"
         ref={panZoomCallback}

@@ -7,6 +7,7 @@ import { ListBoxInput } from 'components/Inputs/ListBoxInput';
 import Well from 'components/Layout/Well';
 import { LoadingMessage } from 'components/Loader/LoadingMessage';
 import config from 'config';
+import { useCanEdit } from 'hooks/useCanEdit';
 import { useData } from 'hooks/useData';
 import { useConfirmModal, useModal } from 'hooks/useModal';
 import { usePageCarto } from 'hooks/usePageCarto';
@@ -19,6 +20,7 @@ export const PageCartoChartPanel = () => {
   const { showModal, hideModal } = useModal();
   const { selectedGeoCode } = useData();
   const { pageCartoId } = usePageCarto();
+  const canEdit = useCanEdit();
   const { data: response, isLoading: isFetching } = useQuery({
     queryKey: ['page-carto-charts', pageCartoId],
     queryFn: async () => {
@@ -88,48 +90,50 @@ export const PageCartoChartPanel = () => {
                 setSelectedChartId(chartId);
               }}
             />
-            <ButtonGroup className="ml-2">
-              <Button
-                icon={PlusIcon}
-                data-testid="create-chart2"
-                onClick={() =>
-                  showModal({
-                    title: 'Nouveau graphique',
-                    Component: ChartEngine,
-                    props: {
-                      chartId: 0,
-                      pageCartoId,
-                      onSubmit: hideModal,
-                      selectedGeoCode,
-                    },
-                  })
-                }
-                size={'sm'}
-              />
-              <Button
-                icon={PencilIcon}
-                data-testid="edit-chart"
-                onClick={() =>
-                  showModal({
-                    title: 'Modifier graphique',
-                    Component: ChartEngine,
-                    props: {
-                      chartId: selectedChartId,
-                      pageCartoId,
-                      onSubmit: hideModal,
-                      selectedGeoCode,
-                    },
-                  })
-                }
-                size={'sm'}
-              />
-              <Button
-                icon={TrashIcon}
-                data-testid="discard-chart"
-                onClick={showConfirmModal}
-                size={'sm'}
-              />
-            </ButtonGroup>
+            {canEdit && (
+              <ButtonGroup className="ml-2">
+                <Button
+                  icon={PlusIcon}
+                  data-testid="create-chart2"
+                  onClick={() =>
+                    showModal({
+                      title: 'Nouveau graphique',
+                      Component: ChartEngine,
+                      props: {
+                        chartId: 0,
+                        pageCartoId,
+                        onSubmit: hideModal,
+                        selectedGeoCode,
+                      },
+                    })
+                  }
+                  size={'sm'}
+                />
+                <Button
+                  icon={PencilIcon}
+                  data-testid="edit-chart"
+                  onClick={() =>
+                    showModal({
+                      title: 'Modifier graphique',
+                      Component: ChartEngine,
+                      props: {
+                        chartId: selectedChartId,
+                        pageCartoId,
+                        onSubmit: hideModal,
+                        selectedGeoCode,
+                      },
+                    })
+                  }
+                  size={'sm'}
+                />
+                <Button
+                  icon={TrashIcon}
+                  data-testid="discard-chart"
+                  onClick={showConfirmModal}
+                  size={'sm'}
+                />
+              </ButtonGroup>
+            )}
           </div>
           <Chart chartId={selectedChartId} />
         </Well>

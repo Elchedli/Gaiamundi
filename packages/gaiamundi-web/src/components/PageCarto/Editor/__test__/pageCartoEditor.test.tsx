@@ -3,10 +3,32 @@ import { usePageCarto } from 'hooks/usePageCarto';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { PageCartoEditor } from '../PageCartoEditor';
 
+// Mock useAuth hook to return a fake user object
+jest.mock('hooks/useAuth', () => {
+  return {
+    useAuth() {
+      return {
+        isAuthenticated: true,
+        user: { id: 1 },
+      };
+    },
+  };
+});
+
+jest.mock('hooks/useCanEdit', () => {
+  return {
+    useCanEdit() {
+      return true;
+    },
+  };
+});
+
 jest.mock('hooks/usePageCarto');
+
 jest.mock('@excalidraw/excalidraw', () => ({
   // mock implementation of excalidraw
 }));
+
 jest.mock('lib0/webcrypto', () => ({
   // mock implementation of webcrypto
 }));
@@ -14,6 +36,7 @@ jest.mock('lib0/webcrypto', () => ({
 jest.mock('nanoid', () => ({
   nanoid: () => 'mocked-id',
 }));
+
 describe('pageCartoEditor', () => {
   afterAll(() => {
     jest.clearAllMocks();
