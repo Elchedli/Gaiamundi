@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "indicatorId": {
-      "type": "biginteger"
+      "type": "integer"
     },
     "projection": {
       "type": "string",

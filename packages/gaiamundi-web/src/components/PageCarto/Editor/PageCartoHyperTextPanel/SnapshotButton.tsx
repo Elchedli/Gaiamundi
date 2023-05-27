@@ -11,9 +11,9 @@ const SnapshotButton = () => {
   const handleClick = async () => {
     try {
       const snapshot = await addSnapshot();
-      let link = `/page-carto/${pageCartoId}/snapshot/${snapshot.data.id}`;
+      let link = `/page-carto/${pageCartoId}#${snapshot.data.id}`;
       if (snapshot.data.geoCode) {
-        link += `/selected/${snapshot.data.geoCode}`;
+        link += `,${snapshot.data.geoCode}`;
       }
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, link);
     } catch (e) {
