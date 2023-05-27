@@ -67,7 +67,7 @@ yarn start:web
 
 #### Desktop (En cours de développement) <a href="#desktop-coming-soon" id="desktop-coming-soon"></a>
 
-Start Desktop app (Electron):&#x20;
+Démarrer l'application desktop avec Electron.js :&#x20;
 
 ```sh
 yarn start:desktop

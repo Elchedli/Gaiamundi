@@ -140,17 +140,5 @@ Outre le partage en réseau local, les différents réseaux gaïaMundi partagent
 
 Satisfaire sa curiosité, tester une hypothyèse, laisser libre court à un raisonnement dans les données. C’est l’un des intérêts de GaïaMundi que de permettre cela , "à temps perdu" ou dans le cadre d’un programme de travail établi. L’inteface allégée "noyeau Gaïamundi" est particulièrement pratique pour ce type d’activité. Après avoir fouillé, testé et découvert des pistes fructueuses, l’usage de la plateforme globale est d’autant plus performant puisquon a déjà une idée précise des directions à prendre dans l’univers des données.
 
-### Technologie et Installation
-
-Le noyau GaïaMundi est développé en technologie Client HTML, SVG et Javascript.
-
-Seules les fonctions de BackOffice sont développées en Php.
-
-La gestion des données ne fait pas appel aux base de données serveur. Les fichiers de données sont au format HTM et javascript.
-
-Du fait de ce choix technique, les plateformes Caïro fonctionnent en mode consultation sans serveur ( clé USB, disque dur ou amovible)
-
-**L’installation** de la suite Cairo se fait par simple copier coller du répertoire racine sur un serveur(local ou distant) ou sur un support USB, disque etc.. ( pour un usage restreint au mode consultation)
-
 
 
