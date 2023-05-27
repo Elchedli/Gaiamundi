@@ -12,13 +12,28 @@ Le projet est totalement développement en Javascript/Node.js en utilisant le mo
 
 ### Pré-requis <a href="#requirements" id="requirements"></a>
 
-* Installer lerna globally
+* Utiliser **Node v16 et Yarn** (Idéalement avec [NVM](https://fr.linux-console.net/?p=6#gsc.tab=0)) :
+
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+# Ou bien
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+```
+
+Ensuite :
+
+```sh
+nvm install v16
+npm install -G yarn
+```
+
+* Installer **Lerna** gloablement :
 
 ```sh
 yarn add -G lerna
 ```
 
-* Utiliser Node v16 (Idéalement avec [NVM](https://fr.linux-console.net/?p=6#gsc.tab=0))
+
 
 ### Installation <a href="#installation" id="installation"></a>
 
