@@ -33,8 +33,6 @@ npm install -G yarn
 yarn add -G lerna
 ```
 
-
-
 ### Installation <a href="#installation" id="installation"></a>
 
 ```bash
@@ -53,7 +51,11 @@ yarn build
 cp .env.example .env
 ```
 
-Démarrez le serveur API (Strapi Headless CMS): `yarn start:api`
+Démarrez le serveur API (Strapi Headless CMS):&#x20;
+
+```sh
+yarn start:api
+```
 
 #### Web <a href="#web" id="web"></a>
 
