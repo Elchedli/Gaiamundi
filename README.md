@@ -2,6 +2,8 @@
 
 The following project is a mono-repo built using [Lerna](https://lerna.js.org/)
 
+Please check our full documentation here : [https://gaiamundi.gitbook.io/](https://gaiamundi.gitbook.io/)
+
 ## Requirements
 
 - Install lerna globally : `yarn add -G lerna`
@@ -14,7 +16,7 @@ The following project is a mono-repo built using [Lerna](https://lerna.js.org/)
 yarn setup
 ```
 
-## Developement
+## Development
 
 ### API
 
