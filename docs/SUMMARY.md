@@ -1,3 +1,6 @@
 # Table of contents
 
-* [Page 1](README.md)
+* [GaïaMundi](README.md)
+* [Ecole Entreprise GaïaMundi](ecole-entreprise-gaiamundi/README.md)
+  * [Démarche pédagogique](ecole-entreprise-gaiamundi/demarche-pedagogique.md)
+* [Documentation Technique](documentation-technique.md)
