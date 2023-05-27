@@ -68,14 +68,6 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route
-                  path="page-carto/:id/:snapshot"
-                  element={
-                    <ProtectedRoute>
-                      <PageCartoViewPage />
-                    </ProtectedRoute>
-                  }
-                />
               </Route>
             </Routes>
           </AuthProvider>

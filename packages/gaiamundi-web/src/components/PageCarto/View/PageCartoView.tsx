@@ -6,6 +6,7 @@ import { PageCartoMap } from '../Editor/PageCartoMap';
 
 export const PageCartoView: FC = () => {
   const { data } = usePageCarto();
+
   return (
     <div className="grid grid-cols-12 h-full grid-rows-2">
       <div className="col-span-7 row-span-2 p-2 relative">

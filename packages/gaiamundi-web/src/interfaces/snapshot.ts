@@ -6,6 +6,8 @@ export interface SnapshotBubble {
   indicatorId: number;
   colors: string[];
   opacity: number;
+  minRadius: number;
+  maxRadius: number;
 }
 
 export interface SnapshotBase {
