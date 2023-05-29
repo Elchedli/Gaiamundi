@@ -17,6 +17,14 @@ jest.mock('hooks/useAuth', () => {
   };
 });
 
+jest.mock('hooks/useCanEdit', () => {
+  return {
+    useCanEdit() {
+      return true;
+    },
+  };
+});
+
 // Mock the usePageCarto hook to return a fake response object
 jest.mock('services/page-carto', () => {
   return {

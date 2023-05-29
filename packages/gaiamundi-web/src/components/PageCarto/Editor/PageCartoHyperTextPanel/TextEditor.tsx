@@ -11,6 +11,7 @@ import {
   ToolbarPlugin,
   UnderlineButton,
 } from 'verbum';
+import AutoSavePlugin from './AutoSavePlugin';
 import SnapshotButton from './SnapshotButton';
 import TagsPageCarto from './TagsPageCarto';
 const TextEditor: FC = () => {
@@ -24,6 +25,7 @@ const TextEditor: FC = () => {
           actionsEnabled={false}
           emojisEnabled={true}
         >
+          <AutoSavePlugin/>
           <ToolbarPlugin defaultFontSize="15px">
             <BoldButton />
             <ItalicButton />
@@ -35,7 +37,7 @@ const TextEditor: FC = () => {
           </ToolbarPlugin>
         </Editor>
       </EditorComposer>
-      <TagsPageCarto></TagsPageCarto>
+      <TagsPageCarto/>
     </>
   );
 };

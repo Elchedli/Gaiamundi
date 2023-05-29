@@ -53,9 +53,10 @@ export const getPageCartoByTagsAndSearch = async (
   page: number,
   searchKeywords: string,
   selectedTags: number[],
-  searchKeywordsCondition: any,
   user: User | undefined
 ) => {
+  const searchKeywordsCondition = { $contains: searchKeywords };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const filters: any = {
     owner: {
       id: {

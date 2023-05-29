@@ -17,7 +17,6 @@ export const PageCartoUserList = ({
 }) => {
   const [page, setPage] = useState(1);
   const { user } = useAuth();
-  const searchKeywordsCondition = { $contains: searchKeywords };
   const {
     data: response,
     isError,
@@ -26,13 +25,7 @@ export const PageCartoUserList = ({
   } = useQuery({
     queryKey: ['page-carto-user', page, searchKeywords, selectedTags],
     queryFn: async () =>
-      getPageCartoByTagsAndSearch(
-        page,
-        searchKeywords,
-        selectedTags,
-        searchKeywordsCondition,
-        user
-      ),
+      getPageCartoByTagsAndSearch(page, searchKeywords, selectedTags, user),
   });
   if (isLoading) {
     return (

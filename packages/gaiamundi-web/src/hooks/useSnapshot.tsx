@@ -1,11 +1,12 @@
 import { ApiDocument } from 'interfaces/api';
 import { GeoProjectionType } from 'interfaces/geojson';
-import { SnapshotStub } from 'interfaces/snapshot';
+import { Snapshot, SnapshotStub } from 'interfaces/snapshot';
 import {
   createContext,
   FC,
   ReactNode,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -76,10 +77,14 @@ const initialContext: SnapshotContextType = {
 const SnapshotContext = createContext<SnapshotContextType>(initialContext);
 
 type SnapshotProviderProps = {
+  snapshot?: ApiDocument<Snapshot>;
   children: ReactNode;
 };
 
-export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
+export const SnapshotProvider: FC<SnapshotProviderProps> = ({
+  snapshot,
+  children,
+}) => {
   const { indicators, pageCartoId } = usePageCarto();
   const { selectedGeoCode } = useData();
   const [indicatorId, updateIndicatorId] = useState(initialContext.indicatorId);
@@ -138,6 +143,15 @@ export const SnapshotProvider: FC<SnapshotProviderProps> = ({ children }) => {
     () => indicators.find(({ id }) => id === bubble.indicatorId)?.name,
     [indicators, bubble.indicatorId]
   );
+
+  useEffect(() => {
+    if (snapshot) {
+      updateIndicatorId(snapshot.data.indicatorId);
+      updateProjection(snapshot.data.projection);
+      updateColors(snapshot.data.colors);
+      setBubble(snapshot.data.bubble);
+    }
+  }, [snapshot]);
 
   return (
     <SnapshotContext.Provider
