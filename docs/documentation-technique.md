@@ -24,13 +24,13 @@ Ensuite :
 
 ```sh
 nvm install v16
-npm install -G yarn
+npm install -g yarn
 ```
 
 * Installer **Lerna** gloablement :
 
 ```sh
-yarn add -G lerna
+yarn add -g lerna
 ```
 
 ### Installation <a href="#installation" id="installation"></a>
