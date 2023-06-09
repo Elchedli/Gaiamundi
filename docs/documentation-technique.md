@@ -36,6 +36,9 @@ yarn add -g lerna
 ### Installation <a href="#installation" id="installation"></a>
 
 ```bash
+git clone https://gitlab.com/gaia-mundi/gaia-mundi.git
+cd gaia-mundi/
+yarn
 yarn setup
 ```
 
