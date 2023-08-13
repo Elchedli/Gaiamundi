@@ -33,7 +33,8 @@ export interface AlertProps
   extends PropsWithChildren<Omit<ComponentProps<'div'>, 'color'>> {
   additionalContent?: ReactNode;
   type?: AlertType;
-  icon?: FC<ComponentProps<'svg'>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon?: FC<any>;
   onDismiss?: boolean | (() => void);
   rounded?: boolean;
 }

@@ -1,0 +1,10 @@
+.cache/
+.tmp/
+.git/
+dist/
+node_modules/
+data/
+.env
+.strapi-updater.json
+yarn-error.lock
+.editorconfig

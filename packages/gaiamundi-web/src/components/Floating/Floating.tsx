@@ -7,7 +7,7 @@ import {
   useFocus,
   useHover,
   useInteractions,
-  useRole,
+  useRole
 } from '@floating-ui/react';
 import classNames from 'classnames';
 import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   getArrowPlacement,
   getMiddleware,
-  getPlacement,
+  getPlacement
 } from '../../utils/floating';
 
 export interface FloatingTheme {
@@ -43,7 +43,7 @@ export interface FloatingArrowTheme {
 }
 
 export interface FloatingProps
-  extends PropsWithChildren<Omit<ComponentProps<'div'>, 'style'>> {
+  extends PropsWithChildren<Omit<ComponentProps<'div'>, 'style' | 'content'>> {
   animation?: false | `duration-${number}`;
   arrow?: boolean;
   closeRequestKey?: string;

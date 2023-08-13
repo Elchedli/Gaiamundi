@@ -5,7 +5,7 @@ import { IndicatorVariable } from 'interfaces/indicator';
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid, {
   Column as DataGridColumn,
-  SelectColumn,
+  SelectColumn
 } from 'react-data-grid';
 import { getCharRange } from 'utils/utils';
 
@@ -73,6 +73,8 @@ const DatasetVariablePicker = React.forwardRef<
       <TextInput
         id="keywords"
         className="w-full mb-2"
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         icon={MagnifyingGlassIcon}
         value={searchKeywords}
         onChange={(e) => setSearchKeywords(e.target.value)}
