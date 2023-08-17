@@ -130,3 +130,42 @@ Voir ci-après les descriptifs schématique et détaillé des démarches d’enq
 Détail des étapes et évaluation du temps mobilisé pour les participants (Equipe GaïaMundi, jeunes de la ville, groupe référent)
 
 <figure><img src="../.gitbook/assets/enqueteEE2.png" alt=""><figcaption></figcaption></figure>
+
+## L'enquete comme outil d'orientation
+
+**La cartographie et l'enquête collective, révèlatrices de domaines d'intérêt ou de positionnement.**
+
+La méthode pédagogique proposée pour faire de l’enquête de terrain un support d'orientation s’inspire de la méthode de l’objet technique \[1].
+
+Aux différentes étapes de l’enquête et des activités qu’elle implique, les jeunes participants sont conduits à explorer, découvrir ou tenir compte d’un ensemble de domaines désignés dans le schéma suivant.
+
+<figure><img src="../.gitbook/assets/domaines_orientation.jpg" alt=""><figcaption><p>domaines d'intérêt mobilisés par l'activité d'enquête cartoraphique</p></figcaption></figure>
+
+Aux différentes étapes de l’enquête et des activités qu’elle implique, les jeunes participants sont conduits à explorer, découvrir ou tenir compte d’un ensemble de domaines désignés dans le schéma suivant.
+
+L’enquête territoriale, basée sur la cartographie de données statistiques publiques et impliquant différents types d’acteurs, articule ainsi des domaines de connaissance et d’activité qui peuvent venir confirmer le caractère concret de domaines d’intérêts, les révéler ou au contraire conforter d’autres choix. Ou bien d’autres façons de les aborder, en particulier par le travail collectif, permettant de dépasser les appréhensions ou les limites liées à des parcours de formation éloignés ou non aboutis.
+
+Un propriété de cette démarche est qu’elle propose une articulation simple entre des domaines d’étude et de professionnalisation possibles et/ou d’investissement citoyen dans des sujets d’utilité collective.
+
+Mise en œuvre du schéma d’enquête comme outil d’orientation active Cette démarche d’orientation et/ou de positionnement via la médiation d’un objet sociotechnique conjugue : • l’exploration de différents domaines de formation et de professionnalité impliqués dans la conduite de l’enquête, • la confrontation croisée des expériences des jeunes participants selon une méthode inspirée de la « méthode de l’objet technique » consistant à réunir un groupe (ici les jeunes) autour d’un objet sociotechnique (la cartographie comme outil de partage de connaissance sur le monde commun) et en les invitant à en découvrir, par un travail collectif accompagné : les lois de son fonctionnement technique (l’application, les données , les cartes) et social (la carte comme rassembleur d’acteurs de différents types), les deux aspects techniques et social étant indissociables dans ce type de démarche d’enquête. Le collectif participant dispose pour cela de trois types de ressources :&#x20;
+
+• Le collectif de participants. Celui-ci doit pour cela s’auto-organiser pour réussir le parcours d’enquête en ne laissant personne sur le bas coté. ^
+
+• Une documentation technique et des experts auxquels ils peuvent s’adresser.&#x20;
+
+• Un•e observateur.•trice ou de préférence un duo \[2] analysant le fonctionnement du groupe (les observateurs n’interviennent en principe dans le cours de l’action que lorsque le groupe le demande, sollicite un retour sur son fonctionnement et ou suggère ce qui peut être facilitant) et proposant aux jeunes des entretiens individualisés, en cours d’action si nécessaire, et en tout cas en fin de cycle, pour travailler sur l’orientation voire une démarche de positionnement.&#x20;
+
+L’intérêt d’une telle démarche n’est pas seulement son effet individuel de découverte d’un domaine d’activité ou d’un champ pratique motivant et en phase avec sa propre perception de son aptitude à s’y orienter.
+
+L'intérêt est de cette démarche est aussi de mettre en mouvement et en lumière la capacité des jeunes à prendre place dans un collectif en y contribuant et en y puisant aussi des ressources, savoirs et savoir-faire dont ils ont besoin pour prendre part à la réussite du projet sans pour autant être déjà expérimentés dans le domaine.
+
+L’une des conditions de réussite de cet engagement dans l’action collective tient au fait que même si les lois qui régissent les outils utilisés peuvent apparaître complexes, l’objet doit présenter un degré élevé de familiarité pour les participants. Dans le cas présent, la source de familiarité est celle du territoire d’habitat et de vie quotidienne ainsi que les problématiques abordées qui sont partagées directement ou indirectement par les jeunes participants bien qu’étant ici appréhendées par la médiation d’un outil technique plus ou moins étranger.
+
+C’est précisément cet outil, ses composantes et ses lois de fonctionnement, qu’il s’agit justement d’appréhender à travers ses usages concrets et de saisir les articulations qu’il permet entre différents domaines d’intérêt.
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+\[_1]« Il s’agit dès lors de partir du prétexte de la technologie et de ses usages pour mettre en débat le travail : celui que l’on fait ou que l’on souhaiterait faire (avec ou sans les dispositifs d’ailleurs), celui aussi que l’on fait mal ou que l’on arrive plus à faire (du fait de ces nouveaux outils). En d’autres termes, s’il faut partir de l’activité pour penser la technologie, on peut aussi partir de la technologie pour « repenser » (et également « repanser », au sens de corriger) le travail. Et en rendant possible la création de cet espace de délibération autour des TIC, l’ambition est aussi de se dégager d’une logique d’individualisation des difficultés et des failles du travail. L’intérêt est alors que « le débat social ne porte pas directement sur des questions de personnalités, mais sur des questions qui dépassent le niveau individuel, sur des questions d’organisation du travail. » (Davezies, 2005, p. 25). « La méthode de l’objet technique paraît à cet égard particulièrement pertinente pour conduire ce processus d’élaboration collective. Rappelons que cette démarche est issue des principes de la pédagogique active et inductive et a été développée dans le champ de la formation des adultes par Marcon, en reprenant des éléments de l’objet technique de Simondon. Il a pour but, à partir de la présentation et de la description d’objets familiers, riches, emblématiques voire problématiques de la situation professionnelle de mettre le métier en débat par un collectif de travail. Ces objets peuvent être tangibles comme des artefacts techniques, des instruments, des supports de travail. Mais ils peuvent être aussi de nature intangible comme des processus, des règles, des procédures, des pratiques collectives instituées. Il s’agit, au travers de ces discussions sur ces artefacts et sur le travail, de rendre visible les difficultés de l’activité, mais aussi son inventivité, de rendre lisible les productions, les créations individuelles et collectives et d’organiser de façon dynamique et collective la transmission des savoirs d’expérience. Cette démarche doit ainsi aider à définir les conditions de développement du pouvoir d’agir (Gaubert, 2012) ». Cité par Marc-Eric Bobillier Chaumon et Yves Clot, « Clinique de l’usage : Les artefacts technologiques comme développement de l’activité », Activités, 13-2,2016 \[en ligne]._
+
+_\[2]Une personne de l’équipe EE GaïaMundi et une personne d’une structure d’insertion ou de formation du territoire._
+
