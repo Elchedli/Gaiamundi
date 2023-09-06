@@ -2,7 +2,7 @@ version: "3"
 services:
 
   nginx:
-    container_name: gaiamundi-nginx
+    container_name: nginx
     volumes:
       - ./packages/gaiamundi-api/public:/app/backend/public
       - ./packages/gaiamundi-web/public:/app/frontend/public
