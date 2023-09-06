@@ -41,7 +41,8 @@ export type ButtonComponentProps = Omit<ComponentProps<'button'>, 'color'> & {
   label?: ReactNode;
   color?: Color;
   size?: Size;
-  icon?: FC<ComponentProps<'svg'>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon?: FC<any>;
   gradientMonochrome?: GradientMonochrome;
   gradientDuoTone?: GradientDuoTone;
   positionInGroup?: PositionInGroup;

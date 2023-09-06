@@ -1,0 +1,75 @@
+version: "3"
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./packages/gaiamundi-api/public:/app/backend/public
+      - ./packages/gaiamundi-web/public:/app/frontend/public
+      - ./nginx/unsecure/:/etc/nginx:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - gaiamundi-web
+      - gaiamundi-api
+
+  gaiamundi-web:
+    container_name: gaiamundi-web
+    build:
+      context: ./packages/gaiamundi-web
+      target: production-build-stage
+      args:
+        NODE_ENV: ${NODE_ENV}
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+        REACT_APP_PUBLIC_URL: ${REACT_APP_PUBLIC_URL}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+      REACT_APP_PUBLIC_URL: ${REACT_APP_PUBLIC_URL}
+    depends_on:
+      - gaiamundi-api
+
+  gaiamundi-api:
+    container_name: gaiamundi-api
+    build:
+      context: ./packages/gaiamundi-api
+      target: production-build-stage
+      args:
+        NODE_ENV: ${NODE_ENV}
+        STRAPI_URL: ${REACT_APP_API_URL}
+        STRAPI_ADMIN_URL: ${REACT_APP_API_URL}/admin
+    restart: unless-stopped
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: gaiamundi-db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      APP_KEYS: ${APP_KEYS}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      NODE_ENV: ${NODE_ENV}
+      STRAPI_URL: ${REACT_APP_API_URL}
+      STRAPI_ADMIN_URL: ${REACT_APP_API_URL}/admin
+    volumes:
+      - ./packages/gaiamundi-api/public/uploads:/app/public/uploads
+    depends_on:
+      - gaiamundi-db
+
+  gaiamundi-db:
+    container_name: gaiamundi-db
+    image: postgres:12.0-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - ./db-data:/var/lib/postgresql/data

@@ -53,7 +53,7 @@ const GeoPropertyPicker = React.forwardRef<
           ({
             ...column,
             isGeoCode: column?.name === selectedGeoCode,
-          } as GeoProperty)
+          } as GeoProperty),
       );
     onChange(selected);
     // eslint-disable-next-line react-hooks/exhaustive-deps

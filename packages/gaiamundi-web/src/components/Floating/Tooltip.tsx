@@ -4,7 +4,7 @@ import type { FloatingTheme } from './Floating';
 import { Floating } from './Floating';
 
 export interface TooltipProps
-  extends PropsWithChildren<Omit<ComponentProps<'div'>, 'style'>> {
+  extends PropsWithChildren<Omit<ComponentProps<'div'>, 'style' | 'content'>> {
   animation?: false | `duration-${number}`;
   arrow?: boolean;
   content: ReactNode;

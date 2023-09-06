@@ -27,7 +27,6 @@ export const PageCartoViewPage: React.FC = () => {
     enabled: !!currentSnapshotId,
   });
 
-  console.log('????', currentSnapshotId, selectedGeoCode);
   return (
     <div className="h-full w-full scroll-auto">
       <PageCartoProvider id={id}>

@@ -9,7 +9,8 @@ export type TextInputProps = ComponentProps<'input'> & {
   shadow?: boolean;
   helperText?: ReactNode;
   addon?: ReactNode;
-  icon?: FC<ComponentProps<'svg'>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon?: FC<any>;
   color?: Color;
   prefix?: string;
   ref?: Ref<HTMLInputElement>;

@@ -2,7 +2,8 @@ import * as React from 'react';
 
 interface WellProps {
   title?: string;
-  Icon?: React.FC<React.ComponentProps<'svg'>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon?: React.FC<any>;
   children: React.ReactNode;
 }
 

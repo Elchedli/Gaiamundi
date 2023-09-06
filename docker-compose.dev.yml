@@ -1,0 +1,44 @@
+version: "3"
+services:
+  nginx:
+    container_name: gaiamundi-nginx
+    volumes:
+      - ./packages/gaiamundi-api/public:/app/backend/public
+      - ./packages/gaiamundi-web/public:/app/frontend/public
+      - ./nginx/unsecure/:/etc/nginx:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  gaiamundi-web:
+    container_name: gaiamundi-web
+    build:
+      context: ./packages/gaiamundi-web
+      target: development-build-stage
+      args:
+        NODE_ENV: ${NODE_ENV}
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+        REACT_APP_PUBLIC_URL: ${REACT_APP_PUBLIC_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./packages/gaiamundi-web/src:/app/src
+      - ./packages/gaiamundi-web/package.json:/app/package.json
+      - ./packages/gaiamundi-web/yarn.lock:/app/yarn.lock
+
+  gaiamundi-api:
+    container_name: gaiamundi-api
+    build:
+      context: ./packages/gaiamundi-api
+      target: development-build-stage
+      args:
+        NODE_ENV: ${NODE_ENV}
+        STRAPI_URL: ${REACT_APP_API_URL}
+        STRAPI_ADMIN_URL: ${REACT_APP_API_URL}/admin
+    volumes:
+      - ./packages/gaiamundi-api/config:/app/config
+      - ./packages/gaiamundi-api/package.json:/app/package.json
+      - ./packages/gaiamundi-api/yarn.lock:/app/yarn.lock
+      - ./packages/gaiamundi-api/public/uploads:/app/public/uploads
+      - ./packages/gaiamundi-api/src:/app/src
+    ports:
+      - "1337:1337"
+
