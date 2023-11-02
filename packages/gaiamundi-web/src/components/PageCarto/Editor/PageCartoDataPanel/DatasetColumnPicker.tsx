@@ -18,7 +18,7 @@ const DatasetColumnPicker = React.forwardRef<
   DatasetColumnPickerProps
 >(({ data, onChange }, ref) => {
   const [selectedColumns, setSelectedColumns] = useState<ReadonlySet<string>>(
-    () => new Set<string>(),
+    () => new Set<string>()
   );
   const [selectedGeoCode, setSelectedGeoCode] = useState<string | null>(null);
   const [searchKeywords, setSearchKeywords] = useState<string>('');
@@ -52,7 +52,7 @@ const DatasetColumnPicker = React.forwardRef<
           ({
             ...column,
             isGeoCode: column?.name === selectedGeoCode,
-          } as Column),
+          } as Column)
       );
     onChange(selected);
   }, [data, onChange, selectedColumns, selectedGeoCode]);

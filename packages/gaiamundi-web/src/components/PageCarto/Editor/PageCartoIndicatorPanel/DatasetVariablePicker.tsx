@@ -5,7 +5,7 @@ import { IndicatorVariable } from 'interfaces/indicator';
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid, {
   Column as DataGridColumn,
-  SelectColumn
+  SelectColumn,
 } from 'react-data-grid';
 import { getCharRange } from 'utils/utils';
 
