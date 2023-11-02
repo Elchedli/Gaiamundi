@@ -11,7 +11,7 @@ test-job:       # This job runs in test stage
     - npm i -g lerna
     - echo "Installing dependencies..."
     - cd packages/gaiamundi-api && yarn install
-    - cd ..
+    - cd ../..
     - cd packages/gaiamundi-web && yarn install
     - echo "Deps install complete."
     - echo "Running unit tests... This will take about 60 seconds."
