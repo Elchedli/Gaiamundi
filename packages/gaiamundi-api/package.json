@@ -19,8 +19,9 @@
     "@strapi/provider-email-sendgrid": "^4.5.3",
     "@strapi/strapi": "4.5.3",
     "better-sqlite3": "7.4.6",
-    "geojson-to-svg": "^1.1.4",
+    "geojson2svg": "^2.0.1",
     "papaparse": "^5.3.2",
+    "parse-svg-path": "^0.1.2",
     "pg": "^8.11.2",
     "strapi-plugin-transformer": "^3.0.1"
   },
