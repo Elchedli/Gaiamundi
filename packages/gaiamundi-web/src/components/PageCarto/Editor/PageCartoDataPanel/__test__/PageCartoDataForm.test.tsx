@@ -1,5 +1,4 @@
-// import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import { render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useAuth } from 'hooks/useAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -42,9 +41,7 @@ describe('PageCartoDataForm', () => {
     const mockDataForm = jest.fn();
     const queryClient = new QueryClient();
 
-    // const { getByDisplayValue, getByTestId, container } = render(
-
-    const { getByTestId, container } = render(
+    const { getByDisplayValue, getByTestId, container } = render(
       <QueryClientProvider client={queryClient}>
         <Router>
           <PageCartoDataForm pageCartoId={0} onSubmit={mockDataForm} />
@@ -64,40 +61,40 @@ describe('PageCartoDataForm', () => {
 
     userEvent.upload(fileInput, file);
 
-    // await waitFor(() =>
-    //   expect(getByDisplayValue(mockFileUpload.name)).toHaveValue(
-    //     mockFileUpload.name
-    //   )
-    // );
+    await waitFor(() =>
+      expect(getByDisplayValue(mockFileUpload.name)).toHaveValue(
+        mockFileUpload.name
+      )
+    );
 
-    // const dataGridRow = container.querySelectorAll(
-    //   "div[role='grid']:nth-child(2) > div"
-    // )[1];
+    const dataGridRow = container.querySelectorAll(
+      "div[role='grid']:nth-child(2) > div"
+    )[1];
 
-    // const columnCheckbox = dataGridRow.querySelector(
-    //   'input[type=checkbox]'
-    // ) as HTMLInputElement;
+    const columnCheckbox = dataGridRow.querySelector(
+      'input[type=checkbox]'
+    ) as HTMLInputElement;
 
-    // await act(async () => {
-    //   fireEvent.click(columnCheckbox);
-    // });
-    // expect(columnCheckbox.checked).toBeTruthy();
+    await act(async () => {
+      fireEvent.click(columnCheckbox);
+    });
+    expect(columnCheckbox.checked).toBeTruthy();
 
-    // const columnRadio = dataGridRow.querySelector(
-    //   'input[type=radio]'
-    // ) as HTMLInputElement;
+    const columnRadio = dataGridRow.querySelector(
+      'input[type=radio]'
+    ) as HTMLInputElement;
 
     expect(getByTestId('validateform-button')).toHaveClass(
       'cursor-not-allowed'
     );
 
-    // await act(async () => {
-    //   fireEvent.click(columnRadio);
-    // });
+    await act(async () => {
+      fireEvent.click(columnRadio);
+    });
 
-    // expect(columnRadio.checked).toBeTruthy();
-    // expect(getByTestId('validateform-button')).not.toHaveClass(
-    //   'cursor-not-allowed'
-    // );
+    expect(columnRadio.checked).toBeTruthy();
+    expect(getByTestId('validateform-button')).not.toHaveClass(
+      'cursor-not-allowed'
+    );
   });
 });
