@@ -6,6 +6,7 @@ stages:          # List of stages for jobs, and their order of execution
 test-job:       # This job runs in test stage
   stage: test
   script:
+    - echo "testing pipeline"
     - echo "Installing lerna"
     - npm i -g lerna
     - echo "Installing dependencies..."
