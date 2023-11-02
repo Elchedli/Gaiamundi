@@ -1,7 +1,6 @@
 node_modules/
 *.log
 db-data/*
-<<<<<<< Updated upstream
-=======
 .DS_Store
->>>>>>> Stashed changes
+.env
+nginx/certbot/
