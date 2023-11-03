@@ -28,7 +28,10 @@ export const MAX_FILE_SIZE_MB = 10;
 const CSV_ALLOWED_MIME_TYPES = ['text/csv'];
 
 export const validateGeoJsonFile = async (file: File): Promise<GeoJSON> => {
-  if (!GEOJSON_ALLOWED_MIME_TYPES.includes(file.type)) {
+  if (
+    !GEOJSON_ALLOWED_MIME_TYPES.includes(file.type) &&
+    !file.name.endsWith('.geojson')
+  ) {
     throw new Error(
       `Le type de fichier est invalide ! Les types autorisés sont : ${GEOJSON_ALLOWED_MIME_TYPES.join(
         ','
