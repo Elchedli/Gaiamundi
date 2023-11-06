@@ -20,8 +20,6 @@ frontend_test_job:
     - echo "Unit tests were successful!"
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
-    paths:
-      - coverage/
     when: always
     reports:
       junit:
