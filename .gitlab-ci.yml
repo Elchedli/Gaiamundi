@@ -36,5 +36,13 @@ deploy_job:
   rules:
     - if: $CI_COMMIT_BRANCH != "main"
       when: never
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | base64 -d | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $SSH_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
-    echo "testing workflows..."
+    - ssh "$SSH_USER@$SSH_IP" "cd gaia-mundi && git pull && docker compose -f 'docker-compose.yml' -f 'docker-compose.prod.yml' up -d --build"
