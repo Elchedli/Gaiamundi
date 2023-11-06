@@ -21,7 +21,8 @@ frontend_test_job:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     when: always
-    paths: packages/gaiamundi-web/junit.xml
+    paths:
+    - packages/gaiamundi-web/junit.xml
     when: always
     reports:
       junit: packages/gaiamundi-web/junit.xml
