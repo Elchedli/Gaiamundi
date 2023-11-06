@@ -34,8 +34,7 @@ deploy_job:
   image: alpine:3.18.4
   stage: deploy
   rules:
-    - if: $CI_COMMIT_BRANCH != "main"
-      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
     - eval $(ssh-agent -s)
