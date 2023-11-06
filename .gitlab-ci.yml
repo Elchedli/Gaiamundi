@@ -1,26 +1,48 @@
-image: node:16.19.1
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
 
-stages:          # List of stages for jobs, and their order of execution
+stages:
   - test
+  - deploy
 
-test-job:       # This job runs in test stage
+frontend_test_job:
+  image: node:16.19.1
   stage: test
-  script:
+  before_script:
     - echo "testing pipeline"
-    - echo "Installing lerna"
-    - npm i -g lerna
     - echo "Installing dependencies..."
-    - cd packages/gaiamundi-api && yarn install
-    - cd ../..
     - cd packages/gaiamundi-web && yarn install
     - echo "Deps install complete."
-    - echo "Running unit tests... This will take about 60 seconds."
-    - yarn test
-    - echo "Unit tests were successful"
-    - echo "Linting code... This will take about 10 seconds."
-    - yarn run lint
+  script:
+    - echo "Linting code..."
+    - yarn lint
     - echo "No lint issues found."
-  only:
-    - merge_requests	
+    - echo "Running unit tests..."
+    - yarn test:report
+    - echo "Unit tests were successful!"
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    when: always
+    paths:
+    - packages/gaiamundi-web/junit.xml
+    when: always
+    reports:
+      junit: packages/gaiamundi-web/junit.xml
 
-
+deploy_job:
+  image: alpine:3.18.4
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH != "main"
+      when: never
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | base64 -d | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $SSH_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh "$SSH_USER@$SSH_IP" "cd gaia-mundi && git pull && docker compose -f 'docker-compose.yml' -f 'docker-compose.prod.yml' up -d --build"
