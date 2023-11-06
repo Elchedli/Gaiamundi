@@ -1,8 +1,6 @@
 workflow:
-    rules:
-    - if: $CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE != "merge-request-event"
-      when: never
-    - when: always
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH != "main"'
 
 stages:
   - test
