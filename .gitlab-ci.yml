@@ -20,9 +20,8 @@ frontend_test_job:
     - echo "Unit tests were successful!"
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
-    paths:
-      - packages/gaiamundi-web/
+    when: always
+    paths: packages/gaiamundi-web/junit.xml
     when: always
     reports:
-      junit:
-        - junit.xml
+      junit: packages/gaiamundi-web/junit.xml
