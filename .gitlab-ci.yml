@@ -1,10 +1,15 @@
+workflow:
+    rules:
+    - if: $CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE != "merge-request-event"
+      when: never
+    - when: always
+
 stages:
   - test
+  - deploy
 
 frontend_test_job:
   image: node:16.19.1
-  only:
-    - merge_requests
   stage: test
   before_script:
     - echo "testing pipeline"
@@ -26,3 +31,12 @@ frontend_test_job:
     when: always
     reports:
       junit: packages/gaiamundi-web/junit.xml
+
+deploy_job:
+  image: alpine:3.18.4
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH != "main"
+      when: never
+  script:
+    echo "testing workflows..."
